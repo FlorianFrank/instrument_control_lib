@@ -2,31 +2,47 @@
 // Created by liuwuhao on 20.05.21.
 //
 #include "spd1305.h"
+#include "kst33500.h"
 #include <iostream>
-
 #include <unistd.h>
 
-int main() {
+int run_kst() {
+     KST33500 k = KST33500("132.231.14.152");
+     k.connect();
+     k.display_connection();
+     k.function("SIN");
+     k.frequency("+1.0E+03");
+     k.voltage("+2.0", "HIGH");
+     k.voltage("+0.0", "LOW");
+     k.output(true);
+     sleep(3);
+     k.output(false);
+     k.phase("+90.0");
+}
+
+int run_spd() {
+
     SPD1305 s = SPD1305("132.231.14.162" );
     s.connect();
-    // setCurrent
-    s.setCurrent(2.458);
+    s.setCurrent(1.8);
 
-    // s.turnon();
-    // sleep(3);
-    // s.turnoff();
+    s.turnon();
+    sleep(3);
+    s.turnoff();
 
-    // getCurrent
-    // double c = s.getCurrent();
-    // cout << c;
+    double c = s.getCurrent();
+    cout << c;
 
-    // exec without result
-    // s.exec("CH1:CURRent 3.14159");
+    s.exec("CH1:CURRent 1.14159");
 
-    // exec with a result(buffer)
-    // char buffer[1024] = {0};
-    // s.exec("CH1:CURRent?", buffer);
-    // cout << buffer;
+    char buffer[1024] = {0};
+    s.exec("CH1:CURRent?", buffer);
+    cout << buffer;
+}
+
+int main() {
+    run_kst();
+    // run_spd();
     return 0;
 }
 
