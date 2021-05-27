@@ -2,8 +2,9 @@
 // Created by liuwuhao on 20.05.21.
 //
 #include "spd1305.h"
-
 #include <iostream>
+
+#include <unistd.h>
 
 int main() {
     SPD1305 s = SPD1305("132.231.14.162" );
@@ -11,9 +12,13 @@ int main() {
     // setCurrent
     s.setCurrent(2.458);
 
+    // s.turnon();
+    // sleep(3);
+    // s.turnoff();
+
     // getCurrent
-    double c = s.getCurrent();
-    cout << c;
+    // double c = s.getCurrent();
+    // cout << c;
 
     // exec without result
     // s.exec("CH1:CURRent 3.14159");

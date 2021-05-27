@@ -13,6 +13,8 @@ SPD1305::SPD1305(char* ip) : Device(ip, port) {
     this->ip = ip;
 }
 
+// connection may fail
+// make sure plugging the ethernet cable before power the Power Supply
 int SPD1305::connect() {
     struct sockaddr_in serv_addr;
     if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
@@ -52,6 +54,7 @@ int SPD1305::setCurrent(double current, int channel) {
     char command[str.length() + 1];
     strcpy(command, str.c_str());
     exec(command);
+    return 0;
 }
 
 double SPD1305::getCurrent(int channel) {
@@ -62,4 +65,21 @@ double SPD1305::getCurrent(int channel) {
     char result[20] = {0};
     exec(command, result);
     return atof(result);
+}
+
+int SPD1305::turnon(int channel) {
+    string str = "OUTPut CH" + to_string(channel) + ",ON";
+    cout << str;
+    char command[str.length() + 1];
+    strcpy(command, str.c_str());
+    exec(command);
+    return 0;
+}
+int SPD1305::turnoff(int channel) {
+    string str = "OUTPut CH" + to_string(channel) + ",OFF";
+    cout << str;
+    char command[str.length() + 1];
+    strcpy(command, str.c_str());
+    exec(command);
+    return 0;
 }

@@ -6,7 +6,7 @@
 #define CE_DEVICE_SPD1305_H
 
 
-#include "library.h"
+#include "device.h"
 
 using namespace std;
 
@@ -23,6 +23,8 @@ public:
 
     int setCurrent(double current, int = 1);
     double getCurrent(int = 1);
+    int turnon(int = 1);
+    int turnoff(int = 1);
 };
 
 #endif //CE_DEVICE_SPD1305_H

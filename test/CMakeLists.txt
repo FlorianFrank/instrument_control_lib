@@ -5,7 +5,6 @@ set(CMAKE_CXX_STANDARD 14)
 message(STATUS "start building test...")
 
 include_directories(../)
-link_directories(../out/)
 
 add_executable(test main.cpp)
 
