@@ -7,15 +7,19 @@
 using namespace std;
 
 class Device {
-    string name;
+    string name = "Device";
+    int sockfd = 0;
 
 protected:
     char* ip;
-    unsigned short port;
+
 public:
+    int port = 5025;
+    int test();
     virtual int connect();
-    virtual int exec(char* message, char *result);
+    virtual int exec(string message, char *result = nullptr, bool = true);
     Device(char* ip, unsigned short port);
+    Device(char* ip);
 };
 
 #endif //CE_DEVICE_DEVICE_H
