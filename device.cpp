@@ -3,6 +3,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <iostream>
+#include <cstring>
 
 Device::Device(char* ip, unsigned short port) : ip(ip), port(port) {
 }

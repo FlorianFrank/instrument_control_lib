@@ -2,6 +2,7 @@
 // Created by liuwuhao on 20.05.21.
 //
 #include <iostream>
+#include <cstring>
 #include "spd1305.h"
 
 using namespace std;
