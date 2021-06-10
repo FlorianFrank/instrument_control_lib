@@ -6,6 +6,22 @@ This repository contains the code to configure oscilloscopes, signal generators 
 - SPD1305X DC Power Supply
 - Keysight 33500B Waveform Generator
 
+## Build
+```shell
+bash build.sh
+```
+The built files are in out direction. The structure should be:
+```
+out
+├── _include
+│   ├── device.h
+│   ├── spd1305.h
+│   ├── kst33500.h
+│   └── ...(other headers) 
+└── _lib
+    └── libce_device.so(or .dylib, .ssl)
+```
+
 ## Usage
 ### Connect devices
 ```c++
