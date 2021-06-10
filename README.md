@@ -19,7 +19,7 @@ out
 │   ├── kst33500.h
 │   └── ...(other headers) 
 └── _lib
-    └── libce_device.so(or .dylib, .ssl)
+    └── libce_device.so(or .dylib, .dll)
 ```
 
 ## Usage
