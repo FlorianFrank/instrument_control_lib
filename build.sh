@@ -1,11 +1,10 @@
 #!/bin/sh
 
+rm -rf build
 mkdir build
 cd build
-cmake ../
-make
 
-mkdir out
-cd out
-cp ../libce_device.so .
-cp ../../*.h . 
+cmake -D CMAKE_INSTALL_PREFIX=./out ../
+make
+make install
+
