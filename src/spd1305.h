@@ -11,15 +11,12 @@
 using namespace std;
 
 class SPD1305 : public Device {
-    string name = "DC Power Supply";
     int sockfd = 0;
 public:
     SPD1305(char* ip);
-    // int connect();
-    // int exec(char* message, char* = nullptr);
 
-    int setCurrent(double current, int = 1);
-    double getCurrent(int = 1);
+    int set_current(double current, int = 1);
+    double get_current(int = 1);
     int turnon(int = 1);
     int turnoff(int = 1);
 };

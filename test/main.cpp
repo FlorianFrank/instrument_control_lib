@@ -5,13 +5,27 @@
 #include <unistd.h>
 #include "Src/kst33500.h"
 #include "Src/spd1305.h"
+#include "Src/kst3000.h"
 
-int run_kst() {
+int run_kst3000() {
+    KST3000 k = KST3000("132.231.14.172");
+    k.connect();
+//    k.cli();
+    k.get_waveform_data();
+//    cout << k.get_waveform_points();
+//    char buffer[1024] = {0};
+//    k.exec("RUN");
+//    cout << buffer;
+}
+
+int run_kst33500() {
      KST33500 k = KST33500("132.231.14.152");
      k.connect();
-     k.display_connection();
+     k.what_am_i();
+     // k.display_connection();
+     k.cli();
 //     k.function("SIN");
-//     k.frequency("+1.0E+03");
+//     k.frequency("+1.0E+05");
 //     k.voltage("+2.0", "HIGH");
 //     k.voltage("+0.0", "LOW");
 //     k.output(true);
@@ -24,13 +38,13 @@ int run_spd() {
 
     SPD1305 s = SPD1305("132.231.14.162" );
     s.connect();
-    s.setCurrent(1.8);
+    s.set_current(1.8);
 
     s.turnon();
     sleep(3);
     s.turnoff();
 
-    double c = s.getCurrent();
+    double c = s.get_current();
     cout << c;
 
     s.exec("CH1:CURRent 1.14159");
@@ -41,8 +55,12 @@ int run_spd() {
 }
 
 int main() {
-    run_kst();
-    // run_spd();
+//    run_kst33500();
+//    run_spd();
+    run_kst3000();
     return 0;
 }
+
+
+
 

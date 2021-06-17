@@ -9,10 +9,8 @@
 using namespace std;
 
 class KST33500 : public Device {
-    int source = 1;
 public:
-    string name = "Keysight 33500B";
-    KST33500(char* ip);
+    KST33500(char *ip);
     int display(string text);
     int display_connection();
     int function(string fun);

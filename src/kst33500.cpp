@@ -2,16 +2,13 @@
 // Created by liuwuhao on 27.05.21.
 //
 
-#include <iostream>
 #include "kst33500.h"
-#include <sys/socket.h>
-#include <arpa/inet.h>
 #include <unistd.h>
 
 using namespace std;
 
 KST33500::KST33500(char *ip) : Device(ip) {
-    this->ip = ip;
+    this->name = "Keysight 33500B Waveform Generator";
 }
 
 int KST33500::display(string text) {

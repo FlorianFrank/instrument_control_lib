@@ -10,7 +10,9 @@ add_library(ce_device SHARED
         src/spd1305.h
         src/kst33500.h
         src/kst33500.cpp
-)
+        src/kst3000.h
+        src/kst3000.cpp
+        )
 
 install(TARGETS ce_device
         LIBRARY DESTINATION lib
