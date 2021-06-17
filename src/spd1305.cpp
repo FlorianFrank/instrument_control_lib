@@ -9,15 +9,16 @@ using namespace std;
 
 SPD1305::SPD1305(char* ip) : Device(ip) {
     this->ip = ip;
+    this->name = "DC Power Supply";
 }
 
-int SPD1305::setCurrent(double current, int channel) {
+int SPD1305::set_current(double current, int channel) {
     string msg = "CH" + to_string(channel) + ":CURRent " + to_string(current);
     exec(msg);
     return 0;
 }
 
-double SPD1305::getCurrent(int channel) {
+double SPD1305::get_current(int channel) {
     string msg = "CH" + to_string(channel) + ":CURRent?";
     // TODO: 20 ?
     char result[20] = {0};
