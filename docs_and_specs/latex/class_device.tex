@@ -1,0 +1,136 @@
+\hypertarget{class_device}{}\doxysection{Device Class Reference}
+\label{class_device}\index{Device@{Device}}
+
+
+Basic device class This class contains all basic method of all devices, like connect, exec, what\+\_\+am\+\_\+i etc.  
+
+
+Inheritance diagram for Device\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_device}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_device_af2f4481711456560cf9f1dea6d0f90ae}\label{class_device_af2f4481711456560cf9f1dea6d0f90ae}} 
+int {\bfseries test} ()
+\item 
+virtual int \mbox{\hyperlink{class_device_ad2b9f59ad977879bd6314258b2080d27}{connect}} ()
+\begin{DoxyCompactList}\small\item\em connect to the device \end{DoxyCompactList}\item 
+virtual int \mbox{\hyperlink{class_device_aade23adf20b97f22c1039fa02ea2fca9}{exec}} (string message, char $\ast$result=nullptr, bool=true)
+\begin{DoxyCompactList}\small\item\em execute a (SCPI) command \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_device_ae928cc0951a73babb6d73012a7906eb8}\label{class_device_ae928cc0951a73babb6d73012a7906eb8}} 
+{\bfseries Device} (char $\ast$ip, unsigned short port)
+\item 
+\mbox{\hyperlink{class_device_aa806615b4c41195c9ba4fc16315d3c76}{Device}} (char $\ast$ip)
+\begin{DoxyCompactList}\small\item\em Constructor of \mbox{\hyperlink{class_device}{Device}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_device_af2f4481711456560cf9f1dea6d0f90ae}\label{class_device_af2f4481711456560cf9f1dea6d0f90ae}} 
+int {\bfseries test} ()
+\item 
+\mbox{\Hypertarget{class_device_ad2b9f59ad977879bd6314258b2080d27}\label{class_device_ad2b9f59ad977879bd6314258b2080d27}} 
+int {\bfseries connect} ()
+\item 
+\mbox{\Hypertarget{class_device_aade23adf20b97f22c1039fa02ea2fca9}\label{class_device_aade23adf20b97f22c1039fa02ea2fca9}} 
+int {\bfseries exec} (string message, char $\ast$result=nullptr, bool=true)
+\item 
+\mbox{\Hypertarget{class_device_a7b46618094960d42a0fb3bfa71c3e732}\label{class_device_a7b46618094960d42a0fb3bfa71c3e732}} 
+void {\bfseries what\+\_\+am\+\_\+i} ()
+\begin{DoxyCompactList}\small\item\em Print a message containing the device\textquotesingle{}s name. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_device_a6d8f4f486b4ccf48e38f12e251706f7b}\label{class_device_a6d8f4f486b4ccf48e38f12e251706f7b}} 
+void {\bfseries cli} ()
+\begin{DoxyCompactList}\small\item\em Start a executing cli. Input a raw SCPI command and execute. To see if a command is valid or not. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_device_ae928cc0951a73babb6d73012a7906eb8}\label{class_device_ae928cc0951a73babb6d73012a7906eb8}} 
+{\bfseries Device} (char $\ast$ip, unsigned short port)
+\item 
+\mbox{\Hypertarget{class_device_aa806615b4c41195c9ba4fc16315d3c76}\label{class_device_aa806615b4c41195c9ba4fc16315d3c76}} 
+{\bfseries Device} (char $\ast$ip)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_device_a94f0a5b685fddeb6e7f7c10c401a9e9f}\label{class_device_a94f0a5b685fddeb6e7f7c10c401a9e9f}} 
+int {\bfseries port} = 5025
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_device_adeed1cdccb1946725e31603a06ceb58c}\label{class_device_adeed1cdccb1946725e31603a06ceb58c}} 
+char $\ast$ {\bfseries ip}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Basic device class This class contains all basic method of all devices, like connect, exec, what\+\_\+am\+\_\+i etc. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_device_aa806615b4c41195c9ba4fc16315d3c76}\label{class_device_aa806615b4c41195c9ba4fc16315d3c76}} 
+\index{Device@{Device}!Device@{Device}}
+\index{Device@{Device}!Device@{Device}}
+\doxysubsubsection{\texorpdfstring{Device()}{Device()}}
+{\footnotesize\ttfamily Device\+::\+Device (\begin{DoxyParamCaption}\item[{char $\ast$}]{ip }\end{DoxyParamCaption})}
+
+
+
+Constructor of \mbox{\hyperlink{class_device}{Device}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ip} & the ip address of the target device \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_device_ad2b9f59ad977879bd6314258b2080d27}\label{class_device_ad2b9f59ad977879bd6314258b2080d27}} 
+\index{Device@{Device}!connect@{connect}}
+\index{connect@{connect}!Device@{Device}}
+\doxysubsubsection{\texorpdfstring{connect()}{connect()}}
+{\footnotesize\ttfamily int Device\+::connect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+connect to the device 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000001}{Todo}}]deal with connection timeout \end{DoxyRefDesc}
+\mbox{\Hypertarget{class_device_aade23adf20b97f22c1039fa02ea2fca9}\label{class_device_aade23adf20b97f22c1039fa02ea2fca9}} 
+\index{Device@{Device}!exec@{exec}}
+\index{exec@{exec}!Device@{Device}}
+\doxysubsubsection{\texorpdfstring{exec()}{exec()}}
+{\footnotesize\ttfamily int Device\+::exec (\begin{DoxyParamCaption}\item[{string}]{message,  }\item[{char $\ast$}]{result = {\ttfamily nullptr},  }\item[{bool}]{br = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+execute a (SCPI) command 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & a (SCPI) command \\
+\hline
+{\em result\mbox{[}out\mbox{]}} & The string will contain the result message(\+Max length\+: 1024) \\
+\hline
+{\em br} & whether add a \textquotesingle{}\textbackslash{}n\textquotesingle{} at the end of the command \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Different companies, devices may have different levels of support for SCPI. Some device may require \textquotesingle{}\textbackslash{}n\textquotesingle{}, some may not. That is why here is a br param.
+\end{DoxyNote}
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000002}{Todo}}]Deal with execution timeout; Support for dynamic length of result; \end{DoxyRefDesc}
+\begin{DoxyWarning}{Warning}
+Some commands may timeout 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{class_k_s_t3000}{KST3000}} k.\mbox{\hyperlink{class_device_aade23adf20b97f22c1039fa02ea2fca9}{exec}}(\textcolor{stringliteral}{"{}STATus? CHANnel2"{}}, buffer);}
+
+\end{DoxyCode}
+ 
+\end{DoxyWarning}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+out/include/device.\+h\item 
+src/device.\+h\item 
+src/device.\+cpp\end{DoxyCompactItemize}

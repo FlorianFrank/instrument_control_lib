@@ -16,13 +16,18 @@ public:
     int stop();
     int single();
     int autoscale();
+    int set_trigger_edge(char*);
+    int set_trigger_source(int channel = 1);
     int set_time_range(double);
+    int set_time_delay(double);
     int set_channel_scale(double, int channel = 1);
     int set_channel_range(double, int channel = 1, bool is_v = true);
-    int set_channel_offset(double range, int channel = 1);
+    int set_channel_offset(double offset, int channel = 1);
     int set_channel_display(int on, int channel = 1);
     int get_waveform_points();
     char *get_waveform_data();
+    int digitize();
+    int get_system_setup(char *buffer);
 };
 
 #endif //CE_DEVICE_KST3000_H

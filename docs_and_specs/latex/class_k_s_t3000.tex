@@ -1,0 +1,184 @@
+\hypertarget{class_k_s_t3000}{}\doxysection{KST3000 Class Reference}
+\label{class_k_s_t3000}\index{KST3000@{KST3000}}
+
+
+Mixed Single Oscilloscope(\+Oscillator) Commend operations of a single generator are defined. \mbox{\hyperlink{class_k_s_t3000}{KST3000}} is the model of the device(keysight 3000 series).  
+
+
+Inheritance diagram for KST3000\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_s_t3000}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_k_s_t3000_a87b44c26dee0d723c13b77639f0505dd}{KST3000}} (char $\ast$ip)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_k_s_t3000_a8efb1ca079752b7f095c26f27423a15e}\label{class_k_s_t3000_a8efb1ca079752b7f095c26f27423a15e}} 
+int {\bfseries display\+\_\+connection} ()
+\begin{DoxyCompactList}\small\item\em Display a line of text\+: Connected Successfully. Returning... The message will disappear after 2 seconds. Can be used to make sure the connection is working. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_k_s_t3000_afe23343cd6edf5380fb51f9a0c245f68}\label{class_k_s_t3000_afe23343cd6edf5380fb51f9a0c245f68}} 
+int {\bfseries run} ()
+\begin{DoxyCompactList}\small\item\em Start to run. Equivalent to press the Run/\+Stop button when the device is not running. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_k_s_t3000_aad0d45673cf8d0f4209be1545e8c4cd4}\label{class_k_s_t3000_aad0d45673cf8d0f4209be1545e8c4cd4}} 
+int {\bfseries stop} ()
+\begin{DoxyCompactList}\small\item\em Stop to run. Equivalent to press the Run/\+Stop button when the device is not stopping. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_k_s_t3000_a6a9e53c515f1295ee8c960ab9ee261fa}\label{class_k_s_t3000_a6a9e53c515f1295ee8c960ab9ee261fa}} 
+int {\bfseries single} ()
+\begin{DoxyCompactList}\small\item\em Equivalent to press the Single button. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_k_s_t3000_a0176062ebc1a56d52608b6a92eda5777}\label{class_k_s_t3000_a0176062ebc1a56d52608b6a92eda5777}} 
+int {\bfseries autoscale} ()
+\begin{DoxyCompactList}\small\item\em Equivalent to press the \char`\"{}\+Auto Scale\char`\"{} button. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_k_s_t3000_ae5a0d31a54d3dfba07e68247ab8e2afd}{set\+\_\+time\+\_\+range}} (double)
+\begin{DoxyCompactList}\small\item\em Equivalent to adjust the \char`\"{}\+Horizontal\char`\"{} knob. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_k_s_t3000_a61e3370f7b9f95d1a75e0f2c0d88c467}{set\+\_\+channel\+\_\+scale}} (double, int channel=1)
+\begin{DoxyCompactList}\small\item\em Equivalent to adjust the knob above channel numbers. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_k_s_t3000_a63108d183b7f011b0791785751feb182}{set\+\_\+channel\+\_\+range}} (double, int channel=1, bool is\+\_\+v=true)
+\begin{DoxyCompactList}\small\item\em Similar to set\+\_\+channel\+\_\+scale, but set the whole voltage range. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_k_s_t3000_a379741f65ff9623c39d7ebf1ff1b4e31}{set\+\_\+channel\+\_\+offset}} (double offset, int channel=1)
+\begin{DoxyCompactList}\small\item\em Set vertical offset. Equivalent to adjust the knob below channel number button. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_k_s_t3000_a23c6d2cf869fde8753f8de3a2c9c2eb1}{set\+\_\+channel\+\_\+display}} (int on, int channel=1)
+\begin{DoxyCompactList}\small\item\em Show or hide channel display. Equivalent to press channel number button. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_k_s_t3000_a7f09ce3bbea900b2eb36e300f9dc97a7}{get\+\_\+waveform\+\_\+points}} ()
+\begin{DoxyCompactList}\small\item\em Query the number of waveform points to be transferred. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_k_s_t3000_a95de0cb7da7894c86856c0222a060e99}\label{class_k_s_t3000_a95de0cb7da7894c86856c0222a060e99}} 
+char $\ast$ {\bfseries get\+\_\+waveform\+\_\+data} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Mixed Single Oscilloscope(\+Oscillator) Commend operations of a single generator are defined. \mbox{\hyperlink{class_k_s_t3000}{KST3000}} is the model of the device(keysight 3000 series). 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_k_s_t3000_a87b44c26dee0d723c13b77639f0505dd}\label{class_k_s_t3000_a87b44c26dee0d723c13b77639f0505dd}} 
+\index{KST3000@{KST3000}!KST3000@{KST3000}}
+\index{KST3000@{KST3000}!KST3000@{KST3000}}
+\doxysubsubsection{\texorpdfstring{KST3000()}{KST3000()}}
+{\footnotesize\ttfamily KST3000\+::\+KST3000 (\begin{DoxyParamCaption}\item[{char $\ast$}]{ip }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ip} & IP address of kst3000 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Get oscillator\textquotesingle{}s ip\+: Press \char`\"{}\+Utility\char`\"{} key; Press I/O; 
+\end{DoxyNote}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_k_s_t3000_a7f09ce3bbea900b2eb36e300f9dc97a7}\label{class_k_s_t3000_a7f09ce3bbea900b2eb36e300f9dc97a7}} 
+\index{KST3000@{KST3000}!get\_waveform\_points@{get\_waveform\_points}}
+\index{get\_waveform\_points@{get\_waveform\_points}!KST3000@{KST3000}}
+\doxysubsubsection{\texorpdfstring{get\_waveform\_points()}{get\_waveform\_points()}}
+{\footnotesize\ttfamily int KST3000\+::get\+\_\+waveform\+\_\+points (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Query the number of waveform points to be transferred. 
+
+\begin{DoxyReturn}{Returns}
+the number of waveform points to be transferred 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_k_s_t3000_a23c6d2cf869fde8753f8de3a2c9c2eb1}\label{class_k_s_t3000_a23c6d2cf869fde8753f8de3a2c9c2eb1}} 
+\index{KST3000@{KST3000}!set\_channel\_display@{set\_channel\_display}}
+\index{set\_channel\_display@{set\_channel\_display}!KST3000@{KST3000}}
+\doxysubsubsection{\texorpdfstring{set\_channel\_display()}{set\_channel\_display()}}
+{\footnotesize\ttfamily int KST3000\+::set\+\_\+channel\+\_\+display (\begin{DoxyParamCaption}\item[{int}]{on,  }\item[{int}]{channel = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Show or hide channel display. Equivalent to press channel number button. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em on} & 1 or 0. 1\+: show channel single. 0\+: hide channel single. \\
+\hline
+{\em channel} & channel number, default 1 \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_k_s_t3000_a379741f65ff9623c39d7ebf1ff1b4e31}\label{class_k_s_t3000_a379741f65ff9623c39d7ebf1ff1b4e31}} 
+\index{KST3000@{KST3000}!set\_channel\_offset@{set\_channel\_offset}}
+\index{set\_channel\_offset@{set\_channel\_offset}!KST3000@{KST3000}}
+\doxysubsubsection{\texorpdfstring{set\_channel\_offset()}{set\_channel\_offset()}}
+{\footnotesize\ttfamily int KST3000\+::set\+\_\+channel\+\_\+offset (\begin{DoxyParamCaption}\item[{double}]{offset,  }\item[{int}]{channel = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Set vertical offset. Equivalent to adjust the knob below channel number button. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em offset} & vertical offset, unit\+: V \\
+\hline
+{\em channel} & channel number, default 1 \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_k_s_t3000_a63108d183b7f011b0791785751feb182}\label{class_k_s_t3000_a63108d183b7f011b0791785751feb182}} 
+\index{KST3000@{KST3000}!set\_channel\_range@{set\_channel\_range}}
+\index{set\_channel\_range@{set\_channel\_range}!KST3000@{KST3000}}
+\doxysubsubsection{\texorpdfstring{set\_channel\_range()}{set\_channel\_range()}}
+{\footnotesize\ttfamily int KST3000\+::set\+\_\+channel\+\_\+range (\begin{DoxyParamCaption}\item[{double}]{range,  }\item[{int}]{channel = {\ttfamily 1},  }\item[{bool}]{is\+\_\+v = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Similar to set\+\_\+channel\+\_\+scale, but set the whole voltage range. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em range} & voltage range(vertical) \\
+\hline
+{\em target} & channel\+: default 1 \\
+\hline
+{\em is\+\_\+v} & voltage unit\+:
+\begin{DoxyItemize}
+\item true\+: use V as unit, default
+\item false\+: use mV as unit 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_k_s_t3000_a61e3370f7b9f95d1a75e0f2c0d88c467}\label{class_k_s_t3000_a61e3370f7b9f95d1a75e0f2c0d88c467}} 
+\index{KST3000@{KST3000}!set\_channel\_scale@{set\_channel\_scale}}
+\index{set\_channel\_scale@{set\_channel\_scale}!KST3000@{KST3000}}
+\doxysubsubsection{\texorpdfstring{set\_channel\_scale()}{set\_channel\_scale()}}
+{\footnotesize\ttfamily int KST3000\+::set\+\_\+channel\+\_\+scale (\begin{DoxyParamCaption}\item[{double}]{scale,  }\item[{int}]{channel = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Equivalent to adjust the knob above channel numbers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scale} & units(voltage) per division(grid) \\
+\hline
+{\em channel} & target channel\+: default 1 \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_k_s_t3000_ae5a0d31a54d3dfba07e68247ab8e2afd}\label{class_k_s_t3000_ae5a0d31a54d3dfba07e68247ab8e2afd}} 
+\index{KST3000@{KST3000}!set\_time\_range@{set\_time\_range}}
+\index{set\_time\_range@{set\_time\_range}!KST3000@{KST3000}}
+\doxysubsubsection{\texorpdfstring{set\_time\_range()}{set\_time\_range()}}
+{\footnotesize\ttfamily int KST3000\+::set\+\_\+time\+\_\+range (\begin{DoxyParamCaption}\item[{double}]{range }\end{DoxyParamCaption})}
+
+
+
+Equivalent to adjust the \char`\"{}\+Horizontal\char`\"{} knob. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em range} & time range to set, unit\+: second \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/kst3000.\+h\item 
+src/kst3000.\+cpp\end{DoxyCompactItemize}
