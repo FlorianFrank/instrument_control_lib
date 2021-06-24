@@ -19,6 +19,7 @@ public:
     int test();
     int connect();
     int exec(string message, char *result = nullptr, bool = true);
+    int exec_commands(string commands);
     void what_am_i();
     void cli();
     Device(char* ip, unsigned short port);

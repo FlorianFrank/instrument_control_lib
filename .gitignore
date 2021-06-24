@@ -1,8 +1,7 @@
 build
 out
-html
-latex
 cmake-build-debug
 cmake-build-release
 cmake-build-relwithdebinfo
 .idea
+.DS_Store

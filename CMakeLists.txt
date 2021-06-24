@@ -25,4 +25,4 @@ install(DIRECTORY src/
         FILES_MATCHING PATTERN "*.h"
         )
 
-# add_subdirectory(test)
+add_subdirectory(test)
