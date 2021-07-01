@@ -24,8 +24,10 @@ public:
     int set_channel_range(double, int channel = 1, bool is_v = true);
     int set_channel_offset(double offset, int channel = 1);
     int set_channel_display(int on, int channel = 1);
+    char *get_waveform_preamble();
     int get_waveform_points();
     char *get_waveform_data();
+    int save_waveform_data(string file_path = "./buffer");
     int digitize();
     int get_system_setup(char *buffer);
 };

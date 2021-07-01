@@ -2,6 +2,10 @@
 // Created by liuwuhao on 17.06.21.
 //
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <cstring>
 #include "kst3000.h"
 #include <unistd.h>
 
@@ -145,6 +149,36 @@ int KST3000::set_channel_display(int on, int channel) {
     return exec(command);
 }
 
+vector<string> split (string s, string delimiter) {
+    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+    string token;
+    vector<string> res;
+
+    while ((pos_end = s.find (delimiter, pos_start)) != string::npos) {
+        token = s.substr (pos_start, pos_end - pos_start);
+        pos_start = pos_end + delim_len;
+        res.push_back (token);
+    }
+
+    res.push_back (s.substr (pos_start));
+    return res;
+}
+
+/**
+ * @brief Query the preamble of waveform data
+ * @return a array containing preamble
+ * [Waveform format, Acquire type, Waveform points desired, Waveform average count,
+ *  Waveform X increment, Waveform X origin, Waveform X reference,
+ *  Waveform Y increment, Waveform Y origin, Waveform Y reference]
+ * */
+char* KST3000::get_waveform_preamble() {
+    string command = "WAVeform:PREamble?";
+    char buffer[1024] = {0};
+    exec(command, buffer);
+    // vector<string> substrs = split(buffer, ",");
+    return buffer;
+}
+
 /**
  * @brief Query the number of waveform points to be transferred
  * @return the number of waveform points to be transferred
@@ -156,17 +190,79 @@ int KST3000::get_waveform_points() {
     return stoi(buffer);
 }
 
+int write_to_file(string data, string file_path) {
+    string buffer(data);
+    ofstream file;
+    file.open(file_path);
+    file  << buffer;
+    file.close();
+    return 0;
+}
+
 char* KST3000::get_waveform_data() {
     string command = "WAVeform:DATA?";
     int num = get_waveform_points();
-    char buffer[num];
-    memset(buffer, 0, num);
-    exec(command, buffer);
-    cout << sizeof(buffer) << endl;
-    cout << 1123 << endl;
+    char buffer[num + 10];
+    memset(buffer, 1, num);
+    cout << strlen(buffer) << endl;
+    exec(command, buffer, true, num);
+    char data[num];
+    memcpy(data, buffer + 10, num);
     for (int i = 0; i < num; i++) {
-        cout << hex << (int)buffer[i];
+        cout << (int) (unsigned char)data[i];
+        cout << "    ";
     }
+    cout << endl;
+//    string s_buffer(buffer);
+//    s_buffer = s_buffer.substr(10);
+//    cout << buffer;
+//    write_to_file(buffer, "/tmp/buffer");
+    return data;
+}
+
+int KST3000::save_waveform_data(string file_path) {
+    char *preamble = get_waveform_preamble();
+    vector<string> v_preamble = split(preamble, ",");
+    int points = stoi(v_preamble[2]);
+    double x_increment = stod(v_preamble[4]);
+    double x_origin = stod(v_preamble[5]);
+    double x_reference = stod(v_preamble[6]);
+    double y_increment = stod(v_preamble[7]);
+    double y_origin = stod(v_preamble[8]);
+    double y_reference = stod(v_preamble[9]);
+
+    char *data = get_waveform_data();
+    for (int i = 0; i < points; i++) {
+        cout << (int) (unsigned char)data[i];
+        cout << "    ";
+    }
+    cout << endl;
+
+//    string command = "WAVeform:DATA?";
+//    int num = get_waveform_points();
+//    char buffer[num + 10];
+//    memset(buffer, 1, num);
+//    cout << strlen(buffer) << endl;
+//    exec(command, buffer, true, num);
+//    char data[num];
+//    memcpy(data, buffer + 10, num);
+
+    cout << endl;
+    stringstream stream;
+    for (int i = 0; i < points; i++) {
+        double time = ((i - x_reference) * x_increment) + x_origin;
+        int voltage_data = (int) (unsigned char) data[i];
+        if (voltage_data == 0) {
+            continue;
+        }
+        double voltage = ((voltage_data - y_reference) * y_increment) + y_origin;
+        cout << voltage_data;
+        cout << "    " ;
+        stream << time << "," << voltage << endl;
+    }
+
+    write_to_file(stream.str(), file_path);
+    return 0;
 }
 
 /**

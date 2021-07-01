@@ -63,7 +63,7 @@ int Device::connect() {
  *      KST3000 k.exec("RSTater?", buffer);
  *      @endcode
  * */
-int Device::exec(string message, char* result, bool br) {
+int Device::exec(string message, char* result, bool br, int size) {
     if (br) {
         message += '\n';
     }
@@ -73,7 +73,7 @@ int Device::exec(string message, char* result, bool br) {
     // testcase: KST3000 k.exec("STATus? CHANnel2", buffer);
     send(sockfd, command, strlen(command), 0);
     if (result) {
-        read(sockfd, result, 1024);
+        read(sockfd, result, size);
     }
     cout << "Executed Successfully.\n";
     return 0;
@@ -105,6 +105,10 @@ void Device::cli() {
         cout << "Input a command: ";
         string commands = "";
         getline(cin, commands);
+        if (commands.compare("f") == 0) {
+            cout << "CLI finished.\n";
+            break;
+        }
         bool is_query = commands.find("?") != string::npos;
         if (is_query) {
             memset(buffer, 0, sizeof(buffer));

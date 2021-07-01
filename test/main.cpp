@@ -10,34 +10,39 @@
 
 using namespace std;
 
-string cap_commands = "ACQuire:TYPE AVERage\n"
+string cap_commands = "ACQuire:TYPE NORMal\n"
                       "ACQuire:COMPlete 100\n"
                        "ACQuire:COUNt 8\n"
-                       "DIGitize CHANnel1\n"
+//                       "DIGitize CHANnel1\n";
                        "WAVeform:SOURce CHANnel1\n"
                        "WAVeform:FORMat BYTE\n"
-                       "WAVeform:POINts 1000\n";
+                       "WAVeform:POINts 1000";
 
 int run_kst3000() {
     KST3000 k = KST3000("132.231.14.172");
     k.connect();
-//    k.set_time_range(1);
+//    k.set_time_range(0.05);
 //    k.set_channel_scale(3.3);
 //    k.set_channel_range(40);
 //    k.set_channel_offset(-2);
 //    k.set_channel_display(1);
 //    k.set_time_delay(0.003);
 //    k.set_trigger_edge("NEG");
+
 //    k.set_trigger_source();
-//    k.single();
-    k.cli();
+//    k.run();
 //    char buffer[2048];
 //    k.get_system_setup(buffer);
 //    cout << buffer;
-//   k.exec_commands(cap_commands);
+    k.exec_commands(cap_commands);
+//    k.single();
+//    k.get_waveform_preamble();
 //    int num = k.get_waveform_points();
 //    cout << num;
 //    k.get_waveform_data();
+//    k.cli();
+    k.save_waveform_data("/tmp/buffer");
+    k.cli();
 //    cout << k.get_waveform_points();
 //    char buffer[1024] = {0};
 //    k.exec("RUN");
@@ -49,7 +54,7 @@ int run_kst33500() {
      k.connect();
      k.what_am_i();
      // k.display_connection();
-     k.cli();
+//     k.cli();
 //     k.function("SIN");
 //     k.frequency("+1.0E+05");
 //     k.voltage("+2.0", "HIGH");
