@@ -9,6 +9,8 @@
 #include "kst3000.h"
 #include <unistd.h>
 
+using namespace std;
+
 /**
  * @class KST3000
  * @brief Mixed Single Oscilloscope(Oscillator)
