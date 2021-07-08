@@ -10,8 +10,16 @@
 
 using namespace std;
 
+//string cap_commands = "ACQuire:TYPE NORMal\n"
+//                      "ACQuire:COMPlete 100\n"
+//                      "ACQuire:COUNt 8\n"
+//                      //                       "DIGitize CHANnel1\n";
+//                      "WAVeform:SOURce CHANnel1\n"
+//                      "WAVeform:FORMat BYTE\n";
+//                      "WAVeform:POINts 1000";
+
 int run_kst3000() {
-    KST3000 k = KST3000("132.231.14.172");
+    KST3000 k = KST3000("132.231.14.247");
     k.connect();
 //    k.set_time_range(0.05);
 //    k.set_channel_scale(3.3);
@@ -33,8 +41,9 @@ int run_kst3000() {
 //    cout << num;
 //    k.get_waveform_data();
 //    k.cli();
+    k.set_waveform_points(1000);
     k.save_waveform_data("/tmp/buffer");
-//    k.cli();
+    k.cli();
 //    cout << k.get_waveform_points();
 //    char buffer[1024] = {0};
 //    k.exec("RUN");
@@ -42,7 +51,7 @@ int run_kst3000() {
 }
 
 int run_kst33500() {
-     KST33500 k = KST33500("132.231.14.152");
+     KST33500 k = KST33500("132.231.14.247");
      k.connect();
      k.what_am_i();
      // k.display_connection();
