@@ -196,7 +196,7 @@ int KST3000::get_waveform_points() {
  * @brief set number of waveform points
  * */
 int KST3000::set_waveform_points(int num_points) {
-    string command = "WAVeform:POINts" + to_string(num_points);
+    string command = "WAVeform:POINts " + to_string(num_points);
     return exec(command);
 }
 
@@ -239,7 +239,7 @@ int KST3000::get_waveform_data(char *data) {
     int num = get_waveform_points();
     char buffer[num + 10]; // 10 is the length of <header>
     memset(buffer, 0, num);
-    exec(command, buffer, true, num);
+    exec(command, buffer, true, num + 10);
     memcpy(data, buffer + 10, num);
     return 0;
 }
@@ -275,9 +275,10 @@ int KST3000::save_waveform_data(string file_path) {
     for (int i = 0; i < points; i++) {
         double time = ((i - x_reference) * x_increment) + x_origin;
         int voltage_data = (int) (unsigned char) data[i];
-//        if (voltage_data == 0) {
-//            continue;
-//        }
+
+        if (voltage_data == 0) {
+            continue;
+        }
         double voltage = ((voltage_data - y_reference) * y_increment) + y_origin;
         stream << time*1000 << "," << voltage << endl;
     }
