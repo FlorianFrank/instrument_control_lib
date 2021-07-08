@@ -31,8 +31,14 @@ int {\bfseries single} ()
 \mbox{\Hypertarget{class_k_s_t3000_a0176062ebc1a56d52608b6a92eda5777}\label{class_k_s_t3000_a0176062ebc1a56d52608b6a92eda5777}} 
 int {\bfseries autoscale} ()
 \begin{DoxyCompactList}\small\item\em Equivalent to press the \char`\"{}\+Auto Scale\char`\"{} button. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_k_s_t3000_a7666f3a2d4d87fe9864393a3ff141c77}{set\+\_\+trigger\+\_\+edge}} (char $\ast$)
+\begin{DoxyCompactList}\small\item\em Set trigger slope. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_k_s_t3000_a6268ea8678ffdbcf663bf2bb88e1a3c2}{set\+\_\+trigger\+\_\+source}} (int channel=1)
+\begin{DoxyCompactList}\small\item\em Set trigger channel. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{class_k_s_t3000_ae5a0d31a54d3dfba07e68247ab8e2afd}{set\+\_\+time\+\_\+range}} (double)
-\begin{DoxyCompactList}\small\item\em Equivalent to adjust the \char`\"{}\+Horizontal\char`\"{} knob. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Set timebase(horizontal) range; Equivalent to adjust the \char`\"{}\+Horizontal\char`\"{} knob. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_k_s_t3000_a3a6e3a01b68dc5e4826ca96dce336127}{set\+\_\+time\+\_\+delay}} (double)
+\begin{DoxyCompactList}\small\item\em Set timebase(horizontal) delay; Equivalent to adjust the delay knob in Horizontal controls. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{class_k_s_t3000_a61e3370f7b9f95d1a75e0f2c0d88c467}{set\+\_\+channel\+\_\+scale}} (double, int channel=1)
 \begin{DoxyCompactList}\small\item\em Equivalent to adjust the knob above channel numbers. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{class_k_s_t3000_a63108d183b7f011b0791785751feb182}{set\+\_\+channel\+\_\+range}} (double, int channel=1, bool is\+\_\+v=true)
@@ -41,11 +47,26 @@ int \mbox{\hyperlink{class_k_s_t3000_a379741f65ff9623c39d7ebf1ff1b4e31}{set\+\_\
 \begin{DoxyCompactList}\small\item\em Set vertical offset. Equivalent to adjust the knob below channel number button. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{class_k_s_t3000_a23c6d2cf869fde8753f8de3a2c9c2eb1}{set\+\_\+channel\+\_\+display}} (int on, int channel=1)
 \begin{DoxyCompactList}\small\item\em Show or hide channel display. Equivalent to press channel number button. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{class_k_s_t3000_a5e396aadce002383b0a573751f841adc}{get\+\_\+waveform\+\_\+preamble}} ()
+\begin{DoxyCompactList}\small\item\em Query the preamble of waveform data. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{class_k_s_t3000_a7f09ce3bbea900b2eb36e300f9dc97a7}{get\+\_\+waveform\+\_\+points}} ()
 \begin{DoxyCompactList}\small\item\em Query the number of waveform points to be transferred. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_k_s_t3000_a95de0cb7da7894c86856c0222a060e99}\label{class_k_s_t3000_a95de0cb7da7894c86856c0222a060e99}} 
-char $\ast$ {\bfseries get\+\_\+waveform\+\_\+data} ()
-\end{DoxyCompactItemize}
+\mbox{\Hypertarget{class_k_s_t3000_ad1cb30d0eb4dbc052f39fcc2d670030e}\label{class_k_s_t3000_ad1cb30d0eb4dbc052f39fcc2d670030e}} 
+int {\bfseries set\+\_\+waveform\+\_\+points} (int num\+\_\+points)
+\begin{DoxyCompactList}\small\item\em set number of waveform points \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_k_s_t3000_a04489c9c16bbbce4c596cef2b749b9a5}\label{class_k_s_t3000_a04489c9c16bbbce4c596cef2b749b9a5}} 
+int {\bfseries set\+\_\+waveform\+\_\+format} (string format=\char`\"{}BYTE\char`\"{})
+\begin{DoxyCompactList}\small\item\em set format of waveform data(default \char`\"{}\+BYTE\char`\"{}) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_k_s_t3000_aabe8af22dd8fa398a92eaeca8a38dedf}{get\+\_\+waveform\+\_\+data}} (char $\ast$data)
+\begin{DoxyCompactList}\small\item\em get the sampled data points \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_k_s_t3000_a1645c7b05f3394040610a57752f436da}{save\+\_\+waveform\+\_\+data}} (string file\+\_\+path=\char`\"{}./buffer\char`\"{})
+\begin{DoxyCompactList}\small\item\em save waveform data to the target file \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_k_s_t3000_ab44f26c498edd4d2941535f526f4608c}\label{class_k_s_t3000_ab44f26c498edd4d2941535f526f4608c}} 
+int {\bfseries digitize} ()
+\begin{DoxyCompactList}\small\item\em capture data \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_k_s_t3000_acf5f42707ff025bbb335dde6075d54da}\label{class_k_s_t3000_acf5f42707ff025bbb335dde6075d54da}} 
+int {\bfseries get\+\_\+system\+\_\+setup} (char $\ast$buffer)
+\begin{DoxyCompactList}\small\item\em get system setup \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Additional Inherited Members}
 
 
@@ -74,7 +95,22 @@ Get oscillator\textquotesingle{}s ip\+: Press \char`\"{}\+Utility\char`\"{} key;
 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{class_k_s_t3000_a7f09ce3bbea900b2eb36e300f9dc97a7}\label{class_k_s_t3000_a7f09ce3bbea900b2eb36e300f9dc97a7}} 
+\mbox{\Hypertarget{class_k_s_t3000_aabe8af22dd8fa398a92eaeca8a38dedf}\label{class_k_s_t3000_aabe8af22dd8fa398a92eaeca8a38dedf}} 
+\index{KST3000@{KST3000}!get\_waveform\_data@{get\_waveform\_data}}
+\index{get\_waveform\_data@{get\_waveform\_data}!KST3000@{KST3000}}
+\doxysubsubsection{\texorpdfstring{get\_waveform\_data()}{get\_waveform\_data()}}
+{\footnotesize\ttfamily int KST3000\+::get\+\_\+waveform\+\_\+data (\begin{DoxyParamCaption}\item[{char $\ast$}]{data }\end{DoxyParamCaption})}
+
+
+
+get the sampled data points 
+
+READ\+\_\+\+WAVE\+\_\+\+DATA -\/ The wave data consists of two parts\+: the header, and the actual waveform data followed by a new line (NL) character.~\newline
+ The query data has the following format\+:~\newline
+ $<$header$>$$<$waveform\+\_\+data$>$$<$\+NL$>$~\newline
+Where\+:~\newline
+$<$header$>$ = \#800001000 (This is an example header)~\newline
+The \char`\"{}\#8\char`\"{} may be stripped off of the header and the remaining numbers are the size, in bytes, of the waveform data block. The size can vary depending on the number of points acquired for the waveform.(In the example, 1000 points) You can then read that number of bytes from the oscilloscope and the terminating NL character. \mbox{\Hypertarget{class_k_s_t3000_a7f09ce3bbea900b2eb36e300f9dc97a7}\label{class_k_s_t3000_a7f09ce3bbea900b2eb36e300f9dc97a7}} 
 \index{KST3000@{KST3000}!get\_waveform\_points@{get\_waveform\_points}}
 \index{get\_waveform\_points@{get\_waveform\_points}!KST3000@{KST3000}}
 \doxysubsubsection{\texorpdfstring{get\_waveform\_points()}{get\_waveform\_points()}}
@@ -87,7 +123,40 @@ Query the number of waveform points to be transferred.
 \begin{DoxyReturn}{Returns}
 the number of waveform points to be transferred 
 \end{DoxyReturn}
-\mbox{\Hypertarget{class_k_s_t3000_a23c6d2cf869fde8753f8de3a2c9c2eb1}\label{class_k_s_t3000_a23c6d2cf869fde8753f8de3a2c9c2eb1}} 
+\mbox{\Hypertarget{class_k_s_t3000_a5e396aadce002383b0a573751f841adc}\label{class_k_s_t3000_a5e396aadce002383b0a573751f841adc}} 
+\index{KST3000@{KST3000}!get\_waveform\_preamble@{get\_waveform\_preamble}}
+\index{get\_waveform\_preamble@{get\_waveform\_preamble}!KST3000@{KST3000}}
+\doxysubsubsection{\texorpdfstring{get\_waveform\_preamble()}{get\_waveform\_preamble()}}
+{\footnotesize\ttfamily char $\ast$ KST3000\+::get\+\_\+waveform\+\_\+preamble (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Query the preamble of waveform data. 
+
+\begin{DoxyReturn}{Returns}
+a array containing preamble \mbox{[}Waveform format, Acquire type, Waveform points desired, Waveform average count, Waveform X increment, Waveform X origin, Waveform X reference, Waveform Y increment, Waveform Y origin, Waveform Y reference\mbox{]} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_k_s_t3000_a1645c7b05f3394040610a57752f436da}\label{class_k_s_t3000_a1645c7b05f3394040610a57752f436da}} 
+\index{KST3000@{KST3000}!save\_waveform\_data@{save\_waveform\_data}}
+\index{save\_waveform\_data@{save\_waveform\_data}!KST3000@{KST3000}}
+\doxysubsubsection{\texorpdfstring{save\_waveform\_data()}{save\_waveform\_data()}}
+{\footnotesize\ttfamily int KST3000\+::save\+\_\+waveform\+\_\+data (\begin{DoxyParamCaption}\item[{string}]{file\+\_\+path = {\ttfamily \char`\"{}./buffer\char`\"{}} }\end{DoxyParamCaption})}
+
+
+
+save waveform data to the target file 
+
+The file can be plotted, for example using python. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{import} pandas \textcolor{keyword}{as} pd}
+\DoxyCodeLine{\textcolor{keyword}{import} matplotlib.pyplot \textcolor{keyword}{as} plt}
+\DoxyCodeLine{data = pd.read\_csv(\textcolor{stringliteral}{"{}buffer"{}})}
+\DoxyCodeLine{plt.xlabel(\textcolor{stringliteral}{'time(ms)'})}
+\DoxyCodeLine{plt.ylabel(\textcolor{stringliteral}{'voltage(V)'})}
+\DoxyCodeLine{plt.plot(data[\textcolor{stringliteral}{'time(ms)'}], data[\textcolor{stringliteral}{'voltage(V)'}])}
+
+\end{DoxyCode}
+ \mbox{\Hypertarget{class_k_s_t3000_a23c6d2cf869fde8753f8de3a2c9c2eb1}\label{class_k_s_t3000_a23c6d2cf869fde8753f8de3a2c9c2eb1}} 
 \index{KST3000@{KST3000}!set\_channel\_display@{set\_channel\_display}}
 \index{set\_channel\_display@{set\_channel\_display}!KST3000@{KST3000}}
 \doxysubsubsection{\texorpdfstring{set\_channel\_display()}{set\_channel\_display()}}
@@ -161,6 +230,21 @@ Equivalent to adjust the knob above channel numbers.
 {\em channel} & target channel\+: default 1 \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{class_k_s_t3000_a3a6e3a01b68dc5e4826ca96dce336127}\label{class_k_s_t3000_a3a6e3a01b68dc5e4826ca96dce336127}} 
+\index{KST3000@{KST3000}!set\_time\_delay@{set\_time\_delay}}
+\index{set\_time\_delay@{set\_time\_delay}!KST3000@{KST3000}}
+\doxysubsubsection{\texorpdfstring{set\_time\_delay()}{set\_time\_delay()}}
+{\footnotesize\ttfamily int KST3000\+::set\+\_\+time\+\_\+delay (\begin{DoxyParamCaption}\item[{double}]{delay }\end{DoxyParamCaption})}
+
+
+
+Set timebase(horizontal) delay; Equivalent to adjust the delay knob in Horizontal controls. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delay} & time delay, unit seconds \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{class_k_s_t3000_ae5a0d31a54d3dfba07e68247ab8e2afd}\label{class_k_s_t3000_ae5a0d31a54d3dfba07e68247ab8e2afd}} 
 \index{KST3000@{KST3000}!set\_time\_range@{set\_time\_range}}
 \index{set\_time\_range@{set\_time\_range}!KST3000@{KST3000}}
@@ -169,11 +253,41 @@ Equivalent to adjust the knob above channel numbers.
 
 
 
-Equivalent to adjust the \char`\"{}\+Horizontal\char`\"{} knob. 
+Set timebase(horizontal) range; Equivalent to adjust the \char`\"{}\+Horizontal\char`\"{} knob. 
 
 
 \begin{DoxyParams}{Parameters}
 {\em range} & time range to set, unit\+: second \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_k_s_t3000_a7666f3a2d4d87fe9864393a3ff141c77}\label{class_k_s_t3000_a7666f3a2d4d87fe9864393a3ff141c77}} 
+\index{KST3000@{KST3000}!set\_trigger\_edge@{set\_trigger\_edge}}
+\index{set\_trigger\_edge@{set\_trigger\_edge}!KST3000@{KST3000}}
+\doxysubsubsection{\texorpdfstring{set\_trigger\_edge()}{set\_trigger\_edge()}}
+{\footnotesize\ttfamily int KST3000\+::set\+\_\+trigger\+\_\+edge (\begin{DoxyParamCaption}\item[{char $\ast$}]{slope }\end{DoxyParamCaption})}
+
+
+
+Set trigger slope. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em slope} & \{POS $\vert$ NEG $\vert$ EITH $\vert$ ALT\} (Rising $\vert$ Falling $\vert$ Either $\vert$ Alternating) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_k_s_t3000_a6268ea8678ffdbcf663bf2bb88e1a3c2}\label{class_k_s_t3000_a6268ea8678ffdbcf663bf2bb88e1a3c2}} 
+\index{KST3000@{KST3000}!set\_trigger\_source@{set\_trigger\_source}}
+\index{set\_trigger\_source@{set\_trigger\_source}!KST3000@{KST3000}}
+\doxysubsubsection{\texorpdfstring{set\_trigger\_source()}{set\_trigger\_source()}}
+{\footnotesize\ttfamily int KST3000\+::set\+\_\+trigger\+\_\+source (\begin{DoxyParamCaption}\item[{int}]{channel = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Set trigger channel. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & \{1(default) $\vert$ 2 $\vert$ 3 $\vert$ 4\} \\
 \hline
 \end{DoxyParams}
 

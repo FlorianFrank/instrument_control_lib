@@ -26,7 +26,9 @@ public:
     int set_channel_display(int on, int channel = 1);
     char *get_waveform_preamble();
     int get_waveform_points();
-    char *get_waveform_data();
+    int set_waveform_points(int num_points);
+    int set_waveform_format(string format = "BYTE");
+    int get_waveform_data(char *data);
     int save_waveform_data(string file_path = "./buffer");
     int digitize();
     int get_system_setup(char *buffer);

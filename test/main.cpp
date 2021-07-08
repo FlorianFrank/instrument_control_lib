@@ -10,14 +10,6 @@
 
 using namespace std;
 
-string cap_commands = "ACQuire:TYPE NORMal\n"
-                      "ACQuire:COMPlete 100\n"
-                       "ACQuire:COUNt 8\n"
-//                       "DIGitize CHANnel1\n";
-                       "WAVeform:SOURce CHANnel1\n"
-                       "WAVeform:FORMat BYTE\n"
-                       "WAVeform:POINts 1000";
-
 int run_kst3000() {
     KST3000 k = KST3000("132.231.14.172");
     k.connect();
@@ -26,7 +18,7 @@ int run_kst3000() {
 //    k.set_channel_range(40);
 //    k.set_channel_offset(-2);
 //    k.set_channel_display(1);
-//    k.set_time_delay(0.003);
+//    k.set_time_delay(0.00085);
 //    k.set_trigger_edge("NEG");
 
 //    k.set_trigger_source();
@@ -34,7 +26,7 @@ int run_kst3000() {
 //    char buffer[2048];
 //    k.get_system_setup(buffer);
 //    cout << buffer;
-    k.exec_commands(cap_commands);
+//    k.exec_commands(cap_commands);
 //    k.single();
 //    k.get_waveform_preamble();
 //    int num = k.get_waveform_points();
@@ -42,7 +34,7 @@ int run_kst3000() {
 //    k.get_waveform_data();
 //    k.cli();
     k.save_waveform_data("/tmp/buffer");
-    k.cli();
+//    k.cli();
 //    cout << k.get_waveform_points();
 //    char buffer[1024] = {0};
 //    k.exec("RUN");
@@ -66,7 +58,6 @@ int run_kst33500() {
 }
 
 int run_spd() {
-
     SPD1305 s = SPD1305("132.231.14.162" );
     s.connect();
     s.set_current(1.8);

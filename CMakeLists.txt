@@ -25,4 +25,6 @@ install(DIRECTORY src/
         FILES_MATCHING PATTERN "*.h"
         )
 
-#add_subdirectory(test)
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_subdirectory(test)
+endif()
