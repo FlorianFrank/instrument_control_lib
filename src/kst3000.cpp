@@ -68,7 +68,7 @@ int KST3000::autoscale() {
 
 /**
  * @brief Set trigger slope
- * @param slope: {POS | NEG | EITH | ALT}
+ * @param slope: {POS | NEG | EITH | ALT} (Rising | Falling | Either | Alternating)
  * */
 int KST3000::set_trigger_edge(char *slope) {
     string s_slope(slope);
@@ -190,6 +190,25 @@ int KST3000::get_waveform_points() {
     return stoi(buffer);
 }
 
+/**
+ * @brief set number of waveform points
+ * */
+int KST3000::set_waveform_points(int num_points) {
+    string command = "WAVeform:POINts" + to_string(num_points);
+    return exec(command);
+}
+
+/**
+ * @brief set format of waveform data(default "BYTE")
+ * */
+int KST3000::set_waveform_format(string format) {
+    string command = "WAVeform:FORMat" + format;
+    return exec(command);
+}
+
+/**
+ * @brief write to file
+ * */
 int write_to_file(string data, string file_path) {
     string buffer(data);
     ofstream file;
@@ -199,27 +218,42 @@ int write_to_file(string data, string file_path) {
     return 0;
 }
 
-char* KST3000::get_waveform_data() {
+/**
+ * @brief get the sampled data points
+ * @details READ_WAVE_DATA - The wave data consists of two parts: the header,
+   and the actual waveform data followed by a new line (NL) character.\n
+
+   The query data has the following format:\n
+        <header><waveform_data><NL>\n
+   Where:\n
+   <header> = #800001000 (This is an example header)\n
+   The "#8" may be stripped off of the header and the remaining
+   numbers are the size, in bytes, of the waveform data block.
+   The size can vary depending on the number of points acquired for the waveform.(In the example, 1000 points)
+   You can then read that number of bytes from the oscilloscope and the terminating NL character.
+ * */
+int KST3000::get_waveform_data(char *data) {
     string command = "WAVeform:DATA?";
     int num = get_waveform_points();
-    char buffer[num + 10];
-    memset(buffer, 1, num);
-    cout << strlen(buffer) << endl;
+    char buffer[num + 10]; // 10 is the length of <header>
+    memset(buffer, 0, num);
     exec(command, buffer, true, num);
-    char data[num];
     memcpy(data, buffer + 10, num);
-    for (int i = 0; i < num; i++) {
-        cout << (int) (unsigned char)data[i];
-        cout << "    ";
-    }
-    cout << endl;
-//    string s_buffer(buffer);
-//    s_buffer = s_buffer.substr(10);
-//    cout << buffer;
-//    write_to_file(buffer, "/tmp/buffer");
-    return data;
+    return 0;
 }
 
+/**
+ * @brief save waveform data to the target file
+ * @details The file can be plotted, for example using python.
+ * @code{.py}
+ * import pandas as pd
+ * import matplotlib.pyplot as plt
+ * data = pd.read_csv("buffer")
+ * plt.xlabel('time(ms)')
+ * plt.ylabel('voltage(V)')
+ * plt.plot(data['time(ms)'], data['voltage(V)'])
+ * @endcode
+ * */
 int KST3000::save_waveform_data(string file_path) {
     char *preamble = get_waveform_preamble();
     vector<string> v_preamble = split(preamble, ",");
@@ -231,34 +265,19 @@ int KST3000::save_waveform_data(string file_path) {
     double y_origin = stod(v_preamble[8]);
     double y_reference = stod(v_preamble[9]);
 
-    char *data = get_waveform_data();
-    for (int i = 0; i < points; i++) {
-        cout << (int) (unsigned char)data[i];
-        cout << "    ";
-    }
-    cout << endl;
+    char data[points];
+    get_waveform_data(data);
 
-//    string command = "WAVeform:DATA?";
-//    int num = get_waveform_points();
-//    char buffer[num + 10];
-//    memset(buffer, 1, num);
-//    cout << strlen(buffer) << endl;
-//    exec(command, buffer, true, num);
-//    char data[num];
-//    memcpy(data, buffer + 10, num);
-
-    cout << endl;
     stringstream stream;
+    stream << "time(ms)" << "," << "voltage(V)" << endl;
     for (int i = 0; i < points; i++) {
         double time = ((i - x_reference) * x_increment) + x_origin;
         int voltage_data = (int) (unsigned char) data[i];
-        if (voltage_data == 0) {
-            continue;
-        }
+//        if (voltage_data == 0) {
+//            continue;
+//        }
         double voltage = ((voltage_data - y_reference) * y_increment) + y_origin;
-        cout << voltage_data;
-        cout << "    " ;
-        stream << time << "," << voltage << endl;
+        stream << time*1000 << "," << voltage << endl;
     }
 
     write_to_file(stream.str(), file_path);

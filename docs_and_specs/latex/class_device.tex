@@ -19,8 +19,9 @@ int {\bfseries test} ()
 \item 
 virtual int \mbox{\hyperlink{class_device_ad2b9f59ad977879bd6314258b2080d27}{connect}} ()
 \begin{DoxyCompactList}\small\item\em connect to the device \end{DoxyCompactList}\item 
-virtual int \mbox{\hyperlink{class_device_aade23adf20b97f22c1039fa02ea2fca9}{exec}} (string message, char $\ast$result=nullptr, bool=true)
-\begin{DoxyCompactList}\small\item\em execute a (SCPI) command \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_device_abd6e0a00eefad7e4cd26b4dd3656468a}\label{class_device_abd6e0a00eefad7e4cd26b4dd3656468a}} 
+virtual int {\bfseries exec} (string message, char $\ast$result=nullptr, bool=true)
+\item 
 \mbox{\Hypertarget{class_device_ae928cc0951a73babb6d73012a7906eb8}\label{class_device_ae928cc0951a73babb6d73012a7906eb8}} 
 {\bfseries Device} (char $\ast$ip, unsigned short port)
 \item 
@@ -32,8 +33,10 @@ int {\bfseries test} ()
 \mbox{\Hypertarget{class_device_ad2b9f59ad977879bd6314258b2080d27}\label{class_device_ad2b9f59ad977879bd6314258b2080d27}} 
 int {\bfseries connect} ()
 \item 
-\mbox{\Hypertarget{class_device_aade23adf20b97f22c1039fa02ea2fca9}\label{class_device_aade23adf20b97f22c1039fa02ea2fca9}} 
-int {\bfseries exec} (string message, char $\ast$result=nullptr, bool=true)
+int \mbox{\hyperlink{class_device_a71749b2f1932378ccf4a31f95e96c619}{exec}} (string message, char $\ast$result=nullptr, bool=true, int size=1024)
+\begin{DoxyCompactList}\small\item\em execute a (SCPI) command \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_device_a5bff0924c588ea7d3ce3f54fad144052}\label{class_device_a5bff0924c588ea7d3ce3f54fad144052}} 
+int {\bfseries exec\+\_\+commands} (string commands)
 \item 
 \mbox{\Hypertarget{class_device_a7b46618094960d42a0fb3bfa71c3e732}\label{class_device_a7b46618094960d42a0fb3bfa71c3e732}} 
 void {\bfseries what\+\_\+am\+\_\+i} ()
@@ -95,11 +98,11 @@ connect to the device
 
 \begin{DoxyRefDesc}{Todo}
 \item[\mbox{\hyperlink{todo__todo000001}{Todo}}]deal with connection timeout \end{DoxyRefDesc}
-\mbox{\Hypertarget{class_device_aade23adf20b97f22c1039fa02ea2fca9}\label{class_device_aade23adf20b97f22c1039fa02ea2fca9}} 
+\mbox{\Hypertarget{class_device_a71749b2f1932378ccf4a31f95e96c619}\label{class_device_a71749b2f1932378ccf4a31f95e96c619}} 
 \index{Device@{Device}!exec@{exec}}
 \index{exec@{exec}!Device@{Device}}
 \doxysubsubsection{\texorpdfstring{exec()}{exec()}}
-{\footnotesize\ttfamily int Device\+::exec (\begin{DoxyParamCaption}\item[{string}]{message,  }\item[{char $\ast$}]{result = {\ttfamily nullptr},  }\item[{bool}]{br = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+{\footnotesize\ttfamily int Device\+::exec (\begin{DoxyParamCaption}\item[{string}]{message,  }\item[{char $\ast$}]{result = {\ttfamily nullptr},  }\item[{bool}]{br = {\ttfamily true},  }\item[{int}]{size = {\ttfamily 1024} }\end{DoxyParamCaption})}
 
 
 
@@ -122,7 +125,7 @@ Different companies, devices may have different levels of support for SCPI. Some
 \begin{DoxyWarning}{Warning}
 Some commands may timeout 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\mbox{\hyperlink{class_k_s_t3000}{KST3000}} k.\mbox{\hyperlink{class_device_aade23adf20b97f22c1039fa02ea2fca9}{exec}}(\textcolor{stringliteral}{"{}STATus? CHANnel2"{}}, buffer);}
+\DoxyCodeLine{\mbox{\hyperlink{class_k_s_t3000}{KST3000}} k.exec(\textcolor{stringliteral}{"{}RSTater?"{}}, buffer);}
 
 \end{DoxyCode}
  

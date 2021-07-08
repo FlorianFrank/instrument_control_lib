@@ -95,9 +95,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>test</b> ()</td></tr>
 <tr class="memitem:ad2b9f59ad977879bd6314258b2080d27"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_device.html#ad2b9f59ad977879bd6314258b2080d27">connect</a> ()</td></tr>
 <tr class="memdesc:ad2b9f59ad977879bd6314258b2080d27"><td class="mdescLeft">&#160;</td><td class="mdescRight">connect to the device  <a href="class_device.html#ad2b9f59ad977879bd6314258b2080d27">More...</a><br /></td></tr>
 <tr class="separator:ad2b9f59ad977879bd6314258b2080d27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aade23adf20b97f22c1039fa02ea2fca9"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_device.html#aade23adf20b97f22c1039fa02ea2fca9">exec</a> (string message, char *result=nullptr, bool=true)</td></tr>
-<tr class="memdesc:aade23adf20b97f22c1039fa02ea2fca9"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute a (SCPI) command  <a href="class_device.html#aade23adf20b97f22c1039fa02ea2fca9">More...</a><br /></td></tr>
-<tr class="separator:aade23adf20b97f22c1039fa02ea2fca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd6e0a00eefad7e4cd26b4dd3656468a"><td class="memItemLeft" align="right" valign="top"><a id="abd6e0a00eefad7e4cd26b4dd3656468a"></a>
+virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>exec</b> (string message, char *result=nullptr, bool=true)</td></tr>
+<tr class="separator:abd6e0a00eefad7e4cd26b4dd3656468a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae928cc0951a73babb6d73012a7906eb8"><td class="memItemLeft" align="right" valign="top"><a id="ae928cc0951a73babb6d73012a7906eb8"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Device</b> (char *ip, unsigned short port)</td></tr>
 <tr class="separator:ae928cc0951a73babb6d73012a7906eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -110,9 +110,12 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>test</b> ()</td></tr>
 <tr class="memitem:ad2b9f59ad977879bd6314258b2080d27"><td class="memItemLeft" align="right" valign="top"><a id="ad2b9f59ad977879bd6314258b2080d27"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>connect</b> ()</td></tr>
 <tr class="separator:ad2b9f59ad977879bd6314258b2080d27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aade23adf20b97f22c1039fa02ea2fca9"><td class="memItemLeft" align="right" valign="top"><a id="aade23adf20b97f22c1039fa02ea2fca9"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>exec</b> (string message, char *result=nullptr, bool=true)</td></tr>
-<tr class="separator:aade23adf20b97f22c1039fa02ea2fca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71749b2f1932378ccf4a31f95e96c619"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_device.html#a71749b2f1932378ccf4a31f95e96c619">exec</a> (string message, char *result=nullptr, bool=true, int size=1024)</td></tr>
+<tr class="memdesc:a71749b2f1932378ccf4a31f95e96c619"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute a (SCPI) command  <a href="class_device.html#a71749b2f1932378ccf4a31f95e96c619">More...</a><br /></td></tr>
+<tr class="separator:a71749b2f1932378ccf4a31f95e96c619"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bff0924c588ea7d3ce3f54fad144052"><td class="memItemLeft" align="right" valign="top"><a id="a5bff0924c588ea7d3ce3f54fad144052"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>exec_commands</b> (string commands)</td></tr>
+<tr class="separator:a5bff0924c588ea7d3ce3f54fad144052"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b46618094960d42a0fb3bfa71c3e732"><td class="memItemLeft" align="right" valign="top"><a id="a7b46618094960d42a0fb3bfa71c3e732"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>what_am_i</b> ()</td></tr>
 <tr class="memdesc:a7b46618094960d42a0fb3bfa71c3e732"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print a message containing the device's name. <br /></td></tr>
@@ -198,14 +201,11 @@ char *&#160;</td><td class="memItemRight" valign="bottom"><b>ip</b></td></tr>
 
 </div>
 </div>
-<a id="aade23adf20b97f22c1039fa02ea2fca9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aade23adf20b97f22c1039fa02ea2fca9">&#9670;&nbsp;</a></span>exec()</h2>
+<a id="a71749b2f1932378ccf4a31f95e96c619"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71749b2f1932378ccf4a31f95e96c619">&#9670;&nbsp;</a></span>exec()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">int Device::exec </td>
@@ -223,7 +223,13 @@ char *&#160;</td><td class="memItemRight" valign="bottom"><b>ip</b></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>br</em> = <code>true</code>&#160;</td>
+          <td class="paramname"><em>br</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size</em> = <code>1024</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -231,11 +237,6 @@ char *&#160;</td><td class="memItemRight" valign="bottom"><b>ip</b></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>execute a (SCPI) command </p>
@@ -249,8 +250,7 @@ char *&#160;</td><td class="memItemRight" valign="bottom"><b>ip</b></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Different companies, devices may have different levels of support for SCPI. Some device may require '\n', some may not. That is why here is a br param.</dd></dl>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Deal with execution timeout; Support for dynamic length of result; </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>Some commands may timeout <div class="fragment"><div class="line"><a class="code" href="class_k_s_t3000.html">KST3000</a> k.<a class="code" href="class_device.html#aade23adf20b97f22c1039fa02ea2fca9">exec</a>(<span class="stringliteral">&quot;STATus? CHANnel2&quot;</span>, buffer);</div>
-<div class="ttc" id="aclass_device_html_aade23adf20b97f22c1039fa02ea2fca9"><div class="ttname"><a href="class_device.html#aade23adf20b97f22c1039fa02ea2fca9">Device::exec</a></div><div class="ttdeci">virtual int exec(string message, char *result=nullptr, bool=true)</div><div class="ttdoc">execute a (SCPI) command</div><div class="ttdef"><b>Definition:</b> device.cpp:65</div></div>
+<dl class="section warning"><dt>Warning</dt><dd>Some commands may timeout <div class="fragment"><div class="line"><a class="code" href="class_k_s_t3000.html">KST3000</a> k.exec(<span class="stringliteral">&quot;RSTater?&quot;</span>, buffer);</div>
 <div class="ttc" id="aclass_k_s_t3000_html"><div class="ttname"><a href="class_k_s_t3000.html">KST3000</a></div><div class="ttdoc">Mixed Single Oscilloscope(Oscillator) Commend operations of a single generator are defined....</div><div class="ttdef"><b>Definition:</b> kst3000.h:11</div></div>
 </div><!-- fragment --> </dd></dl>
 

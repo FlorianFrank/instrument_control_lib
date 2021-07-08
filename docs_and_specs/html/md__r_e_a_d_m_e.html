@@ -73,6 +73,9 @@ Supported Devices</h1>
 <li>Keysight 33500B Waveform Generator</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md2"></a>
+Example</h1>
+<p >Check the <a href="./test/main.cpp">test file</a> </p>
+<h1><a class="anchor" id="autotoc_md3"></a>
 Build</h1>
 <div class="fragment"><div class="line">bash build.sh</div>
 </div><!-- fragment --><p> The built files are in out direction. The structure should be: </p><div class="fragment"><div class="line">out</div>
@@ -83,9 +86,9 @@ Build</h1>
 <div class="line">│   └── ...(other headers) </div>
 <div class="line">└── _lib</div>
 <div class="line">    └── libce_device.so(or .dylib, .dll)</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
 Usage</h1>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<h2><a class="anchor" id="autotoc_md5"></a>
 Connect devices</h2>
 <div class="fragment"><div class="line"> {c++}</div>
 <div class="line">#include &quot;kst33500.h&quot; // include right device header file</div>
@@ -95,14 +98,14 @@ Connect devices</h2>
 <div class="line">    KST33500 k = KST33500(&quot;xx.xx.xx.xx&quot;); </div>
 <div class="line">    k.connect();</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
 Execute commands</h2>
-<h3><a class="anchor" id="autotoc_md6"></a>
+<h3><a class="anchor" id="autotoc_md7"></a>
 Use exec function to send SCPI commands.</h3>
 <div class="fragment"><div class="line"> {c++}</div>
 <div class="line">// set a SIN wave</div>
 <div class="line">k.exec(&quot;FUNCtion SIN&quot;);</div>
-</div><!-- fragment --> <h3><a class="anchor" id="autotoc_md7"></a>
+</div><!-- fragment --> <h3><a class="anchor" id="autotoc_md8"></a>
 Use wrapped functions</h3>
 <p >We wrapped some common commands to save your time. Here is an example. </p><div class="fragment"><div class="line"> {c++}</div>
 <div class="line">k.function(&quot;SIN&quot;);</div>
@@ -117,7 +120,7 @@ Use wrapped functions</h3>
 <div class="line">VOLTage:LOW +0.0</div>
 <div class="line">OUTPut ON</div>
 <div class="line">PHASe +90.0</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md8"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md9"></a>
 Development</h1>
 <p >In this lab, we use socket to send SCPI commands to devices in order control them remotely. <br  />
  Check the documents in <a href="./docs%20and%20specs">Docs</a> for SCPI commands.</p>
