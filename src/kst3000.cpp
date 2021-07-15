@@ -212,9 +212,13 @@ int write_to_file(string data, string file_path) {
     string buffer(data);
     ofstream file;
     file.open(file_path);
-    file  << buffer;
-    file.close();
-    return 0;
+    if (file.is_open()) {
+        file << buffer;
+        file.close();
+        return 0;
+    }
+    cout << "File open failed!\n";
+    return 1;
 }
 
 /**
