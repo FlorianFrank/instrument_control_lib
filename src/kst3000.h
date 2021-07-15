@@ -32,6 +32,7 @@ public:
     int save_waveform_data(string file_path = "./buffer");
     int set_waveform_source(int channel = 1);
     int digitize();
+    int set_timebase_mode(string mode = "MAIN");
     int get_system_setup(char *buffer);
 };
 

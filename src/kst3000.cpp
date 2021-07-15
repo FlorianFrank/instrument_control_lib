@@ -287,6 +287,15 @@ int KST3000::save_waveform_data(string file_path) {
 }
 
 /**
+ * @brief set timebase mode
+ * @param mode: {MAIN | WIND | XY | ROLL}
+ * must be MAIN before executing digitize
+ * */
+int KST3000::set_timebase_mode(string mode) {
+    return exec("TIMebase:MODE " + mode);
+}
+
+/**
  * @brief capture data
  * */
 int KST3000::digitize() {
@@ -306,3 +315,5 @@ int KST3000::get_system_setup(char *buffer) {
 int KST3000::set_waveform_source(int channel) {
     return exec("WAVeform:SOURce CHANnel" + to_string(channel));
 }
+
+/**/

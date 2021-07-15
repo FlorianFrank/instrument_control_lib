@@ -42,9 +42,7 @@ int run_kst3000() {
 //    cout << num;
 //    k.get_waveform_data();
 //    k.cli();
-    k.set_waveform_points(1000);
 
-    k.digitize();
 //    k.set_waveform_source(1);
 //    k.save_waveform_data("/tmp/buffer");
 //    k.cli();
@@ -54,6 +52,8 @@ int run_kst3000() {
 // WAVeform:SOURce?
 //    k.save_waveform_data("/tmp/buffer1");
 
+    k.set_waveform_points(1000);
+    k.digitize();
     k.set_waveform_source(1);
     k.save_waveform_data("/tmp/buffer1");
     k.set_waveform_source(2);
