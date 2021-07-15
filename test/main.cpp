@@ -18,6 +18,7 @@ using namespace std;
 //                      "WAVeform:FORMat BYTE\n";
 //                      "WAVeform:POINts 1000";
 
+
 int run_kst3000() {
     KST3000 k = KST3000("132.231.14.247");
     k.connect();
@@ -42,8 +43,22 @@ int run_kst3000() {
 //    k.get_waveform_data();
 //    k.cli();
     k.set_waveform_points(1000);
-    k.save_waveform_data("/tmp/buffer");
-    k.cli();
+
+    k.digitize();
+//    k.set_waveform_source(1);
+//    k.save_waveform_data("/tmp/buffer");
+//    k.cli();
+//  WAVeform:PREamble?
+//   WAVeform:Points?
+//  WAVeform:SOURce CHANnel2
+// WAVeform:SOURce?
+//    k.save_waveform_data("/tmp/buffer1");
+
+    k.set_waveform_source(1);
+    k.save_waveform_data("/tmp/buffer1");
+    k.set_waveform_source(2);
+    k.save_waveform_data("/tmp/buffer2");
+
 //    cout << k.get_waveform_points();
 //    char buffer[1024] = {0};
 //    k.exec("RUN");
