@@ -173,12 +173,9 @@ vector<string> split (string s, string delimiter) {
  *  Waveform X increment, Waveform X origin, Waveform X reference,
  *  Waveform Y increment, Waveform Y origin, Waveform Y reference]
  * */
-char* KST3000::get_waveform_preamble() {
+int KST3000::get_waveform_preamble(char* preamble) {
     string command = "WAVeform:PREamble?";
-    char buffer[1024] = {0};
-    exec(command, buffer);
-    // vector<string> substrs = split(buffer, ",");
-    return buffer;
+    return exec(command, preamble);
 }
 
 /**
@@ -237,9 +234,10 @@ int write_to_file(string data, string file_path) {
 int KST3000::get_waveform_data(char *data) {
     string command = "WAVeform:DATA?";
     int num = get_waveform_points();
-    char buffer[num + 10]; // 10 is the length of <header>
+    int data_length = 10 + num + 1;  // 10 is the length of <header>, 1 is the end breakline(\n)
+    char buffer[data_length];
     memset(buffer, 0, num);
-    exec(command, buffer, true, num + 10);
+    exec(command, buffer, true, data_length);
     memcpy(data, buffer + 10, num);
     return 0;
 }
@@ -257,7 +255,8 @@ int KST3000::get_waveform_data(char *data) {
  * @endcode
  * */
 int KST3000::save_waveform_data(string file_path) {
-    char *preamble = get_waveform_preamble();
+    char preamble[1024];
+    get_waveform_preamble(preamble);
     vector<string> v_preamble = split(preamble, ",");
     int points = stoi(v_preamble[2]);
     double x_increment = stod(v_preamble[4]);
@@ -299,4 +298,11 @@ int KST3000::digitize() {
  * */
 int KST3000::get_system_setup(char *buffer) {
     return exec("SYSTem:SETup?", buffer);
+}
+
+/**
+ * @brief set waveform source
+ * */
+int KST3000::set_waveform_source(int channel) {
+    return exec("WAVeform:SOURce CHANnel" + to_string(channel));
 }

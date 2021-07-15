@@ -23,6 +23,7 @@ Device::Device(char *ip) : ip(ip) {
 /**
  * @brief connect to the device
  * @todo deal with connection timeout
+ * @todo deal with connection warning(you have not connected or connect automatically)
  */
 int Device::connect() {
     cout << name + " is connecting...\n";
