@@ -6,6 +6,11 @@ This repository contains the code to configure oscilloscopes, signal generators 
 - SPD1305X DC Power Supply
 - Keysight 33500B Waveform Generator
 
+## Documentation
+Run doxygen
+```shell
+doxygen Doxyfile
+```
 ## Example
 Check the [test file](./test/main.cpp) 
 ## Build
