@@ -55,9 +55,9 @@ int run_kst3000() {
     k.set_waveform_points(1000);
     k.digitize();
     k.set_waveform_source(1);
-    k.save_waveform_data("/tmp/buffer1");
+    k.save_waveform_data("/Users/lwh/CLionProjects/ce_device/test/data/buffer1");
     k.set_waveform_source(2);
-    k.save_waveform_data("/tmp/buffer2");
+    k.save_waveform_data("/Users/lwh/CLionProjects/ce_device/test/data/buffer2");
 
 //    cout << k.get_waveform_points();
 //    char buffer[1024] = {0};

@@ -6,7 +6,7 @@ message(STATUS "start building test...")
 
 include_directories(../)
 
-add_executable(test main.cpp)
+add_executable(test main.cpp measure_chip.cpp)
 
 target_link_libraries(test ce_device)
 

@@ -14,8 +14,8 @@ public:
     int display(string text);
     int display_connection();
     int function(string fun);
-    int frequency(string value);
-    int voltage(string value, string constrain = "");
+    int frequency(double value);
+    int voltage(double value, string constrain = "");
     int output(bool on);
     int phase(string value);
 };

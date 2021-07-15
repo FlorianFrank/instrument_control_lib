@@ -31,18 +31,18 @@ int KST33500::function(string fun) {
     return 0;
 }
 
-int KST33500::frequency(string value) {
-    string msg = "FREQuency " + value;
+int KST33500::frequency(double value) {
+    string msg = "FREQuency " + to_string(value);
     exec(msg);
     return 0;
 }
 
-int KST33500::voltage(string value, string constrain) {
+int KST33500::voltage(double value, string constrain) {
     string msg = "VOLTage";
     if (constrain != "") {
         msg += ":" + constrain + " ";
     }
-    msg += " " + value;
+    msg += " " + to_string(value);
     exec(msg);
     return 0;
 }
