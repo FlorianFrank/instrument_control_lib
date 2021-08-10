@@ -39,27 +39,27 @@ Device::Device(char *ip) : ip(ip) {
  * @todo deal with connection warning(you have not connected or connect automatically)
  */
 int Device::connect() {
-    cout << name + " is connecting...\n";
-    struct sockaddr_in serv_addr;
-    if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-        cout << "\n Socket creation error \n";
-        return -1;
-    }
+  cout << name + " is connecting...\n";
+  struct sockaddr_in serv_addr;
+  if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+    cout << "\n Socket creation error \n";
+    return -1;
+  }
 
-    serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(port);
-    if (inet_pton(AF_INET, ip, &serv_addr.sin_addr) <= 0) {
-        cout << "\n Invalid address / Address not supported \n" << endl;
-        return -1;
-    }
+  serv_addr.sin_family = AF_INET;
+  serv_addr.sin_port = htons(port);
+  if (inet_pton(AF_INET, ip, &serv_addr.sin_addr) <= 0) {
+    cout << "\n Invalid address / Address not supported \n" << endl;
+    return -1;
+  }
 
-    if (::connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
-        cout << "Connection Failed. \n";
-        return -1;
-    }
+  if (::connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
+    cout << "Connection Failed. \n";
+    return -1;
+  }
 
-    cout << "Connection Succeed. \n";
-    return 0;
+  cout << "Connection Succeed. \n";
+  return 0;
 }
 
 /**
@@ -77,65 +77,39 @@ int Device::connect() {
  *      KST3000 k.exec("RSTater?", buffer);
  *      @endcode
  * */
-int Device::exec(string message, char* result, bool br, int size) {
-    if (br) {
-        message += '\n';
-    }
-    char* command = const_cast<char *>(message.c_str());
-    if (DEBUG) {
-      cout << "Executing Command: " << command;
-    }
-    // TODO: add timeout
-    // testcase: KST3000 k.exec("STATus? CHANnel2", buffer);
-    send(sockfd, command, strlen(command), 0);
-    if (result) { // not all operation need a result
-//      if (size > 1024) {
-//        char temp[1024];
-//        int times = ceil(size / 1024.0);
-//        int remaining = size;
-//        for (int i = 0; i < times; i++) {
-//          if (remaining > 1024) {
-//            read(sockfd, temp, 1024);
-//          } else {
-//            read(sockfd, temp, remaining);
-//          }
-//
-////          if (i == 0) {
-////            strcpy(result, temp);
-////          } else {
-////            strcat(result, temp);
-////          }
-//
-//          remaining = remaining - 1024;
-//          if (remaining <= 0) {
-//            break;
-//          }
-//        }
-//      } else {
-//        read(sockfd, result, size);
-//      }
-      read(sockfd, result, size);
-    }
-    if (DEBUG) {
-      cout << "Executed Successfully.\n";
-    }
-    return 0;
+int Device::exec(string message, char *result, bool br, int size) {
+  if (br) {
+    message += '\n';
+  }
+  char *command = const_cast<char *>(message.c_str());
+  if (DEBUG) {
+    cout << "Executing Command: " << command;
+  }
+  // TODO: add timeout
+  // testcase: KST3000 k.exec("STATus? CHANnel2", buffer);
+  send(sockfd, command, strlen(command), 0);
+  if (result) { // not all operation need a result
+    read(sockfd, result, size);
+  }
+  if (DEBUG) {
+    cout << "Executed Successfully.\n";
+  }
+  return 0;
 }
 
 int Device::exec_commands(string commands) {
-    stringstream s_commands(commands);
-    string command;
-    while (std::getline(s_commands, command)) {
-        exec(command);
-//        cout << command << endl;
-    }
+  stringstream s_commands(commands);
+  string command;
+  while (std::getline(s_commands, command)) {
+    exec(command);
+  }
 }
 
 /**
  * @brief Print a message containing the device's name
  * */
 void Device::what_am_i() {
-    cout << "My name is: " << name << "\n";
+  cout << "My name is: " << name << "\n";
 }
 
 /**
@@ -143,22 +117,22 @@ void Device::what_am_i() {
  *        To see if a command is valid or not.
  * */
 void Device::cli() {
-    char buffer[1024] = {0};
-    while(1) {
-        cout << "Input a command: ";
-        string commands = "";
-        getline(cin, commands);
-        if (commands.compare("f") == 0) {
-            cout << "CLI finished.\n";
-            break;
-        }
-        bool is_query = commands.find("?") != string::npos;
-        if (is_query) {
-            memset(buffer, 0, sizeof(buffer));
-            exec(commands, buffer);
-            cout << "Result: " << buffer << "\n";
-        } else {
-            exec(commands);
-        }
+  char buffer[1024] = {0};
+  while (1) {
+    cout << "Input a command: ";
+    string commands = "";
+    getline(cin, commands);
+    if (commands.compare("f") == 0) {
+      cout << "CLI finished.\n";
+      break;
     }
+    bool is_query = commands.find("?") != string::npos;
+    if (is_query) {
+      memset(buffer, 0, sizeof(buffer));
+      exec(commands, buffer);
+      cout << "Result: " << buffer << "\n";
+    } else {
+      exec(commands);
+    }
+  }
 }

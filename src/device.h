@@ -8,7 +8,7 @@ using namespace std;
 
 class Device {
 protected:
-    char* ip;
+    char *ip;
 
 public:
     string name{};
@@ -17,13 +17,20 @@ public:
 
 
     int test();
+
     int connect();
+
     int exec(string message, char *result = nullptr, bool = true, int size = 1024);
+
     int exec_commands(string commands);
+
     void what_am_i();
+
     void cli();
-    Device(char* ip, unsigned short port);
-    Device(char* ip);
+
+    Device(char *ip, unsigned short port);
+
+    Device(char *ip);
 };
 
 #endif //CE_DEVICE_DEVICE_H

@@ -82,7 +82,7 @@ int run_kst33500() {
 }
 
 int run_spd() {
-  SPD1305 s = SPD1305("132.231.14.162" );
+  SPD1305 s = SPD1305("132.231.14.162");
   s.connect();
   s.set_current(1.8);
 

@@ -7,36 +7,36 @@
 
 using namespace std;
 
-SPD1305::SPD1305(char* ip) : Device(ip) {
-    this->ip = ip;
-    this->name = "DC Power Supply";
+SPD1305::SPD1305(char *ip) : Device(ip) {
+  this->ip = ip;
+  this->name = "DC Power Supply";
 }
 
 int SPD1305::set_current(double current, int channel) {
-    string msg = "CH" + to_string(channel) + ":CURRent " + to_string(current);
-    exec(msg);
-    return 0;
+  string msg = "CH" + to_string(channel) + ":CURRent " + to_string(current);
+  exec(msg);
+  return 0;
 }
 
 double SPD1305::get_current(int channel) {
-    string msg = "CH" + to_string(channel) + ":CURRent?";
-    // TODO: 20 ?
-    char result[20] = {0};
-    exec(msg, result);
-    return atof(result);
+  string msg = "CH" + to_string(channel) + ":CURRent?";
+  // TODO: 20 ?
+  char result[20] = {0};
+  exec(msg, result);
+  return atof(result);
 }
 
 int SPD1305::turnon(int channel) {
-    string msg = "OUTPut CH" + to_string(channel) + ",ON";
-    exec(msg, nullptr, false);
-    return 0;
+  string msg = "OUTPut CH" + to_string(channel) + ",ON";
+  exec(msg, nullptr, false);
+  return 0;
 }
 
 int SPD1305::turnoff(int channel) {
-    string str = "OUTPut CH" + to_string(channel) + ",OFF";
-    cout << str;
-    char command[str.length() + 1];
-    strcpy(command, str.c_str());
-    exec(command, nullptr, false);
-    return 0;
+  string str = "OUTPut CH" + to_string(channel) + ",OFF";
+  cout << str;
+  char command[str.length() + 1];
+  strcpy(command, str.c_str());
+  exec(command, nullptr, false);
+  return 0;
 }
