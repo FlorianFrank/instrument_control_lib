@@ -27,6 +27,7 @@ public:
     int get_waveform_preamble(char *preamble);
     int get_waveform_points();
     int set_waveform_points(int num_points);
+    int set_waveform_points_mode(string mode);
     int set_waveform_format(string format = "BYTE");
     int get_waveform_data(char *data);
     int save_waveform_data(string file_path = "./buffer");
