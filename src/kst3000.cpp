@@ -190,6 +190,18 @@ int KST3000::get_waveform_points() {
 }
 
 /**
+ * @brief set waveform points mode
+ * @param mode:
+ *          - NORMal
+ *          - MAXimum
+ *          - RAW
+ * */
+int KST3000::set_waveform_points_mode(string mode) {
+  string command = "WAVeform:POINts:MODE " + mode;
+  return exec(command);
+}
+
+/**
  * @brief set number of waveform points
  * */
 int KST3000::set_waveform_points(int num_points) {
@@ -240,8 +252,17 @@ int KST3000::get_waveform_data(char *data) {
     int num = get_waveform_points();
     int data_length = 10 + num + 1;  // 10 is the length of <header>, 1 is the end breakline(\n)
     char buffer[data_length];
-    memset(buffer, 0, num);
+//    memset(buffer, 0, num);
     exec(command, buffer, true, data_length);
+//    for (int i = 0; i < 10; i++) {
+//      cout << buffer[i];
+////      cout << (int) (unsigned char) buffer[i] << "  ";
+//    }
+//    cout << endl;
+//    for (int i = 10; i < data_length; i++) {
+//      cout << std::hex << "0x" << (int) (unsigned char) buffer[i] << "  ";
+//    }
+//    cout << endl;
     memcpy(data, buffer + 10, num);
     return 0;
 }
@@ -262,15 +283,16 @@ int KST3000::save_waveform_data(string file_path) {
     char preamble[1024];
     get_waveform_preamble(preamble);
     vector<string> v_preamble = split(preamble, ",");
-    int points = stoi(v_preamble[2]);
+//    int points = stoi(v_preamble[2]);
     double x_increment = stod(v_preamble[4]);
     double x_origin = stod(v_preamble[5]);
     double x_reference = stod(v_preamble[6]);
     double y_increment = stod(v_preamble[7]);
     double y_origin = stod(v_preamble[8]);
     double y_reference = stod(v_preamble[9]);
-
-    char data[points];
+  int points = get_waveform_points();
+//  cout << "points: " << points << endl;
+  char data[points];
     get_waveform_data(data);
 
     stringstream stream;

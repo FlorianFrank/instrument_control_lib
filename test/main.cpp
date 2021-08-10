@@ -1,112 +1,181 @@
-//
-// Created by liuwuhao on 20.05.21.
-//
 #include <iostream>
+#include <filesystem>
+#include <fstream>
 #include <unistd.h>
-#include <sstream>
-#include "Src/kst33500.h"
-#include "Src/spd1305.h"
-#include "Src/kst3000.h"
+#include "pugixml.hpp"
+#include "kst3000.h"
+#include "kst33500.h"
 
 using namespace std;
+using namespace pugi;
 
-//string cap_commands = "ACQuire:TYPE NORMal\n"
-//                      "ACQuire:COMPlete 100\n"
-//                      "ACQuire:COUNt 8\n"
-//                      //                       "DIGitize CHANnel1\n";
-//                      "WAVeform:SOURce CHANnel1\n"
-//                      "WAVeform:FORMat BYTE\n";
-//                      "WAVeform:POINts 1000";
+string PWD = "/Users/lwh/CLionProjects/ce_device/test/";
+string DATA_PATH = "/Users/lwh/CLionProjects/ce_device/test/data/";
 
+// the max voltage of the chip can be input, unit /10v, here is 1.2V
+int MAX_VOLTAGE = 10;
+// the min voltage of the chip can be input, unit /10v, here is 0.1V
+int MIN_VOLTAGE = 4;
 
-int run_kst3000() {
-    KST3000 k = KST3000("132.231.14.247");
-    k.connect();
-//    k.set_time_range(0.05);
-//    k.set_channel_scale(3.3);
-//    k.set_channel_range(40);
-//    k.set_channel_offset(-2);
-//    k.set_channel_display(1);
-//    k.set_time_delay(0.00085);
-//    k.set_trigger_edge("NEG");
+int MAX_FREQUENCY = 500;
+int MIN_FREQUENCY = 100;
 
-//    k.set_trigger_source();
-//    k.run();
-//    char buffer[2048];
-//    k.get_system_setup(buffer);
-//    cout << buffer;
-//    k.exec_commands(cap_commands);
-//    k.single();
-//    k.get_waveform_preamble();
-//    int num = k.get_waveform_points();
-//    cout << num;
-//    k.get_waveform_data();
-//    k.cli();
+int CHIP = 1;
 
-//    k.set_waveform_source(1);
-//    k.save_waveform_data("/tmp/buffer");
-//    k.cli();
-//  WAVeform:PREamble?
-//   WAVeform:Points?
-//  WAVeform:SOURce CHANnel2
-// WAVeform:SOURce?
-//    k.save_waveform_data("/tmp/buffer1");
+// how many time a cell need to be tested
+int MAX_TIMES = 3;
 
-    k.set_waveform_points(1000);
-    k.digitize();
-    k.set_waveform_source(1);
-    k.save_waveform_data("/Users/lwh/CLionProjects/ce_device/test/data/buffer1");
-    k.set_waveform_source(2);
-    k.save_waveform_data("/Users/lwh/CLionProjects/ce_device/test/data/buffer2");
-
-//    cout << k.get_waveform_points();
-//    char buffer[1024] = {0};
-//    k.exec("RUN");
-//    cout << buffer;
+void sleep(int secs) {
+  unsigned int microsecond = 1000000;
+  usleep(secs * microsecond);//sleeps for 3 second
 }
 
-int run_kst33500() {
-     KST33500 k = KST33500("132.231.14.247");
-     k.connect();
-     k.what_am_i();
-     // k.display_connection();
-//     k.cli();
-//     k.function("SIN");
-//     k.frequency("+1.0E+05");
-//     k.voltage("+2.0", "HIGH");
-//     k.voltage("+0.0", "LOW");
-//     k.output(true);
-//     sleep(3);
-//     k.output(false);
-//     k.phase("+90.0");
+KST33500 connect_wave_generator() {
+  char *wave_generator_ip = "132.231.14.245";
+  KST33500 wg = KST33500(wave_generator_ip);
+  wg.connect();
+  return wg;
 }
 
-int run_spd() {
-    SPD1305 s = SPD1305("132.231.14.162" );
-    s.connect();
-    s.set_current(1.8);
+KST3000 connect_oscilloscope() {
+  char *ip = "132.231.14.243";
+  KST3000 k = KST3000(ip);
+  k.connect();
+  return k;
+}
 
-    s.turnon();
-    sleep(3);
-    s.turnoff();
+/**
+ * @brief set params of oscilloscope & waveform generator
+ * because every cell has different device parameter to get a better "shape"
+ * */
+int set_params(KST33500 wg, KST3000 o, int frequency, int voltage) {
+  double d_voltage = voltage / 10.0;
+  wg.voltage(d_voltage);
+  wg.frequency(frequency);
+  o.set_channel_range(d_voltage * 2, 1); // *2 for sin wave
+  o.set_channel_range(d_voltage * 2, 2); // *2 for sin wave
+  o.set_time_range(10.0 / frequency); // collect 10 cycles
+}
 
-    double c = s.get_current();
-    cout << c;
+/**
+ * @brief run a test
+ * */
+int run_test(int cell, KST33500 wg, KST3000 o, int v) {
+  if (v > 12) {
+    return 1;
+  }
+  double voltage = v / 10.0;
+  wg.voltage(voltage);
 
-    s.exec("CH1:CURRent 1.14159");
+  string file_prefix = DATA_PATH + to_string(cell);
 
-    char buffer[1024] = {0};
-    s.exec("CH1:CURRent?", buffer);
-    cout << buffer;
+  o.digitize();
+  o.set_waveform_source(1);
+  o.save_waveform_data(file_prefix + "_1");
+  o.set_waveform_source(2);
+  o.save_waveform_data(file_prefix + "_2");
+  return 0;
+}
+
+
+/**
+ * @brief save test meta data
+ * */
+int save_meta(string file_name, int frequency, double voltage, int cell, int chip = 1) {
+  xml_document doc;
+  string meta_file = DATA_PATH + "meta.xml";
+  xml_parse_result result = doc.load_file(meta_file.c_str());
+  xml_node tests = doc.child("tests");
+  if (!tests) {
+    tests = doc.append_child("tests");
+  }
+
+  string dup_xpath = "//test[contains(file,'" + file_name + "')]";
+  xpath_node dup_test = doc.select_node(dup_xpath.c_str());
+  if (dup_test) {
+    dup_test.node().parent().remove_child(dup_test.node());
+  }
+
+  xml_node test = tests.append_child("test");
+  xml_node chip_node = test.append_child("chip");
+  chip_node.append_child(node_pcdata).set_value(to_string(chip).c_str());
+  xml_node cell_node = test.append_child("cell");
+  cell_node.append_child(node_pcdata).set_value(to_string(cell).c_str());
+  xml_node frequency_node = test.append_child("frequency");
+  frequency_node.append_child(node_pcdata).set_value(to_string(frequency).c_str());
+  xml_node voltage_node = test.append_child("voltage");
+  voltage_node.append_child(node_pcdata).set_value(to_string(voltage).c_str());
+  xml_node file_node = test.append_child("file");
+  file_node.append_child(node_pcdata).set_value(file_name.c_str());
+
+  doc.save_file(meta_file.c_str());
+  return 0;
+}
+
+
+/**
+ * @brief run a single test
+ * @param wg, KST33500
+ * @param k, KST3000
+ * @param cell, cell number
+ * @param frequency, unit: Hz
+ * @param voltage, unit: /10 V
+ * filename consists of 4 number, separated by a underscore
+ * the 4 numbers means:
+ *  1, chip
+ *  2, cell;
+ *  3, frequency
+ *  4, voltage(unit: /10 V);
+ *  5, data direction, 1 means input, 2 means output
+ * */
+int single_test(int cell, KST33500 wg, KST3000 o, int frequency, int i_voltage) {
+  double voltage = i_voltage / 10.0;
+  wg.voltage(voltage);
+  wg.frequency(frequency);
+  string file_prefix = DATA_PATH + to_string(CHIP)
+          + "_" + to_string(cell)
+          + "_" + to_string(frequency)
+          + "_" + to_string(i_voltage);
+  string input_file = file_prefix + "_1";
+  string output_file = file_prefix + "_2";
+
+  o.digitize();
+  o.set_waveform_source(1);
+  o.save_waveform_data(input_file);
+  o.set_waveform_source(2);
+  o.save_waveform_data(output_file);
+
+  save_meta(file_prefix, frequency, voltage, cell);
+}
+
+/**
+ * @brief run a test for a cell
+ * filename consists of 4 number, separated by a underscore
+ * the 4 numbers means:
+ *  1, cell;
+ *  2, voltage(unit: /10 V);
+ *  3, the nth time test, every cell need to be tested many times
+ *  4, frequency
+ * */
+int test_cell(int cell, KST33500 wg, KST3000 o) {
+  for (int f = MIN_FREQUENCY; f <= MAX_FREQUENCY; f += 100) {
+    for (int v = MIN_VOLTAGE; v <= MAX_VOLTAGE; v++) {
+      set_params(wg, o, f, v);
+      single_test(cell, wg, o, f, v);
+      sleep(1);
+    }
+  }
+}
+
+int config(KST3000 o) {
+  o.set_waveform_points_mode("NORmal");
+  o.set_waveform_points(1000);
 }
 
 int main() {
-//    run_kst33500();
-//    run_spd();
-    run_kst3000();
-    return 0;
+  KST33500 wg = connect_wave_generator();
+  KST3000 o = connect_oscilloscope();
+  config(o);
+  test_cell(1, wg, o);
+  return 0;
 }
-
-
-
-

@@ -6,12 +6,25 @@
 #include <sstream>
 #include <cstring>
 
+
 /**
  * @class Device
  * @brief Basic device class
  * This class contains all basic method of all devices, like connect, exec, what_am_i etc.
  */
 
+
+/**
+ * @brief setting DEBUG=1 environment variable to enable some debug information
+ * */
+int is_enable_debug() {
+  if (getenv("DEBUG")) {
+    return stoi(getenv("DEBUG"));
+  }
+  return 0;
+}
+
+int DEBUG = is_enable_debug();
 
 /**
  * @brief Constructor of Device
@@ -69,14 +82,43 @@ int Device::exec(string message, char* result, bool br, int size) {
         message += '\n';
     }
     char* command = const_cast<char *>(message.c_str());
-    cout << "Executing Command: " << command;
+    if (DEBUG) {
+      cout << "Executing Command: " << command;
+    }
     // TODO: add timeout
     // testcase: KST3000 k.exec("STATus? CHANnel2", buffer);
     send(sockfd, command, strlen(command), 0);
-    if (result) {
-        read(sockfd, result, size);
+    if (result) { // not all operation need a result
+//      if (size > 1024) {
+//        char temp[1024];
+//        int times = ceil(size / 1024.0);
+//        int remaining = size;
+//        for (int i = 0; i < times; i++) {
+//          if (remaining > 1024) {
+//            read(sockfd, temp, 1024);
+//          } else {
+//            read(sockfd, temp, remaining);
+//          }
+//
+////          if (i == 0) {
+////            strcpy(result, temp);
+////          } else {
+////            strcat(result, temp);
+////          }
+//
+//          remaining = remaining - 1024;
+//          if (remaining <= 0) {
+//            break;
+//          }
+//        }
+//      } else {
+//        read(sockfd, result, size);
+//      }
+      read(sockfd, result, size);
     }
-    cout << "Executed Successfully.\n";
+    if (DEBUG) {
+      cout << "Executed Successfully.\n";
+    }
     return 0;
 }
 
