@@ -3,7 +3,7 @@ project(ce_device)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_library(ce_device SHARED
+add_library(ce_device STATIC
         src/device.cpp
         src/device.h
         src/spd1305.cpp

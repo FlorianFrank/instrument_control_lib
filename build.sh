@@ -1,11 +1,20 @@
-#!/bin/sh
+#!/bin/bash
 
 rm -rf out
 rm -rf build
 mkdir build
-cd build
+mkdir build/lib
 
-cmake -D CMAKE_INSTALL_PREFIX=../out ../
+pushd build/lib
+cmake ../.. -D CMAKE_INSTALL_PREFIX=../../out 
 make
 make install
+popd
 
+
+mkdir build/bin
+pushd build/bin
+cmake ../../test -D CMAKE_INSTALL_PREFIX=../../out
+make
+make install
+popd

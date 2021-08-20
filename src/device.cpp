@@ -103,6 +103,7 @@ int Device::exec_commands(string commands) {
   while (std::getline(s_commands, command)) {
     exec(command);
   }
+  return 0;
 }
 
 /**

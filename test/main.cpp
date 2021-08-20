@@ -9,8 +9,8 @@
 using namespace std;
 using namespace pugi;
 
-string PWD = "/Users/lwh/CLionProjects/ce_device/test/";
-string DATA_PATH = "/Users/lwh/CLionProjects/ce_device/test/data/";
+string PWD = "/home/florianfrank/Desktop/Measurements";
+string DATA_PATH = "/home/florianfrank/Desktop/Measurements";
 
 // the max voltage of the chip can be input, unit /10v, here is 1.2V
 int MAX_VOLTAGE = 10;
@@ -145,6 +145,7 @@ int single_test(int cell, KST33500 wg, KST3000 o, int frequency, int i_voltage) 
   o.set_waveform_source(2);
   o.save_waveform_data(output_file);
 
+  printf("Save file in %s\n", file_prefix);
   save_meta(file_prefix, frequency, voltage, cell);
 }
 
@@ -172,10 +173,12 @@ int config(KST3000 o) {
   o.set_waveform_points(1000);
 }
 
-int main() {
+int main(int argc, char **argv) {
   KST33500 wg = connect_wave_generator();
   KST3000 o = connect_oscilloscope();
   config(o);
-  test_cell(1, wg, o);
+  int cellID = atoi(argv[1]);
+  printf("Measure cell %d\n", cellID);
+  test_cell(cellID, wg, o);
   return 0;
 }
