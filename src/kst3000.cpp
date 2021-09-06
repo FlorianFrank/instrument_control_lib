@@ -252,20 +252,43 @@ int KST3000::get_waveform_data(char *data) {
   int num = get_waveform_points();
   int data_length = 10 + num + 1;  // 10 is the length of <header>, 1 is the end breakline(\n)
   char buffer[data_length];
-//    memset(buffer, 0, num);
   exec(command, buffer, true, data_length);
-//    for (int i = 0; i < 10; i++) {
-//      cout << buffer[i];
-////      cout << (int) (unsigned char) buffer[i] << "  ";
-//    }
-//    cout << endl;
-//    for (int i = 10; i < data_length; i++) {
-//      cout << std::hex << "0x" << (int) (unsigned char) buffer[i] << "  ";
-//    }
-//    cout << endl;
   memcpy(data, buffer + 10, num);
   return 0;
 }
+
+/**
+ * @brief convert a measurement data array to a 2d array: time array & voltage array
+ * */
+int KST3000::get_real_data(double **result) {
+  int points = get_waveform_points();
+  char data[points];
+  get_waveform_data(data);
+  char preamble[1024];
+  get_waveform_preamble(preamble);
+  vector<string> v_preamble = split(preamble, ",");
+  double x_increment = stod(v_preamble[4]);
+  double x_origin = stod(v_preamble[5]);
+  double x_reference = stod(v_preamble[6]);
+  double y_increment = stod(v_preamble[7]);
+  double y_origin = stod(v_preamble[8]);
+  double y_reference = stod(v_preamble[9]);
+
+  for (int i = 0; i < points; i++) {
+    double time = ((i - x_reference) * x_increment) + x_origin;
+    result[0][i] = time;
+
+    int voltage_data = (int) (unsigned char) data[i];
+    if (voltage_data == 0) {
+      // Hole. Holes are locations where data has not yet been acquired.
+      continue;
+    }
+    double voltage = ((voltage_data - y_reference) * y_increment) + y_origin;
+    result[1][i] = voltage;
+  }
+  return 0;
+}
+
 
 /**
  * @brief save waveform data to the target file
@@ -283,30 +306,33 @@ int KST3000::save_waveform_data(string file_path) {
   char preamble[1024];
   get_waveform_preamble(preamble);
   vector<string> v_preamble = split(preamble, ",");
-  double x_increment = stod(v_preamble[4]);
-  double x_origin = stod(v_preamble[5]);
-  double x_reference = stod(v_preamble[6]);
-  double y_increment = stod(v_preamble[7]);
-  double y_origin = stod(v_preamble[8]);
-  double y_reference = stod(v_preamble[9]);
   int points = get_waveform_points();
-  char data[points];
-  get_waveform_data(data);
 
+  double *result[2];
+  result[0] = new double[points];
+  result[1] = new double[points];
+  get_real_data(result);
   stringstream stream;
   stream << "time(ms)" << "," << "voltage(V)" << endl;
   for (int i = 0; i < points; i++) {
-    double time = ((i - x_reference) * x_increment) + x_origin;
-    int voltage_data = (int) (unsigned char) data[i];
-
-    if (voltage_data == 0) {
-      continue;
-    }
-    double voltage = ((voltage_data - y_reference) * y_increment) + y_origin;
-    stream << time * 1000 << "," << voltage << endl;
+    stream << result[0][i] * 1000 << "," << result[1][i] << endl;
   }
-
   write_to_file(stream.str(), file_path);
+
+//  stringstream stream;
+//  stream << "time(ms)" << "," << "voltage(V)" << endl;
+//  for (int i = 0; i < points; i++) {
+//    double time = ((i - x_reference) * x_increment) + x_origin;
+//    int voltage_data = (int) (unsigned char) data[i];
+//
+//    if (voltage_data == 0) {
+//      continue;
+//    }
+//    double voltage = ((voltage_data - y_reference) * y_increment) + y_origin;
+//    stream << time * 1000 << "," << voltage << endl;
+//  }
+//
+//  write_to_file(stream.str(), file_path);
   return 0;
 }
 
