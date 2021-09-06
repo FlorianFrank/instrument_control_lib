@@ -51,6 +51,8 @@ public:
 
     int get_waveform_data(char *data);
 
+    int get_real_data(double **result);
+
     int save_waveform_data(string file_path = "./buffer");
 
     int set_waveform_source(int channel = 1);
