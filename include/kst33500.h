@@ -7,7 +7,6 @@
 
 #include "device.h"
 
-
 class KST33500 : public Device {
 
 public:
@@ -17,7 +16,7 @@ public:
 
     int display_connection();
 
-    int function(std::string fun);
+    int function(std::string &fun);
 
     int frequency(double value);
 

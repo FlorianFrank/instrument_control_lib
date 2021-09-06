@@ -7,8 +7,6 @@
 
 #include "device.h"
 
-using namespace std;
-
 class KST3000 : public Device {
 
 public:
@@ -46,19 +44,19 @@ public:
 
     int set_waveform_points(int num_points);
 
-    int set_waveform_points_mode(string mode);
+    int set_waveform_points_mode(std::string &mode);
 
-    int set_waveform_format(string format = "BYTE");
+    int set_waveform_format(const char *format = "BYTE");
 
     int get_waveform_data(char *data);
 
-    int save_waveform_data(string file_path = "./buffer");
+    int save_waveform_data(const char *file_path = "./buffer");
 
     int set_waveform_source(int channel = 1);
 
     int digitize();
 
-    int set_timebase_mode(string mode = "MAIN");
+    int set_timebase_mode(const char *mode = "MAIN");
 
     int get_system_setup(char *buffer);
 };

@@ -2,29 +2,39 @@
 #define CE_DEVICE_DEVICE_H
 
 #include <string>
+#include "error_handler.h"
 //#include "spd1305.h"
 
 class Device {
 
 public:
     explicit Device(const char *ip);
+    ~Device();
 
-    int connect();
+    bool connect();
 
-    int exec(std::string message, char *result = nullptr, bool = true, int size = 1024);
+    bool disconnect();
 
-    int exec_commands(std::string &commands);
+    bool isOpen();
 
-    void what_am_i();
+    std::string getDeviceIdentifier();
 
-    void cli();
+    bool exec(std::string message, char *result = nullptr, bool br = true, int size = 1024);
+
+    bool exec_commands(std::string &commands);
+
+    std::string what_am_i();
+
+    PIL_ErrorHandle m_ErrorHandle;
+
+    std::string return_error_message();
 
 protected:
-    const char *ip;
-    std::string name{};
-    int sockfd = 0;
-    int port = 5025;
-
+    const char *m_IPAddr;
+    std::string m_DeviceName{};
+    int m_SocketHandle = 0;
+    int m_Port = 5025;
+    bool m_IsOpen;
 };
 
 #endif //CE_DEVICE_DEVICE_H

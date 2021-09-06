@@ -8,12 +8,10 @@
 
 #include "device.h"
 
-using namespace std;
-
 class SPD1305 : public Device {
 
 public:
-    explicit SPD1305(char *ip);
+    explicit SPD1305(const char *ip);
 
     int set_current(double current, int = 1);
 

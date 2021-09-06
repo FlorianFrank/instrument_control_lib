@@ -7,7 +7,7 @@
 
 
 KST33500::KST33500(const char *ip) : Device(ip) {
-  this->name = "Keysight 33500B Waveform Generator";
+  this->m_DeviceName = "Keysight 33500B Waveform Generator";
 }
 
 int KST33500::display(std::string &text) {
@@ -24,7 +24,7 @@ int KST33500::display_connection() {
   return 0;
 }
 
-int KST33500::function(std::string fun) {
+int KST33500::function(std::string &fun) {
   std::string msg = "FUNCtion " + fun;
   exec(msg);
   return 0;
