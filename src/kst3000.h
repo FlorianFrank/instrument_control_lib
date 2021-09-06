@@ -11,7 +11,7 @@ using namespace std;
 
 class KST3000 : public Device {
 public:
-    KST3000(char *ip);
+    KST3000(const char *ip);
 
     int display_connection();
 

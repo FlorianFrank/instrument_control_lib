@@ -1,16 +1,13 @@
 #include <iostream>
-#include <filesystem>
-#include <fstream>
 #include <unistd.h>
 #include "pugixml.hpp"
 #include "kst3000.h"
 #include "kst33500.h"
 
-using namespace std;
+//using namespace std;
 using namespace pugi;
 
-string PWD = "/home/florianfrank/Desktop/Measurements";
-string DATA_PATH = "/home/florianfrank/Desktop/Measurements";
+#define DATA_PATH "/home/florianfrank/Desktop/Measurements"
 
 // the max voltage of the chip can be input, unit /10v, here is 1.2V
 int MAX_VOLTAGE = 10;
@@ -23,7 +20,7 @@ int MIN_FREQUENCY = 100;
 int CHIP = 1;
 
 // how many time a cell need to be tested
-int MAX_TIMES = 3;
+//int MAX_TIMES = 3;
 
 void sleep(int secs) {
   unsigned int microsecond = 1000000;
@@ -31,14 +28,14 @@ void sleep(int secs) {
 }
 
 KST33500 connect_wave_generator() {
-  char *wave_generator_ip = "132.231.14.245";
+  const char *wave_generator_ip = "132.231.14.245";
   KST33500 wg = KST33500(wave_generator_ip);
   wg.connect();
   return wg;
 }
 
 KST3000 connect_oscilloscope() {
-  char *ip = "132.231.14.243";
+  const char *ip = "132.231.14.243";
   KST3000 k = KST3000(ip);
   k.connect();
   return k;
@@ -55,36 +52,46 @@ int set_params(KST33500 wg, KST3000 o, int frequency, int voltage) {
   o.set_channel_range(d_voltage * 2, 1); // *2 for sin wave
   o.set_channel_range(d_voltage * 2, 2); // *2 for sin wave
   o.set_time_range(10.0 / frequency); // collect 10 cycles
+
+  // TODO error code
+  return 0;
 }
 
 /**
  * @brief run a test
  * */
-int run_test(int cell, KST33500 wg, KST3000 o, int v) {
+/*int run_test(int cell, KST33500 wg, KST3000 o, int v) {
   if (v > 12) {
     return 1;
   }
   double voltage = v / 10.0;
   wg.voltage(voltage);
 
-  string file_prefix = DATA_PATH + to_string(cell);
+  string file_prefix = std::string(DATA_PATH) + to_string(cell);
 
   o.digitize();
   o.set_waveform_source(1);
   o.save_waveform_data(file_prefix + "_1");
   o.set_waveform_source(2);
   o.save_waveform_data(file_prefix + "_2");
+
+  // TODO error code
   return 0;
-}
+}*/
 
 
 /**
  * @brief save test meta data
  * */
-int save_meta(string file_name, int frequency, double voltage, int cell, int chip = 1) {
+int save_meta(string &file_name, int frequency, double voltage, int cell, int chip = 1) {
   xml_document doc;
-  string meta_file = DATA_PATH + "meta.xml";
+  string meta_file = std::string(DATA_PATH) + "meta.xml";
   xml_parse_result result = doc.load_file(meta_file.c_str());
+  if(result.status != status_ok)
+  {
+      std::cout << "Error while loading document (" << result.description() << ")" << std::endl;
+      return -1;
+  }
   xml_node tests = doc.child("tests");
   if (!tests) {
     tests = doc.append_child("tests");
@@ -145,8 +152,11 @@ int single_test(int cell, KST33500 wg, KST3000 o, int frequency, int i_voltage) 
   o.set_waveform_source(2);
   o.save_waveform_data(output_file);
 
-  printf("Save file in %s\n", file_prefix);
+  std::cout << "Save file in %s\n" << file_prefix << std::endl;
   save_meta(file_prefix, frequency, voltage, cell);
+
+  // TODO error code
+  return 0;
 }
 
 /**
@@ -158,7 +168,7 @@ int single_test(int cell, KST33500 wg, KST3000 o, int frequency, int i_voltage) 
  *  3, the nth time test, every cell need to be tested many times
  *  4, frequency
  * */
-int test_cell(int cell, KST33500 wg, KST3000 o) {
+int test_cell(int cell, const KST33500 &wg, const KST3000 &o) {
   for (int f = MIN_FREQUENCY; f <= MAX_FREQUENCY; f += 100) {
     for (int v = MIN_VOLTAGE; v <= MAX_VOLTAGE; v++) {
       set_params(wg, o, f, v);
@@ -166,18 +176,28 @@ int test_cell(int cell, KST33500 wg, KST3000 o) {
       sleep(1);
     }
   }
+
+  // TODO error code
+  return 0;
 }
 
-int config(KST3000 o) {
+int config(KST3000 &o) {
   o.set_waveform_points_mode("NORmal");
   o.set_waveform_points(1000);
+
+  // TODO error code
+  return 0;
 }
 
 int main(int argc, char **argv) {
+  if(argc < 2) {
+        std::cout << "Error: CellID must be passed to the program" << std::endl;
+        return 0;
+  }
   KST33500 wg = connect_wave_generator();
   KST3000 o = connect_oscilloscope();
   config(o);
-  int cellID = atoi(argv[1]);
+  int cellID = std::stoi(argv[1]);
   printf("Measure cell %d\n", cellID);
   test_cell(cellID, wg, o);
   return 0;

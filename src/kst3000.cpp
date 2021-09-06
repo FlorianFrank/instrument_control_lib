@@ -24,7 +24,7 @@ using namespace std;
  * @param ip: IP address of kst3000
  * @note Get oscillator's ip: Press "Utility" key; Press I/O;
  * */
-KST3000::KST3000(char *ip) : Device(ip) {
+KST3000::KST3000(const char *ip) : Device(ip) {
   this->name = "Mixed Single Oscilloscope";
 }
 

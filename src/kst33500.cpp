@@ -7,7 +7,7 @@
 
 using namespace std;
 
-KST33500::KST33500(char *ip) : Device(ip) {
+KST33500::KST33500(const char *ip) : Device(ip) {
   this->name = "Keysight 33500B Waveform Generator";
 }
 

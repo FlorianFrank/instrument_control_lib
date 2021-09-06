@@ -30,7 +30,7 @@ int DEBUG = is_enable_debug();
  * @brief Constructor of Device
  * @param ip: the ip address of the target device
  */
-Device::Device(char *ip) : ip(ip) {
+Device::Device(const char *ip) : ip(ip) {
 }
 
 /**

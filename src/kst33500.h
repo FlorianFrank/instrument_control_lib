@@ -11,7 +11,7 @@ using namespace std;
 
 class KST33500 : public Device {
 public:
-    KST33500(char *ip);
+    KST33500(const char *ip);
 
     int display(string text);
 
