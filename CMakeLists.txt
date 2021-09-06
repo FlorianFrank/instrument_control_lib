@@ -23,7 +23,7 @@ install(TARGETS ce_device
         RUNTIME DESTINATION bin
         )
 
-install(DIRECTORY src/
+install(DIRECTORY include/
         DESTINATION include
         FILES_MATCHING PATTERN "*.h"
         )
