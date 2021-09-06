@@ -11,9 +11,9 @@
 using namespace std;
 
 class SPD1305 : public Device {
-    int sockfd = 0;
+
 public:
-    SPD1305(char *ip);
+    explicit SPD1305(char *ip);
 
     int set_current(double current, int = 1);
 

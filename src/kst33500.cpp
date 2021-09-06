@@ -5,14 +5,13 @@
 #include "kst33500.h"
 #include <unistd.h>
 
-using namespace std;
 
 KST33500::KST33500(const char *ip) : Device(ip) {
   this->name = "Keysight 33500B Waveform Generator";
 }
 
-int KST33500::display(string text) {
-  string msg = "DISP:TEXT '" + text + "'";
+int KST33500::display(std::string &text) {
+  std::string msg = "DISP:TEXT '" + text + "'";
   exec(msg);
   return 0;
 }
@@ -25,30 +24,30 @@ int KST33500::display_connection() {
   return 0;
 }
 
-int KST33500::function(string fun) {
-  string msg = "FUNCtion " + fun;
+int KST33500::function(std::string fun) {
+  std::string msg = "FUNCtion " + fun;
   exec(msg);
   return 0;
 }
 
 int KST33500::frequency(double value) {
-  string msg = "FREQuency " + to_string(value);
+  std::string msg = "FREQuency " + std::to_string(value);
   exec(msg);
   return 0;
 }
 
-int KST33500::voltage(double value, string constrain) {
-  string msg = "VOLTage";
-  if (constrain != "") {
+int KST33500::voltage(double value, std::string constrain) {
+  std::string msg = "VOLTage";
+  if (!constrain.empty()) {
     msg += ":" + constrain + " ";
   }
-  msg += " " + to_string(value);
+  msg += " " + std::to_string(value);
   exec(msg);
   return 0;
 }
 
 int KST33500::output(bool on) {
-  string msg = "OUTPut";
+  std::string msg = "OUTPut";
   if (on) {
     msg += " ON";
   } else {
@@ -58,8 +57,8 @@ int KST33500::output(bool on) {
   return 0;
 }
 
-int KST33500::phase(string value) {
-  string msg = "PHASe " + value;
+int KST33500::phase(std::string &value) {
+  std::string msg = "PHASe " + value;
   exec(msg);
   return 0;
 }

@@ -7,25 +7,25 @@
 
 #include "device.h"
 
-using namespace std;
 
 class KST33500 : public Device {
-public:
-    KST33500(const char *ip);
 
-    int display(string text);
+public:
+    explicit KST33500(const char *ip);
+
+    int display(std::string &text);
 
     int display_connection();
 
-    int function(string fun);
+    int function(std::string fun);
 
     int frequency(double value);
 
-    int voltage(double value, string constrain = "");
+    int voltage(double value, std::string constrain = "");
 
     int output(bool on);
 
-    int phase(string value);
+    int phase(std::string &value);
 };
 
 #endif //CE_DEVICE_KST33500_H
