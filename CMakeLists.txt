@@ -5,14 +5,17 @@ set(CMAKE_CXX_STANDARD 11)
 
 add_library(ce_device STATIC
         src/device.cpp
-        src/device.h
         src/spd1305.cpp
-        src/spd1305.h
-        src/kst33500.h
         src/kst33500.cpp
-        src/kst3000.h
         src/kst3000.cpp
+
+        include/device.h
+        include/spd1305.h
+        include/kst33500.h
+        include/kst3000.h
         )
+
+target_include_directories(ce_device PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 install(TARGETS ce_device
         LIBRARY DESTINATION lib
