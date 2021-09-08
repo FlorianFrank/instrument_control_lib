@@ -7,24 +7,62 @@
 
 #include "device.h"
 
+
 class KST33500 : public Device {
 
 public:
+    enum FunctionType {
+        /* Sinus signal*/
+        SIN,
+        /* Square signal*/
+        SQUARE,
+        /* Square signal*/
+        RAMP,
+        /* Negative ramp signal*/
+        NEGATIVE_RAM,
+        /* Triangle signal*/
+        TRIANGLE,
+        /* Noise signal */
+        NOISE,
+        /* Pseudo random bit stream signal */
+        PSEUDO_RANDOM_BIT_STREAM,
+        /* Arbitrary signal */
+        ARBITRARY
+    };
+
     explicit KST33500(const char *ip);
 
-    int display(std::string &text);
+    bool display(std::string &text);
 
-    int display_connection();
+    bool display_connection();
 
-    int function(std::string &fun);
+    bool setFunction(FunctionType functionType);
 
-    int frequency(double value);
+    bool frequency(double value);
 
-    int voltage(double value, std::string constrain = "");
+    bool voltage(double value, const char *constrain = "");
 
-    int output(bool on);
 
-    int phase(std::string &value);
+    bool enableOutput();
+
+    bool disableOutput();
+
+    bool phase(std::string &value);
+
+
+    // Getters
+    FunctionType getOutputFunction() const;
+
+    bool isOutputEnabled() const;
+
+    double getCurrentAmplitude() const;
+
+private:
+    bool output(bool on);
+
+    FunctionType m_CurrentFunction;
+    bool m_OutputEnabled;
+    double m_Amplitude;
 };
 
 #endif //CE_DEVICE_KST33500_H
