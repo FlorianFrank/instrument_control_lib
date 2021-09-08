@@ -1,4 +1,7 @@
 #include <iostream>
+#include <filesystem>
+#include <fstream>
+#include <sstream>
 #include <unistd.h>
 #include <kst3000.h>
 #include "kst33500.h"
@@ -10,19 +13,21 @@ using namespace pugi;
 #define DATA_PATH "/home/florianfrank/Desktop/Measurements/"
 
 // the max voltage of the chip can be input, unit /10v, here is 1.2V
-int MAX_VOLTAGE = 10;
+int MAX_VOLTAGE = 12;
 // the min voltage of the chip can be input, unit /10v, here is 0.1V
-int MIN_VOLTAGE = 4;
+int MIN_VOLTAGE = 12;
 
-int MAX_FREQUENCY = 500;
+int MAX_FREQUENCY = 100;
 int MIN_FREQUENCY = 100;
+
+double CYCLES_PER_FILE = 10.0;
 
 int CHIP = 1;
 
 // how many time a cell need to be tested
-//int MAX_TIMES = 3;
+int MAX_TIMES = 100;
 
-void sleep(int secs) {
+void sleep(double secs) {
   unsigned int microsecond = 1000000;
   usleep(secs * microsecond);//sleeps for 3 second
 }
@@ -53,10 +58,7 @@ int set_params(KST33500 &wg, KST3000 &o, int frequency, int voltage) {
   wg.frequency(frequency);
   o.set_channel_range(d_voltage * 2, 1); // *2 for sin wave
   o.set_channel_range(d_voltage * 2, 2); // *2 for sin wave
-  o.set_time_range(10.0 / frequency); // collect 10 cycles
-
-  // TODO error code
-  return 0;
+  o.set_time_range(CYCLES_PER_FILE / frequency); // collect 1 cycle every time
 }
 
 /**
@@ -121,6 +123,50 @@ int save_meta(std::string &file_name, int frequency, double voltage, int cell, i
   return 0;
 }
 
+int stream_triple(stringstream &stream, double time, double input, double output) {
+  stream << time << setw(20) << input << setw(20) << output << endl;
+  return 0;
+}
+
+int write_to_file(string data, string file_path) {
+  string buffer(data);
+  ofstream file;
+  file.open(file_path);
+  if (file.is_open()) {
+    file << buffer;
+    file.close();
+    return 0;
+  }
+  cout << "File open failed!\n";
+  return 1;
+}
+
+/**
+ * @brief save data into a file containing 3 columns: time; input; output;
+ * */
+int capture_data(string file_name, KST3000 o) {
+  o.digitize();
+  int points = o.get_waveform_points();
+
+  o.set_waveform_source(1);
+  double *input[2];
+  input[0] = new double[points];
+  input[1] = new double[points];
+  o.get_real_data(input);
+
+  o.set_waveform_source(2);
+  double *output[2];
+  output[0] = new double[points];
+  output[1] = new double[points];
+  o.get_real_data(output);
+
+  stringstream stream;
+  stream << "time" << "," << "input" << "," << "output" << endl;
+  for (int i = 0; i < points; i++) {
+    stream << input[0][i] * 1000 << "," << input[1][i] << "," << output[1][i] << endl;
+  }
+  write_to_file(stream.str(), file_name);
+}
 
 /**
  * @brief run a single test
@@ -135,30 +181,20 @@ int save_meta(std::string &file_name, int frequency, double voltage, int cell, i
  *  2, cell;
  *  3, frequency
  *  4, voltage(unit: /10 V);
- *  5, data direction, 1 means input, 2 means output
+ *  5, timestamp
  * */
 int single_test(int cell, KST33500 &wg, KST3000 &o, int frequency, int i_voltage) {
   double voltage = i_voltage / 10.0;
+  time_t t = time(nullptr);
   wg.voltage(voltage);
   wg.frequency(frequency);
-  std::string file_prefix = DATA_PATH + std::to_string(CHIP)
-          + "_" + std::to_string(cell)
-          + "_" + std::to_string(frequency)
-          + "_" + std::to_string(i_voltage);
-    std::string input_file = file_prefix + "_1";
-    std::string output_file = file_prefix + "_2";
-
-  o.digitize();
-  o.set_waveform_source(1);
-  o.save_waveform_data(input_file.c_str());
-  o.set_waveform_source(2);
-  o.save_waveform_data(output_file.c_str());
-
-  std::cout << "Save file in "  << file_prefix << std::endl;
-  save_meta(file_prefix, frequency, voltage, cell);
-
-  // TODO error code
-  return 0;
+  string file_name = DATA_PATH + to_string(CHIP)
+                     + "_" + to_string(cell)
+                     + "_" + to_string(frequency)
+                     + "_" + to_string(i_voltage)
+                     + "_" + to_string(t);
+  capture_data(file_name, o);
+  save_meta(file_name, frequency, voltage, cell);
 }
 
 /**
@@ -174,8 +210,8 @@ int memristor_frequency_test(int cell, KST33500 &wg, KST3000 &o) {
   for (int f = MIN_FREQUENCY; f <= MAX_FREQUENCY; f += 100) {
     for (int v = MIN_VOLTAGE; v <= MAX_VOLTAGE; v++) {
       set_params(wg, o, f, v);
+      sleep(0.5);
       single_test(cell, wg, o, f, v);
-      sleep(1);
     }
   }
 
@@ -209,7 +245,7 @@ void testCellAllFrequencies(std::string &args)
         KST3000 o = connect_oscilloscope();
         config(o);
 
-        printf("Measure cell %d\n", cellID);
+        printf("Measure cell %d\n", cellID);-
         memristor_frequency_test(cellID, wg, o);
     } catch (std::invalid_argument &e)
     {
