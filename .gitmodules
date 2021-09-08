@@ -1,3 +1,0 @@
-[submodule "test/pugixml"]
-	path = test/pugixml
-	url = https://github.com/zeux/pugixml.git

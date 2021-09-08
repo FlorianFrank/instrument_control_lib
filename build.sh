@@ -14,7 +14,14 @@ popd
 
 mkdir build/bin
 pushd build/bin
-cmake ../../test -D CMAKE_INSTALL_PREFIX=../../out
+cmake ../../memristor_tester -D CMAKE_INSTALL_PREFIX=../../out
+make
+make install
+popd
+
+mkdir build/bin
+pushd build/bin
+cmake ../../instrument_cmd_tool -D CMAKE_INSTALL_PREFIX=../../out
 make
 make install
 popd
