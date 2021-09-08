@@ -15,7 +15,7 @@ public:
 
     bool disconnect();
 
-    bool isOpen();
+    bool isOpen() const;
 
     std::string getDeviceIdentifier();
 
