@@ -18,13 +18,16 @@ enum CLI_Commands {
     CLI_SELECT_DEVICE,
     CLI_GET_DEVICE_IDENTIFIER,
     CLI_QUIT,
-    CLI_COMMAND_NOT_FOUND
+    CLI_COMMAND_NOT_FOUND,
+    CUSTOM_COMMAND1,
+    CUSTOM_COMMAND2,
+    CUSTOM_COMMAND3,
 };
 
 enum {
-    KST3000,
-    KST33500,
-    SPD1305
+    KST3000_DEVICE,
+    KST33500_DEVICE,
+    SPD1305_DEVICE
 } typedef DeviceType;
 
 
@@ -34,8 +37,24 @@ class command_line_interface
 {
 
 public:
+
     command_line_interface();
     bool start();
+
+
+    struct CLICommandStruct {
+
+        CLI_Commands identifier;
+        const char* command;
+        const char* description;
+        void (*func)(std::string&);
+    } typedef CLICommandStruct;
+
+
+    static void addCustomCommandLineOption(const char *identifier, const char *description, void (*func)(std::string&));
+    static std::vector<std::string> splitArguments(std::string &args);
+
+
     CLI_Commands ParseCommand(std::string &string);
 
     static void printHelp(std::string &args);
@@ -59,19 +78,13 @@ private:
     static void ctrl_c_handler(int signal);
     static volatile bool m_ExitCLI;
 
-    struct CLICommandStruct {
-
-        CLI_Commands identifier;
-        const char* command;
-        const char* description;
-        void (*func)(std::string&);
-    } typedef CLICommandStruct;
 
 
 
-    static const std::map<CLI_Commands, CLICommandStruct> m_DescriptionMap;
+    static std::map<CLI_Commands, CLICommandStruct> m_DescriptionMap;
     static const std::map<std::string, std::string> m_SupportedDevices;
-
+    static std::vector<std::string> m_DeviceNameList;
+    static std::vector<std::string> m_DeviceIPList;
 };
 
 

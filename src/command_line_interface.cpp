@@ -8,6 +8,7 @@
 #include <device.h>
 #include <iomanip>
 #include <iterator>
+#include <sstream>
 #include "command_line_interface.h"
 
 // TODO new abstraction layer
@@ -18,9 +19,10 @@
 /*static*/ volatile bool command_line_interface::m_ExitCLI;
 /*static*/ std::vector<Device*> command_line_interface::m_DeviceList;
 /*static*/ int command_line_interface::m_currentDevice = 0;
+/*static*/ std::vector<std::string> command_line_interface::m_DeviceNameList;
+/*static*/ std::vector<std::string> command_line_interface::m_DeviceIPList;
 
-
-/*static*/ const std::map<CLI_Commands, command_line_interface::CLICommandStruct> command_line_interface::m_DescriptionMap = {
+/*static*/ std::map<CLI_Commands, command_line_interface::CLICommandStruct> command_line_interface::m_DescriptionMap = {
         {{CLI_HELP, {CLI_HELP, "help", "print list of commands", command_line_interface::printHelp}},
          {CLI_SUPPORTED_DEVICES, {CLI_SUPPORTED_DEVICES, "supported_devices", "returns a list of supported devices", command_line_interface::getSupportedDevices}},
         {CLI_CONNECT, {CLI_CONNECT, "connect", "(connect <ip>:<port>) establish connection with a device", command_line_interface::connect}},
@@ -29,8 +31,14 @@
         {CLI_ACTIVE_DEVICES, {CLI_ACTIVE_DEVICES, "active_devices", "(active_devices <id>) Displays all active devices with its corresponding ID.", command_line_interface::activeDevices}},
         {CLI_SELECT_DEVICE, {CLI_SELECT_DEVICE, "select_device", "(select_device <id>) Select device on which all following actions are executed.", command_line_interface::selectDevice}},
         {CLI_GET_DEVICE_IDENTIFIER, {CLI_GET_DEVICE_IDENTIFIER, "get_device_identity", "(get_device_identity <id>) Return the identity of a device in the network", command_line_interface::getDeviceIdentifier}}}
-
 };
+
+/*static*/ void
+command_line_interface::addCustomCommandLineOption(const char *identifier, const char *description, void (*func)(std::string&))
+{
+    auto it = m_DescriptionMap.begin();
+    m_DescriptionMap.insert (it, std::pair<CLI_Commands,command_line_interface::CLICommandStruct>(CUSTOM_COMMAND1, {CUSTOM_COMMAND1, identifier, description, func}));  // max efficiency inserting
+}
 
 /*static*/ const std::map<std::string, std::string> command_line_interface::m_SupportedDevices {
                 {"KST3000", "Keysight Oscilloscope"},
@@ -61,7 +69,6 @@ command_line_interface::command_line_interface()
  * */
 bool command_line_interface::start()
 {
-    char buffer[1024] = {0};
     std::signal(SIGINT, ctrl_c_handler);
 
     std::cout << "Instrument control lib command line..." << std::endl;
@@ -71,7 +78,7 @@ bool command_line_interface::start()
     while (!m_ExitCLI)
     {
         std::cout << "$ ";
-        std::basic_string<char> commands;
+        std::string commands;
         std::getline(std::cin, commands);
         if (commands == "f")
         {
@@ -123,7 +130,7 @@ CLI_Commands command_line_interface::ParseCommand(std::string &string)
     std::cout << std::endl;
 }
 
-std::vector<std::string> splitArguments(std::string &args)
+std::vector<std::string> command_line_interface::splitArguments(std::string &args)
 {
     std::istringstream iss(args);
     std::vector<std::string> argumentList((std::istream_iterator<std::string>(iss)),
@@ -141,15 +148,20 @@ std::vector<std::string> splitArguments(std::string &args)
         return;
     }
 
-    Device device(argumentList[0].c_str());
+    auto *device = new Device(argumentList[0].c_str());
+    m_DeviceList.push_back(device);
 
 
-    std::cout << "    Connect to Device " <<  "IP: " << argumentList[0] << "ID (" << m_DeviceList.size()-1 << ")" << std::endl;
-    if(!device.connect())
+
+    std::cout << "    Connect to Device " <<  "IP: " << argumentList[0] << " ID (" << m_DeviceList.size()-1 << ")" << std::endl;
+    if(!device->connect())
     {
-        std::cout << device.return_error_message() << std::endl;
+        std::cout << device->return_error_message() << std::endl;
     }
-    std::cout << "    Device identified as " << device.getDeviceIdentifier() << std::endl;
+    std::string deviceName = device->getDeviceIdentifier();
+    m_DeviceNameList.push_back(deviceName);
+    m_DeviceIPList.push_back(argumentList[0]);
+    std::cout << "    Device identified as " << deviceName << std::endl;
 
 
 
@@ -226,7 +238,7 @@ void command_line_interface::activeDevices(std::string &args)
     std::cout << "    List active devices: " << std::endl;
     for(int i = 0; i < m_DeviceList.size(); i++)
     {
-        std::cout << "         ID: " << i << " " << m_DeviceList[i]->what_am_i() << " " << (m_DeviceList[i]->isOpen() ? "Connected" : "Disconnected") << std::endl;
+        std::cout << "         ID: " << i << " " << m_DeviceNameList[i] << " IP: " << m_DeviceIPList[i] <<" " << (m_DeviceList[i]->isOpen() ? "Connected" : "Disconnected") << std::endl;
     }
 }
 
