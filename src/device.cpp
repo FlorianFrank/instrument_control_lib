@@ -1,12 +1,11 @@
 #include "device.h"
-#include "command_line_interface.h"
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <iostream>
 #include <sstream>
 #include <cstring>
-#include <csignal>
+#include <regex>
 
 
 /**
@@ -149,5 +148,5 @@ std::string Device::getDeviceIdentifier()
     if(!exec("*IDN?", buffer))
         return "Error while executing *IDN?";
 
-    return std::string(buffer);
+    return std::regex_replace(buffer, std::regex("\n"), "");
 }
