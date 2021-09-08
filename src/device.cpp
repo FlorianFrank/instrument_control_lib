@@ -71,7 +71,7 @@ bool Device::disconnect()
     return PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
 }
 
-bool Device::isOpen()
+bool Device::isOpen() const
 {
     return m_IsOpen;
 }
@@ -93,7 +93,9 @@ bool Device::isOpen()
  *      @endcode
  * */
 bool Device::exec(std::string message, char *result, bool br, int size) {
-  if (br) {
+    if(!m_IsOpen)
+        return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_INTERFACE_CLOSED, "Error interface is closed");
+    if (br) {
     message += '\n';
   }
   char *command = const_cast<char *>(message.c_str());
