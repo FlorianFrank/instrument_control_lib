@@ -5,7 +5,7 @@
 #ifndef PIL_ERROR_CODE_DEFINES_H
 #define PIL_ERROR_CODE_DEFINES_H
 
-#include <stdint.h> // uint32_t
+#include <cstdint> // uint32_t
 
 /** Maximum error message length. */
 #define MAX_ERROR_MSG_LEN 128

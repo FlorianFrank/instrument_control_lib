@@ -14,7 +14,8 @@ void sleep(int secs) {
   usleep(secs * microsecond);//sleeps for 3 second
 }
 
-KST33500 connect_wave_generator() {
+bool connect_wave_generator(KST33500 *waveformGenerator)
+{
   const char *wave_generator_ip = "132.231.14.245";
   KST33500 wg = KST33500(wave_generator_ip);
   wg.connect();

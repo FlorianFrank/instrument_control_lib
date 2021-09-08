@@ -37,4 +37,5 @@ install(DIRECTORY include/
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_subdirectory(instrument_cmd_tool)
+    add_subdirectory(memristor_tester)
 endif ()
