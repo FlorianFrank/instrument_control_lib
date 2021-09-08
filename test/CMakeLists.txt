@@ -7,7 +7,7 @@ message(STATUS "start building test...")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/pugixml")
 
 add_executable(test main.cpp)
-add_executable(InstrumentCmdLineTool InstrumentCmdLineTool.cpp)
+add_executable(InstrumentCmdLineTool ../instrument_cmd_tool/InstrumentCMDLineTool.cpp)
 
 target_include_directories(test PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/pugixml/src"
                            "${CMAKE_CURRENT_SOURCE_DIR}/../include")
