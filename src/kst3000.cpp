@@ -266,13 +266,14 @@ int KST3000::get_real_data(double **result) {
   get_waveform_data(data);
   char preamble[1024];
   get_waveform_preamble(preamble);
-  vector<string> v_preamble = split(preamble, ",");
-  double x_increment = stod(v_preamble[4]);
-  double x_origin = stod(v_preamble[5]);
-  double x_reference = stod(v_preamble[6]);
-  double y_increment = stod(v_preamble[7]);
-  double y_origin = stod(v_preamble[8]);
-  double y_reference = stod(v_preamble[9]);
+  std::string delimiter = ",";
+  std::vector<std::string> v_preamble = split(preamble, delimiter);
+  double x_increment = std::stod(v_preamble[4]);
+  double x_origin = std::stod(v_preamble[5]);
+  double x_reference = std::stod(v_preamble[6]);
+  double y_increment = std::stod(v_preamble[7]);
+  double y_origin = std::stod(v_preamble[8]);
+  double y_reference = std::stod(v_preamble[9]);
 
   for (int i = 0; i < points; i++) {
     double time = ((i - x_reference) * x_increment) + x_origin;
@@ -302,22 +303,23 @@ int KST3000::get_real_data(double **result) {
  * plt.plot(data['time(ms)'], data['voltage(V)'])
  * @endcode
  * */
-int KST3000::save_waveform_data(string file_path) {
+int KST3000::save_waveform_data(std::string file_path) {
   char preamble[1024];
   get_waveform_preamble(preamble);
-  vector<string> v_preamble = split(preamble, ",");
+  std::string delimiter = ",";
+  std::vector<std::string> v_preamble = split(preamble, delimiter);
   int points = get_waveform_points();
 
   double *result[2];
   result[0] = new double[points];
   result[1] = new double[points];
   get_real_data(result);
-  stringstream stream;
-  stream << "time(ms)" << "," << "voltage(V)" << endl;
+  std::stringstream stream;
+  stream << "time(ms)" << "," << "voltage(V)" << std::endl;
   for (int i = 0; i < points; i++) {
-    stream << result[0][i] * 1000 << "," << result[1][i] << endl;
+    stream << result[0][i] * 1000 << "," << result[1][i] << std::endl;
   }
-  write_to_file(stream.str(), file_path);
+  write_to_file(stream.str().c_str(), file_path);
 
 //  stringstream stream;
 //  stream << "time(ms)" << "," << "voltage(V)" << endl;
