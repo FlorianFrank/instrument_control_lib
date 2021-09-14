@@ -4900,4 +4900,32 @@
 		<voltage>1.200000</voltage>
 		<file>/Users/lwh/CLionProjects/ce_device/test/data/1_7_100_12_1628863407</file>
 	</test>
+	<test>
+		<chip>1</chip>
+		<cell>2</cell>
+		<frequency>100</frequency>
+		<voltage>1.200000</voltage>
+		<file>/Users/lwh/CLionProjects/ce_device/test/data/1_2_100_12_1631603739</file>
+	</test>
+	<test>
+		<chip>1</chip>
+		<cell>2</cell>
+		<frequency>100</frequency>
+		<voltage>1.200000</voltage>
+		<file>/Users/lwh/CLionProjects/ce_device/test/data/1_2_100_12_1631604369</file>
+	</test>
+	<test>
+		<chip>1</chip>
+		<cell>2</cell>
+		<frequency>100</frequency>
+		<voltage>1.200000</voltage>
+		<file>/Users/lwh/CLionProjects/ce_device/test/data/1_2_100_12_1631604406</file>
+	</test>
+	<test>
+		<chip>1</chip>
+		<cell>2</cell>
+		<frequency>100</frequency>
+		<voltage>1.200000</voltage>
+		<file>/Users/lwh/CLionProjects/ce_device/test/data/1_2_100_12_1631604451</file>
+	</test>
 </tests>
