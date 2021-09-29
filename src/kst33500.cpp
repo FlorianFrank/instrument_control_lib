@@ -47,6 +47,25 @@ int KST33500::voltage(double value, string constrain) {
   return 0;
 }
 
+/**
+ * argument unit: V
+ * attention: offset would change voltage by double of your argument
+ * */
+int KST33500::offset(double value) {
+  string msg = "VOLTage:OFFSet ";
+  msg += to_string(value);
+  return exec(msg);
+}
+
+/**
+ * argument unit: ms
+ * */
+int KST33500::set_pulse_width(double value) {
+  string msg = "FUNCtion:PULSe:WIDTh ";
+  msg += to_string(value) + " ms";
+  return exec(msg);
+}
+
 int KST33500::output(bool on) {
   string msg = "OUTPut";
   if (on) {
