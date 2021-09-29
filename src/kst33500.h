@@ -23,6 +23,10 @@ public:
 
     int voltage(double value, string constrain = "");
 
+    int offset(double value);
+
+    int set_pulse_width(double value);
+
     int output(bool on);
 
     int phase(string value);
