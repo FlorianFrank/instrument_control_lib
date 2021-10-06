@@ -10,6 +10,8 @@
 #include "kst3000.h"
 #include "kst33500.h"
 #include "utils.h"
+//#include <boost/filesystem.hpp>
+
 
 using namespace std;
 using namespace pugi;
@@ -38,14 +40,14 @@ void sleep(double secs) {
 }
 
 KST33500 connect_wave_generator() {
-  char *wave_generator_ip = "132.231.14.251";
+  char *wave_generator_ip = "132.231.14.168";
   KST33500 wg = KST33500(wave_generator_ip);
   wg.connect();
   return wg;
 }
 
 KST3000 connect_oscilloscope() {
-  char *ip = "132.231.14.250";
+  char *ip = "132.231.14.169";
   KST3000 k = KST3000(ip);
   k.connect();
   return k;
@@ -262,4 +264,61 @@ int set_perfect_sin(KST33500 wg) {
  * */
 int del_test_files() {
 //  std::remove();
+}
+
+
+/**
+ * set -1.2V voltage by pulse waveform(making pulse width short enough to be ignored)
+ * */
+int set_conductive_minus_pulse(KST33500 wg) {
+  wg.function("PULS");
+  wg.voltage(0.001);
+  // notice offset set 2* value of argument
+  wg.offset(-(THRESHOLD / 2));
+  wg.set_pulse_width(0.001);
+}
+
+/**
+ * set target voltage by pulse waveform
+ * */
+int set_measurement_pulse(KST33500 wg, double voltage) {
+  wg.function("PULS");
+  wg.voltage(0.001);
+  // notice offset set 2* value of argument
+  wg.offset(voltage / 2);
+  wg.set_pulse_width(0.001);
+}
+
+int measure_resistance(KST33500 wg, KST3000 o, double measure_v) {
+  // set range of oscillator to make it easy to look
+  o.set_channel_range(THRESHOLD * 2.5, 1);
+  o.set_channel_range(THRESHOLD * 2.5, 2);
+  o.run();
+  // TODO: frequency shouldn't matter for now, but maybe need to be confirm
+  wg.frequency(FREQUENCY);
+  set_conductive_minus_pulse(wg);
+  wg.output(true);
+  // keep threshold voltage for a while to make the electrons movement happens
+  // TODO: this time could also matter
+  sleep(0.5);
+  wg.output(false);
+  // The electrons movement finished by now
+
+  // set range of oscillator to make it easy to look
+  o.set_channel_range(measure_v * 2.5, 1);
+  o.set_channel_range(measure_v * 2.5, 2);
+
+  set_measurement_pulse(wg, measure_v);
+  wg.output(true);
+  // keep measurement voltage for a while, otherwise you could capture all 0 as output
+  sleep(0.5);
+  return 0;
+}
+
+
+string get_main_dir() {
+  string file_path = __FILE__;
+  string dir_path = file_path.substr(0, file_path.rfind("/"));
+  return dir_path;
+
 }
