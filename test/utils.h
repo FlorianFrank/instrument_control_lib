@@ -14,7 +14,11 @@
 #endif //CE_DEVICE_UTILS_H
 
 #ifndef CELL
-#define CELL 16
+#define CELL 1
+#endif
+
+#ifndef APP_TO_FILE
+#define APP_TO_FILE 1
 #endif
 
 void sleep(double secs);

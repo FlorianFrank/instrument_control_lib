@@ -11,7 +11,7 @@ int set_conductive_minus_pulse(KST33500 wg) {
   // set -1.2V voltage through making pulse width short enough to be ignored
   wg.function("PULS");
   wg.voltage(0.001);
-  wg.offset(+0.6);
+  wg.offset(-0.6);
   wg.set_pulse_width(0.001);
 }
 
@@ -27,7 +27,7 @@ int set_measurement_pulse(KST33500 wg, double voltage) {
 //  o.set_channel_range(measure_v * 2.5, 2);
 //}
 
-int measure_once(KST33500 wg, KST3000 o, double measure_v) {
+int measure_once(KST33500 wg, KST3000 o, double measure_v, string prefix = "") {
 
   o.set_channel_range(1.2 * 2.5, 1);
   o.set_channel_range(1.2 * 2.5, 2);
@@ -46,10 +46,11 @@ int measure_once(KST33500 wg, KST3000 o, double measure_v) {
   set_measurement_pulse(wg, measure_v);
   wg.output(true);
 //  o.digitize();
-  sleep(0.5);
+//  sleep(0.5);
 
 
   string filename = "/Users/lwh/CLionProjects/ce_device/test/data/"
+                    + prefix + "_"
                     + to_string(CHIP) + "_"
                     + to_string(CELL) + "_"
                     + to_string((int) (measure_v * 1000));
@@ -63,14 +64,24 @@ int main() {
   KST3000 o = connect_oscilloscope();
   o.set_waveform_points(100);
 
-  del_meta_tests();
+  //del_meta_tests();
+
   for (double i = 0.1; i < 1.5; i += 0.1) {
     cout << i << endl;
-    measure_once(wg, o, i);
+    for (int j = 0; j < 10; j++) {
+      measure_once(wg, o, i, "measure");
+      sleep(0.5);
+    }
+//    measure_once(wg, o, i);
     sleep(0.5);
   }
 
-//  measure_once(wg, o, 0.1);
+//  measure_once(wg, o, 0.1, "measure");
+
+//  for (int i = 0; i < 20; i++) {
+//    measure_once(wg, o, 0.4, "stability");
+//  }
+
 //  set_perfect_sin(wg);
 
 //  wg.cli();

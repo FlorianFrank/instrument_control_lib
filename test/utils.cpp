@@ -136,8 +136,11 @@ int stream_triple(stringstream &stream, double time, double input, double output
 int write_to_file(string data, string file_path) {
   string buffer(data);
   ofstream file;
-//  file.open(file_path, ios_base::app);
-  file.open(file_path);
+  if (APP_TO_FILE == 1) {
+    file.open(file_path, ios_base::app);
+  } else {
+    file.open(file_path);
+  }
   if (file.is_open()) {
     file << buffer;
     file.close();
