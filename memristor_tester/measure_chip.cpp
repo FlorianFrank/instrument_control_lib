@@ -1,5 +1,3 @@
-#include <iostream>
-#include <filesystem>
 #include<unistd.h>
 
 #include "kst3000.h"
@@ -16,15 +14,16 @@ void sleep(int secs) {
   usleep(secs * microsecond);//sleeps for 3 second
 }
 
-KST33500 connect_wave_generator() {
-  char *wave_generator_ip = "132.231.14.245";
+bool connect_wave_generator(KST33500 *waveformGenerator)
+{
+  const char *wave_generator_ip = "132.231.14.245";
   KST33500 wg = KST33500(wave_generator_ip);
   wg.connect();
   return wg;
 }
 
 KST3000 connect_oscilloscope() {
-  char *ip = "132.231.14.243";
+  const char *ip = "132.231.14.243";
   KST3000 k = KST3000(ip);
   k.connect();
   return k;
@@ -39,6 +38,9 @@ int set_params(int cell, KST33500 wg, KST3000 o) {
   o.set_time_range(1);
   o.set_channel_range(1.6, 1);
   o.set_channel_range(1.6, 2);
+
+  // TODO error code
+  return 0;
 }
 
 /**
@@ -65,6 +67,9 @@ int test_cell(int cell, KST33500 wg, KST3000 o) {
     o.save_waveform_data(file_prefix + "_2");
     sleep(1);
   }
+
+  // TODO error code
+  return 0;
 }
 
 int main() {

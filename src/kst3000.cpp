@@ -9,8 +9,6 @@
 #include "kst3000.h"
 #include <unistd.h>
 
-using namespace std;
-
 /**
  * @class KST3000
  * @brief Mixed Single Oscilloscope(Oscillator)
@@ -22,10 +20,10 @@ using namespace std;
 /**
  * @brief Constructor
  * @param ip: IP address of kst3000
- * @note Get oscillator's ip: Press "Utility" key; Press I/O;
+ * @note Get oscillator's m_IPAddr: Press "Utility" key; Press I/O;
  * */
-KST3000::KST3000(char *ip) : Device(ip) {
-  this->name = "Mixed Single Oscilloscope";
+KST3000::KST3000(const char *ip) : Device(ip) {
+  this->m_DeviceName = "Mixed Single Oscilloscope";
 }
 
 /**
@@ -73,7 +71,7 @@ int KST3000::autoscale() {
  * @param slope: {POS | NEG | EITH | ALT} (Rising | Falling | Either | Alternating)
  * */
 int KST3000::set_trigger_edge(char *slope) {
-  string s_slope(slope);
+  std::string s_slope(slope);
   return exec("TRIGger:SLOPe " + s_slope);
 }
 
@@ -82,7 +80,7 @@ int KST3000::set_trigger_edge(char *slope) {
  * @param channel: {1(default) | 2 | 3 | 4}
  * */
 int KST3000::set_trigger_source(int channel) {
-  return exec("TRIGger:SOURce CHAN" + to_string(channel));
+  return exec("TRIGger:SOURce CHAN" + std::to_string(channel));
 }
 
 /**
@@ -90,7 +88,7 @@ int KST3000::set_trigger_source(int channel) {
  * @param range: time range to set, unit: second
  * */
 int KST3000::set_time_range(double range) {
-  return exec("TIMebase:RANGe " + to_string(range));
+  return exec("TIMebase:RANGe " + std::to_string(range));
 }
 
 /**
@@ -98,7 +96,7 @@ int KST3000::set_time_range(double range) {
  * @param delay: time delay, unit seconds
  * */
 int KST3000::set_time_delay(double delay) {
-  return exec("TIMebase:DELay " + to_string(delay));
+  return exec("TIMebase:DELay " + std::to_string(delay));
 }
 
 /**
@@ -108,7 +106,7 @@ int KST3000::set_time_delay(double delay) {
  * */
 int KST3000::set_channel_scale(double scale, int channel) {
   // set the vertical scale
-  string command = "CHANnel" + to_string(channel) + ":SCALe " + to_string(scale);
+  std::string command = "CHANnel" + std::to_string(channel) + ":SCALe " + std::to_string(scale);
   return exec(command);
 }
 
@@ -122,7 +120,7 @@ int KST3000::set_channel_scale(double scale, int channel) {
  * */
 int KST3000::set_channel_range(double range, int channel, bool is_v) {
   // set the vertical range
-  string command = "CHANnel" + to_string(channel) + ":RANGe " + to_string(range);
+  std::string command = "CHANnel" + std::to_string(channel) + ":RANGe " + std::to_string(range);
   if (!is_v) {
     command += " mV";
   }
@@ -136,7 +134,7 @@ int KST3000::set_channel_range(double range, int channel, bool is_v) {
  * */
 int KST3000::set_channel_offset(double offset, int channel) {
   // set the vertical offset
-  string command = "CHANnel" + to_string(channel) + ":offset " + to_string(offset);
+  std::string command = "CHANnel" + std::to_string(channel) + ":offset " + std::to_string(offset);
   return exec(command);
 }
 
@@ -147,22 +145,24 @@ int KST3000::set_channel_offset(double offset, int channel) {
  * */
 int KST3000::set_channel_display(int on, int channel) {
   // turns the channel on(1) or off(0)
-  string command = "CHANnel" + to_string(channel) + ":DISPlay " + to_string(on);
+  std::string command = "CHANnel" + std::to_string(channel) + ":DISPlay " + std::to_string(on);
   return exec(command);
 }
 
-vector<string> split(string s, string delimiter) {
+std::vector<std::string> split(const char *splitStr, std::string &delimiter) {
   size_t pos_start = 0, pos_end, delim_len = delimiter.length();
-  string token;
-  vector<string> res;
 
-  while ((pos_end = s.find(delimiter, pos_start)) != string::npos) {
-    token = s.substr(pos_start, pos_end - pos_start);
+  std::string stringToSplit = std::string(splitStr);
+  std::string token;
+  std::vector<std::string> res;
+
+  while ((pos_end = stringToSplit.find(delimiter, pos_start)) != std::string::npos) {
+    token = stringToSplit.substr(pos_start, pos_end - pos_start);
     pos_start = pos_end + delim_len;
     res.push_back(token);
   }
 
-  res.push_back(s.substr(pos_start));
+  res.push_back(stringToSplit.substr(pos_start));
   return res;
 }
 
@@ -174,7 +174,7 @@ vector<string> split(string s, string delimiter) {
  *  Waveform Y increment, Waveform Y origin, Waveform Y reference]
  * */
 int KST3000::get_waveform_preamble(char *preamble) {
-  string command = "WAVeform:PREamble?";
+  std::string command = "WAVeform:PREamble?";
   return exec(command, preamble);
 }
 
@@ -183,10 +183,10 @@ int KST3000::get_waveform_preamble(char *preamble) {
  * @return the number of waveform points to be transferred
  * */
 int KST3000::get_waveform_points() {
-  string command = "WAVeform:POINts?";
+  std::string command = "WAVeform:POINts?";
   char buffer[1024] = {0};
   exec(command, buffer);
-  return stoi(buffer);
+  return std::stoi(buffer);
 }
 
 /**
@@ -196,8 +196,8 @@ int KST3000::get_waveform_points() {
  *          - MAXimum
  *          - RAW
  * */
-int KST3000::set_waveform_points_mode(string mode) {
-  string command = "WAVeform:POINts:MODE " + mode;
+int KST3000::set_waveform_points_mode(std::string &mode) {
+  std::string command = "WAVeform:POINts:MODE " + mode;
   return exec(command);
 }
 
@@ -205,31 +205,31 @@ int KST3000::set_waveform_points_mode(string mode) {
  * @brief set number of waveform points
  * */
 int KST3000::set_waveform_points(int num_points) {
-  string command = "WAVeform:POINts " + to_string(num_points);
+  std::string command = "WAVeform:POINts " + std::to_string(num_points);
   return exec(command);
 }
 
 /**
  * @brief set format of waveform data(default "BYTE")
  * */
-int KST3000::set_waveform_format(string format) {
-  string command = "WAVeform:FORMat" + format;
+int KST3000::set_waveform_format(const char *format) {
+  std::string command = "WAVeform:FORMat" + std::string(format);
   return exec(command);
 }
 
 /**
  * @brief write to file
  * */
-int write_to_file(string data, string file_path) {
-  string buffer(data);
-  ofstream file;
+int write_to_file(const char *data, const std::string &file_path) {
+  std::string buffer(data);
+  std::ofstream file;
   file.open(file_path);
   if (file.is_open()) {
     file << buffer;
     file.close();
     return 0;
   }
-  cout << "File open failed!\n";
+  std::cout << "File open failed!\n";
   return 1;
 }
 
@@ -248,7 +248,7 @@ int write_to_file(string data, string file_path) {
    You can then read that number of bytes from the oscilloscope and the terminating NL character.
  * */
 int KST3000::get_waveform_data(char *data) {
-  string command = "WAVeform:DATA?";
+  std::string command = "WAVeform:DATA?";
   int num = get_waveform_points();
   int data_length = 10 + num + 1;  // 10 is the length of <header>, 1 is the end breakline(\n)
   char buffer[data_length];
@@ -266,13 +266,14 @@ int KST3000::get_real_data(double **result) {
   get_waveform_data(data);
   char preamble[1024];
   get_waveform_preamble(preamble);
-  vector<string> v_preamble = split(preamble, ",");
-  double x_increment = stod(v_preamble[4]);
-  double x_origin = stod(v_preamble[5]);
-  double x_reference = stod(v_preamble[6]);
-  double y_increment = stod(v_preamble[7]);
-  double y_origin = stod(v_preamble[8]);
-  double y_reference = stod(v_preamble[9]);
+  std::string delimiter = ",";
+  std::vector<std::string> v_preamble = split(preamble, delimiter);
+  double x_increment = std::stod(v_preamble[4]);
+  double x_origin = std::stod(v_preamble[5]);
+  double x_reference = std::stod(v_preamble[6]);
+  double y_increment = std::stod(v_preamble[7]);
+  double y_origin = std::stod(v_preamble[8]);
+  double y_reference = std::stod(v_preamble[9]);
 
   for (int i = 0; i < points; i++) {
     double time = ((i - x_reference) * x_increment) + x_origin;
@@ -302,22 +303,23 @@ int KST3000::get_real_data(double **result) {
  * plt.plot(data['time(ms)'], data['voltage(V)'])
  * @endcode
  * */
-int KST3000::save_waveform_data(string file_path) {
+int KST3000::save_waveform_data(std::string file_path) {
   char preamble[1024];
   get_waveform_preamble(preamble);
-  vector<string> v_preamble = split(preamble, ",");
+  std::string delimiter = ",";
+  std::vector<std::string> v_preamble = split(preamble, delimiter);
   int points = get_waveform_points();
 
   double *result[2];
   result[0] = new double[points];
   result[1] = new double[points];
   get_real_data(result);
-  stringstream stream;
-  stream << "time(ms)" << "," << "voltage(V)" << endl;
+  std::stringstream stream;
+  stream << "time(ms)" << "," << "voltage(V)" << std::endl;
   for (int i = 0; i < points; i++) {
-    stream << result[0][i] * 1000 << "," << result[1][i] << endl;
+    stream << result[0][i] * 1000 << "," << result[1][i] << std::endl;
   }
-  write_to_file(stream.str(), file_path);
+  write_to_file(stream.str().c_str(), file_path);
 
 //  stringstream stream;
 //  stream << "time(ms)" << "," << "voltage(V)" << endl;
@@ -341,8 +343,8 @@ int KST3000::save_waveform_data(string file_path) {
  * @param mode: {MAIN | WIND | XY | ROLL}
  * must be MAIN before executing digitize
  * */
-int KST3000::set_timebase_mode(string mode) {
-  return exec("TIMebase:MODE " + mode);
+int KST3000::set_timebase_mode(const char *mode) {
+  return exec("TIMebase:MODE " + std::string(mode));
 }
 
 /**
@@ -363,7 +365,7 @@ int KST3000::get_system_setup(char *buffer) {
  * @brief set waveform source
  * */
 int KST3000::set_waveform_source(int channel) {
-  return exec("WAVeform:SOURce CHANnel" + to_string(channel));
+  return exec("WAVeform:SOURce CHANnel" + std::to_string(channel));
 }
 
 /**/

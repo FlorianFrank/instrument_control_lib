@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <cstring>
+#include <regex>
 
 
 /**
@@ -19,7 +20,7 @@
  * */
 int is_enable_debug() {
   if (getenv("DEBUG")) {
-    return stoi(getenv("DEBUG"));
+    return std::stoi(getenv("DEBUG"));
   }
   return 0;
 }
@@ -28,9 +29,15 @@ int DEBUG = is_enable_debug();
 
 /**
  * @brief Constructor of Device
- * @param ip: the ip address of the target device
+ * @param ip: the m_IPAddr address of the target device
  */
-Device::Device(char *ip) : ip(ip) {
+Device::Device(const char *ip) : m_IPAddr(ip), m_ErrorHandle({0}), m_IsOpen(false) {
+    m_ErrorHandle.m_ErrorCode = PIL_NO_ERROR;
+}
+
+Device::~Device()
+{
+    disconnect();
 }
 
 /**
@@ -38,29 +45,37 @@ Device::Device(char *ip) : ip(ip) {
  * @todo deal with connection timeout
  * @todo deal with connection warning(you have not connected or connect automatically)
  */
-int Device::connect() {
-  cout << name + " is connecting...\n";
-  struct sockaddr_in serv_addr;
-  if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-    cout << "\n Socket creation error \n";
-    return -1;
-  }
+bool Device::connect() {
+  std::cout << m_DeviceName + " is connecting...\n";
+  struct sockaddr_in serv_addr = {0};
+  if ((m_SocketHandle = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+      return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Could not open socket");
 
   serv_addr.sin_family = AF_INET;
-  serv_addr.sin_port = htons(port);
-  if (inet_pton(AF_INET, ip, &serv_addr.sin_addr) <= 0) {
-    cout << "\n Invalid address / Address not supported \n" << endl;
-    return -1;
-  }
+  serv_addr.sin_port = htons(m_Port);
+  if (inet_pton(AF_INET, m_IPAddr, &serv_addr.sin_addr) <= 0)
+      return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while calling inet_pton");
 
-  if (::connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
-    cout << "Connection Failed. \n";
-    return -1;
-  }
+  if (::connect(m_SocketHandle, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
+      return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while calling connect");
 
-  cout << "Connection Succeed. \n";
-  return 0;
+    m_IsOpen = true;
+    return PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
 }
+
+bool Device::disconnect()
+{
+    m_IsOpen = false;
+    if(close(m_SocketHandle) == -1)
+        return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while closing socket.");
+    return PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
+}
+
+bool Device::isOpen() const
+{
+    return m_IsOpen;
+}
+
 
 /**
  * @brief execute a (SCPI) command
@@ -77,62 +92,63 @@ int Device::connect() {
  *      KST3000 k.exec("RSTater?", buffer);
  *      @endcode
  * */
-int Device::exec(string message, char *result, bool br, int size) {
-  if (br) {
+bool Device::exec(std::string message, char *result, bool br, int size) {
+    if(!m_IsOpen)
+        return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_INTERFACE_CLOSED, "Error interface is closed");
+    if (br) {
     message += '\n';
   }
   char *command = const_cast<char *>(message.c_str());
   if (DEBUG) {
-    cout << "Executing Command: " << command;
+    std::cout << "Executing Command: " << command;
   }
   // TODO: add timeout
   // testcase: KST3000 k.exec("STATus? CHANnel2", buffer);
-  send(sockfd, command, strlen(command), 0);
+  if(send(m_SocketHandle, command, strlen(command), 0) == -1)
+    return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while calling send");
+
   if (result) { // not all operation need a result
-    read(sockfd, result, size);
+    if(read(m_SocketHandle, result, size) == -1)
+      return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while calling read");
   }
   if (DEBUG) {
-    cout << "Executed Successfully.\n";
+    std::cout << "Executed Successfully.\n";
   }
-  return 0;
+    return PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
 }
 
-int Device::exec_commands(string commands) {
-  stringstream s_commands(commands);
-  string command;
+bool Device::exec_commands(std::string &commands) {
+  std::stringstream s_commands(commands);
+  std::string command;
   while (std::getline(s_commands, command)) {
-    exec(command);
+    if(!exec(command))
+        return false;
   }
+    return PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
 }
 
 /**
  * @brief Print a message containing the device's name
  * */
-void Device::what_am_i() {
-  cout << "My name is: " << name << "\n";
+std::string Device::what_am_i() {
+  return "My name is: " + m_DeviceName;
 }
 
-/**
- * @brief Start a executing cli. Input a raw SCPI command and execute.
- *        To see if a command is valid or not.
- * */
-void Device::cli() {
-  char buffer[1024] = {0};
-  while (1) {
-    cout << "Input a command: ";
-    string commands = "";
-    getline(cin, commands);
-    if (commands.compare("f") == 0) {
-      cout << "CLI finished.\n";
-      break;
+std::string Device::return_error_message()
+{
+    return std::string(PIL_ReturnErrorMessage(&m_ErrorHandle));
+}
+
+std::string Device::getDeviceIdentifier()
+{
+    if(!m_IsOpen)
+    {
+        PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_INTERFACE_CLOSED, "Error device is closed");
+        return std::string(PIL_ReturnErrorMessage(&m_ErrorHandle));
     }
-    bool is_query = commands.find("?") != string::npos;
-    if (is_query) {
-      memset(buffer, 0, sizeof(buffer));
-      exec(commands, buffer);
-      cout << "Result: " << buffer << "\n";
-    } else {
-      exec(commands);
-    }
-  }
+    char buffer[512];
+    if(!exec("*IDN?", buffer))
+        return "Error while executing *IDN?";
+
+    return std::regex_replace(buffer, std::regex("\n"), "");
 }
