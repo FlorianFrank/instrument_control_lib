@@ -9,38 +9,38 @@
 #include <iomanip>
 #include <iterator>
 #include <sstream>
-#include "command_line_interface.h"
+#include "CommandLineInterface.h"
 
 // TODO new abstraction layer
 #include "KST3000.h"
 #include "SPD1305.h"
 #include "KST33500.h"
 
-/*static*/ volatile bool command_line_interface::m_ExitCLI;
-/*static*/ std::vector<Device*> command_line_interface::m_DeviceList;
-/*static*/ int command_line_interface::m_currentDevice = 0;
-/*static*/ std::vector<std::string> command_line_interface::m_DeviceNameList;
-/*static*/ std::vector<std::string> command_line_interface::m_DeviceIPList;
+/*static*/ volatile bool CommandLineInterface::m_ExitCLI;
+/*static*/ std::vector<Device*> CommandLineInterface::m_DeviceList;
+/*static*/ int CommandLineInterface::m_currentDevice = 0;
+/*static*/ std::vector<std::string> CommandLineInterface::m_DeviceNameList;
+/*static*/ std::vector<std::string> CommandLineInterface::m_DeviceIPList;
 
-/*static*/ std::map<CLI_Commands, command_line_interface::CLICommandStruct> command_line_interface::m_DescriptionMap = {
-        {{CLI_HELP, {CLI_HELP, "help", "print list of commands", command_line_interface::printHelp}},
-         {CLI_SUPPORTED_DEVICES, {CLI_SUPPORTED_DEVICES, "supported_devices", "returns a list of supported devices", command_line_interface::getSupportedDevices}},
-        {CLI_CONNECT, {CLI_CONNECT, "connect", "(connect <ip>:<port>) establish connection with a device", command_line_interface::connect}},
-        {CLI_DISCONNECT, {CLI_DISCONNECT, "disconnect", "(disconnect <id>|all) disconnects the device connection specified by id or the connection of all devices.", command_line_interface::disconnect}},
-        {CLI_QUIT, {CLI_QUIT, "quit", "Closes the current session", command_line_interface::quit}},
-        {CLI_ACTIVE_DEVICES, {CLI_ACTIVE_DEVICES, "active_devices", "(active_devices <id>) Displays all active devices with its corresponding ID.", command_line_interface::activeDevices}},
-        {CLI_SELECT_DEVICE, {CLI_SELECT_DEVICE, "select_device", "(select_device <id>) Select device on which all following actions are executed.", command_line_interface::selectDevice}},
-        {CLI_GET_DEVICE_IDENTIFIER, {CLI_GET_DEVICE_IDENTIFIER, "get_device_identity", "(get_device_identity <id>) Return the identity of a device in the network", command_line_interface::getDeviceIdentifier}}}
+/*static*/ std::map<CLI_Commands, CommandLineInterface::CLICommandStruct> CommandLineInterface::m_DescriptionMap = {
+        {{CLI_HELP, {CLI_HELP, "help", "print list of commands", CommandLineInterface::printHelp}},
+         {CLI_SUPPORTED_DEVICES, {CLI_SUPPORTED_DEVICES, "supported_devices", "returns a list of supported devices", CommandLineInterface::getSupportedDevices}},
+        {CLI_CONNECT, {CLI_CONNECT, "connect", "(connect <ip>:<port>) establish connection with a device", CommandLineInterface::connect}},
+        {CLI_DISCONNECT, {CLI_DISCONNECT, "disconnect", "(disconnect <id>|all) disconnects the device connection specified by id or the connection of all devices.", CommandLineInterface::disconnect}},
+        {CLI_QUIT, {CLI_QUIT, "quit", "Closes the current session", CommandLineInterface::quit}},
+        {CLI_ACTIVE_DEVICES, {CLI_ACTIVE_DEVICES, "active_devices", "(active_devices <id>) Displays all active devices with its corresponding ID.", CommandLineInterface::activeDevices}},
+        {CLI_SELECT_DEVICE, {CLI_SELECT_DEVICE, "select_device", "(select_device <id>) Select device on which all following actions are executed.", CommandLineInterface::selectDevice}},
+        {CLI_GET_DEVICE_IDENTIFIER, {CLI_GET_DEVICE_IDENTIFIER, "get_device_identity", "(get_device_identity <id>) Return the identity of a device in the network", CommandLineInterface::getDeviceIdentifier}}}
 };
 
 /*static*/ void
-command_line_interface::addCustomCommandLineOption(const char *identifier, const char *description, void (*func)(std::string&))
+CommandLineInterface::addCustomCommandLineOption(const char *identifier, const char *description, void (*func)(std::string&))
 {
     auto it = m_DescriptionMap.begin();
-    m_DescriptionMap.insert (it, std::pair<CLI_Commands,command_line_interface::CLICommandStruct>(CUSTOM_COMMAND1, {CUSTOM_COMMAND1, identifier, description, func}));  // max efficiency inserting
+    m_DescriptionMap.insert (it, std::pair<CLI_Commands,CommandLineInterface::CLICommandStruct>(CUSTOM_COMMAND1, {CUSTOM_COMMAND1, identifier, description, func}));  // max efficiency inserting
 }
 
-/*static*/ const std::map<std::string, std::string> command_line_interface::m_SupportedDevices {
+/*static*/ const std::map<std::string, std::string> CommandLineInterface::m_SupportedDevices {
                 {"KST3000", "Keysight Oscilloscope"},
                 {"SPD1305", "Digilent DC Powersupply"},
                 {"KST33500", "Keysight Function Generator"},
@@ -48,13 +48,13 @@ command_line_interface::addCustomCommandLineOption(const char *identifier, const
 
 
 
-command_line_interface::command_line_interface()
+CommandLineInterface::CommandLineInterface()
 {
-    command_line_interface::m_ExitCLI = false;
+    CommandLineInterface::m_ExitCLI = false;
 }
 
 
-/*static*/ void command_line_interface::ctrl_c_handler(int signal)
+/*static*/ void CommandLineInterface::ctrl_c_handler(int signal)
 {
     if(signal == SIGINT)
     {
@@ -67,7 +67,7 @@ command_line_interface::command_line_interface()
  * @brief Start executing the command line interface. Input a raw SCPI command and execute.
  *        To see if a command is valid or not.
  * */
-bool command_line_interface::start()
+bool CommandLineInterface::start()
 {
     std::signal(SIGINT, ctrl_c_handler);
 
@@ -98,7 +98,7 @@ bool command_line_interface::start()
 
 
 
-CLI_Commands command_line_interface::ParseCommand(std::string &string)
+CLI_Commands CommandLineInterface::ParseCommand(std::string &string)
 {
     for(const auto& [key, value]: m_DescriptionMap)
     {
@@ -120,7 +120,7 @@ CLI_Commands command_line_interface::ParseCommand(std::string &string)
 
 
 
-/*static*/ void command_line_interface::printHelp(std::string&)
+/*static*/ void CommandLineInterface::printHelp(std::string&)
 {
     std::cout << "    Available commands: " << std::endl;
     for(const auto& [key, value]: m_DescriptionMap)
@@ -130,7 +130,7 @@ CLI_Commands command_line_interface::ParseCommand(std::string &string)
     std::cout << std::endl;
 }
 
-std::vector<std::string> command_line_interface::splitArguments(std::string &args)
+std::vector<std::string> CommandLineInterface::splitArguments(std::string &args)
 {
     std::istringstream iss(args);
     std::vector<std::string> argumentList((std::istream_iterator<std::string>(iss)),
@@ -139,7 +139,7 @@ std::vector<std::string> command_line_interface::splitArguments(std::string &arg
     return argumentList;
 }
 
-/*static*/ void command_line_interface::connect(std::string &args)
+/*static*/ void CommandLineInterface::connect(std::string &args)
 {
     auto argumentList = splitArguments(args);
     if(argumentList.empty())
@@ -168,7 +168,7 @@ std::vector<std::string> command_line_interface::splitArguments(std::string &arg
     // TODO assert
 }
 
-void command_line_interface::disconnect(std::string &args)
+void CommandLineInterface::disconnect(std::string &args)
 {
     auto argumentList = splitArguments(args);
     if(argumentList.empty())
@@ -205,7 +205,7 @@ void command_line_interface::disconnect(std::string &args)
 
 }
 
-void command_line_interface::setFrequency(std::string &args)
+void CommandLineInterface::setFrequency(std::string &args)
 {
     auto argumentList = splitArguments(args);
     if(m_SupportedDevices.count(argumentList[0]) == 0)
@@ -216,7 +216,7 @@ void command_line_interface::setFrequency(std::string &args)
 }
 
 
-/*static*/ void command_line_interface::getSupportedDevices(std::string &args)
+/*static*/ void CommandLineInterface::getSupportedDevices(std::string &args)
 {
     // TODO register devices somewhere else
     std::cout << "    List of supported devices" << std::endl;
@@ -226,14 +226,14 @@ void command_line_interface::setFrequency(std::string &args)
     }
 }
 
-void command_line_interface::quit(std::string &args)
+void CommandLineInterface::quit(std::string &args)
 {
     std::string closeAll = "all";
     disconnect(closeAll);
     m_ExitCLI = true;
 }
 
-void command_line_interface::activeDevices(std::string &args)
+void CommandLineInterface::activeDevices(std::string &args)
 {
     std::cout << "    List active devices: " << std::endl;
     for(int i = 0; i < m_DeviceList.size(); i++)
@@ -242,7 +242,7 @@ void command_line_interface::activeDevices(std::string &args)
     }
 }
 
-void command_line_interface::selectDevice(std::string &args)
+void CommandLineInterface::selectDevice(std::string &args)
 {
     auto argumentList = splitArguments(args);
     if(argumentList.empty())
@@ -261,7 +261,7 @@ void command_line_interface::selectDevice(std::string &args)
     m_currentDevice = index;
 }
 
-void command_line_interface::getDeviceIdentifier(std::string &args)
+void CommandLineInterface::getDeviceIdentifier(std::string &args)
 {
     auto argumentList = splitArguments(args);
     if(argumentList.empty())

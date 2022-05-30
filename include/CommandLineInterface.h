@@ -2,8 +2,8 @@
 // Created by florianfrank on 06.09.21.
 //
 
-#ifndef CE_DEVICE_COMMAND_LINE_INTERFACE_H
-#define CE_DEVICE_COMMAND_LINE_INTERFACE_H
+#ifndef CE_DEVICE_COMMANDLINEINTERFACE_H
+#define CE_DEVICE_COMMANDLINEINTERFACE_H
 
 #include <map>
 #include <vector>
@@ -34,12 +34,12 @@ enum {
 
 class Device;
 
-class command_line_interface
+class CommandLineInterface
 {
 
 public:
 
-    command_line_interface();
+    CommandLineInterface();
     bool start();
 
 
@@ -89,4 +89,4 @@ private:
 };
 
 
-#endif //CE_DEVICE_COMMAND_LINE_INTERFACE_H
+#endif //CE_DEVICE_COMMANDLINEINTERFACE_H

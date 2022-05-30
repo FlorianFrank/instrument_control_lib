@@ -5,7 +5,7 @@
 #include <iomanip>
 #include "KST33500.h"
 #include "pugixml.hpp"
-#include "command_line_interface.h"
+#include "CommandLineInterface.h"
 
 using namespace pugi;
 
@@ -330,7 +330,7 @@ bool config(KST3000 *o) {
 
 void testPulses(std::string &args)
 {
-    auto argumentList = command_line_interface::splitArguments(args);
+    auto argumentList = CommandLineInterface::splitArguments(args);
     if(argumentList.empty())
     {
         std::cout << "Error: argument list is empty" << std::endl;
@@ -375,7 +375,7 @@ void testPulses(std::string &args)
 
 void testCellAllFrequencies(std::string &args)
 {
-    auto argumentList = command_line_interface::splitArguments(args);
+    auto argumentList = CommandLineInterface::splitArguments(args);
     if(argumentList.empty())
     {
         std::cout << "Error: argument list is empty" << std::endl;
@@ -418,12 +418,12 @@ void testCellAllFrequencies(std::string &args)
 
 int main() {
 
-  command_line_interface cli;
-  command_line_interface::addCustomCommandLineOption("test_all_frequencies", "- Starts a memristor hysterese loop test with different freqnencies",
+  CommandLineInterface cli;
+  CommandLineInterface::addCustomCommandLineOption("test_all_frequencies", "- Starts a memristor hysterese loop test with different freqnencies",
                                                        testCellAllFrequencies);
 
 
-    command_line_interface::addCustomCommandLineOption("test_all_frequencies", "- Starts a memristor hysterese loop test with different freqnencies",
+    CommandLineInterface::addCustomCommandLineOption("test_all_frequencies", "- Starts a memristor hysterese loop test with different freqnencies",
                                                        testPulses);
   cli.start();
 

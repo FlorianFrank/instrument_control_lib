@@ -9,13 +9,13 @@ add_library(ce_device STATIC
         src/KST33500.cpp
         src/KST3000.cpp
         src/ErrorHandler.cpp
-        src/command_line_interface.cpp
+        src/CommandLineInterface.cpp
 
         include/Device.h
         include/SPD1305.h
         include/KST33500.h
         include/KST3000.h
-        include/command_line_interface.h
+        include/CommandLineInterface.h
         )
 
 target_compile_features(ce_device PRIVATE cxx_std_17)

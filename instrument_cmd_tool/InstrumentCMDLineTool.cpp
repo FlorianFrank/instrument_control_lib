@@ -3,11 +3,11 @@
 //
 
 
-#include "command_line_interface.h"
+#include "CommandLineInterface.h"
 
 int main()
 {
-    command_line_interface commandLineInterface;
+    CommandLineInterface commandLineInterface;
     commandLineInterface.start();
 
     return 0;
