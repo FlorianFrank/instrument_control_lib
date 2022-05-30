@@ -5,7 +5,7 @@
 #ifndef PLATFORMINDEPENDENTLIB_ERRORHANDLER_H
 #define PLATFORMINDEPENDENTLIB_ERRORHANDLER_H
 
-#include "error_code_defines.h"
+#include "ErrorCodeDefines.h"
 #include <stdint.h>
 
 const char* PIL_ErrorCodeToString(PIL_ERROR_CODE errorCode);
