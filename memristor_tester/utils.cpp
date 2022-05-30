@@ -7,8 +7,8 @@
 #include <sstream>
 #include <unistd.h>
 #include "pugixml.hpp"
-#include "kst3000.h"
-#include "kst33500.h"
+#include "KST3000.h"
+#include "KST33500.h"
 #include "utils.h"
 //#include <boost/filesystem.hpp>
 

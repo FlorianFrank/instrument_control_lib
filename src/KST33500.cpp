@@ -2,22 +2,22 @@
 // Created by liuwuhao on 27.05.21.
 //
 
-#include "kst33500.h"
+#include "KST33500.h"
 #include <unistd.h>
 
 using namespace std;
 
-KST33500::KST33500(char *ip) : Device(ip) {
+KST33500::KST33500(const char *ip) : Device(ip) {
   this->m_DeviceName = "Keysight 33500B Waveform Generator";
 }
 
-int KST33500::display(string text) {
+bool KST33500::display(std::string &text) {
   string msg = "DISP:TEXT '" + text + "'";
     Exec(msg);
   return 0;
 }
 
-int KST33500::display_connection() {
+bool KST33500::display_connection() {
     Exec("DISP:TEXT 'Connected Successfully. Returning...'");
   sleep(2);
     Exec("DISP ON");
@@ -25,22 +25,23 @@ int KST33500::display_connection() {
   return 0;
 }
 
-int KST33500::function(string fun) {
+bool KST33500::function(string& fun) {
   string msg = "FUNCtion " + fun;
     Exec(msg);
   return 0;
 }
 
-int KST33500::frequency(double value) {
+bool KST33500::frequency(double value) {
   string msg = "FREQuency " + to_string(value);
     Exec(msg);
   return 0;
 }
 
-int KST33500::voltage(double value, string constrain) {
+bool KST33500::voltage(double value, const char *constrain)
+{
   string msg = "VOLTage";
   if (constrain != "") {
-    msg += ":" + constrain + " ";
+  //  msg += ":" + constrain + " "; TODO
   }
   msg += " " + to_string(value);
     Exec(msg);
@@ -66,7 +67,7 @@ int KST33500::set_pulse_width(double value) {
   return Exec(msg);
 }
 
-int KST33500::output(bool on) {
+bool KST33500::output(bool on) {
   string msg = "OUTPut";
   if (on) {
     msg += " ON";

@@ -1,9 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <unistd.h>
-#include <kst3000.h>
+#include <KST3000.h>
 #include <iomanip>
-#include "kst33500.h"
+#include "KST33500.h"
 #include "pugixml.hpp"
 #include "command_line_interface.h"
 

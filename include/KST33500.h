@@ -63,6 +63,14 @@ private:
     FunctionType m_CurrentFunction;
     bool m_OutputEnabled;
     double m_Amplitude;
+
+    bool function(std::string &fun);
+
+    int offset(double value);
+
+    int set_pulse_width(double value);
+
+    int phase(std::string value);
 };
 
 #endif //CE_DEVICE_KST33500_H

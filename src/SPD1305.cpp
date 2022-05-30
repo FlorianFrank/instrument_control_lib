@@ -3,7 +3,7 @@
 //
 #include <iostream>
 #include <cstring>
-#include "spd1305.h"
+#include "SPD1305.h"
 
 SPD1305::SPD1305(const char *ip) : Device(ip) {
   this->m_IPAddr = ip;

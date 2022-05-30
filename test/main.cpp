@@ -1,8 +1,8 @@
 #include "iostream"
 #include "sstream"
 #include "utils.h"
-#include "kst3000.h"
-#include "kst33500.h"
+#include "KST3000.h"
+#include "KST33500.h"
 #include "boost/filesystem.hpp"
 
 using namespace std;

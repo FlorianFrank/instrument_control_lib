@@ -5,16 +5,16 @@ set(CMAKE_CXX_STANDARD 11)
 
 add_library(ce_device STATIC
         src/Device.cpp
-        src/spd1305.cpp
-        src/kst33500.cpp
-        src/kst3000.cpp
+        src/SPD1305.cpp
+        src/KST33500.cpp
+        src/KST3000.cpp
         src/ErrorHandler.cpp
         src/command_line_interface.cpp
 
         include/Device.h
-        include/spd1305.h
-        include/kst33500.h
-        include/kst3000.h
+        include/SPD1305.h
+        include/KST33500.h
+        include/KST3000.h
         include/command_line_interface.h
         )
 

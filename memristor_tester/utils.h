@@ -2,8 +2,8 @@
 // Created by liuwuhao on 28.09.21.
 //
 
-#include "kst3000.h"
-#include "kst33500.h"
+#include "KST3000.h"
+#include "KST33500.h"
 
 #ifndef CE_DEVICE_UTILS_H
 #define CE_DEVICE_UTILS_H

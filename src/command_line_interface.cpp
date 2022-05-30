@@ -12,9 +12,9 @@
 #include "command_line_interface.h"
 
 // TODO new abstraction layer
-#include "kst3000.h"
-#include "spd1305.h"
-#include "kst33500.h"
+#include "KST3000.h"
+#include "SPD1305.h"
+#include "KST33500.h"
 
 /*static*/ volatile bool command_line_interface::m_ExitCLI;
 /*static*/ std::vector<Device*> command_line_interface::m_DeviceList;

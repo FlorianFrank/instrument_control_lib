@@ -4,9 +4,9 @@
 #include <iostream>
 #include <unistd.h>
 #include <sstream>
-#include "kst33500.h"
-#include "spd1305.h"
-#include "kst3000.h"
+#include "KST33500.h"
+#include "SPD1305.h"
+#include "KST3000.h"
 
 using namespace std;
 
