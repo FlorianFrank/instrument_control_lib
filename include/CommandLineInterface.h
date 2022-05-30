@@ -8,6 +8,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include "ConfigFileParser.h"
 
 
 enum CLI_Commands {
@@ -83,9 +84,12 @@ private:
 
 
     static std::map<CLI_Commands, CLICommandStruct> m_DescriptionMap;
-    static const std::map<std::string, std::string> m_SupportedDevices;
+    static std::map<std::string, std::string> m_SupportedDevices;
     static std::vector<std::string> m_DeviceNameList;
     static std::vector<std::string> m_DeviceIPList;
+
+    static std::vector<DeviceDescription> m_DeviceDescriptions;
+
 };
 
 

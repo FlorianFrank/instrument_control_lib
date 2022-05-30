@@ -44,6 +44,7 @@ enum
     /** Error no such file or directory. */
     PIL_NO_SUCH_FILE,
 
+    PIL_XML_PARSING_ERROR,
      /** Invalid error code. */
     PIL_UNKNOWN_ERROR,
 

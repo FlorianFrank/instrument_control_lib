@@ -6,7 +6,7 @@
 #define PLATFORMINDEPENDENTLIB_ERRORHANDLER_H
 
 #include "ErrorCodeDefines.h"
-#include <stdint.h>
+#include <cstdint>
 
 const char* PIL_ErrorCodeToString(PIL_ERROR_CODE errorCode);
 
