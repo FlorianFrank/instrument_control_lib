@@ -45,6 +45,8 @@ char errMsgBuff[512];
              return "File only partially written";
          case PIL_NO_SUCH_FILE:
              return "No such file or directory";
+         case PIL_XML_PARSING_ERROR:
+             return "Error while parsing XML file";
          default:
              return "Unknown error";
      }

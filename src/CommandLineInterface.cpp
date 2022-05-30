@@ -9,6 +9,7 @@
 #include <iomanip>
 #include <iterator>
 #include <sstream>
+#include <ConfigFileParser.h>
 #include "CommandLineInterface.h"
 
 // TODO new abstraction layer
@@ -21,6 +22,7 @@
 /*static*/ int CommandLineInterface::m_currentDevice = 0;
 /*static*/ std::vector<std::string> CommandLineInterface::m_DeviceNameList;
 /*static*/ std::vector<std::string> CommandLineInterface::m_DeviceIPList;
+/*static*/ std::vector<DeviceDescription> CommandLineInterface::m_DeviceDescriptions;
 
 /*static*/ std::map<CLI_Commands, CommandLineInterface::CLICommandStruct> CommandLineInterface::m_DescriptionMap = {
         {{CLI_HELP, {CLI_HELP, "help", "print list of commands", CommandLineInterface::printHelp}},
@@ -37,14 +39,12 @@
 CommandLineInterface::addCustomCommandLineOption(const char *identifier, const char *description, void (*func)(std::string&))
 {
     auto it = m_DescriptionMap.begin();
-    m_DescriptionMap.insert (it, std::pair<CLI_Commands,CommandLineInterface::CLICommandStruct>(CUSTOM_COMMAND1, {CUSTOM_COMMAND1, identifier, description, func}));  // max efficiency inserting
+    m_DescriptionMap.insert(it, std::pair<CLI_Commands, CommandLineInterface::CLICommandStruct>(CUSTOM_COMMAND1,
+                                                                                                {CUSTOM_COMMAND1,
+                                                                                                 identifier,
+                                                                                                 description,
+                                                                                                 func}));  // max efficiency inserting
 }
-
-/*static*/ const std::map<std::string, std::string> CommandLineInterface::m_SupportedDevices {
-                {"KST3000", "Keysight Oscilloscope"},
-                {"SPD1305", "Digilent DC Powersupply"},
-                {"KST33500", "Keysight Function Generator"},
-        };
 
 
 
@@ -74,6 +74,11 @@ bool CommandLineInterface::start()
     std::cout << "Instrument control lib command line..." << std::endl;
     std::cout << "Type 'help' to get a list of available commands" << std::endl;
 
+    std::string configFile = DEVICE_CONFIG_FILE;
+    std::cout << DEVICE_CONFIG_FILE << std::endl;
+    PIL_ERROR_CODE errorCode = ConfigFileParser::ParseSupportedDevices(configFile, m_DeviceDescriptions);
+    if(errorCode != PIL_NO_ERROR)
+        std::cout << PIL_ErrorCodeToString(errorCode);
 
     while (!m_ExitCLI)
     {
@@ -208,7 +213,7 @@ void CommandLineInterface::disconnect(std::string &args)
 void CommandLineInterface::setFrequency(std::string &args)
 {
     auto argumentList = splitArguments(args);
-    if(m_SupportedDevices.count(argumentList[0]) == 0)
+//    if(m_SupportedDevices.count(argumentList[0]) == 0)
     {
         std::cout << "Error specified device not within the supported devices list" << std::endl;
         return;
@@ -220,9 +225,9 @@ void CommandLineInterface::setFrequency(std::string &args)
 {
     // TODO register devices somewhere else
     std::cout << "    List of supported devices" << std::endl;
-    for(const auto& [key, value]: m_SupportedDevices)
+    for(const auto& deviceDescription: m_DeviceDescriptions)
     {
-        std::cout << "        " << key << " - " << value << std::endl;
+        std::cout << "        " << deviceDescription.m_DeviceName << " - " << deviceDescription.m_DeviceDescription << std::endl;
     }
 }
 
