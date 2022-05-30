@@ -7,6 +7,7 @@
 
 #include <map>
 #include <vector>
+#include <string>
 
 
 enum CLI_Commands {

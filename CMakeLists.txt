@@ -4,14 +4,14 @@ project(ce_device)
 set(CMAKE_CXX_STANDARD 11)
 
 add_library(ce_device STATIC
-        src/device.cpp
+        src/Device.cpp
         src/spd1305.cpp
         src/kst33500.cpp
         src/kst3000.cpp
         src/error_handler.cpp
         src/command_line_interface.cpp
 
-        include/device.h
+        include/Device.h
         include/spd1305.h
         include/kst33500.h
         include/kst3000.h

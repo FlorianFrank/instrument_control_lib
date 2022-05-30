@@ -5,7 +5,7 @@
 #ifndef CE_DEVICE_KST3000_H
 #define CE_DEVICE_KST3000_H
 
-#include "device.h"
+#include "Device.h"
 
 class KST3000 : public Device {
 

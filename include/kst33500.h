@@ -5,7 +5,7 @@
 #ifndef CE_DEVICE_KST33500_H
 #define CE_DEVICE_KST33500_H
 
-#include "device.h"
+#include "Device.h"
 
 
 class KST33500 : public Device {

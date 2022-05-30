@@ -6,7 +6,7 @@
 #define CE_DEVICE_SPD1305_H
 
 
-#include "device.h"
+#include "Device.h"
 
 class SPD1305 : public Device {
 

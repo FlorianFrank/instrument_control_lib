@@ -5,7 +5,7 @@
 #include <csignal>
 #include <iostream>
 #include <cstring>
-#include <device.h>
+#include <Device.h>
 #include <iomanip>
 #include <iterator>
 #include <sstream>
@@ -154,11 +154,11 @@ std::vector<std::string> command_line_interface::splitArguments(std::string &arg
 
 
     std::cout << "    Connect to Device " <<  "IP: " << argumentList[0] << " ID (" << m_DeviceList.size()-1 << ")" << std::endl;
-    if(!device->connect())
+    if(!device->Connect())
     {
-        std::cout << device->return_error_message() << std::endl;
+        std::cout << device->ReturnErrorMessage() << std::endl;
     }
-    std::string deviceName = device->getDeviceIdentifier();
+    std::string deviceName = device->GetDeviceIdentifier();
     m_DeviceNameList.push_back(deviceName);
     m_DeviceIPList.push_back(argumentList[0]);
     std::cout << "    Device identified as " << deviceName << std::endl;
@@ -173,7 +173,7 @@ void command_line_interface::disconnect(std::string &args)
     auto argumentList = splitArguments(args);
     if(argumentList.empty())
     {
-        std::cout << "Please specify an ID or select all to disconnect all devices" << std::endl;
+        std::cout << "Please specify an ID or select all to Disconnect all devices" << std::endl;
         return;
     }
 
@@ -181,10 +181,10 @@ void command_line_interface::disconnect(std::string &args)
     {
         for(auto device: m_DeviceList)
         {
-            if(!device->disconnect())
-                std::cout << device->return_error_message() << std::endl;
+            if(!device->Disconnect())
+                std::cout << device->ReturnErrorMessage() << std::endl;
             else
-                std::cout << "Device " + device->what_am_i() + " closed successfully" << std::endl;
+                std::cout << "Device " + device->WhatAmI() + " closed successfully" << std::endl;
         }
     }
     else {
@@ -197,10 +197,10 @@ void command_line_interface::disconnect(std::string &args)
         }
         else
         {
-            if(!m_DeviceList[id]->disconnect())
-                std::cout << m_DeviceList[id]->return_error_message() << std::endl;
+            if(!m_DeviceList[id]->Disconnect())
+                std::cout << m_DeviceList[id]->ReturnErrorMessage() << std::endl;
             else
-                std::cout << "Device " + m_DeviceList[id]->what_am_i() + " closed successfully" << std::endl;        }
+                std::cout << "Device " + m_DeviceList[id]->WhatAmI() + " closed successfully" << std::endl;        }
     }
 
 }
@@ -238,7 +238,7 @@ void command_line_interface::activeDevices(std::string &args)
     std::cout << "    List active devices: " << std::endl;
     for(int i = 0; i < m_DeviceList.size(); i++)
     {
-        std::cout << "         ID: " << i << " " << m_DeviceNameList[i] << " IP: " << m_DeviceIPList[i] <<" " << (m_DeviceList[i]->isOpen() ? "Connected" : "Disconnected") << std::endl;
+        std::cout << "         ID: " << i << " " << m_DeviceNameList[i] << " IP: " << m_DeviceIPList[i] << " " << (m_DeviceList[i]->IsOpen() ? "Connected" : "Disconnected") << std::endl;
     }
 }
 
@@ -277,7 +277,7 @@ void command_line_interface::getDeviceIdentifier(std::string &args)
         return;
     }
     std::cout << "              Get Device Identifier:";
-    std::cout << "    " << m_DeviceList[index]->getDeviceIdentifier();
+    std::cout << "    " << m_DeviceList[index]->GetDeviceIdentifier();
 }
 
 

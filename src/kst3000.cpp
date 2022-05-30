@@ -32,38 +32,38 @@ KST3000::KST3000(const char *ip) : Device(ip) {
  *        Can be used to make sure the connection is working.
  * */
 int KST3000::display_connection() {
-  exec("DISP:TEXT 'Connected Successfully. Returning...'");
+    Exec("DISP:TEXT 'Connected Successfully. Returning...'");
   sleep(2);
-  exec("DISP ON");
-  return exec("DISPlay:TEXT:CLEar");
+    Exec("DISP ON");
+  return Exec("DISPlay:TEXT:CLEar");
 }
 
 /**
  * @brief Start to run. Equivalent to press the Run/Stop button when the device is not running.
  * */
 int KST3000::run() {
-  return exec("RUN");
+  return Exec("RUN");
 }
 
 /**
  * @brief Stop to run. Equivalent to press the Run/Stop button when the device is not stopping.
  * */
 int KST3000::stop() {
-  return exec("STOP");
+  return Exec("STOP");
 }
 
 /**
  * @brief Equivalent to press the Single button.
  * */
 int KST3000::single() {
-  return exec("SINGLE");
+  return Exec("SINGLE");
 }
 
 /**
  * @brief Equivalent to press the "Auto Scale" button.
  * */
 int KST3000::autoscale() {
-  return exec("AUToscale");
+  return Exec("AUToscale");
 }
 
 /**
@@ -72,7 +72,7 @@ int KST3000::autoscale() {
  * */
 int KST3000::set_trigger_edge(char *slope) {
   std::string s_slope(slope);
-  return exec("TRIGger:SLOPe " + s_slope);
+  return Exec("TRIGger:SLOPe " + s_slope);
 }
 
 /**
@@ -80,7 +80,7 @@ int KST3000::set_trigger_edge(char *slope) {
  * @param channel: {1(default) | 2 | 3 | 4}
  * */
 int KST3000::set_trigger_source(int channel) {
-  return exec("TRIGger:SOURce CHAN" + std::to_string(channel));
+  return Exec("TRIGger:SOURce CHAN" + std::to_string(channel));
 }
 
 /**
@@ -88,7 +88,7 @@ int KST3000::set_trigger_source(int channel) {
  * @param range: time range to set, unit: second
  * */
 int KST3000::set_time_range(double range) {
-  return exec("TIMebase:RANGe " + std::to_string(range));
+  return Exec("TIMebase:RANGe " + std::to_string(range));
 }
 
 /**
@@ -96,7 +96,7 @@ int KST3000::set_time_range(double range) {
  * @param delay: time delay, unit seconds
  * */
 int KST3000::set_time_delay(double delay) {
-  return exec("TIMebase:DELay " + std::to_string(delay));
+  return Exec("TIMebase:DELay " + std::to_string(delay));
 }
 
 /**
@@ -107,7 +107,7 @@ int KST3000::set_time_delay(double delay) {
 int KST3000::set_channel_scale(double scale, int channel) {
   // set the vertical scale
   std::string command = "CHANnel" + std::to_string(channel) + ":SCALe " + std::to_string(scale);
-  return exec(command);
+  return Exec(command);
 }
 
 /**
@@ -124,7 +124,7 @@ int KST3000::set_channel_range(double range, int channel, bool is_v) {
   if (!is_v) {
     command += " mV";
   }
-  return exec(command);
+  return Exec(command);
 }
 
 /**
@@ -135,7 +135,7 @@ int KST3000::set_channel_range(double range, int channel, bool is_v) {
 int KST3000::set_channel_offset(double offset, int channel) {
   // set the vertical offset
   std::string command = "CHANnel" + std::to_string(channel) + ":offset " + std::to_string(offset);
-  return exec(command);
+  return Exec(command);
 }
 
 /**
@@ -146,7 +146,7 @@ int KST3000::set_channel_offset(double offset, int channel) {
 int KST3000::set_channel_display(int on, int channel) {
   // turns the channel on(1) or off(0)
   std::string command = "CHANnel" + std::to_string(channel) + ":DISPlay " + std::to_string(on);
-  return exec(command);
+  return Exec(command);
 }
 
 std::vector<std::string> split(const char *splitStr, std::string &delimiter) {
@@ -175,7 +175,7 @@ std::vector<std::string> split(const char *splitStr, std::string &delimiter) {
  * */
 int KST3000::get_waveform_preamble(char *preamble) {
   std::string command = "WAVeform:PREamble?";
-  return exec(command, preamble);
+  return Exec(command, preamble);
 }
 
 /**
@@ -185,7 +185,7 @@ int KST3000::get_waveform_preamble(char *preamble) {
 int KST3000::get_waveform_points() {
   std::string command = "WAVeform:POINts?";
   char buffer[1024] = {0};
-  exec(command, buffer);
+    Exec(command, buffer);
   return std::stoi(buffer);
 }
 
@@ -198,7 +198,7 @@ int KST3000::get_waveform_points() {
  * */
 int KST3000::set_waveform_points_mode(std::string &mode) {
   std::string command = "WAVeform:POINts:MODE " + mode;
-  return exec(command);
+  return Exec(command);
 }
 
 /**
@@ -206,7 +206,7 @@ int KST3000::set_waveform_points_mode(std::string &mode) {
  * */
 int KST3000::set_waveform_points(int num_points) {
   std::string command = "WAVeform:POINts " + std::to_string(num_points);
-  return exec(command);
+  return Exec(command);
 }
 
 /**
@@ -214,7 +214,7 @@ int KST3000::set_waveform_points(int num_points) {
  * */
 int KST3000::set_waveform_format(const char *format) {
   std::string command = "WAVeform:FORMat" + std::string(format);
-  return exec(command);
+  return Exec(command);
 }
 
 /**
@@ -252,7 +252,7 @@ int KST3000::get_waveform_data(char *data) {
   int num = get_waveform_points();
   int data_length = 10 + num + 1;  // 10 is the length of <header>, 1 is the end breakline(\n)
   char buffer[data_length];
-  exec(command, buffer, true, data_length);
+    Exec(command, buffer, true, data_length);
   memcpy(data, buffer + 10, num);
   return 0;
 }
@@ -344,28 +344,28 @@ int KST3000::save_waveform_data(std::string file_path) {
  * must be MAIN before executing digitize
  * */
 int KST3000::set_timebase_mode(const char *mode) {
-  return exec("TIMebase:MODE " + std::string(mode));
+  return Exec("TIMebase:MODE " + std::string(mode));
 }
 
 /**
  * @brief capture data
  * */
 int KST3000::digitize() {
-  return exec("DIGitize");
+  return Exec("DIGitize");
 }
 
 /**
  * @brief get system setup
  * */
 int KST3000::get_system_setup(char *buffer) {
-  return exec("SYSTem:SETup?", buffer);
+  return Exec("SYSTem:SETup?", buffer);
 }
 
 /**
  * @brief set waveform source
  * */
 int KST3000::set_waveform_source(int channel) {
-  return exec("WAVeform:SOURce CHANnel" + std::to_string(channel));
+  return Exec("WAVeform:SOURce CHANnel" + std::to_string(channel));
 }
 
 /**/

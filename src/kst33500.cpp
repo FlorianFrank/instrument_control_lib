@@ -8,32 +8,32 @@
 using namespace std;
 
 KST33500::KST33500(char *ip) : Device(ip) {
-  this->name = "Keysight 33500B Waveform Generator";
+  this->m_DeviceName = "Keysight 33500B Waveform Generator";
 }
 
 int KST33500::display(string text) {
   string msg = "DISP:TEXT '" + text + "'";
-  exec(msg);
+    Exec(msg);
   return 0;
 }
 
 int KST33500::display_connection() {
-  exec("DISP:TEXT 'Connected Successfully. Returning...'");
+    Exec("DISP:TEXT 'Connected Successfully. Returning...'");
   sleep(2);
-  exec("DISP ON");
-  exec("DISPlay:TEXT:CLEar");
+    Exec("DISP ON");
+    Exec("DISPlay:TEXT:CLEar");
   return 0;
 }
 
 int KST33500::function(string fun) {
   string msg = "FUNCtion " + fun;
-  exec(msg);
+    Exec(msg);
   return 0;
 }
 
 int KST33500::frequency(double value) {
   string msg = "FREQuency " + to_string(value);
-  exec(msg);
+    Exec(msg);
   return 0;
 }
 
@@ -43,7 +43,7 @@ int KST33500::voltage(double value, string constrain) {
     msg += ":" + constrain + " ";
   }
   msg += " " + to_string(value);
-  exec(msg);
+    Exec(msg);
   return 0;
 }
 
@@ -54,7 +54,7 @@ int KST33500::voltage(double value, string constrain) {
 int KST33500::offset(double value) {
   string msg = "VOLTage:OFFSet ";
   msg += to_string(value);
-  return exec(msg);
+  return Exec(msg);
 }
 
 /**
@@ -63,7 +63,7 @@ int KST33500::offset(double value) {
 int KST33500::set_pulse_width(double value) {
   string msg = "FUNCtion:PULSe:WIDTh ";
   msg += to_string(value) + " ms";
-  return exec(msg);
+  return Exec(msg);
 }
 
 int KST33500::output(bool on) {
@@ -73,12 +73,12 @@ int KST33500::output(bool on) {
   } else {
     msg += " OFF";
   }
-  exec(msg);
+    Exec(msg);
   return 0;
 }
 
 int KST33500::phase(string value) {
   string msg = "PHASe " + value;
-  exec(msg);
+    Exec(msg);
   return 0;
 }

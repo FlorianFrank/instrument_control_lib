@@ -12,7 +12,7 @@ SPD1305::SPD1305(const char *ip) : Device(ip) {
 
 int SPD1305::set_current(double current, int channel) {
   std::string msg = "CH" + std::to_string(channel) + ":CURRent " + std::to_string(current);
-  exec(msg);
+    Exec(msg);
   return 0;
 }
 
@@ -20,13 +20,13 @@ double SPD1305::get_current(int channel) {
   std::string msg = "CH" + std::to_string(channel) + ":CURRent?";
   // TODO: 20 ?
   char result[20] = {0};
-  exec(msg, result);
+    Exec(msg, result);
   return atof(result);
 }
 
 int SPD1305::turnon(int channel) {
   std::string msg = "OUTPut CH" + std::to_string(channel) + ",ON";
-  exec(msg, nullptr, false);
+    Exec(msg, nullptr, false);
   return 0;
 }
 
@@ -35,6 +35,6 @@ int SPD1305::turnoff(int channel) {
   std::cout << str;
   char command[str.length() + 1];
   strcpy(command, str.c_str());
-  exec(command, nullptr, false);
+    Exec(command, nullptr, false);
   return 0;
 }

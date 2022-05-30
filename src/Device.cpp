@@ -1,9 +1,15 @@
-#include "device.h"
+/**
+ * @brief Base class containing the base functionality of all devices.
+ * And parameters to store the name connection type, etc.
+ * @authors Wuhao Liu, Florian Frank
+ * @copyright University of Passau
+ */
+#include "Device.h"
+
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <iostream>
-#include <sstream>
 #include <cstring>
 #include <regex>
 
@@ -11,7 +17,7 @@
 /**
  * @class Device
  * @brief Basic device class
- * This class contains all basic method of all devices, like connect, exec, what_am_i etc.
+ * This class contains all basic method of all devices, like Connect, Exec, WhatAmI etc.
  */
 
 
@@ -37,15 +43,15 @@ Device::Device(const char *ip) : m_IPAddr(ip), m_ErrorHandle({0}), m_IsOpen(fals
 
 Device::~Device()
 {
-    disconnect();
+    Disconnect();
 }
 
 /**
- * @brief connect to the device
+ * @brief Connect to the device
  * @todo deal with connection timeout
- * @todo deal with connection warning(you have not connected or connect automatically)
+ * @todo deal with connection warning(you have not connected or Connect automatically)
  */
-bool Device::connect() {
+bool Device::Connect() {
   std::cout << m_DeviceName + " is connecting...\n";
   struct sockaddr_in serv_addr = {0};
   if ((m_SocketHandle = socket(AF_INET, SOCK_STREAM, 0)) < 0)
@@ -57,13 +63,13 @@ bool Device::connect() {
       return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while calling inet_pton");
 
   if (::connect(m_SocketHandle, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
-      return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while calling connect");
+      return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while calling Connect");
 
     m_IsOpen = true;
     return PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
 }
 
-bool Device::disconnect()
+bool Device::Disconnect()
 {
     m_IsOpen = false;
     if(close(m_SocketHandle) == -1)
@@ -71,7 +77,7 @@ bool Device::disconnect()
     return PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
 }
 
-bool Device::isOpen() const
+bool Device::IsOpen() const
 {
     return m_IsOpen;
 }
@@ -89,10 +95,10 @@ bool Device::isOpen() const
  *        Support for dynamic length of result;
  * @warning Some commands may timeout
  *      @code{.c}
- *      KST3000 k.exec("RSTater?", buffer);
+ *      KST3000 k.Exec("RSTater?", buffer);
  *      @endcode
  * */
-bool Device::exec(std::string message, char *result, bool br, int size) {
+bool Device::Exec(std::string message, char *result, bool br, int size) {
     if(!m_IsOpen)
         return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_INTERFACE_CLOSED, "Error interface is closed");
     if (br) {
@@ -117,11 +123,11 @@ bool Device::exec(std::string message, char *result, bool br, int size) {
     return PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
 }
 
-bool Device::exec_commands(std::string &commands) {
+bool Device::ExecCommands(std::string &commands) {
   std::stringstream s_commands(commands);
   std::string command;
   while (std::getline(s_commands, command)) {
-    if(!exec(command))
+    if(!Exec(command))
         return false;
   }
     return PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
@@ -130,16 +136,16 @@ bool Device::exec_commands(std::string &commands) {
 /**
  * @brief Print a message containing the device's name
  * */
-std::string Device::what_am_i() {
+std::string Device::WhatAmI() {
   return "My name is: " + m_DeviceName;
 }
 
-std::string Device::return_error_message()
+std::string Device::ReturnErrorMessage()
 {
     return std::string(PIL_ReturnErrorMessage(&m_ErrorHandle));
 }
 
-std::string Device::getDeviceIdentifier()
+std::string Device::GetDeviceIdentifier()
 {
     if(!m_IsOpen)
     {
@@ -147,7 +153,7 @@ std::string Device::getDeviceIdentifier()
         return std::string(PIL_ReturnErrorMessage(&m_ErrorHandle));
     }
     char buffer[512];
-    if(!exec("*IDN?", buffer))
+    if(!Exec("*IDN?", buffer))
         return "Error while executing *IDN?";
 
     return std::regex_replace(buffer, std::regex("\n"), "");

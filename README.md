@@ -37,16 +37,16 @@ out
 int main() {
     // provide a IP address, some devices may need an extra port parameter
     KST33500 k = KST33500("xx.xx.xx.xx"); 
-    k.connect();
+    k.Connect();
 }
 ```
 
 ### Execute commands
-####Use exec function to send SCPI commands.
+####Use Exec function to send SCPI commands.
 
 ```c++
 // set a SIN wave
-k.exec("FUNCtion SIN");
+k.Exec("FUNCtion SIN");
 ```
 #### Use wrapped functions
 We wrapped some common commands to save your time. Here is an example. 
@@ -73,7 +73,7 @@ In this lab, we use socket to send SCPI commands to devices in order
 control them remotely.   
 Check the documents in [Docs](./docs%20and%20specs) for SCPI commands. 
 
-Basically, you can run any commands using exec commands. For saving time,
+Basically, you can run any commands using Exec commands. For saving time,
 we wrapped some frequently used commands. But we cannot wrap all the commands.
 
 Here is an instruction for wrapping a command. Let's say you want to wrap a
@@ -87,11 +87,11 @@ Go to kst33500.h file and add a function signature called "function".
 int function(string fun);
 ```
 Go to skt33500.cpp file and add the implementation of this function.
-What you need to do is making an SCPI command and invoke the exec function.
+What you need to do is making an SCPI command and invoke the Exec function.
 ```c++
 int KST33500::function(string fun) {
     string msg = "FUNCtion " + fun;
-    exec(msg);
+    Exec(msg);
     return 0;
 }
 ```

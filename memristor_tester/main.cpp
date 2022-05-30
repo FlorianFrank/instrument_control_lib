@@ -33,9 +33,9 @@ void sleep(double secs) {
 
 bool connect_wave_generator(KST33500 *waveformGenerator)
 {
-  if(!waveformGenerator->connect())
+  if(!waveformGenerator->Connect())
   {
-      std::cout << "Error while connecting to the wave_generator (" << waveformGenerator->return_error_message() << ")" << std::endl;
+      std::cout << "Error while connecting to the wave_generator (" << waveformGenerator->ReturnErrorMessage() << ")" << std::endl;
       delete waveformGenerator;
       return false;
   }
@@ -44,9 +44,9 @@ bool connect_wave_generator(KST33500 *waveformGenerator)
 
 bool connect_oscilloscope(KST3000 *oscilloscope)
 {
-    if (!oscilloscope->connect())
+    if (!oscilloscope->Connect())
     {
-        std::cout << "Error while connecting to the oscilloscope (" << oscilloscope->return_error_message() << ")"
+        std::cout << "Error while connecting to the oscilloscope (" << oscilloscope->ReturnErrorMessage() << ")"
                   << std::endl;
         delete oscilloscope;
         return false;
@@ -68,30 +68,30 @@ bool set_params(KST33500 *wg, KST3000 *o, int frequency, int voltage) {
 
   double d_voltage = voltage / 10.0;
   if(!wg->voltage(d_voltage))
-      std::cout << __LINE__ << ": Error while setting the voltage (" << wg->return_error_message() << ")" << std::endl;
+      std::cout << __LINE__ << ": Error while setting the voltage (" << wg->ReturnErrorMessage() << ")" << std::endl;
 
   if(!wg->frequency(frequency))
   {
-      std::cout << __LINE__ << ": Error while setting the frequency " << wg->return_error_message() << ")" << std::endl;
+      std::cout << __LINE__ << ": Error while setting the frequency " << wg->ReturnErrorMessage() << ")" << std::endl;
       return false;
   }
 
   if(!o->set_channel_range(d_voltage * 2, 1)) // *2 for sin wave
   {
-      std::cout << __LINE__ << ": Error while setting the channel_range " << wg->return_error_message() << ")"
+      std::cout << __LINE__ << ": Error while setting the channel_range " << wg->ReturnErrorMessage() << ")"
                 << std::endl;
       return false;
   }
 
   if(!o->set_channel_range(d_voltage * 2, 2)) // *2 for sin wave
   {
-      std::cout << __LINE__ << ": Error while setting the channel_range " << wg->return_error_message() << ")" << std::endl;
+      std::cout << __LINE__ << ": Error while setting the channel_range " << wg->ReturnErrorMessage() << ")" << std::endl;
       return false;
   }
 
   if(!o->set_time_range(CYCLES_PER_FILE / frequency)) // collect 1 cycle every time
   {
-      std::cout << __LINE__ << ": Error while setting the time_range " << wg->return_error_message() << ")" << std::endl;
+      std::cout << __LINE__ << ": Error while setting the time_range " << wg->ReturnErrorMessage() << ")" << std::endl;
       return false;
   }
     return true;
@@ -238,14 +238,14 @@ bool single_test(int cell, KST33500 *wg, KST3000 *o, int frequency, int i_voltag
   time_t t = time(nullptr);
   if(!wg->voltage(voltage))
   {
-      std::cout << __LINE__ << ": Error while setting the frequency " << wg->return_error_message() << ")"
+      std::cout << __LINE__ << ": Error while setting the frequency " << wg->ReturnErrorMessage() << ")"
                 << std::endl;
       return false;
   }
 
   if(!wg->frequency(frequency))
   {
-      std::cout << __LINE__ << ": Error while setting the channel_range " << wg->return_error_message() << ")"
+      std::cout << __LINE__ << ": Error while setting the channel_range " << wg->ReturnErrorMessage() << ")"
                 << std::endl;
       return false;
   }
@@ -258,7 +258,7 @@ bool single_test(int cell, KST33500 *wg, KST3000 *o, int frequency, int i_voltag
 
   if(!capture_data(file_name, o))
   {
-      std::cout << __LINE__ << ": Error while capturing data " << wg->return_error_message() << ")"
+      std::cout << __LINE__ << ": Error while capturing data " << wg->ReturnErrorMessage() << ")"
                 << std::endl;
       return false;
   }
@@ -313,14 +313,14 @@ bool config(KST3000 *o) {
   std::string mode = "NORmal";
   if(!o->set_waveform_points_mode(mode))
   {
-      std::cout << __LINE__ << ": Error while setting waveform points mode " << o->return_error_message() << ")"
+      std::cout << __LINE__ << ": Error while setting waveform points mode " << o->ReturnErrorMessage() << ")"
                 << std::endl;
       return false;
   }
 
   if(!o->set_waveform_points(1000))
   {
-      std::cout << __LINE__ << ": Error while setting waveform points " << o->return_error_message() << ")"
+      std::cout << __LINE__ << ": Error while setting waveform points " << o->ReturnErrorMessage() << ")"
                     << std::endl;
           return false;
   }
@@ -349,12 +349,12 @@ void testPulses(std::string &args)
 
         if(!connect_wave_generator(wg))
         {
-            std::cout << "Unable to connect to waveform generator " << std::endl;
+            std::cout << "Unable to Connect to waveform generator " << std::endl;
             return;
         }
         if(!connect_oscilloscope(o))
         {
-            std::cout << "Unable to connect to the oscilloscope" << std::endl;
+            std::cout << "Unable to Connect to the oscilloscope" << std::endl;
             return;
         }
         if(!config(o))
@@ -394,12 +394,12 @@ void testCellAllFrequencies(std::string &args)
 
         if(!connect_wave_generator(wg))
         {
-            std::cout << "Unable to connect to waveform generator " << std::endl;
+            std::cout << "Unable to Connect to waveform generator " << std::endl;
             return;
         }
         if(!connect_oscilloscope(o))
         {
-            std::cout << "Unable to connect to the oscilloscope" << std::endl;
+            std::cout << "Unable to Connect to the oscilloscope" << std::endl;
             return;
         }
         if(!config(o))
