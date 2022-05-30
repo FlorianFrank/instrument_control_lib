@@ -7,7 +7,7 @@
 #ifndef CE_DEVICE_DEVICE_H
 #define CE_DEVICE_DEVICE_H
 
-#include "error_handler.h"
+#include "ErrorHandler.h"
 
 #include <string>
 

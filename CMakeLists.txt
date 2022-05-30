@@ -8,7 +8,7 @@ add_library(ce_device STATIC
         src/spd1305.cpp
         src/kst33500.cpp
         src/kst3000.cpp
-        src/error_handler.cpp
+        src/ErrorHandler.cpp
         src/command_line_interface.cpp
 
         include/Device.h
