@@ -1,0 +1,7 @@
+<DeviceConfig>
+
+<Device name="KST3000" description="Keysight Oscilloscope"/>
+<Device name="SPD1305" description="Digilent DC Powersupply"/>
+<Device name="KST33500" description="Keysight Function Generator"/>
+<Device name="Keithley2636B" description="Keithley SMU"/>
+</DeviceConfig>
