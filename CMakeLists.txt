@@ -25,7 +25,12 @@ else()
     target_link_libraries(instrument_control_lib PUBLIC pugixml-shared common_tools_lib_static)
 endif()
 
-target_include_directories(instrument_control_lib PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include pugixml-1.12/src)
+target_include_directories(instrument_control_lib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
+                                                          "${CMAKE_CURRENT_SOURCE_DIR}/pugixml-1.12/src"
+                                                          "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/Communication/include"
+                                                          "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/Additional"
+                                                          "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/ErrorHandling/include"
+                                                          "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/Logging/include")
 
 install(TARGETS instrument_control_lib
         LIBRARY DESTINATION lib
