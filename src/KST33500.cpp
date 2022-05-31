@@ -7,9 +7,16 @@
 
 using namespace std;
 
-KST33500::KST33500(const char *ip) : Device(ip) {
+KST33500::KST33500(const char *ip) : Device(ip, nullptr){
   this->m_DeviceName = "Keysight 33500B Waveform Generator";
 }
+
+KST33500::KST33500(const char *ip, PIL::Logging *logger): Device(ip, logger)
+{
+    this->m_DeviceName = "Keysight 33500B Waveform Generator";
+}
+
+
 
 bool KST33500::display(std::string &text) {
   string msg = "DISP:TEXT '" + text + "'";

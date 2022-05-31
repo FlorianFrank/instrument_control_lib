@@ -22,9 +22,16 @@
  * @param ip: IP address of kst3000
  * @note Get oscillator's m_IPAddr: Press "Utility" key; Press I/O;
  * */
-KST3000::KST3000(const char *ip) : Device(ip) {
+KST3000::KST3000(const char *ip) : Device(ip, nullptr)
+{
   this->m_DeviceName = "Mixed Single Oscilloscope";
 }
+
+KST3000::KST3000(const char *ip, PIL::Logging *logger): Device(ip, logger)
+{
+    this->m_DeviceName = "Mixed Single Oscilloscope";
+}
+
 
 /**
  * @brief Display a line of text: Connected Successfully. Returning...
@@ -367,5 +374,6 @@ int KST3000::get_system_setup(char *buffer) {
 int KST3000::set_waveform_source(int channel) {
   return Exec("WAVeform:SOURce CHANnel" + std::to_string(channel));
 }
+
 
 /**/

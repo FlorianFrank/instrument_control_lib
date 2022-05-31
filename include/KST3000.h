@@ -7,10 +7,17 @@
 
 #include "Device.h"
 
+namespace PIL {
+    class Logging;
+}
+
 class KST3000 : public Device {
 
 public:
     explicit KST3000(const char *ip);
+
+    KST3000(const char *ip, PIL::Logging *logger);
+
 
     int display_connection();
 

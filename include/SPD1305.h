@@ -8,10 +8,16 @@
 
 #include "Device.h"
 
+namespace PIL {
+    class Logging;
+}
+
 class SPD1305 : public Device {
 
 public:
     explicit SPD1305(const char *ip);
+
+    explicit SPD1305(const char *ip, PIL::Logging *logger);
 
     int set_current(double current, int = 1);
 

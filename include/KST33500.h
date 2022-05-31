@@ -7,6 +7,9 @@
 
 #include "Device.h"
 
+namespace PIL {
+    class Logging;
+}
 
 class KST33500 : public Device {
 
@@ -31,6 +34,8 @@ public:
     };
 
     explicit KST33500(const char *ip);
+
+    explicit KST33500(const char *ip, PIL::Logging *logger);
 
     bool display(std::string &text);
 

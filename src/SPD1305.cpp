@@ -5,8 +5,13 @@
 #include <cstring>
 #include "SPD1305.h"
 
-SPD1305::SPD1305(const char *ip) : Device(ip) {
-  this->m_IPAddr = ip;
+SPD1305::SPD1305(const char *ip) : Device(ip, nullptr)
+{
+  this->m_DeviceName = "DC Power Supply";
+}
+
+SPD1305::SPD1305(const char *ip, PIL::Logging *logger) : Device(ip, logger)
+{
   this->m_DeviceName = "DC Power Supply";
 }
 
