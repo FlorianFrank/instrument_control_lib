@@ -23,6 +23,7 @@
 /*static*/ std::vector<std::string> CommandLineInterface::m_DeviceNameList;
 /*static*/ std::vector<std::string> CommandLineInterface::m_DeviceIPList;
 /*static*/ std::vector<DeviceDescription> CommandLineInterface::m_DeviceDescriptions;
+/*static*/ PIL::Logging* CommandLineInterface::m_Logger;
 
 /*static*/ std::map<CLI_Commands, CommandLineInterface::CLICommandStruct> CommandLineInterface::m_DescriptionMap = {
         {{CLI_HELP, {CLI_HELP, "help", "print list of commands", CommandLineInterface::printHelp}},
@@ -48,9 +49,10 @@ CommandLineInterface::addCustomCommandLineOption(const char *identifier, const c
 
 
 
-CommandLineInterface::CommandLineInterface()
+CommandLineInterface::CommandLineInterface(PIL::Logging *logger)
 {
     CommandLineInterface::m_ExitCLI = false;
+    CommandLineInterface::m_Logger = logger;
 }
 
 
@@ -153,7 +155,7 @@ std::vector<std::string> CommandLineInterface::splitArguments(std::string &args)
         return;
     }
 
-    auto *device = new Device(argumentList[0].c_str());
+    auto *device = new Device(argumentList[0].c_str(), m_Logger);
     m_DeviceList.push_back(device);
 
 

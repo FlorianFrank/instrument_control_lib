@@ -10,6 +10,10 @@
 #include <string>
 #include "ConfigFileParser.h"
 
+namespace PIL {
+    class Logging;
+}
+
 
 enum CLI_Commands {
     CLI_HELP,
@@ -40,7 +44,7 @@ class CommandLineInterface
 
 public:
 
-    CommandLineInterface();
+    CommandLineInterface(PIL::Logging *logger);
     bool start();
 
 
@@ -80,6 +84,7 @@ private:
     static void ctrl_c_handler(int signal);
     static volatile bool m_ExitCLI;
 
+    static PIL::Logging *m_Logger;
 
 
 
