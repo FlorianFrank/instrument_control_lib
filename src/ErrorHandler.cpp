@@ -7,7 +7,7 @@
 #include <cstdio>
 #include <cerrno>
 
-#if __WIN32
+#if __WIN32__
 #include <string.h>
 #endif
 
