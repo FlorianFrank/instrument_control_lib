@@ -9,10 +9,12 @@ set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
 
 # Set general CXX options
 set(CMAKE_CXX_STANDARD 17)
+add_definitions(-DCXX=1)
 
 # Definitions for the platform independent abstraction layer.
 option(PIL_COMMUNICATION    "Enable PIL Sockets"          ON)
 option(PIL_THREADING        "Enable PIL Threads"          ON)
+option(PIL_LOGGING          "Enable Logging support"      ON)
 option(PIL_SHARED           "BUILD PIL as shared library" ON)
 option(PIL_CXX              "Enable PIL C++ support"      ON)
 
