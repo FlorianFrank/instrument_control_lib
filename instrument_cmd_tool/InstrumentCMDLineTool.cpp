@@ -4,10 +4,12 @@
 
 
 #include "CommandLineInterface.h"
+#include "ctlib/Logging.hpp"
 
 int main()
 {
-    CommandLineInterface commandLineInterface;
+    PIL::Logging logger(INFO_LVL, nullptr);
+    CommandLineInterface commandLineInterface(&logger);
     commandLineInterface.start();
 
     return 0;
