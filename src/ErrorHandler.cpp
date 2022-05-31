@@ -7,6 +7,10 @@
 #include <cstdio>
 #include <cerrno>
 
+#if __WIN32
+#include <string.h>
+#endif
+
 #include "ErrorHandler.h"
 #include "ErrorCodeDefines.h"
 
