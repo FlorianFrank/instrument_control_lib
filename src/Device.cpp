@@ -7,31 +7,14 @@
 #include "Device.h"
 
 #include <arpa/inet.h>
-#include <iostream>
 #include <cstring>
 #include <regex>
 
 #include "ctlib/Socket.hpp"
 #include "ctlib/Logging.hpp"
 
-/**
- * @class Device
- * @brief Basic device class
- * This class contains all basic method of all devices, like Connect, Exec, WhatAmI etc.
- */
 
 
-/**
- * @brief setting DEBUG=1 environment variable to enable some debug information
- * */
-int is_enable_debug() {
-  if (getenv("DEBUG")) {
-    return std::stoi(getenv("DEBUG"));
-  }
-  return 0;
-}
-
-int DEBUG = is_enable_debug();
 
 /**
  * @brief Constructor of Device
@@ -39,7 +22,7 @@ int DEBUG = is_enable_debug();
  */
 Device::Device(const char *ip, PIL::Logging *logger) : m_IPAddr(ip), m_ErrorHandle({0}), m_IsOpen(false)
 {
-    m_SocketHandle = new PIL::Socket(UDP, IPv4, ip, m_Port);
+    m_SocketHandle = new PIL::Socket(TCP, IPv4, ip, m_Port);
     m_ErrorHandle.m_ErrorCode = PIL_NO_ERROR;
     m_Logger = logger;
 }
@@ -59,7 +42,6 @@ bool Device::Connect()
 {
     if (m_Logger)
         m_Logger->LogMessage(INFO_LVL, __FILENAME__, __LINE__, "Device %s is connecting.", m_DeviceName.c_str());
-    struct sockaddr_in serv_addr = {0};
     if (m_SocketHandle->GetLastError() != PIL_NO_ERROR)
     {
         if(m_Logger)
@@ -130,9 +112,7 @@ bool Device::Exec(std::string message, char *result, bool br, int size) {
     message += '\n';
   }
   char *command = const_cast<char *>(message.c_str());
-  if (DEBUG) {
-    std::cout << "Executing Command: " << command;
-  }
+
   // TODO: add timeout
   // testcase: KST3000 k.exec("STATus? CHANnel2", buffer);
   int comamndLen = strlen(command);
@@ -183,15 +163,15 @@ std::string Device::WhatAmI() {
 
 std::string Device::ReturnErrorMessage()
 {
-    return std::string(PIL_ReturnErrorMessage(&m_ErrorHandle));
+    return PIL_ReturnErrorMessage(&m_ErrorHandle);
 }
 
 std::string Device::GetDeviceIdentifier()
 {
-    if(!m_IsOpen)
+    if(!IsOpen())
     {
         PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_INTERFACE_CLOSED, "Error device is closed");
-        return std::string(PIL_ReturnErrorMessage(&m_ErrorHandle));
+        return PIL_ReturnErrorMessage(&m_ErrorHandle);
     }
     char buffer[512];
     if(!Exec("*IDN?", buffer))

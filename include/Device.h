@@ -17,7 +17,11 @@ namespace PIL
     class Logging;
 }
 
-
+/**
+ * @class Device
+ * @brief Basic device class
+ * This class contains all basic method of all devices, like Connect, Exec, WhatAmI etc.
+ */
 class Device {
 
 public:
