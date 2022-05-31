@@ -1,0 +1,3 @@
+[submodule "common_tools_lib"]
+	path = common_tools_lib
+	url = git@github.com:FlorianFrank/common_tools_lib.git
