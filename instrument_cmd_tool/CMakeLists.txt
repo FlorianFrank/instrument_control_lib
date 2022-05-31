@@ -10,7 +10,7 @@ target_include_directories(instrument_cmd_tool PRIVATE "${CMAKE_CURRENT_SOURCE_D
 target_link_directories(instrument_cmd_tool PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../out/lib")
 
 
-target_link_libraries(instrument_cmd_tool ce_device pugixml)
+target_link_libraries(instrument_cmd_tool pugixml instrument_control_lib)
 
 install(TARGETS instrument_cmd_tool
         LIBRARY DESTINATION lib

@@ -4,9 +4,6 @@ project(test)
 set(CMAKE_CXX_STANDARD 14)
 message(STATUS "start building test...")
 
-set(PUGI_XML_VERSION 1.12)
-
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/pugixml-${PUGI_XML_VERSION}")
 
 add_executable(memristor_tester main.cpp)
 
