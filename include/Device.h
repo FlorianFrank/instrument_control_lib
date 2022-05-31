@@ -11,11 +11,17 @@
 
 #include <string>
 
+namespace PIL
+{
+    class Socket;
+    class Logging;
+}
+
 
 class Device {
 
 public:
-    explicit Device(const char *ip);
+    explicit Device(const char *ip, PIL::Logging *logger);
     ~Device();
 
     bool Connect();
@@ -36,11 +42,14 @@ public:
 
 protected:
     PIL_ErrorHandle m_ErrorHandle;
-    const char *m_IPAddr;
+    std::string m_IPAddr;
     std::string m_DeviceName{};
-    int m_SocketHandle = 0;
+ //   int m_SocketHandle = 0;
+    PIL::Socket *m_SocketHandle;
+    PIL::Logging *m_Logger;
     int m_Port = 5025;
     bool m_IsOpen;
+
 };
 
 #endif //CE_DEVICE_DEVICE_H

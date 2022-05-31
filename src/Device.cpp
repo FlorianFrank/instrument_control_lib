@@ -6,13 +6,13 @@
  */
 #include "Device.h"
 
-#include <sys/socket.h>
 #include <arpa/inet.h>
-#include <unistd.h>
 #include <iostream>
 #include <cstring>
 #include <regex>
 
+#include "ctlib/Socket.hpp"
+#include "ctlib/Logging.hpp"
 
 /**
  * @class Device
@@ -37,13 +37,17 @@ int DEBUG = is_enable_debug();
  * @brief Constructor of Device
  * @param ip: the m_IPAddr address of the target device
  */
-Device::Device(const char *ip) : m_IPAddr(ip), m_ErrorHandle({0}), m_IsOpen(false) {
+Device::Device(const char *ip, PIL::Logging *logger) : m_IPAddr(ip), m_ErrorHandle({0}), m_IsOpen(false)
+{
+    m_SocketHandle = new PIL::Socket(UDP, IPv4, ip, m_Port);
     m_ErrorHandle.m_ErrorCode = PIL_NO_ERROR;
+    m_Logger = logger;
 }
 
 Device::~Device()
 {
     Disconnect();
+    delete m_SocketHandle;
 }
 
 /**
@@ -51,35 +55,56 @@ Device::~Device()
  * @todo deal with connection timeout
  * @todo deal with connection warning(you have not connected or Connect automatically)
  */
-bool Device::Connect() {
-  std::cout << m_DeviceName + " is connecting...\n";
-  struct sockaddr_in serv_addr = {0};
-  if ((m_SocketHandle = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-      return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Could not open socket");
+bool Device::Connect()
+{
+    if (m_Logger)
+        m_Logger->LogMessage(INFO_LVL, __FILENAME__, __LINE__, "Device %s is connecting.", m_DeviceName.c_str());
+    struct sockaddr_in serv_addr = {0};
+    if (m_SocketHandle->GetLastError() != PIL_NO_ERROR)
+    {
+        if(m_Logger)
+            m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__, PIL_ErrorCodeToString(m_SocketHandle->GetLastError()));
+        return PIL_SetLastErrorMsg(&m_ErrorHandle, m_SocketHandle->GetLastError(), "Could not open socket");
+    }
 
-  serv_addr.sin_family = AF_INET;
-  serv_addr.sin_port = htons(m_Port);
-  if (inet_pton(AF_INET, m_IPAddr, &serv_addr.sin_addr) <= 0)
-      return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while calling inet_pton");
+    if (m_SocketHandle->Connect(m_IPAddr, m_Port) != PIL_NO_ERROR)
+    {
+        if(m_Logger)
+            m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__, PIL_ErrorCodeToString(m_SocketHandle->GetLastError()));
+    }
+    else
+    {
+        if(m_Logger)
+            m_Logger->LogMessage(INFO_LVL, __FILENAME__, __LINE__, "Connection to device %s:%d established!",
+                             m_IPAddr.c_str(), m_Port);
+    }
 
-  if (::connect(m_SocketHandle, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
-      return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while calling Connect");
-
-    m_IsOpen = true;
-    return PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
+    return PIL_SetLastError(&m_ErrorHandle, m_SocketHandle->GetLastError());
 }
 
 bool Device::Disconnect()
 {
-    m_IsOpen = false;
-    if(close(m_SocketHandle) == -1)
-        return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while closing socket.");
-    return PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
+    if (m_SocketHandle->IsOpen())
+    {
+        if(m_SocketHandle->Close() != PIL_NO_ERROR)
+        {
+            if(m_Logger)
+                m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__,
+                                 PIL_ErrorCodeToString(m_SocketHandle->GetLastError()));
+            return PIL_SetLastError(&m_ErrorHandle, m_SocketHandle->GetLastError());
+        }
+        if(m_Logger)
+            m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__,"Socket disconnected");
+        return true;
+    }
+    if(m_Logger)
+        m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__,"Socket already closed");
+    return true;
 }
 
 bool Device::IsOpen() const
 {
-    return m_IsOpen;
+    return m_SocketHandle->IsOpen();
 }
 
 
@@ -99,7 +124,7 @@ bool Device::IsOpen() const
  *      @endcode
  * */
 bool Device::Exec(std::string message, char *result, bool br, int size) {
-    if(!m_IsOpen)
+    if(!IsOpen())
         return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_INTERFACE_CLOSED, "Error interface is closed");
     if (br) {
     message += '\n';
@@ -110,16 +135,32 @@ bool Device::Exec(std::string message, char *result, bool br, int size) {
   }
   // TODO: add timeout
   // testcase: KST3000 k.exec("STATus? CHANnel2", buffer);
-  if(send(m_SocketHandle, command, strlen(command), 0) == -1)
-    return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while calling send");
+  int comamndLen = strlen(command);
+  if(m_SocketHandle->Send(reinterpret_cast<uint8_t*>(command), &comamndLen) != PIL_NO_ERROR)
+  {
+      if(m_Logger)
+          m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__,
+                               PIL_ErrorCodeToString(m_SocketHandle->GetLastError()));
+      return PIL_SetLastErrorMsg(&m_ErrorHandle, m_SocketHandle->GetLastError(), "Error while calling send");
+  }
+
+    if(m_Logger)
+        m_Logger->LogMessage(INFO_LVL, __FILENAME__, __LINE__,
+                             "Command %s successfully executed", command);
 
   if (result) { // not all operation need a result
-    if(read(m_SocketHandle, result, size) == -1)
-      return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while calling read");
+    if(m_SocketHandle->Receive(reinterpret_cast<uint8_t*>(result), reinterpret_cast<uint32_t*>(&size)) != PIL_NO_ERROR)
+    {
+        if(m_Logger)
+            m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__,
+                             PIL_ErrorCodeToString(m_SocketHandle->GetLastError()));
+        return PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while calling read");
+    }
   }
-  if (DEBUG) {
-    std::cout << "Executed Successfully.\n";
-  }
+    if(m_Logger)
+        m_Logger->LogMessage(INFO_LVL, __FILENAME__, __LINE__,
+                             "Receive result: %s", result);
+
     return PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
 }
 
