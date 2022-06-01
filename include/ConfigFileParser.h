@@ -7,6 +7,8 @@
 
 #include "ErrorHandler.h"
 #include "ConfigFileDefines.h"
+#include "ErrorCodeDefines.h"
+#include "ctlib/ErrorCodeDefines.h"
 #include <vector>
 
 
