@@ -1,7 +1,7 @@
 //
 // Created by florianfrank on 29.12.20.
 //
-
+#if 0
 #ifndef PLATFORMINDEPENDENTLIB_ERRORHANDLER_H
 #define PLATFORMINDEPENDENTLIB_ERRORHANDLER_H
 
@@ -17,3 +17,4 @@ bool PIL_SetLastErrorMsg(PIL_ErrorHandle *errStruct, PIL_ERROR_CODE errorCode, c
 const char* PIL_ReturnErrorMessage(PIL_ErrorHandle *errorHandle);
 
 #endif //PLATFORMINDEPENDENTLIB_ERRORHANDLER_H
+#endif

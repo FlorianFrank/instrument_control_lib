@@ -7,7 +7,9 @@
 #ifndef CE_DEVICE_DEVICE_H
 #define CE_DEVICE_DEVICE_H
 
-#include "ErrorHandler.h"
+extern "C" {
+#include "ctlib/ErrorCodeDefines.h"
+};
 
 #include <string>
 

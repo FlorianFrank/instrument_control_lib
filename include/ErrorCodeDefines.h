@@ -1,3 +1,4 @@
+#if 0
 //
 // Created by florianfrank on 29.12.20.
 //
@@ -65,3 +66,4 @@ struct
 
 
 #endif //PIL_ERROR_CODE_DEFINES_H
+#endif
