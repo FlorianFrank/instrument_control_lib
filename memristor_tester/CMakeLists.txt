@@ -13,7 +13,7 @@ target_include_directories(memristor_tester PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}
 target_link_directories(memristor_tester PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../out/lib")
 
 
-target_link_libraries(memristor_tester ce_device pugixml)
+target_link_libraries(memristor_tester PUBLIC instrument_control_lib pugixml)
 
 install(TARGETS memristor_tester
         LIBRARY DESTINATION lib

@@ -19,11 +19,20 @@ add_subdirectory(instrument_cmd_tool)
 add_subdirectory(memristor_tester)
 add_subdirectory(common_tools_lib)
 
-if(PIL_SHARED)
-    target_link_libraries(instrument_control_lib PUBLIC pugixml-shared common_tools_lib)
+if(BUILD_SHARED_LIBS)
+    set(PUGIXML pugixml-shared)
 else()
-    target_link_libraries(instrument_control_lib PUBLIC pugixml-shared common_tools_lib_static)
+    set(PUGIXML pugixml-static)
 endif()
+
+if(PIL_SHARED)
+    set(COMMON_TOOLS_LIB common_tools_lib)
+else()
+    set(COMMON_TOOLS_LIB common_tools_lib_static)
+endif()
+
+target_link_libraries(instrument_control_lib PUBLIC ${PUGIXML} ${COMMON_TOOLS_LIB})
+
 
 target_include_directories(instrument_control_lib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/pugixml-1.12/src"
