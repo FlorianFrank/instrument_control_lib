@@ -6,7 +6,6 @@
  */
 #include "Device.h"
 
-#include <arpa/inet.h>
 #include <cstring>
 #include <regex>
 
