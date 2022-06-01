@@ -8,9 +8,11 @@
 #include <Device.h>
 #include <iomanip>
 #include <iterator>
-#include <sstream>
 #include <ConfigFileParser.h>
 #include "CommandLineInterface.h"
+extern "C" {
+#include "ctlib/ErrorHandler.h"
+};
 
 // TODO new abstraction layer
 #include "KST3000.h"

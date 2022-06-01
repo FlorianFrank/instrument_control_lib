@@ -2,7 +2,7 @@
  //
 // Created by florianfrank on 29.12.20.
 //
-
+#if 0
 #include <memory.h>
 #include <cstdio>
 #include <cerrno>
@@ -15,8 +15,8 @@
 #include "ErrorCodeDefines.h"
 
 
+ char errMsgBuff[512];
 
-char errMsgBuff[512];
 
  const char* PIL_ErrorCodeToString(PIL_ERROR_CODE errorCode)
  {
@@ -118,3 +118,4 @@ char errMsgBuff[512];
     return true;
  }
 
+#endif

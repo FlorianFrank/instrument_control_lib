@@ -11,15 +11,15 @@
 
 #include "ctlib/Socket.hpp"
 #include "ctlib/Logging.hpp"
-
-
-
+extern "C" {
+#include "ctlib/ErrorHandler.h"
+}
 
 /**
  * @brief Constructor of Device
  * @param ip: the m_IPAddr address of the target device
  */
-Device::Device(const char *ip, PIL::Logging *logger) : m_IPAddr(ip), m_ErrorHandle({0}), m_IsOpen(false)
+Device::Device(const char *ip, PIL::Logging *logger) : m_IPAddr(ip), m_ErrorHandle(), m_IsOpen(false)
 {
     m_SocketHandle = new PIL::Socket(TCP, IPv4, ip, m_Port);
     m_ErrorHandle.m_ErrorCode = PIL_NO_ERROR;
@@ -162,7 +162,7 @@ std::string Device::WhatAmI() {
 
 std::string Device::ReturnErrorMessage()
 {
-    return PIL_ReturnErrorMessage(&m_ErrorHandle);
+    return PIL_ReturnErrorMessageAsString(&m_ErrorHandle);
 }
 
 std::string Device::GetDeviceIdentifier()
@@ -170,7 +170,7 @@ std::string Device::GetDeviceIdentifier()
     if(!IsOpen())
     {
         PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_INTERFACE_CLOSED, "Error device is closed");
-        return PIL_ReturnErrorMessage(&m_ErrorHandle);
+        return PIL_ReturnErrorMessageAsString(&m_ErrorHandle);
     }
     char buffer[512];
     if(!Exec("*IDN?", buffer))
