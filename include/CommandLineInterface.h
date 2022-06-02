@@ -20,6 +20,7 @@ enum CLI_Commands {
     CLI_CONNECT,
     CLI_SUPPORTED_DEVICES,
     CLI_DISCONNECT,
+    CLI_SEND_CUSTOM_COMMAND,
     CLI_ACTIVE_DEVICES,
     CLI_SELECT_DEVICE,
     CLI_GET_DEVICE_IDENTIFIER,
@@ -65,6 +66,7 @@ public:
 
     static void printHelp(std::string &args);
     static void connect(std::string &args);
+    static void sendCustomCommand(std::string &args);
     static void disconnect(std::string &args);
     static void quit(std::string &args);
     static void getSupportedDevices(std::string &args);

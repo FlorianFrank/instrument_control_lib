@@ -32,6 +32,7 @@ extern "C" {
          {CLI_SUPPORTED_DEVICES, {CLI_SUPPORTED_DEVICES, "supported_devices", "returns a list of supported devices", CommandLineInterface::getSupportedDevices}},
         {CLI_CONNECT, {CLI_CONNECT, "connect", "(connect <ip>:<port>) establish connection with a device", CommandLineInterface::connect}},
         {CLI_DISCONNECT, {CLI_DISCONNECT, "disconnect", "(disconnect <id>|all) disconnects the device connection specified by id or the connection of all devices.", CommandLineInterface::disconnect}},
+        {CLI_SEND_CUSTOM_COMMAND, {CLI_SEND_CUSTOM_COMMAND, "custom_command", "custom_command <id> <command> <parameters>", CommandLineInterface::sendCustomCommand}},
         {CLI_QUIT, {CLI_QUIT, "quit", "Closes the current session", CommandLineInterface::quit}},
         {CLI_ACTIVE_DEVICES, {CLI_ACTIVE_DEVICES, "active_devices", "(active_devices <id>) Displays all active devices with its corresponding ID.", CommandLineInterface::activeDevices}},
         {CLI_SELECT_DEVICE, {CLI_SELECT_DEVICE, "select_device", "(select_device <id>) Select device on which all following actions are executed.", CommandLineInterface::selectDevice}},
@@ -212,6 +213,36 @@ void CommandLineInterface::disconnect(std::string &args)
                 std::cout << "Device " + m_DeviceList[id]->WhatAmI() + " closed successfully" << std::endl;        }
     }
 
+}
+
+/*static*/ void CommandLineInterface::sendCustomCommand(std::string &args)
+{
+    auto argumentList = splitArguments(args);
+    if(argumentList.empty())
+    {
+    std::cout << "Please specify an ID or select all to Disconnect all devices" << std::endl;
+    return;
+    }
+
+    int deviceIdx = atoi(argumentList[0].c_str());
+    Device *d = m_DeviceList.at(deviceIdx);
+    bool Exec(std::string message, char *result = nullptr, bool br = true, int size = 1024);
+
+    std::string output;
+    for (int i = 1; i < argumentList.size(); i++)
+    {
+        if (i < argumentList.size() - 1)
+            output += argumentList[i] + " ";
+        output += argumentList[i];
+    }
+
+
+    std::cout << output;
+
+    char retBuff[1024];
+    d->Exec(output.c_str(), retBuff);
+
+    std::cout << "Returns: " << retBuff << std::endl;
 }
 
 void CommandLineInterface::setFrequency(std::string &args)
