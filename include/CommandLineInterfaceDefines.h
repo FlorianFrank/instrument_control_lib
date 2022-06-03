@@ -17,7 +17,11 @@
 /** Defines the indentation for the help message */
 #define HELP_MESSAGE_INDENTATION 10
 
+#ifdef __WIN32__
+#define TIMEOUT_IN_MS   0 // TODO timeout not supported yet on windows
+#else
 #define TIMEOUT_IN_MS   2000
+#endif
 
 enum CLI_Commands
 {
