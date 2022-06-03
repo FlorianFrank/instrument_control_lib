@@ -338,10 +338,10 @@ void testPulses(std::string &args)
     }
 
     const char *wave_generator_ip = "132.231.14.245";
-    auto* wg = new KST33500(wave_generator_ip);
+    auto* wg = new KST33500(wave_generator_ip, 0);
 
     const char *ip = "132.231.14.243";
-    auto* o = new KST3000(ip);
+    auto* o = new KST3000(ip, 0);
 
     try
     {
@@ -383,10 +383,10 @@ void testCellAllFrequencies(std::string &args)
     }
 
     const char *wave_generator_ip = "132.231.14.245";
-    auto* wg = new KST33500(wave_generator_ip);
+    auto* wg = new KST33500(wave_generator_ip, 0);
 
     const char *ip = "132.231.14.243";
-    auto* o = new KST3000(ip);
+    auto* o = new KST3000(ip, 0);
 
     try
     {
