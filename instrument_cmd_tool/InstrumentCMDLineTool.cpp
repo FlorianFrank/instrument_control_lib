@@ -10,7 +10,7 @@ int main()
 {
     PIL::Logging logger(INFO_LVL, nullptr);
     CommandLineInterface commandLineInterface(&logger);
-    commandLineInterface.start();
+    commandLineInterface.Start();
 
     return 0;
 }
