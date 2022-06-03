@@ -15,9 +15,9 @@ namespace PIL {
 class SPD1305 : public Device {
 
 public:
-    explicit SPD1305(const char *ip);
+    explicit SPD1305(const char *ip, int timeoutInMS);
 
-    explicit SPD1305(const char *ip, PIL::Logging *logger);
+    explicit SPD1305(const char *ip, PIL::Logging *logger, int timeoutInMs);
 
     int set_current(double current, int = 1);
 

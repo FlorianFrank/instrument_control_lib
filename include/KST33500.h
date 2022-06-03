@@ -33,9 +33,9 @@ public:
         ARBITRARY
     };
 
-    explicit KST33500(const char *ip);
+    explicit KST33500(const char *ip, int timeoutInMS);
 
-    explicit KST33500(const char *ip, PIL::Logging *logger);
+    explicit KST33500(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
     bool display(std::string &text);
 

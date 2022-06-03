@@ -22,12 +22,12 @@
  * @param ip: IP address of kst3000
  * @note Get oscillator's m_IPAddr: Press "Utility" key; Press I/O;
  * */
-KST3000::KST3000(const char *ip) : Device(ip, nullptr)
+KST3000::KST3000(const char *ip, int timeoutInMS) : Device(ip, timeoutInMS, nullptr)
 {
   this->m_DeviceName = "Mixed Single Oscilloscope";
 }
 
-KST3000::KST3000(const char *ip, PIL::Logging *logger): Device(ip, logger)
+KST3000::KST3000(const char *ip, int timeoutInMs, PIL::Logging *logger) : Device(ip, timeoutInMs, logger)
 {
     this->m_DeviceName = "Mixed Single Oscilloscope";
 }

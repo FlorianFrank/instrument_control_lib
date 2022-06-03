@@ -27,7 +27,7 @@ namespace PIL
 class Device {
 
 public:
-    explicit Device(const char *ip, PIL::Logging *logger);
+    explicit Device(const char *ip, int timeoutInMs, PIL::Logging *logger);
     ~Device();
 
     bool Connect();
@@ -49,6 +49,7 @@ public:
 protected:
     PIL_ErrorHandle m_ErrorHandle;
     std::string m_IPAddr;
+    int m_TimeoutInMs;
     std::string m_DeviceName{};
  //   int m_SocketHandle = 0;
     PIL::Socket *m_SocketHandle;

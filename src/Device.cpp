@@ -15,13 +15,14 @@ extern "C" {
 #include "ctlib/ErrorHandler.h"
 }
 
+
 /**
  * @brief Constructor of Device
  * @param ip: the m_IPAddr address of the target device
  */
-Device::Device(const char *ip, PIL::Logging *logger) : m_IPAddr(ip), m_ErrorHandle(), m_IsOpen(false)
+Device::Device(const char *ip, int timeoutInMs, PIL::Logging *logger) : m_IPAddr(ip), m_TimeoutInMs(timeoutInMs), m_ErrorHandle(), m_IsOpen(false)
 {
-    m_SocketHandle = new PIL::Socket(TCP, IPv4, ip, m_Port);
+    m_SocketHandle = new PIL::Socket(TCP, IPv4, ip, m_Port, timeoutInMs);
     m_ErrorHandle.m_ErrorCode = PIL_NO_ERROR;
     m_Logger = logger;
 }
@@ -48,10 +49,11 @@ bool Device::Connect()
         return PIL_SetLastErrorMsg(&m_ErrorHandle, m_SocketHandle->GetLastError(), "Could not open socket");
     }
 
-    if (m_SocketHandle->Connect(m_IPAddr, m_Port) != PIL_NO_ERROR)
+    if (m_SocketHandle->Connect(m_IPAddr, m_Port, m_TimeoutInMs) != PIL_NO_ERROR)
     {
         if(m_Logger)
             m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__, PIL_ErrorCodeToString(m_SocketHandle->GetLastError()));
+        return false;
     }
     else
     {

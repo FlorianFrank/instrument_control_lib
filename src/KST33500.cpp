@@ -7,11 +7,11 @@
 
 using namespace std;
 
-KST33500::KST33500(const char *ip) : Device(ip, nullptr){
+KST33500::KST33500(const char *ip, int timeoutInMS) : Device(ip, timeoutInMS, nullptr){
   this->m_DeviceName = "Keysight 33500B Waveform Generator";
 }
 
-KST33500::KST33500(const char *ip, PIL::Logging *logger): Device(ip, logger)
+KST33500::KST33500(const char *ip, int timeoutInMs, PIL::Logging *logger) : Device(ip, timeoutInMs, logger)
 {
     this->m_DeviceName = "Keysight 33500B Waveform Generator";
 }
