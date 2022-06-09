@@ -10,6 +10,9 @@ extern "C" {
 #include <cstring> // strlen
 #include <iomanip> // setw, std::isstringstream
 #include <iterator> // std::istream_iterator
+#if __APPLE__
+#include <sstream>
+#endif // __APPLE__
 
 /** Macro indicates that currently no device is selected. */
 #define NO_DEVICE_SELECTED (-1)
