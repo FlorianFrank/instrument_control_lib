@@ -18,6 +18,7 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/pugixml-${PUGI_XML_VERSION}")
 add_subdirectory(instrument_cmd_tool)
 add_subdirectory(memristor_tester)
 add_subdirectory(common_tools_lib)
+add_subdirectory(playground)
 
 if(BUILD_SHARED_LIBS)
     set(PUGIXML pugixml-shared)
