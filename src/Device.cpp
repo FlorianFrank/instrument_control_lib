@@ -15,6 +15,10 @@ extern "C" {
 #include "ctlib/ErrorHandler.h"
 }
 
+#ifdef __APPLE__
+#include <sstream>
+#endif // __APPLE__
+
 
 /**
  * @brief Constructor of Device
