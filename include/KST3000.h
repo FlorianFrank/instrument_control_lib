@@ -14,10 +14,10 @@ namespace PIL {
 class KST3000 : public Device {
 
 public:
+    // TODO: timeoutInMS -> Deice
     explicit KST3000(const char *ip, int timeoutInMS);
 
     KST3000(const char *ip, int timeoutInMs, PIL::Logging *logger);
-
 
     int display_connection();
 
