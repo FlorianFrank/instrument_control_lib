@@ -1,8 +1,8 @@
 
 #Paths containing the XML configuration files
 add_definitions(-DDEVICE_CONFIG_FILE="${CMAKE_CURRENT_SOURCE_DIR}/config_files/SupportedDevices.xml")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=x86-64")
-set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -march=x86-64")
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=x86-64 -static -static-libgcc -static-libstdc++")
+#set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -march=x86-64 -static -static-libgcc -static-libstdc++")
 
 
 option(INSTRUMENT_LIB_BUILD_STATIC "Build instrument lib as static library"     ON)

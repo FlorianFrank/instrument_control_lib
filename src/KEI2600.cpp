@@ -12,7 +12,7 @@ using namespace std;
  */
 
 
-KEI2600::KEI2600(const char *ip, int timeoutInMS) : Device(ip, timeoutInMS, nullptr) {
+KEI2600::KEI2600(PIL::Logging *logger, const char *ip, int timeoutInMS) : Device(ip, timeoutInMS, logger) {
     this->m_DeviceName = "Keithley SMU 2600B";
 }
 
@@ -112,7 +112,7 @@ double KEI2600::readI(char channel) {
 double KEI2600::readV(char channel) {
     string sChannel(1, channel);
     string command = "reading = smu" + sChannel + ".measure.v()";
-    char buffer[1024] = {0};
+    char buffer[1024] = "0";
     Exec(command, buffer);
     return stod(buffer);
 }

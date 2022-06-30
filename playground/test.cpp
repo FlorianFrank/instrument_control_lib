@@ -4,6 +4,7 @@
 
 #include "test.h"
 #include "unistd.h"
+#include "ctlib/Logging.hpp"
 
 int testSPD() {
 //    SPD1305 power("132.231.14.176", 0);
@@ -22,13 +23,17 @@ int testSPD() {
     return 0;
 }
 
-int testSMU() {
-    KEI2600 *smu = new KEI2600("192.168.1.1", 0);
-    smu->Connect();
+int testSMU(string ip) {
+    PIL::Logging logger(INFO_LVL, nullptr);
+    KEI2600 *smu = new KEI2600(&logger, ip.c_str(), 0);
+    bool connectRet = smu->Connect();
+    if(!connectRet)
+        cout << smu->ReturnErrorMessage() << std::endl;
 
     // beep
     smu->enableBeep();
     smu->beep();
+    usleep(1000000);
     smu->disableBeep();
 
     smu->enableSourceAutorangeV();
