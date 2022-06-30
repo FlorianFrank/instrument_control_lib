@@ -12,6 +12,7 @@ namespace PIL {
 }
 
 class KEI2600 : public Device {
+public:
     explicit KEI2600(const char *ip, int timeoutInMS);
 
     KEI2600(const char *ip, int timeoutInMs, PIL::Logging *logger);
