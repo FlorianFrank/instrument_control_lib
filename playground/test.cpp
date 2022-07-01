@@ -30,6 +30,9 @@ int testSMU(string ip) {
     if(!connectRet)
         cout << smu->ReturnErrorMessage() << std::endl;
 
+    string id = smu->GetDeviceIdentifier();
+    cout << "Connected to: " + id << endl;
+
     // beep
     smu->enableBeep();
     smu->beep();
