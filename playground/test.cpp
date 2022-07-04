@@ -33,6 +33,16 @@ int testSMU(string ip) {
     string id = smu->GetDeviceIdentifier();
     cout << "Connected to: " + id << endl;
 
+
+    string bo_str = "testResult = bit.bitxor(10, 9)";
+    // check print() function of TSP
+    string print_str = "print(testResult)";
+    smu->Exec(bo_str);
+    char buffer[1024] = "0";
+    smu->Exec(print_str, buffer);
+    cout << "bitxor(10, 9) is: " << buffer;
+
+
     // beep
     smu->enableBeep();
     smu->beep();
