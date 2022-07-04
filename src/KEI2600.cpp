@@ -112,8 +112,11 @@ double KEI2600::readI(char channel) {
 double KEI2600::readV(char channel) {
     string sChannel(1, channel);
     string command = "reading = smu" + sChannel + ".measure.v()";
+    Exec(command);
     char buffer[1024] = "0";
-    Exec(command, buffer);
+    string response = "print(reading)";
+    Exec(response, buffer);
+    cout << "Received from readV: " << buffer << endl;
     return stod(buffer);
 }
 
