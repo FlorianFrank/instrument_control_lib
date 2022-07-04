@@ -10,7 +10,7 @@ file(GLOB source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 if(INSTRUMENT_LIB_BUILD_STATIC)
     add_library(instrument_control_lib STATIC ${source_files})
 else() # build shared lib
-    add_library(instrument_control_lib SHARED ${source_files})
+    add_library(instrument_control_lib SHARED ${source_files} winsock_test/main.cpp)
 endif()
 
 # Build third party libraries and executables
@@ -19,6 +19,7 @@ add_subdirectory(instrument_cmd_tool)
 add_subdirectory(memristor_tester)
 add_subdirectory(common_tools_lib)
 add_subdirectory(playground)
+add_subdirectory(winsock_test)
 
 if(BUILD_SHARED_LIBS)
     set(PUGIXML pugixml-shared)
