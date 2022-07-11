@@ -34,44 +34,76 @@ int KEI2600::disableBeep() {
     return Exec("beeper.enable = beeper.OFF");
 }
 
-int KEI2600::enableMeasureAutoRangeI(SMU_CHANNEL channel) {
+int KEI2600::enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel) {
     string sChannel(1, channel);
-    return Exec("smu" + sChannel + ".measure.autorangei = smu" + sChannel + ".AUTORANGE_ON");
+    string measureType = ".measure.autorangev = smu";
+    switch (unit)
+    {
+        case CURRENT:
+            measureType = ".measure.autorangei = smu";
+            break;
+        case VOLTAGE:
+            measureType = ".measure.autorangev = smu";
+            break;
+        default:
+            // TODO error handling
+            break;
+    }
+    return Exec("smu" + sChannel + measureType + sChannel + ".AUTORANGE_ON");
 }
 
-int KEI2600::enableSourceAutoRangeI(SMU_CHANNEL channel) {
+int KEI2600::enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel) {
     string sChannel(1, channel);
-    return Exec("smu" + sChannel + ".source.autorangei = smu" + sChannel + ".AUTORANGE_ON");
+    string sourceType = ".source.autorangev = smu";
+    switch (unit)
+    {
+        case CURRENT:
+            sourceType = ".source.autorangei = smu";
+            break;
+        case VOLTAGE:
+            sourceType = ".source.autorangei = smu";
+            break;
+        default:
+            // TODO error handling
+            break;
+    }
+    return Exec("smu" + sChannel + sourceType + sChannel + ".AUTORANGE_ON");
 }
 
-int KEI2600::disableMeasureAutoRangeI(SMU_CHANNEL channel) {
+int KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel) {
     string sChannel(1, channel);
-    return Exec("smu" + sChannel + ".measure.autorangei = smu" + sChannel + ".AUTORANGE_OFF");
+    string measureType = ".measure.autorangev = smu";
+    switch (unit)
+    {
+        case CURRENT:
+            measureType = ".measure.autorangei = smu";
+            break;
+        case VOLTAGE:
+            measureType = ".measure.autorangev = smu";
+            break;
+        default:
+            // TODO error handling
+            break;
+    }
+    return Exec("smu" + sChannel + measureType + sChannel + ".AUTORANGE_OFF");
 }
 
-int KEI2600::disableSourceAutoRangeI(SMU_CHANNEL channel) {
+int KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel) {
     string sChannel(1, channel);
-    return Exec("smu" + sChannel + ".source.autorangei = smu" + sChannel + ".AUTORANGE_OFF");
-}
-
-int KEI2600::enableMeasureAutoRangeV(SMU_CHANNEL channel) {
-    string sChannel(1, channel);
-    return Exec("smu" + sChannel + ".measure.autorangev = smu" + sChannel + " .AUTORANGE_ON");
-}
-
-int KEI2600::enableSourceAutoRangeV(SMU_CHANNEL channel) {
-    string sChannel(1, channel);
-    return Exec("smu" + sChannel + ".source.autorangev = smu" + sChannel + " .AUTORANGE_ON");
-}
-
-int KEI2600::disableMeasureAutoRangeV(SMU_CHANNEL channel) {
-    string sChannel(1, channel);
-    return Exec("smu" + sChannel + ".measure.autorangev = smu" + sChannel + " .AUTORANGE_OFF");
-}
-
-int KEI2600::disableSourceAutoRangeV(SMU_CHANNEL channel) {
-    string sChannel(1, channel);
-    return Exec("smu" + sChannel + ".source.autorangev = smu" + sChannel + " .AUTORANGE_OFF");
+    string sourceType = ".source.autorangev = smu";
+    switch (unit)
+    {
+        case CURRENT:
+            sourceType = ".source.autorangei = smu";
+            break;
+        case VOLTAGE:
+            sourceType = ".source.autorangei = smu";
+            break;
+        default:
+            // TODO error handling
+            break;
+    }
+    return Exec("smu" + sChannel + sourceType + sChannel + ".AUTORANGE_ON");
 }
 
 /**
@@ -79,28 +111,42 @@ int KEI2600::disableSourceAutoRangeV(SMU_CHANNEL channel) {
  * currently using. Assigning a value to this attribute sets the SMU on a fixed range large enough to
  * measure the assigned value. The instrument selects the best range for measuring a value of rangeValue
  * */
-int KEI2600::setMeasureRangeI(double rangeValue, SMU_CHANNEL channel) {
+int KEI2600::setMeasureRange(UNIT unit, SMU_CHANNEL channel, double rangeValue) {
     string sChannel(1, channel);
+    string measureRange = ".measure.rangei = ";
     string sValue = to_string(rangeValue);
-    return Exec("smu" + sChannel + ".measure.rangei = " + sValue);
+    switch (unit)
+    {
+        case CURRENT:
+            measureRange = ".measure.rangei = ";
+            break;
+        case VOLTAGE:
+            measureRange = ".measure.rangev = ";
+            break;
+        default:
+            // TODO error correction
+            break;
+    }
+    return Exec("smu" + sChannel + measureRange + sValue);
 }
 
-int KEI2600::setMeasureRangeV(double rangeValue, SMU_CHANNEL channel) {
+int KEI2600::setSourceRange(UNIT unit, SMU_CHANNEL channel, double rangeValue) {
     string sChannel(1, channel);
     string sValue = to_string(rangeValue);
-    return Exec("smu" + sChannel + ".measure.rangev = " + sValue);
-}
-
-int KEI2600::setSourceRangeI(double rangeValue, SMU_CHANNEL channel) {
-    string sChannel(1, channel);
-    string sValue = to_string(rangeValue);
-    return Exec("smu" + sChannel + ".source.rangei = " + sValue);
-}
-
-int KEI2600::setSourceRangeV(double rangeValue, SMU_CHANNEL channel) {
-    string sChannel(1, channel);
-    string sValue = to_string(rangeValue);
-    return Exec("smu" + sChannel + ".source.rangev = " + sValue);
+    string rangeType = ".source.rangev = ";
+    switch (unit)
+    {
+        case CURRENT:
+            rangeType = ".source.rangei = ";
+            break;
+        case VOLTAGE:
+            rangeType = ".source.rangev = ";
+            break;
+        default:
+            // TODO error correction
+            break;
+    }
+    return Exec("smu" + sChannel + rangeType + sValue);
 }
 
 double KEI2600::readI(SMU_CHANNEL channel) {
@@ -139,40 +185,48 @@ double KEI2600::readP(SMU_CHANNEL channel) {
     return stod(buffer);
 }
 
-int KEI2600::setLevelI(double levelI, SMU_CHANNEL channel) {
+int KEI2600::setLevel(UNIT unit, SMU_CHANNEL channel, double level) {
     string sChannel(1, channel);
-    string sValue = to_string(levelI);
-    string command = "smu" + sChannel + ".source.leveli = " + sValue;
-    return Exec(command);
-}
+    string sValue = to_string(level);
+    string levelType = ".source.levelv = ";
+    switch (unit)
+    {
+        case CURRENT:
+            levelType = ".source.leveli = ";
+            break;
+        case VOLTAGE:
+            levelType = ".source.levelv = ";
+            break;
+        default:
+            // TODO error handling
+            break;
+    }
 
-int KEI2600::setLevelV(double levelV, SMU_CHANNEL channel) {
-    string sChannel(1, channel);
-    string sValue = to_string(levelV);
-    string command = "smu" + sChannel + ".source.levelv = " + sValue;
-    return Exec(command);
-}
-
-
-int KEI2600::setLimitI(double limitI, SMU_CHANNEL channel) {
-    string sChannel(1, channel);
-    string sValue = to_string(limitI);
-    string command = "smu" + sChannel + ".source.limiti = " + sValue;
-    return Exec(command);
-}
-
-int KEI2600::setLimitV(double limitV, SMU_CHANNEL channel) {
-    string sChannel(1, channel);
-    string sValue = to_string(limitV);
-    string command = "smu" + sChannel + ".source.limitv = " + sValue;
+    string command = "smu" + sChannel + levelType + sValue;
     return Exec(command);
 }
 
 
-int KEI2600::setLimitP(double limitP, SMU_CHANNEL channel) {
+int KEI2600::setLimit(UNIT unit, SMU_CHANNEL channel, double limit) {
     string sChannel(1, channel);
-    string sValue = to_string(limitP);
-    string command = "smu" + sChannel + ".source.limitp = " + sValue;
+    string sValue = to_string(limit);
+    string limitType = ".source.limitv = ";
+    switch (unit)
+    {
+        case CURRENT:
+            limitType = ".source.limiti = ";
+            break;
+        case VOLTAGE:
+            limitType = ".source.limitv = ";
+            break;
+        case POWER:
+            limitType = ".source.limitp = ";
+            break;
+        default:
+            // TODO error handling;
+            break;
+    }
+    string command = "smu" + sChannel + limitType + sValue;
     return Exec(command);
 }
 

@@ -18,6 +18,12 @@ public:
         SMU_CHANNEL_B = 'b'
     };
 
+    enum UNIT {
+        VOLTAGE = 0,
+        CURRENT = 1,
+        POWER   = 2
+    };
+
     explicit KEI2600(PIL::Logging *logger, const char *ip, int timeoutInMS);
 
     KEI2600(const char *ip, int timeoutInMs, PIL::Logging *logger);
@@ -28,29 +34,17 @@ public:
 
     int disableBeep();
 
-    int enableMeasureAutoRangeI(SMU_CHANNEL channel);
+    int enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel);
 
-    int enableSourceAutoRangeI(SMU_CHANNEL channel);
+    int enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel);
 
-    int disableMeasureAutoRangeI(SMU_CHANNEL channel);
+    int disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel);
 
-    int disableSourceAutoRangeI(SMU_CHANNEL channel);
+    int disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel);
 
-    int enableMeasureAutoRangeV(SMU_CHANNEL channel);
+    int setMeasureRange(UNIT unit, SMU_CHANNEL channel, double range);
 
-    int enableSourceAutoRangeV(SMU_CHANNEL channel);
-
-    int disableMeasureAutoRangeV(SMU_CHANNEL channel);
-
-    int disableSourceAutoRangeV(SMU_CHANNEL channel);
-
-    int setMeasureRangeI(double, SMU_CHANNEL channel);
-
-    int setSourceRangeI(double, SMU_CHANNEL channel);
-
-    int setMeasureRangeV(double, SMU_CHANNEL channel);
-
-    int setSourceRangeV(double, SMU_CHANNEL channel);
+    int setSourceRange(UNIT unit, SMU_CHANNEL channel, double range);
 
     double readI(SMU_CHANNEL channel);
 
@@ -60,15 +54,9 @@ public:
 
     double readP(SMU_CHANNEL channel);
 
-    int setLevelI(double, SMU_CHANNEL channel);
+    int setLevel(UNIT unit, SMU_CHANNEL channel, double level);
 
-    int setLevelV(double, SMU_CHANNEL channel);
-
-    int setLimitI(double, SMU_CHANNEL channel);
-
-    int setLimitV(double, SMU_CHANNEL channel);
-
-    int setLimitP(double, SMU_CHANNEL channel);
+    int setLimit(UNIT unit, SMU_CHANNEL channel, double limit);
 
     int turnOn(SMU_CHANNEL channel);
 
