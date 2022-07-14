@@ -47,12 +47,6 @@ jobs:
         with:
           recursive: true
 
-      - name: Set up MinGW
-        if: matrix.config.os == 'windows-latest'
-        uses: egor-tensin/setup-mingw@v2
-        with:
-          platform: x64
-
       - name: Setup Ninja
         if: matrix.config.os == 'windows-latest'
         uses: ashutoshvarma/setup-ninja@master
