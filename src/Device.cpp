@@ -53,7 +53,7 @@ bool Device::Connect()
         return PIL_SetLastErrorMsg(&m_ErrorHandle, m_SocketHandle->GetLastError(), "Could not open socket");
     }
 
-    if (m_SocketHandle->Connect(m_IPAddr, m_Port, m_TimeoutInMs) != PIL_NO_ERROR)
+    if (m_SocketHandle->Connect(m_IPAddr, m_Port) != PIL_NO_ERROR)
     {
         if(m_Logger)
             m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__, PIL_ErrorCodeToString(m_SocketHandle->GetLastError()));

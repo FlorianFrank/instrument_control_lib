@@ -13,6 +13,17 @@ namespace PIL {
 
 class KEI2600 : public Device {
 public:
+    enum SMU_CHANNEL {
+        SMU_CHANNEL_A = 'a',
+        SMU_CHANNEL_B = 'b'
+    };
+
+    enum UNIT {
+        VOLTAGE = 0,
+        CURRENT = 1,
+        POWER   = 2
+    };
+
     explicit KEI2600(PIL::Logging *logger, const char *ip, int timeoutInMS);
 
     KEI2600(const char *ip, int timeoutInMs, PIL::Logging *logger);
@@ -23,55 +34,38 @@ public:
 
     int disableBeep();
 
-    int enableMeasureAutorangeI(char channel = 'a');
+    int enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel);
 
-    int enableSourceAutorangeI(char channel = 'a');
+    int enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel);
 
-    int disableMeasureAutorangeI(char channel = 'a');
+    int disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel);
 
-    int disableSourceAutorangeI(char channel = 'a');
+    int disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel);
 
-    int enableMeasureAutorangeV(char channel = 'a');
+    int setMeasureRange(UNIT unit, SMU_CHANNEL channel, double range);
 
-    int enableSourceAutorangeV(char channel = 'a');
+    int setSourceRange(UNIT unit, SMU_CHANNEL channel, double range);
 
-    int disableMeasureAutorangeV(char channel = 'a');
+    double readI(SMU_CHANNEL channel);
 
-    int disableSourceAutorangeV(char channel = 'a');
+    double readV(SMU_CHANNEL channel);
 
-    int setMeasureRangeI(double, char channel = 'a');
+    double readR(SMU_CHANNEL channel);
 
-    int setSourceRangeI(double, char channel = 'a');
+    double readP(SMU_CHANNEL channel);
 
-    int setMeasureRangeV(double, char channel = 'a');
+    int setLevel(UNIT unit, SMU_CHANNEL channel, double level);
 
-    int setSourceRangeV(double, char channel = 'a');
+    int setLimit(UNIT unit, SMU_CHANNEL channel, double limit);
 
-    double readI(char channel = 'a');
+    int turnOn(SMU_CHANNEL channel);
 
-    double readV(char channel = 'a');
+    int turnOff(SMU_CHANNEL channel);
 
-    double readR(char channel = 'a');
+    int selectLocalSense(SMU_CHANNEL channel);
 
-    double readP(char channel = 'a');
+    int selectRemoteSense(SMU_CHANNEL channel);
 
-    int setLevelI(double, char channel = 'a');
-
-    int setLevelV(double, char channel = 'a');
-
-    int setLimitI(double, char channel = 'a');
-
-    int setLimitV(double, char channel = 'a');
-
-    int setLimitP(double, char channel = 'a');
-
-    int turnOn(char channel = 'a');
-
-    int turnOff(char channel = 'a');
-
-    int selectLocalSense(char channel = 'a');
-
-    int selectRemoteSense(char channel = 'a');
 };
 
 #endif //INSTRUMENT_CONTROL_LIB_KEI2600_H
