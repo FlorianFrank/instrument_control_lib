@@ -6,6 +6,8 @@
 #include "unistd.h"
 #include "ctlib/Logging.hpp"
 
+using namespace SMU;
+
 int testSPD() {
 //    SPD1305 power("132.231.14.176", 0);
     SPD1305 *power = new SPD1305("132.231.14.176", 0);
@@ -49,74 +51,74 @@ int testSMU(string ip) {
     usleep(1000000);
     smu->disableBeep();
 
-    smu->enableSourceAutoRange(KEI2600::VOLTAGE, KEI2600::SMU_CHANNEL_A);
-    smu->setLevel(KEI2600::VOLTAGE, KEI2600::SMU_CHANNEL_A, 0.5);
-    smu->enableMeasureAutoRange(KEI2600::VOLTAGE, KEI2600::SMU_CHANNEL_A);
-    smu->turnOn(KEI2600::SMU_CHANNEL_A);
-    double measureV = smu->readV(KEI2600::SMU_CHANNEL_A);
+    smu->enableSourceAutoRange(VOLTAGE, CHANNEL_A);
+    smu->setLevel(VOLTAGE, CHANNEL_A, 0.5);
+    smu->enableMeasureAutoRange(VOLTAGE, CHANNEL_A);
+    smu->turnOn(CHANNEL_A);
+    double measureV = smu->readV(CHANNEL_A);
     if (measureV != 0.5) {
         cout << "ERROR! Voltage test failed!\n";
         exit(1);
     } else {
         cout << "Voltage test passed!\n";
-        smu->disableSourceAutoRange(KEI2600::VOLTAGE, KEI2600::SMU_CHANNEL_A);
-        smu->disableMeasureAutoRange(KEI2600::VOLTAGE, KEI2600::SMU_CHANNEL_A);
-        smu->turnOff(KEI2600::SMU_CHANNEL_A);
+        smu->disableSourceAutoRange(VOLTAGE, CHANNEL_A);
+        smu->disableMeasureAutoRange(VOLTAGE, CHANNEL_A);
+        smu->turnOff(CHANNEL_A);
     }
 
-    smu->setSourceRange(KEI2600::VOLTAGE, KEI2600::SMU_CHANNEL_B, 0.5);
-    smu->setLevel(KEI2600::VOLTAGE, KEI2600::SMU_CHANNEL_B, 0.5);
-    smu->setMeasureRange(KEI2600::VOLTAGE, KEI2600::SMU_CHANNEL_B, 0.5);
-    smu->turnOn(KEI2600::SMU_CHANNEL_B);
-    measureV = smu->readV(KEI2600::SMU_CHANNEL_B);
+    smu->setSourceRange(VOLTAGE, CHANNEL_B, 0.5);
+    smu->setLevel(VOLTAGE, CHANNEL_B, 0.5);
+    smu->setMeasureRange(VOLTAGE, CHANNEL_B, 0.5);
+    smu->turnOn(CHANNEL_B);
+    measureV = smu->readV(CHANNEL_B);
     if (measureV != 0.5) {
         cout << "ERROR! Voltage on Channel b test failed!\n";
         exit(1);
     } else {
         cout << "Voltage test on Channel b passed!\n";
-        smu->enableSourceAutoRange(KEI2600::VOLTAGE, KEI2600::SMU_CHANNEL_B);
-        smu->enableMeasureAutoRange(KEI2600::VOLTAGE, KEI2600::SMU_CHANNEL_B);
-        smu->turnOff(KEI2600::SMU_CHANNEL_B);
+        smu->enableSourceAutoRange(VOLTAGE, CHANNEL_B);
+        smu->enableMeasureAutoRange(VOLTAGE, CHANNEL_B);
+        smu->turnOff(CHANNEL_B);
     }
 
-    smu->enableSourceAutoRange(KEI2600::CURRENT, KEI2600::SMU_CHANNEL_B);
-    smu->setLevel(KEI2600::CURRENT, KEI2600::SMU_CHANNEL_B, -1.1);
-    smu->enableMeasureAutoRange(KEI2600::CURRENT, KEI2600::SMU_CHANNEL_B);
-    smu->turnOn(KEI2600::SMU_CHANNEL_B);
-    double measureI = smu->readI(KEI2600::SMU_CHANNEL_B);
+    smu->enableSourceAutoRange(CURRENT, CHANNEL_B);
+    smu->setLevel(CURRENT, CHANNEL_B, -1.1);
+    smu->enableMeasureAutoRange(CURRENT, CHANNEL_B);
+    smu->turnOn(CHANNEL_B);
+    double measureI = smu->readI(CHANNEL_B);
     if (measureI != -1.1) {
         cout << "ERROR! Current test failed!\n";
         exit(1);
     } else {
         cout << "Current test passed!\n";
-        smu->disableSourceAutoRange(KEI2600::CURRENT, KEI2600::SMU_CHANNEL_B);
-        smu->disableMeasureAutoRange(KEI2600::CURRENT, KEI2600::SMU_CHANNEL_B);
-        smu->turnOn(KEI2600::SMU_CHANNEL_B);
+        smu->disableSourceAutoRange(CURRENT, CHANNEL_B);
+        smu->disableMeasureAutoRange(CURRENT, CHANNEL_B);
+        smu->turnOn(CHANNEL_B);
     }
 
-    smu->setSourceRange(KEI2600::CURRENT, KEI2600::SMU_CHANNEL_B, -1.1);
-    smu->setLevel(KEI2600::CURRENT, KEI2600::SMU_CHANNEL_B, -1.1);
-    smu->setMeasureRange(KEI2600::CURRENT, KEI2600::SMU_CHANNEL_B, -1.1);
-    smu->turnOn(KEI2600::SMU_CHANNEL_B);
-    measureI = smu->readI( KEI2600::SMU_CHANNEL_B);
+    smu->setSourceRange(CURRENT, CHANNEL_B, -1.1);
+    smu->setLevel(CURRENT, CHANNEL_B, -1.1);
+    smu->setMeasureRange(CURRENT, CHANNEL_B, -1.1);
+    smu->turnOn(CHANNEL_B);
+    measureI = smu->readI( CHANNEL_B);
     if (measureI != -1.1) {
         cout << "ERROR! Current test on Channel b failed!\n";
         exit(1);
     } else {
         cout << "Current test on Channel b passed!\n";
-        smu->disableSourceAutoRange(KEI2600::CURRENT, KEI2600::SMU_CHANNEL_B);
-        smu->disableMeasureAutoRange(KEI2600::CURRENT, KEI2600::SMU_CHANNEL_B);
-        smu->turnOn(KEI2600::SMU_CHANNEL_B);
+        smu->disableSourceAutoRange(CURRENT, CHANNEL_B);
+        smu->disableMeasureAutoRange(CURRENT, CHANNEL_B);
+        smu->turnOn(CHANNEL_B);
     }
 
-    smu->setLimit(KEI2600::CURRENT, KEI2600::SMU_CHANNEL_B, -1.5);
+    smu->setLimit(CURRENT, CHANNEL_B, -1.5);
     // this should fail.
-    smu->setLevel(KEI2600::CURRENT, KEI2600::SMU_CHANNEL_B, -1.6);
+    smu->setLevel(CURRENT, CHANNEL_B, -1.6);
     cout << "Current on Channel a should not be -1.6. Maybe 0.5\n";
     sleep(2);
 
-    smu->setLimit(KEI2600::VOLTAGE, KEI2600::SMU_CHANNEL_B, 0.5);
-    smu->setLevel(KEI2600::VOLTAGE, KEI2600::SMU_CHANNEL_B, 0.6);
+    smu->setLimit(VOLTAGE, CHANNEL_B, 0.5);
+    smu->setLevel(VOLTAGE, CHANNEL_B, 0.6);
     cout << "Voltage on Channel a should not be 0.6. Maybe 1.5\n";
     sleep(2);
 

@@ -6,23 +6,17 @@
 #define INSTRUMENT_CONTROL_LIB_KEI2600_H
 
 #include "Device.h"
+#include "defines/SMUDefines.h"
 
 namespace PIL {
     class Logging;
 }
 
+using namespace SMU;
+
 class KEI2600 : public Device {
 public:
-    enum SMU_CHANNEL {
-        SMU_CHANNEL_A = 'a',
-        SMU_CHANNEL_B = 'b'
-    };
 
-    enum UNIT {
-        VOLTAGE = 0,
-        CURRENT = 1,
-        POWER   = 2
-    };
 
     explicit KEI2600(PIL::Logging *logger, const char *ip, int timeoutInMS);
 
