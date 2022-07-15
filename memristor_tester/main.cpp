@@ -1,9 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <unistd.h>
-#include <KST3000.h>
+#include "devices/KST3000.h"
 #include <iomanip>
-#include "KST33500.h"
+#include "devices/KST33500.h"
 #include "pugixml.hpp"
 #include "CommandLineInterface.h"
 

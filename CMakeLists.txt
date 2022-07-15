@@ -6,6 +6,9 @@ project(instrument_control_lib)
 
 file(GLOB source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 
+file(GLOB device_files ${CMAKE_CURRENT_SOURCE_DIR}/src/devices/*.cpp)
+
+
 # BUILD instrument lib as
 if(INSTRUMENT_LIB_BUILD_STATIC)
     add_library(instrument_control_lib STATIC ${source_files})

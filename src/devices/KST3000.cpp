@@ -6,7 +6,7 @@
 #include <sstream>
 #include <vector>
 #include <cstring>
-#include "KST3000.h"
+#include "devices/KST3000.h"
 #include <unistd.h>
 
 /**

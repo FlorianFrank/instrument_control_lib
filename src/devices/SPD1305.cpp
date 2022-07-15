@@ -3,7 +3,7 @@
 //
 #include <iostream>
 #include <cstring>
-#include "SPD1305.h"
+#include "devices/SPD1305.h"
 
 SPD1305::SPD1305(const char *ip, int timeoutInMS) : Device(ip, timeoutInMS, nullptr)
 {

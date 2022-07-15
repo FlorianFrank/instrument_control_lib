@@ -2,7 +2,7 @@
 // Created by sueaki on 03.06.22.
 //
 #include "iostream"
-#include "KEI2600.h"
+#include "devices/KEI2600.h"
 
 using namespace std;
 

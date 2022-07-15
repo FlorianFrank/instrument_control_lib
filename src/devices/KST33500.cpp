@@ -2,7 +2,7 @@
 // Created by liuwuhao on 27.05.21.
 //
 
-#include "KST33500.h"
+#include "devices/KST33500.h"
 #include <unistd.h>
 
 using namespace std;
