@@ -14,7 +14,7 @@ else() # build shared lib
 endif()
 
 # Build third party libraries and executables
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/pugixml-${PUGI_XML_VERSION}")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/pugixml")
 add_subdirectory(instrument_cmd_tool)
 #add_subdirectory(memristor_tester)
 add_subdirectory(common_tools_lib)
