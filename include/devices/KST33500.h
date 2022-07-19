@@ -5,77 +5,37 @@
 #ifndef CE_DEVICE_KST33500_H
 #define CE_DEVICE_KST33500_H
 
-#include "Device.h"
+#include "types/FunctionGenerator.h"
 
 namespace PIL {
     class Logging;
 }
 
-class KST33500 : public Device {
+class KST33500 : public FunctionGenerator {
 
 public:
-    enum FunctionType {
-        /* Sinus signal*/
-        SIN,
-        /* Square signal*/
-        SQUARE,
-        /* Square signal*/
-        RAMP,
-        /* Negative ramp signal*/
-        NEGATIVE_RAM,
-        /* Triangle signal*/
-        TRIANGLE,
-        /* Noise signal */
-        NOISE,
-        /* Pseudo random bit stream signal */
-        PSEUDO_RANDOM_BIT_STREAM,
-        /* Arbitrary signal */
-        ARBITRARY
-    };
-
     explicit KST33500(const char *ip, int timeoutInMS);
-
     explicit KST33500(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
+    int turnOn(FUNC_CHANNEL channel) override;
+    int turnOff(FUNC_CHANNEL channel) override;
+
+    int setFrequency(FUNC_CHANNEL channel, double value) override;
+    int setAmplitude(FUNC_CHANNEL channel, double value, const char *constrain) override;
+    bool setOffset(FUNC_CHANNEL channel, double offset) override;
+    int setPhase(FUNC_CHANNEL channel, double value) override;
+    bool setFunction(FUNCTION_TYPE functionType) override;
+
     bool display(std::string &text);
-
     bool display_connection();
-
-    bool setFunction(FunctionType functionType);
-
-    bool frequency(double value);
-
-    bool voltage(double value, const char *constrain = "");
-
-
-    bool enableOutput();
-
-    bool disableOutput();
-
-    bool phase(std::string &value);
-
-
-    // Getters
-    FunctionType getOutputFunction() const;
-
-    bool isOutputEnabled() const;
-
-    double getCurrentAmplitude() const;
 
 private:
     bool output(bool on);
-
-    FunctionType m_CurrentFunction;
-    bool m_OutputEnabled;
-    double m_Amplitude;
-
-    bool function(std::string &fun);
 
     int offset(double value);
 
     int set_pulse_width(double value);
 
-    int phase(std::string value);
 };
 
 #endif //CE_DEVICE_KST33500_H
