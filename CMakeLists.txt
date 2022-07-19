@@ -7,13 +7,15 @@ project(instrument_control_lib)
 file(GLOB source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 
 file(GLOB device_files ${CMAKE_CURRENT_SOURCE_DIR}/src/devices/*.cpp)
+file(GLOB device_type_files ${CMAKE_CURRENT_SOURCE_DIR}/src/devices/types/*.cpp)
+
 
 
 # BUILD instrument lib as
 if(INSTRUMENT_LIB_BUILD_STATIC)
-    add_library(instrument_control_lib STATIC ${source_files} ${device_files})
+    add_library(instrument_control_lib STATIC ${source_files} ${device_files} ${device_type_files})
 else() # build shared lib
-    add_library(instrument_control_lib SHARED ${source_files} ${device_files})
+    add_library(instrument_control_lib SHARED ${source_files} ${device_files} ${device_type_files})
 endif()
 
 # Build third party libraries and executables
