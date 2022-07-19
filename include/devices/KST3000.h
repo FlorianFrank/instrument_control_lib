@@ -5,13 +5,13 @@
 #ifndef CE_DEVICE_KST3000_H
 #define CE_DEVICE_KST3000_H
 
-#include "Device.h"
+#include "types/Oscilloscope.h"
 
 namespace PIL {
     class Logging;
 }
 
-class KST3000 : public Device {
+class KST3000 : public Oscilloscope {
 
 public:
     // TODO: timeoutInMS -> Deice
@@ -19,55 +19,55 @@ public:
 
     KST3000(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
-    int display_connection();
+    int run() override;
+    int stop() override;
+    int single() override;
+    int autoScale() override;
 
-    int run();
+    int setTimeRange(double value) override;
+    int setChannelOffset(OSC_CHANNEL channel, double offset) override;
+    int setChannelScale(OSC_CHANNEL channel, double value) override;
+    int setChannelRange(OSC_CHANNEL channel, double value, bool is_v = true) override;
 
-    int stop();
+    int setTriggerEdge(TRIGGER_EDGE edge) override;
+    int setTriggerSource(OSC_CHANNEL channel) override;
 
-    int single();
+    int setDisplayMode(DISPLAY_MODES displayMode);
 
-    int autoscale();
+    int displayConnection();
 
-    int set_trigger_edge(char *);
+    int setTimeDelay(double);
 
-    int set_trigger_source(int channel = 1);
+    int setChannelDisplay(int on, int channel = 1);
 
-    int set_time_range(double);
+    int getWaveformPreamble(char *preamble);
 
-    int set_time_delay(double);
+    int getWaveformPoints();
 
-    int set_channel_scale(double, int channel = 1);
+    int setWaveformPoints(int num_points);
 
-    int set_channel_range(double, int channel = 1, bool is_v = true);
+    int setWaveformPointsMode(std::string &mode);
 
-    int set_channel_offset(double offset, int channel = 1);
+    int setWaveformFormat(const char *format = "BYTE");
 
-    int set_channel_display(int on, int channel = 1);
+    int getWaveformData(char *data);
 
-    int get_waveform_preamble(char *preamble);
+    int getRealData(double **result);
 
-    int get_waveform_points();
+    int saveWaveformData(std::string file_path = "./buffer");
 
-    int set_waveform_points(int num_points);
-
-    int set_waveform_points_mode(std::string &mode);
-
-    int set_waveform_format(const char *format = "BYTE");
-
-    int get_waveform_data(char *data);
-
-    int get_real_data(double **result);
-
-    int save_waveform_data(std::string file_path = "./buffer");
-
-    int set_waveform_source(int channel = 1);
+    int setWaveformSource(int channel = 1);
 
     int digitize();
 
-    int set_timebase_mode(const char *mode = "MAIN");
 
-    int get_system_setup(char *buffer);
+    int getSystemSetup(char *buffer);
+
+private:
+    // Helper-functions
+    static std::string getTriggerEdgeStr(TRIGGER_EDGE edge) ;
+    static std::string getChannelFromEnum(OSC_CHANNEL channel) ;
+    static std::string getDisplayModeFromEnum(DISPLAY_MODES displayMode);
 };
 
 #endif //CE_DEVICE_KST3000_H
