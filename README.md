@@ -1,6 +1,15 @@
-# Voltage Measurement Lib
+# Instrument Control Lib
 
 This repository contains the code to configure oscilloscopes, signal generators and DC power supplies.
+
+### Build status
+
+|       OS       |                                                          Status                                                          | 
+|:--------------:|:------------------------------------------------------------------------------------------------------------------------:|
+|Windows Latest  | ![Windows latest](https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/windows_latest.yml/badge.svg) |
+|Mac OS Latest   |  ![MAC OS latest](https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/mac_os_latest.yml/badge.svg)  |
+|Ubuntu Latest   |  ![Ubuntu Latest](https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/ubuntu_latest.yml/badge.svg)  |
+
 
 ## Supported Devices
 - SPD1305X DC Power Supply
