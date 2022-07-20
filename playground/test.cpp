@@ -11,8 +11,8 @@ int testSPD() {
     SPD1305 *power = new SPD1305("132.231.14.176", 0);
     power->Connect();
 
-    power->set_current(0.15);
-    double measureI = power->get_current();
+    power->setCurrent(DCPowerSupply::CHANNEL_1, 0.15);
+    double measureI = power->getCurrent(DCPowerSupply::CHANNEL_1);
     if (measureI != 0.15) {
         cout << "ERROR! Current test failed.\n";
         exit(1);
