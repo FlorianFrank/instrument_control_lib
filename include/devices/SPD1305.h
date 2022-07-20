@@ -6,26 +6,27 @@
 #define CE_DEVICE_SPD1305_H
 
 
-#include "Device.h"
+#include "types/DCPowerSupply.h"
 
 namespace PIL {
     class Logging;
 }
 
-class SPD1305 : public Device {
+class SPD1305 : public DCPowerSupply {
 
 public:
     explicit SPD1305(const char *ip, int timeoutInMS);
 
     explicit SPD1305(const char *ip, PIL::Logging *logger, int timeoutInMs);
 
-    int set_current(double current, int = 1);
+    int turnOn(DC_CHANNEL channel) override;
+    int turnOff(DC_CHANNEL channel) override;
 
-    double get_current(int = 1);
+    int setCurrent(DC_CHANNEL channel, double current) override;
+    double getCurrent(DC_CHANNEL channel) override;
 
-    int turnon(int = 1);
-
-    int turnoff(int = 1);
+private:
+    static std::string getStrFromDCChannelEnum(DC_CHANNEL channel);
 };
 
 #endif //CE_DEVICE_SPD1305_H
