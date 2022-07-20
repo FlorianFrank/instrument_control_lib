@@ -150,9 +150,9 @@ int KST3000::setChannelOffset(OSC_CHANNEL channel, double offset) {
  * @param on: 1 or 0. 1: show channel single. 0: hide channel single.
  * @param channel: channel number, default 1
  * */
-int KST3000::setChannelDisplay(int on, int channel) {
+int KST3000::setChannelDisplay(OSC_CHANNEL channel, int on) {
     // turns the channel on(1) or off(0)
-    std::string command = "CHANnel" + std::to_string(channel) + ":DISPlay " + std::to_string(on);
+    std::string command = "CHANnel" + getChannelFromEnum(channel) + ":DISPlay " + std::to_string(on);
     return Exec(command);
 }
 
@@ -219,8 +219,8 @@ int KST3000::setWaveformPoints(int num_points) {
 /**
  * @brief set format of waveform data(default "BYTE")
  * */
-int KST3000::setWaveformFormat(const char *format) {
-    std::string command = "WAVeform:FORMat" + std::string(format);
+int KST3000::setWaveformFormat(FILE_FORMAT format) {
+    std::string command = "WAVeform:FORMat" + getFileFormatStrFromEnum(format);
     return Exec(command);
 }
 
@@ -371,8 +371,8 @@ int KST3000::getSystemSetup(char *buffer) {
 /**
  * @brief set waveform source
  * */
-int KST3000::setWaveformSource(int channel) {
-    return Exec("WAVeform:SOURce CHANnel" + std::to_string(channel));
+int KST3000::setWaveformSource(OSC_CHANNEL channel) {
+    return Exec("WAVeform:SOURce CHANnel" + getChannelFromEnum(channel));
 }
 
 /*static*/ std::string KST3000::getTriggerEdgeStr(Oscilloscope::TRIGGER_EDGE edge)
@@ -422,6 +422,21 @@ std::string KST3000::getDisplayModeFromEnum(Oscilloscope::DISPLAY_MODES displayM
             return "ROLL";
         default:
             return "MAIN"; // TODO check
+    }
+}
+
+std::string KST3000::getFileFormatStrFromEnum(Oscilloscope::FILE_FORMAT format)
+{
+    switch (format)
+    {
+        case ASCII:
+            return "ASCII";
+        case WORD:
+            return "WORD";
+        case BYTE:
+            return "BYTE";
+        default:
+            return "BYTE"; // TODO check
     }
 }
 

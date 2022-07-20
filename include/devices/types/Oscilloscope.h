@@ -30,6 +30,14 @@ public:
         ROLL = 3
     };
 
+    enum FILE_FORMAT {
+        ASCII = 0,
+        WORD =   1,
+        BYTE =   2,
+    };
+
+
+
     Oscilloscope(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
     virtual int run() = 0;

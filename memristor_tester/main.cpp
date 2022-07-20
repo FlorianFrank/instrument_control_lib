@@ -190,13 +190,13 @@ bool capture_data(const std::string& file_name, KST3000 *o) {
   o->digitize();
   int points = o->getWaveformPoints();
 
-    o->setWaveformSource(1);
+    o->setWaveformSource(Oscilloscope::CHANNEL_1);
   double *input[2];
   input[0] = new double[points];
   input[1] = new double[points];
     o->getRealData(input);
 
-    o->setWaveformSource(2);
+    o->setWaveformSource(Oscilloscope::CHANNEL_2);
   double *output[2];
   output[0] = new double[points];
   output[1] = new double[points];
