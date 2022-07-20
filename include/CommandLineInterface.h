@@ -40,9 +40,11 @@ public:
     static void GetDeviceIdentifier(std::string &args);
     static void addCustomCommandLineOption(const char *identifier, const char *description, void (*func)(std::string&));
 
+    static std::vector<std::string> splitArguments(std::string &args);
+
 private:
     CLI_Commands ParseCommand(std::string &string);
-    static std::vector<std::string> splitArguments(std::string &args);
+
     static void CtrlCHandler(int signal);
 
     // TODO: maybe combined to one data structure

@@ -1,9 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <unistd.h>
-#include <KST3000.h>
+#include "devices/KST3000.h"
 #include <iomanip>
-#include "KST33500.h"
+#include "devices/KST33500.h"
 #include "pugixml.hpp"
 #include "CommandLineInterface.h"
 
@@ -67,29 +67,29 @@ bool set_params(KST33500 *wg, KST3000 *o, int frequency, int voltage) {
     }
 
   double d_voltage = voltage / 10.0;
-  if(!wg->voltage(d_voltage))
+  if(!wg->setAmplitude(FunctionGenerator::CHANNEL_A, d_voltage, ""))
       std::cout << __LINE__ << ": Error while setting the voltage (" << wg->ReturnErrorMessage() << ")" << std::endl;
 
-  if(!wg->frequency(frequency))
+  if(!wg->setFrequency(FunctionGenerator::CHANNEL_A, frequency))
   {
       std::cout << __LINE__ << ": Error while setting the frequency " << wg->ReturnErrorMessage() << ")" << std::endl;
       return false;
   }
 
-  if(!o->set_channel_range(d_voltage * 2, 1)) // *2 for sin wave
+  if(!o->setChannelRange(Oscilloscope::CHANNEL_1, d_voltage * 2)) // *2 for sin wave
   {
       std::cout << __LINE__ << ": Error while setting the channel_range " << wg->ReturnErrorMessage() << ")"
                 << std::endl;
       return false;
   }
 
-  if(!o->set_channel_range(d_voltage * 2, 2)) // *2 for sin wave
+  if(!o->setChannelRange(Oscilloscope::CHANNEL_2, d_voltage * 2)) // *2 for sin wave
   {
       std::cout << __LINE__ << ": Error while setting the channel_range " << wg->ReturnErrorMessage() << ")" << std::endl;
       return false;
   }
 
-  if(!o->set_time_range(CYCLES_PER_FILE / frequency)) // collect 1 cycle every time
+  if(!o->setTimeRange(CYCLES_PER_FILE / frequency)) // collect 1 cycle every time
   {
       std::cout << __LINE__ << ": Error while setting the time_range " << wg->ReturnErrorMessage() << ")" << std::endl;
       return false;
@@ -188,19 +188,19 @@ bool capture_data(const std::string& file_name, KST3000 *o) {
     }
 
   o->digitize();
-  int points = o->get_waveform_points();
+  int points = o->getWaveformPoints();
 
-  o->set_waveform_source(1);
+    o->setWaveformSource(Oscilloscope::CHANNEL_1);
   double *input[2];
   input[0] = new double[points];
   input[1] = new double[points];
-  o->get_real_data(input);
+    o->getRealData(input);
 
-  o->set_waveform_source(2);
+    o->setWaveformSource(Oscilloscope::CHANNEL_2);
   double *output[2];
   output[0] = new double[points];
   output[1] = new double[points];
-  o->get_real_data(output);
+    o->getRealData(output);
 
   std::stringstream stream;
   stream << "time" << "," << "input" << "," << "output" << std::endl;
@@ -236,14 +236,14 @@ bool single_test(int cell, KST33500 *wg, KST3000 *o, int frequency, int i_voltag
 
   double voltage = i_voltage / 10.0;
   time_t t = time(nullptr);
-  if(!wg->voltage(voltage))
+  if(!wg->setAmplitude(FunctionGenerator::CHANNEL_A, voltage, ""))
   {
       std::cout << __LINE__ << ": Error while setting the frequency " << wg->ReturnErrorMessage() << ")"
                 << std::endl;
       return false;
   }
 
-  if(!wg->frequency(frequency))
+  if(!wg->setFrequency(FunctionGenerator::CHANNEL_B, frequency))
   {
       std::cout << __LINE__ << ": Error while setting the channel_range " << wg->ReturnErrorMessage() << ")"
                 << std::endl;
@@ -311,14 +311,14 @@ bool config(KST3000 *o) {
     }
 
   std::string mode = "NORmal";
-  if(!o->set_waveform_points_mode(mode))
+  if(!o->setWaveformPointsMode(mode))
   {
       std::cout << __LINE__ << ": Error while setting waveform points mode " << o->ReturnErrorMessage() << ")"
                 << std::endl;
       return false;
   }
 
-  if(!o->set_waveform_points(1000))
+  if(!o->setWaveformPoints(1000))
   {
       std::cout << __LINE__ << ": Error while setting waveform points " << o->ReturnErrorMessage() << ")"
                     << std::endl;
@@ -425,7 +425,7 @@ int main() {
 
     CommandLineInterface::addCustomCommandLineOption("test_all_frequencies", "- Starts a memristor hysterese loop test with different freqnencies",
                                                        testPulses);
-  cli.start();
+  cli.Start();
 
     return 0;
 }

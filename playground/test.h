@@ -6,8 +6,8 @@
 #define INSTRUMENT_CONTROL_LIB_TEST_H
 
 #include "iostream"
-#include "KEI2600.h"
-#include "SPD1305.h"
+#include "devices/KEI2600.h"
+#include "devices/SPD1305.h"
 
 using namespace std;
 

@@ -6,7 +6,7 @@
 #include <sstream>
 #include <vector>
 #include <cstring>
-#include "KST3000.h"
+#include "devices/KST3000.h"
 #include <unistd.h>
 
 /**
@@ -23,11 +23,11 @@
  * @note Get oscillator's m_IPAddr: Press "Utility" key; Press I/O;
  * */
 // TODO: these two instructor seem not necessary, could coverd by Device
-KST3000::KST3000(const char *ip, int timeoutInMS) : Device(ip, timeoutInMS, nullptr) {
+KST3000::KST3000(const char *ip, int timeoutInMS) : Oscilloscope(ip, timeoutInMS, nullptr) {
     this->m_DeviceName = "Mixed Single Oscilloscope";
 }
 
-KST3000::KST3000(const char *ip, int timeoutInMS, PIL::Logging *logger) : Device(ip, timeoutInMS, logger) {
+KST3000::KST3000(const char *ip, int timeoutInMS, PIL::Logging *logger) : Oscilloscope(ip, timeoutInMS, logger) {
     this->m_DeviceName = "Mixed Single Oscilloscope";
 }
 
@@ -38,7 +38,7 @@ KST3000::KST3000(const char *ip, int timeoutInMS, PIL::Logging *logger) : Device
  *        Can be used to make sure the connection is working.
  * */
 
-int KST3000::display_connection() {
+int KST3000::displayConnection() {
     Exec("DISP:TEXT 'Connected Successfully. Returning...'");
     sleep(2);
     Exec("DISP ON");
@@ -69,32 +69,31 @@ int KST3000::single() {
 /**
  * @brief Equivalent to press the "Auto Scale" button.
  * */
-int KST3000::autoscale() {
+int KST3000::autoScale() {
     return Exec("AUToscale");
 }
 
 /**
  * @brief Set trigger slope
- * @param slope: {POS | NEG | EITH | ALT} (Rising | Falling | Either | Alternating)
+ * @param edge: {POS | NEG | EITH | ALT} (Rising | Falling | Either | Alternating)
  * */
-int KST3000::set_trigger_edge(char *slope) {
-    std::string s_slope(slope);
-    return Exec("TRIGger:SLOPe " + s_slope);
+int KST3000::setTriggerEdge(TRIGGER_EDGE edge) {
+    return Exec("TRIGger:SLOPe " + getTriggerEdgeStr(edge));
 }
 
 /**
  * @brief Set trigger  channel
  * @param channel: {1(default) | 2 | 3 | 4}
  * */
-int KST3000::set_trigger_source(int channel) {
-    return Exec("TRIGger:SOURce CHAN" + std::to_string(channel));
+int KST3000::setTriggerSource(OSC_CHANNEL channel) {
+    return Exec("TRIGger:SOURce CHAN" + getChannelFromEnum(channel));
 }
 
 /**
  * @brief Set timebase(horizontal) range; Equivalent to adjust the "Horizontal" knob.
  * @param range: time range to set, unit: second
  * */
-int KST3000::set_time_range(double range) {
+int KST3000::setTimeRange(double range) {
     return Exec("TIMebase:RANGe " + std::to_string(range));
 }
 
@@ -102,7 +101,7 @@ int KST3000::set_time_range(double range) {
  * @brief Set timebase(horizontal) delay; Equivalent to adjust the delay knob in Horizontal controls.
  * @param delay: time delay, unit seconds
  * */
-int KST3000::set_time_delay(double delay) {
+int KST3000::setTimeDelay(double delay) {
     return Exec("TIMebase:DELay " + std::to_string(delay));
 }
 
@@ -111,26 +110,26 @@ int KST3000::set_time_delay(double delay) {
  * @param scale: units(voltage) per division(grid)
  * @param channel:  target channel: default 1
  * */
-int KST3000::set_channel_scale(double scale, int channel) {
+int KST3000::setChannelScale(OSC_CHANNEL channel, double value) {
     // set the vertical scale
     std::string command = ""
-                          "CHANnel" + std::to_string(channel) + ":SCALe " + std::to_string(scale);
+                          "CHANnel" + std::to_string(channel) + ":SCALe " + getChannelFromEnum(channel);
     return Exec(command);
 }
 
 /**
- * @brief Similar to set_channel_scale, but set the whole voltage range.
+ * @brief Similar to setChannelScale, but set the whole voltage range.
  * @param range: voltage range(vertical)
  * @param target: channel: default 1
  * @param is_v: voltage unit:
  *              - true: use V as unit, default
  *              - false: use mV as unit
  * */
-int KST3000::set_channel_range(double range, int channel, bool is_v) {
+int KST3000::setChannelRange(OSC_CHANNEL channel, double range, bool is_v) {
     // set the vertical range
-    std::string command = "CHANnel" + std::to_string(channel) + ":RANGe " + std::to_string(range);
+    std::string command = "CHANnel" + getChannelFromEnum(channel) + ":RANGe " + std::to_string(range);
     if (!is_v) {
-        command += " mV";
+        command += " mV"; // What is is_v?
     }
     return Exec(command);
 }
@@ -140,9 +139,9 @@ int KST3000::set_channel_range(double range, int channel, bool is_v) {
  * @param offset:  vertical offset, unit: V
  * @param channel: channel number, default 1
  * */
-int KST3000::set_channel_offset(double offset, int channel) {
+int KST3000::setChannelOffset(OSC_CHANNEL channel, double offset) {
     // set the vertical offset
-    std::string command = "CHANnel" + std::to_string(channel) + ":offset " + std::to_string(offset);
+    std::string command = "CHANnel" + getChannelFromEnum(channel) + ":offset " + std::to_string(offset);
     return Exec(command);
 }
 
@@ -151,9 +150,9 @@ int KST3000::set_channel_offset(double offset, int channel) {
  * @param on: 1 or 0. 1: show channel single. 0: hide channel single.
  * @param channel: channel number, default 1
  * */
-int KST3000::set_channel_display(int on, int channel) {
+int KST3000::setChannelDisplay(OSC_CHANNEL channel, int on) {
     // turns the channel on(1) or off(0)
-    std::string command = "CHANnel" + std::to_string(channel) + ":DISPlay " + std::to_string(on);
+    std::string command = "CHANnel" + getChannelFromEnum(channel) + ":DISPlay " + std::to_string(on);
     return Exec(command);
 }
 
@@ -181,7 +180,7 @@ std::vector<std::string> split(const char *splitStr, std::string &delimiter) {
  *  Waveform X increment, Waveform X origin, Waveform X reference,
  *  Waveform Y increment, Waveform Y origin, Waveform Y reference]
  * */
-int KST3000::get_waveform_preamble(char *preamble) {
+int KST3000::getWaveformPreamble(char *preamble) {
     std::string command = "WAVeform:PREamble?";
     return Exec(command, preamble);
 }
@@ -190,7 +189,7 @@ int KST3000::get_waveform_preamble(char *preamble) {
  * @brief Query the number of waveform points to be transferred
  * @return the number of waveform points to be transferred
  * */
-int KST3000::get_waveform_points() {
+int KST3000::getWaveformPoints() {
     std::string command = "WAVeform:POINts?";
     char buffer[1024] = {0};
     Exec(command, buffer);
@@ -204,7 +203,7 @@ int KST3000::get_waveform_points() {
  *          - MAXimum
  *          - RAW
  * */
-int KST3000::set_waveform_points_mode(std::string &mode) {
+int KST3000::setWaveformPointsMode(std::string &mode) {
     std::string command = "WAVeform:POINts:MODE " + mode;
     return Exec(command);
 }
@@ -212,7 +211,7 @@ int KST3000::set_waveform_points_mode(std::string &mode) {
 /**
  * @brief set number of waveform points
  * */
-int KST3000::set_waveform_points(int num_points) {
+int KST3000::setWaveformPoints(int num_points) {
     std::string command = "WAVeform:POINts " + std::to_string(num_points);
     return Exec(command);
 }
@@ -220,8 +219,8 @@ int KST3000::set_waveform_points(int num_points) {
 /**
  * @brief set format of waveform data(default "BYTE")
  * */
-int KST3000::set_waveform_format(const char *format) {
-    std::string command = "WAVeform:FORMat" + std::string(format);
+int KST3000::setWaveformFormat(FILE_FORMAT format) {
+    std::string command = "WAVeform:FORMat" + getFileFormatStrFromEnum(format);
     return Exec(command);
 }
 
@@ -255,9 +254,9 @@ int write_to_file(const char *data, const std::string &file_path) {
    The size can vary depending on the number of points acquired for the waveform.(In the example, 1000 points)
    You can then read that number of bytes from the oscilloscope and the terminating NL character.
  * */
-int KST3000::get_waveform_data(char *data) {
+int KST3000::getWaveformData(char *data) {
     std::string command = "WAVeform:DATA?";
-    int num = get_waveform_points();
+    int num = getWaveformPoints();
     int data_length = 10 + num + 1;  // 10 is the length of <header>, 1 is the end breakline(\n)
     char buffer[data_length];
     Exec(command, buffer, true, data_length);
@@ -268,12 +267,12 @@ int KST3000::get_waveform_data(char *data) {
 /**
  * @brief convert a measurement data array to a 2d array: time array & voltage array
  * */
-int KST3000::get_real_data(double **result) {
-    int points = get_waveform_points();
+int KST3000::getRealData(double **result) {
+    int points = getWaveformPoints();
     char data[points];
-    get_waveform_data(data);
+    getWaveformData(data);
     char preamble[1024];
-    get_waveform_preamble(preamble);
+    getWaveformPreamble(preamble);
     std::string delimiter = ",";
     std::vector<std::string> v_preamble = split(preamble, delimiter);
     double x_increment = std::stod(v_preamble[4]);
@@ -311,17 +310,17 @@ int KST3000::get_real_data(double **result) {
  * plt.plot(data['time(ms)'], data['voltage(V)'])
  * @endcode
  * */
-int KST3000::save_waveform_data(std::string file_path) {
+int KST3000::saveWaveformData(std::string file_path) {
     char preamble[1024];
-    get_waveform_preamble(preamble);
+    getWaveformPreamble(preamble);
     std::string delimiter = ",";
     std::vector<std::string> v_preamble = split(preamble, delimiter);
-    int points = get_waveform_points();
+    int points = getWaveformPoints();
 
     double *result[2];
     result[0] = new double[points];
     result[1] = new double[points];
-    get_real_data(result);
+    getRealData(result);
     std::stringstream stream;
     stream << "time(ms)" << "," << "voltage(V)" << std::endl;
     for (int i = 0; i < points; i++) {
@@ -351,8 +350,8 @@ int KST3000::save_waveform_data(std::string file_path) {
  * @param mode: {MAIN | WIND | XY | ROLL}
  * must be MAIN before executing digitize
  * */
-int KST3000::set_timebase_mode(const char *mode) {
-    return Exec("TIMebase:MODE " + std::string(mode));
+int KST3000::setDisplayMode(DISPLAY_MODES mode) {
+    return Exec("TIMebase:MODE " + getDisplayModeFromEnum(mode));
 }
 
 /**
@@ -365,15 +364,80 @@ int KST3000::digitize() {
 /**
  * @brief get system setup
  * */
-int KST3000::get_system_setup(char *buffer) {
+int KST3000::getSystemSetup(char *buffer) {
     return Exec("SYSTem:SETup?", buffer);
 }
 
 /**
  * @brief set waveform source
  * */
-int KST3000::set_waveform_source(int channel) {
-    return Exec("WAVeform:SOURce CHANnel" + std::to_string(channel));
+int KST3000::setWaveformSource(OSC_CHANNEL channel) {
+    return Exec("WAVeform:SOURce CHANnel" + getChannelFromEnum(channel));
+}
+
+/*static*/ std::string KST3000::getTriggerEdgeStr(Oscilloscope::TRIGGER_EDGE edge)
+{
+    switch (edge) {
+        case Oscilloscope::POS_EDGE:
+            return "POS";
+        case Oscilloscope::NEG_EDGE:
+            return "NEG";
+        case Oscilloscope::EITHER:
+            return "EITH";
+        case Oscilloscope::ALTERNATING:
+            return "ALT";
+        default:
+            return "POS"; // TODO check
+    }
+}
+
+/*static*/ std::string KST3000::getChannelFromEnum(Oscilloscope::OSC_CHANNEL channel)
+{
+    switch (channel)
+    {
+        case Oscilloscope::CHANNEL_1:
+            return "1";
+        case Oscilloscope::CHANNEL_2:
+            return "2";
+        case Oscilloscope::CHANNEL_3:
+            return "3";
+        case Oscilloscope::CHANNEL_4:
+            return "4";
+        default:
+            return "1"; // TODO check
+    }
+}
+
+std::string KST3000::getDisplayModeFromEnum(Oscilloscope::DISPLAY_MODES displayMode)
+{
+    switch (displayMode)
+    {
+        case MAIN:
+            return "MAIN";
+        case WIND:
+            return "WIND";
+        case XY:
+            return "XY";
+        case ROLL:
+            return "ROLL";
+        default:
+            return "MAIN"; // TODO check
+    }
+}
+
+std::string KST3000::getFileFormatStrFromEnum(Oscilloscope::FILE_FORMAT format)
+{
+    switch (format)
+    {
+        case ASCII:
+            return "ASCII";
+        case WORD:
+            return "WORD";
+        case BYTE:
+            return "BYTE";
+        default:
+            return "BYTE"; // TODO check
+    }
 }
 
 

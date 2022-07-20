@@ -1,7 +1,7 @@
 #include<unistd.h>
 
-#include "KST3000.h"
-#include "KST33500.h"
+#include "devices/KST3000.h"
+#include "devices/KST33500.h"
 
 using namespace std;
 
