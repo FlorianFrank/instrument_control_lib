@@ -250,8 +250,11 @@ int KEI2600::disableBeep() {
 double KEI2600::measureI(SMU_CHANNEL channel) {
     string sChannel(1, channel);
     string command = "reading = smu" + sChannel + ".measure.i()";
+    Exec(command);
     char buffer[1024] = {0};
-    Exec(command, buffer);
+    string response = "print(reading)";
+    Exec(response, buffer);
+    cout << "Received from measureI: " << buffer << endl;
     return stod(buffer);
 }
 
@@ -263,7 +266,7 @@ double KEI2600::measureV(SMU_CHANNEL channel) {
     char buffer[1024] = "0";
     string response = "print(reading)";
     Exec(response, buffer);
-    cout << "Received from readV: " << buffer << endl;
+    cout << "Received from measureV: " << buffer << endl;
     return stod(buffer);
 }
 

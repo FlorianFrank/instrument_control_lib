@@ -27,8 +27,10 @@ int testSMU(string ip) {
     PIL::Logging logger(INFO_LVL, nullptr);
     KEI2600 *smu = new KEI2600(&logger, ip.c_str(), 0);
     bool connectRet = smu->Connect();
-    if(!connectRet)
+    if(!connectRet) {
         cout << smu->ReturnErrorMessage() << std::endl;
+        return 1;
+    }
 
     string id = smu->GetDeviceIdentifier();
     cout << "Connected to: " + id << endl;
