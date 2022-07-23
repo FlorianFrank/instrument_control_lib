@@ -1,5 +1,8 @@
 # Instrument Control Lib
 
+<img src="docs_and_specs/figures/Logo.svg">
+
+
 This repository contains the code to configure oscilloscopes, signal generators and DC power supplies.
 
 ### Build status
