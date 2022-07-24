@@ -102,13 +102,6 @@ It provides following functionality:
 | setFunction()       | funcType           | Set the function currently used (allowed: sinus, square, ramp, negative ramp, triangle, noise, pseudo random bit stream, arbitrary) | See manual      |
 | display()           | -                  | -                                                                                                                                   |                 |
 | displayConnection() | -                  | -                                                                                                                                   | -               |
-|                     |                    |                                                                                                                                     |                 |
-|                     |                    |                                                                                                                                     |                 |
-|                     |                    |                                                                                                                                     |                 |
-|                     |                    |                                                                                                                                     |                 |
-|                     |                    |                                                                                                                                     |                 |
-|                     |                    |                                                                                                                                     |                 |
-|                     |                    |                                                                                                                                     |                 |
 
 ## Documentation
 Run doxygen
