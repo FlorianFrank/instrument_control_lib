@@ -19,16 +19,6 @@ It provides following functionality:
   <br><br>
 - Platform independent implementation (tested on Windows, MAC OS and Ubuntu)
 
-
-### Build status
-
-|       OS       |                                                          Status                                                          | 
-|:--------------:|:------------------------------------------------------------------------------------------------------------------------:|
-|Windows Latest  | ![Windows latest](https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/windows_latest.yml/badge.svg) |
-|Mac OS Latest   |  ![MAC OS latest](https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/mac_os_latest.yml/badge.svg)  |
-|Ubuntu Latest   |  ![Ubuntu Latest](https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/ubuntu_latest.yml/badge.svg)  |
-
-
 ## Supported Devices
 #### &nbsp;&nbsp;&nbsp;&nbsp;- SPD1305X DC Power Supply
 #### &nbsp;&nbsp;&nbsp;- Keysight 33500B Waveform Generator
@@ -103,43 +93,110 @@ It provides following functionality:
 | display()           | -                  | -                                                                                                                                   |                 |
 | displayConnection() | -                  | -                                                                                                                                   | -               |
 
-## Documentation
-Run doxygen
-```shell
-doxygen Doxyfile
-```
-## Example
-Check the [test file](./test/main.cpp) 
+## Continuous integration
+
+|       OS       |                                                          Status                                                          | 
+|:--------------:|:------------------------------------------------------------------------------------------------------------------------:|
+|Windows Latest  | ![Windows latest](https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/windows_latest.yml/badge.svg) |
+|Mac OS Latest   |  ![MAC OS latest](https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/mac_os_latest.yml/badge.svg)  |
+|Ubuntu Latest   |  ![Ubuntu Latest](https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/ubuntu_latest.yml/badge.svg)  |
+
 ## Build
-```shell
-bash build.sh
+
+### 1. Build from master branch
+
+#### 1.1 Checkout repository
+
 ```
-The built files are in out direction. The structure should be:
-```
-out
-├── _include
-│   ├── device.h
-│   ├── spd1305.h
-│   ├── kst33500.h
-│   └── ...(other headers) 
-└── _lib
-    └── libce_device.so(or .dylib, .dll)
+git clone git@github.com:FlorianFrank/instrument_control_lib.git
 ```
 
-## Usage
+#### 1.2 Configure build
+
+Adjust the configuration files according to your needs.
+
+```
+option(INSTRUMENT_LIB_BUILD_STATIC "Build instrument lib as static library"     ON)
+
+# Definitions for the platform independent abstraction layer.
+option(PIL_COMMUNICATION    "Enable PIL Sockets"          ON)
+option(PIL_THREADING        "Enable PIL Threads"          ON)
+option(PIL_LOGGING          "Enable Logging support"      ON)
+option(PIL_SHARED           "BUILD PIL as shared library" OFF)
+option(PIL_STATIC           "BUILD PIL as static library" ON)
+option(PIL_CXX              "Enable PIL C++ support"      ON)
+
+# PugiXML options
+option(BUILD_SHARED_LIBS    "Build pugiXML as shared lib" OFF)
+set(PUGI_XML_VERSION 1.12)
+```
+
+#### 1.3 Build the library
+
+On Linux and MAC OS run:
+```bash
+./build.sh
+```
+
+On Windows run:
+
+````powershell
+.\build.bat
+````
+
+<br><br>
+#### 1.4 Exporting the library 
+
+You can find the library in the **build** folder.
+```
+out
+├── include          Here you can find the device and include fines for the project
+├── ĺib              Here you can find the libraries to link to your project.
+├── bin              In this folder you can find sample test programs, like a command line interface.
+├── doc              This folder contains the doxygen documentation.
+```
+
+### 2. Download pre-installed packages
+
+#### 2.1 Download a released version from github.
+
+Go to:<br>
+[Github Packages](https://github.com/FlorianFrank/instrument_control_lib/tags) and download the preferred version.
+
+#### 2.2 Install the package
+
+#### 2.2.1 On Debian based systems
+
+```
+dpkg -i instrument_control_lib.deb
+```
+
+The files are copied into the **/usr/bin, /usr/lib/,** and **/usr/include** folders and can be linked and included in any program.
+
+#### 2.2.2 On Windows systems
+
+
+
+
+
+
+## Examples
+
+##
+
 ### Connect devices
 ```c++
 #include "kst33500.h" // include right device header file
 
 int main() {
     // provide a IP address, some devices may need an extra port parameter
-    KST33500 k = KST33500("xx.xx.xx.xx"); 
+    KST33500 k("xx.xx.xx.xx"); 
     k.Connect();
 }
 ```
 
 ### Execute commands
-####Use Exec function to send SCPI commands.
+#### Use Exec function to send SCPI commands.
 
 ```c++
 // set a SIN wave
