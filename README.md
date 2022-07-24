@@ -74,7 +74,7 @@ On Windows run:
 .\build.bat
 ````
 
-<br><br>
+
 #### 1.4 Exporting the library
 
 You can find the library in the **build** folder.
@@ -91,11 +91,13 @@ out
 #### 2.1 Download a released version from github.
 
 Go to:<br>
-[Github Packages](https://github.com/FlorianFrank/instrument_control_lib/tags) and download the preferred version.
+[Instrument Control Packages](https://github.com/FlorianFrank/instrument_control_lib/tags) and download the preferred version.
 
 #### 2.2 Install the package
 
 #### 2.2.1 On Debian based systems
+
+Execute:
 
 ```
 dpkg -i instrument_control_lib.deb
@@ -105,7 +107,14 @@ The files are copied into the **/usr/bin, /usr/lib/,** and **/usr/include** fold
 
 #### 2.2.2 On Windows systems
 
+Run the graphical installer.
+
+#### 2.2.3 On MAC OS systems
+
+Run the graphical installer.
+
 ## Supported Commands per device
+<br><br>
 
 #### SPD1305X DC Power Supply
 | **Function** | **Parameters**   | **Description**                                          | **Value Range** |
@@ -174,9 +183,8 @@ The files are copied into the **/usr/bin, /usr/lib/,** and **/usr/include** fold
 
 ## Examples
 
-##
 
-### Connect devices
+### Connect to devices
 ```c++
 #include "kst33500.h" // include right device header file
 
@@ -185,33 +193,6 @@ int main() {
     KST33500 k("xx.xx.xx.xx"); 
     k.Connect();
 }
-```
-
-### Execute commands
-#### Use Exec function to send SCPI commands.
-
-```c++
-// set a SIN wave
-k.Exec("FUNCtion SIN");
-```
-#### Use wrapped functions
-We wrapped some common commands to save your time. Here is an example. 
-```c++
-k.function("SIN");
-k.frequency("+1.0E+03");
-k.voltage("+2.0", "HIGH");
-k.voltage("+0.0", "LOW");
-k.output(true);
-k.phase("+90.0");
-```
-The code above is equivalent to
-```
-FUNCtion SIN
-FREQuency +1.0E+05
-VOLTage:HIGH +2.0
-VOLTage:LOW +0.0
-OUTPut ON
-PHASe +90.0
 ```
 
 ## Development
