@@ -8,15 +8,13 @@ This repository contains the code to configure oscilloscopes, signal generators,
 It provides following functionality:
 <br>
 - Establishing a network connection and identifying the different types of devices
-  <br><br>
-  
+  <br>
 - Execution of VISA commands on the devices. E.g. setting the voltage on a DC power-supply, Setting voltage limits on SMUs or to gather the current data of an oscilloscope
-  <br><br>
-  
+  <br>
 - CSV export function to directly store the output of measure devices in an *.csv file.
-  <br><br>
+  <br>
 - Environment to set up test cases, configured by an XML file.
-  <br><br>
+  <br>
 - Platform independent implementation (tested on Windows, MAC OS and Ubuntu)
 
 ## Supported Devices
