@@ -59,24 +59,24 @@ It provides following functionality:
 <br><br>
 #### Tektronix 2600B Series SMU
 
-| **Function**              | **Parameters** | **Description**                                                                  | **Value Range** |
-|---------------------------|----------------|----------------------------------------------------------------------------------|-----------------|
-| turnOn()                  | channel        | Enable a channel on the SMU.                                                     | See manual      |
-| turnOff()                 | channel        | Disable a channel on the SMU.                                                    | See manual      |
-| measure()                 | channel, unit  | Measure a certain unit (voltage, current, power) and return the measure results. | See manual      |
-| setLevel()                | channel        | TODO?                                                                            | See manual      |
-| setLimit()                | channel        | TODO?                                                                            | See manual      |
-| enableMeasureAutoRange()  | unit, channel  | TODO?                                                                            | See manual      |
-| disableMeasureAutoRange() | unit, channel  | TODO?                                                                            | See manual      |
-| enableSourceAutoRange()   | unit, channel  | TODO?                                                                            | See manual      |
-| disableSourceAutoRange()  | unit, channel  | TODO?                                                                            | See manual      |
-| setMeasureRange()         | unit, channel  | TODO?                                                                            | See manual      |
-| setSourceRange()          | unit, channel  | TODO?                                                                            | See manual      |
-| selectLocalSense()        | unit, channel  | TODO?                                                                            | See manual      |
-| setRemoteSense()          | unit, channel  | TODO?                                                                            | See manual      |
-| enableBeep()              | -              | Enable the execution of a beep sound on the oscilloscope.                        | See manual      |
-| enableBeep()              | -              | Disable the execution of a beep sound on the oscilloscope.                       | See manual      |
-| beep()                    | -              | Send a beep signal to the SMU.                                                   | See manual.     |
+| **Function**              | **Parameters**       | **Description**                                                                  | **Value Range** |
+|---------------------------|----------------------|----------------------------------------------------------------------------------|-----------------|
+| turnOn()                  | channel              | Enable a channel on the SMU.                                                     | See manual      |
+| turnOff()                 | channel              | Disable a channel on the SMU.                                                    | See manual      |
+| measure()                 | channel, unit        | Measure a certain unit (voltage, current, power) and return the measure results. | See manual      |
+| setLevel()                | channel, unit        | Set voltage, current source level                                                | See manual      |
+| setLimit()                | channel, unit        | Set voltage, current or power limit.                                             | See manual      |
+| enableMeasureAutoRange()  | unit, channel        | Enable voltage or current measure auto range.                                    | ON              |
+| disableMeasureAutoRange() | unit, channel        | Disable voltage or current measure auto range.                                   | OFF             |
+| enableSourceAutoRange()   | unit, channel        | Enable voltage or current measure auto range.                                    | ON              |
+| disableSourceAutoRange()  | unit, channel        | Disable voltage or current measure auto range.                                   | OFF             |
+| setMeasureRange()         | unit, channel, range | Set voltage or current measure range.                                            | See manual      |
+| setSourceRange()          | unit, channel, range | Set voltage or current source range.                                             | See manual      |
+| selectLocalSense()        | unit, channel        | Select local sense (2-wire).                                                     | See manual      |
+| setRemoteSense()          | unit, channel        | Select remote sense (4-wire).                                                    | See manual      |
+| enableBeep()              | -                    | Enable the execution of a beep sound on the oscilloscope.                        | See manual      |
+| enableBeep()              | -                    | Disable the execution of a beep sound on the oscilloscope.                       | See manual      |
+| beep()                    | -                    | Send a beep signal to the SMU.                                                   | See manual.     |
 
 <br><br>
 #### Keysight 33500B Waveform Generator
@@ -90,7 +90,7 @@ It provides following functionality:
 | setOffset()         | channel, offset    | Set a voltage offset on a certain channel of the function generator.                                                                | See manual      |
 | setPhase()          | channel, phase     | Adjust the phase on a certain function generator channel.                                                                           | See manual      |
 | setFunction()       | funcType           | Set the function currently used (allowed: sinus, square, ramp, negative ramp, triangle, noise, pseudo random bit stream, arbitrary) | See manual      |
-| display()           | -                  | -                                                                                                                                   |                 |
+| display()           | text               | Display text on display of function generator.                                                                                      |                 |
 | displayConnection() | -                  | -                                                                                                                                   | -               |
 
 ## Continuous integration
