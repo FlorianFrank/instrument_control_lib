@@ -39,22 +39,22 @@ It provides following functionality:
 <br><br>
 #### Keysight 33500B Waveform Generator
 
-| **Function**        | **Parameters**  | **Description**                                                                          | **Value Range** |
-|---------------------|-----------------|------------------------------------------------------------------------------------------|-----------------|
-| run()               | -               | Execute a continuous measurement.                                                        | -               |
-| stop()              | -               | Stop the current measurement on the oscilloscope.                                        | See manual      |
-| single()            | -               | Wait for the first signal which is triggered and stop the measurement.                   | See manual      |
-| autoScale()         | -               | Find the best settings to visualize the currently measured signal.                       | See manual      |
-| setTimeRange()      | timeRange       | Adjust the time range on the oscilloscope.                                               | See manual      |
-| setChannelOffset()  | channel, offset | Set the offset of a channel in volts.                                                    | See manual      |
-| setChannelScale()   | channel, scale  | -                                                                                        | See manual      |
-| setChannelRange()   | channel, range  | -                                                                                        | See manual      |
-| getWaveFormData()   | char ** data    | Return the currently captured waveform, which is visualized on the oscilloscopes screen. | See manual      |
-| getRealData()       | double **result | TODO what's the difference to the function above.                                        | See manual      |
-| digitize()          | -               | TODO                                                                                     | See manual      |
-| getSystemSetup()    | -               | -                                                                                        | See manual      |
-| setDisplayMode()    | -               | -                                                                                        | See manual      |
-| setChannelDisplay() | -               | -                                                                                        | See manual      |
+| **Function**        | **Parameters**        | **Description**                                                                                                                                               | **Value Range**                                                |
+|---------------------|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
+| run()               | -                     | Start the acquisition on the instrument.                                                                                                                      | -                                                              |
+| stop()              | -                     | Stop the acquisition on the instrument.                                                                                                                       | -                                                              |
+| single()            | -                     | Wait for the first signal which is triggered and stop the measurement.                                                                                        | -                                                              |
+| autoScale()         | -                     | The oscilloscope tries to find the best vertical channel, timebase and trigger setting for the current experiment.                                            | -                                                              |
+| setTimeRange()      | timeRange             | Sets the full-cale horizontal time in seconds for the main window.                                                                                            | 10x current time-per-devision setting                          |
+| setChannelOffset()  | channel, offset, unit | Set the offset of a channel in volts or milli volts.                                                                                                          | When amplitude is below 400 mV the offset is limited to 500 mV |
+| setChannelScale()   | channel, scale        | Sets the vertical scale or units per division of a specified channel.                                                                                         | See manual                                                     |
+| setChannelRange()   | channel, range        | Defines the full-scale vertical axis on the selected channel                                                                                                  | 8 mV - 40 V                                                    |
+| getWaveFormData()   | data                  | Return the currently captured waveform, which is visualized on the oscilloscopes screen. The data is formated in IEEE 488.2 arbitrary block data format.      | -                                                              |
+| getRealData()       | double **result       | Captures data from the oscilloscope and transforms the data from binary array to a double array.                                                              | -                                                              |
+| digitize()          | -                     | Specialized run command. Captures waveforms according to the settings of the :ACQuire format. (Can only be executed with :TIMbased:MODE being MAIN or WINDow) | -                                                              |
+| getSystemSetup()    | -                     | Outputs the current oscilloscope setup as string.                                                                                                             | -                                                              |
+| setDisplayMode()    | mode                  | Sets the mode of the oscilloscope either to normal mode, time based mode, XY or roll mode.                                                                    | NORMAL, TIME_BASED; XY, ROLL                                   |
+| setChannelDisplay() | channel               | Turns the output of a channel on or off.                                                                                                                      | ON / OFF                                                       |
 
 <br><br>
 #### Tektronix 2600B Series SMU
@@ -174,10 +174,6 @@ dpkg -i instrument_control_lib.deb
 The files are copied into the **/usr/bin, /usr/lib/,** and **/usr/include** folders and can be linked and included in any program.
 
 #### 2.2.2 On Windows systems
-
-
-
-
 
 
 ## Examples
