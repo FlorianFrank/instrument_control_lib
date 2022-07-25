@@ -12,7 +12,8 @@ int testSPD() {
     power->Connect();
 
     power->setCurrent(DCPowerSupply::CHANNEL_1, 0.15);
-    double measureI = power->getCurrent(DCPowerSupply::CHANNEL_1);
+    double measureI;
+    power->getCurrent(DCPowerSupply::CHANNEL_1, &measureI);
     if (measureI != 0.15) {
         cout << "ERROR! Current test failed.\n";
         exit(1);
