@@ -19,11 +19,11 @@ public:
 
     explicit SPD1305(const char *ip, PIL::Logging *logger, int timeoutInMs);
 
-    int turnOn(DC_CHANNEL channel) override;
-    int turnOff(DC_CHANNEL channel) override;
+    PIL_ERROR_CODE turnOn(DC_CHANNEL channel) override;
+    PIL_ERROR_CODE turnOff(DC_CHANNEL channel) override;
 
-    int setCurrent(DC_CHANNEL channel, double current) override;
-    double getCurrent(DC_CHANNEL channel) override;
+    PIL_ERROR_CODE setCurrent(DC_CHANNEL channel, double current) override;
+    PIL_ERROR_CODE getCurrent(DC_CHANNEL channel, double* current) override;
 
 private:
     static std::string getStrFromDCChannelEnum(DC_CHANNEL channel);

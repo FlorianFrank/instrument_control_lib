@@ -18,35 +18,35 @@ public:
     explicit KEI2600(PIL::Logging *logger, const char *ip, int timeoutInMS);
     KEI2600(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
-    double measure(UNIT unit, SMU_CHANNEL channel) override;
+    PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double* value) override;
 
-    int turnOn(SMU_CHANNEL channel) override;
-    int turnOff(SMU_CHANNEL channel) override;
+    PIL_ERROR_CODE turnOn(SMU_CHANNEL channel) override;
+    PIL_ERROR_CODE turnOff(SMU_CHANNEL channel) override;
 
-    int setLevel(UNIT unit, SMU_CHANNEL channel, double level) override;
-    int setLimit(UNIT unit, SMU_CHANNEL channel, double limit) override;
+    PIL_ERROR_CODE setLevel(UNIT unit, SMU_CHANNEL channel, double level) override;
+    PIL_ERROR_CODE setLimit(UNIT unit, SMU_CHANNEL channel, double limit) override;
 
-    int enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel);
-    int disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel);
+    PIL_ERROR_CODE enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel);
+    PIL_ERROR_CODE disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel);
 
-    int enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel);
-    int disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel);
+    PIL_ERROR_CODE enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel);
+    PIL_ERROR_CODE disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel);
 
-    int setMeasureRange(UNIT unit, SMU_CHANNEL channel, double range);
-    int setSourceRange(UNIT unit, SMU_CHANNEL channel, double range);
+    PIL_ERROR_CODE setMeasureRange(UNIT unit, SMU_CHANNEL channel, double range);
+    PIL_ERROR_CODE setSourceRange(UNIT unit, SMU_CHANNEL channel, double range);
 
-    int selectLocalSense(SMU_CHANNEL channel);
-    int selectRemoteSense(SMU_CHANNEL channel);
+    PIL_ERROR_CODE selectLocalSense(SMU_CHANNEL channel);
+    PIL_ERROR_CODE selectRemoteSense(SMU_CHANNEL channel);
 
-    int enableBeep();
-    int beep();
-    int disableBeep();
+    PIL_ERROR_CODE enableBeep();
+    PIL_ERROR_CODE beep();
+    PIL_ERROR_CODE disableBeep();
 
 private:
-    double measureI(SMU_CHANNEL channel);
-    double measureV(SMU_CHANNEL channel);
-    double measureR(SMU_CHANNEL channel);
-    double measureP(SMU_CHANNEL channel);
+    PIL_ERROR_CODE measureI(SMU_CHANNEL channel, double *value);
+    PIL_ERROR_CODE measureV(SMU_CHANNEL channel, double *value);
+    PIL_ERROR_CODE measureR(SMU_CHANNEL channel, double *value);
+    PIL_ERROR_CODE measureP(SMU_CHANNEL channel, double *value);
 
 
 

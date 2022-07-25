@@ -18,37 +18,37 @@ public:
     explicit KST3000(const char *ip, int timeoutInMS);
     KST3000(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
-    int run() override;
-    int stop() override;
-    int single() override;
-    int autoScale() override;
+    PIL_ERROR_CODE run() override;
+    PIL_ERROR_CODE stop() override;
+    PIL_ERROR_CODE single() override;
+    PIL_ERROR_CODE autoScale() override;
 
-    int setTimeRange(double value) override;
-    int setChannelOffset(OSC_CHANNEL channel, double offset) override;
-    int setChannelScale(OSC_CHANNEL channel, double value) override;
-    int setChannelRange(OSC_CHANNEL channel, double value, bool is_v = true) override; // TODO what is is_v?
+    PIL_ERROR_CODE setTimeRange(double value) override;
+    PIL_ERROR_CODE setChannelOffset(OSC_CHANNEL channel, double offset) override;
+    PIL_ERROR_CODE setChannelScale(OSC_CHANNEL channel, double value) override;
+    PIL_ERROR_CODE setChannelRange(OSC_CHANNEL channel, double value, bool is_v = true) override; // TODO what is is_v?
 
-    int setTriggerEdge(TRIGGER_EDGE edge) override;
-    int setTriggerSource(OSC_CHANNEL channel) override;
+    PIL_ERROR_CODE setTriggerEdge(TRIGGER_EDGE edge) override;
+    PIL_ERROR_CODE setTriggerSource(OSC_CHANNEL channel) override;
 
-    int setTimeDelay(double delay);
+    PIL_ERROR_CODE setTimeDelay(double delay);
 
-    int setWaveformSource(OSC_CHANNEL channel);
-    int getWaveformPreamble(char *preamble);
-    int getWaveformPoints();
-    int setWaveformPoints(int num_points);
-    int setWaveformPointsMode(std::string &mode);
-    int setWaveformFormat(FILE_FORMAT format);
-    int saveWaveformData(std::string file_path = "./buffer");
+    PIL_ERROR_CODE setWaveformSource(OSC_CHANNEL channel);
+    PIL_ERROR_CODE getWaveformPreamble(char *preamble);
+    PIL_ERROR_CODE getWaveformPoints(int* nrWaveFormPoints);
+    PIL_ERROR_CODE setWaveformPoints(int num_points);
+    PIL_ERROR_CODE setWaveformPointsMode(std::string &mode);
+    PIL_ERROR_CODE setWaveformFormat(FILE_FORMAT format);
+    PIL_ERROR_CODE saveWaveformData(std::string file_path = "./buffer"); // TODO remove unnecessary default argument
 
-    int getWaveformData(char *data);
-    int getRealData(double **result);
-    int digitize();
+    PIL_ERROR_CODE getWaveformData(char *data);
+    PIL_ERROR_CODE getRealData(double **result);
+    PIL_ERROR_CODE digitize();
 
-    int getSystemSetup(char *buffer);
-    int setDisplayMode(DISPLAY_MODES displayMode);
-    int displayConnection();
-    int setChannelDisplay(OSC_CHANNEL channel, int on);
+    PIL_ERROR_CODE getSystemSetup(char *buffer);
+    PIL_ERROR_CODE setDisplayMode(DISPLAY_MODES displayMode);
+    PIL_ERROR_CODE displayConnection();
+    PIL_ERROR_CODE setChannelDisplay(OSC_CHANNEL channel, int on);
 
 private:
     // Helper-functions

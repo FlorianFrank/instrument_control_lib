@@ -15,33 +15,33 @@ SPD1305::SPD1305(const char *ip, PIL::Logging *logger, int timeoutInMs) : DCPowe
   this->m_DeviceName = "DC Power Supply";
 }
 
-int SPD1305::setCurrent(DC_CHANNEL channel, double current) {
+PIL_ERROR_CODE SPD1305::setCurrent(DC_CHANNEL channel, double current) {
   std::string msg = "CH" + getStrFromDCChannelEnum(channel) + ":CURRent " + std::to_string(current);
-    Exec(msg);
-  return 0;
+  return Exec(msg);
 }
 
-double SPD1305::getCurrent(DC_CHANNEL channel) {
+PIL_ERROR_CODE SPD1305::getCurrent(DC_CHANNEL channel, double *current) {
   std::string msg = "CH" + getStrFromDCChannelEnum(channel) + ":CURRent?";
   // TODO: 20 ?
   char result[20] = {0};
-    Exec(msg, result);
-  return atof(result);
+  auto execRet = Exec(msg, result);
+  if(execRet != PIL_NO_ERROR)
+      return execRet;
+  *current = atof(result);
+  return PIL_NO_ERROR;
 }
 
-int SPD1305::turnOn(DC_CHANNEL channel) {
+PIL_ERROR_CODE SPD1305::turnOn(DC_CHANNEL channel) {
   std::string msg = "OUTPut CH" + getStrFromDCChannelEnum(channel) + ",ON";
-    Exec(msg, nullptr, false);
-  return 0;
+    return Exec(msg, nullptr, false);
 }
 
-int SPD1305::turnOff(DC_CHANNEL channel) {
+PIL_ERROR_CODE SPD1305::turnOff(DC_CHANNEL channel) {
   std::string str = "OUTPut CH" + getStrFromDCChannelEnum(channel) + ",OFF";
   std::cout << str;
   char command[str.length() + 1];
   strcpy(command, str.c_str());
-    Exec(command, nullptr, false);
-  return 0;
+  return Exec(command, nullptr, false);
 }
 
 /*static*/ std::string SPD1305::getStrFromDCChannelEnum(DCPowerSupply::DC_CHANNEL channel)

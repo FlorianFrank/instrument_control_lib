@@ -40,20 +40,20 @@ public:
 
     Oscilloscope(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
-    virtual int run() = 0;
-    virtual int stop() = 0;
-    virtual int single() = 0;
+    virtual PIL_ERROR_CODE run() = 0;
+    virtual PIL_ERROR_CODE stop() = 0;
+    virtual PIL_ERROR_CODE single() = 0;
 
-    virtual int autoScale() = 0;
+    virtual PIL_ERROR_CODE autoScale() = 0;
 
-    virtual int setTimeRange(double value) = 0;
-    virtual int setChannelOffset(OSC_CHANNEL channel, double offset) = 0;
-    virtual int setChannelScale(OSC_CHANNEL channel, double value) = 0;
-    virtual int setChannelRange(OSC_CHANNEL channel, double value, bool is_v) = 0;
+    virtual PIL_ERROR_CODE setTimeRange(double value) = 0;
+    virtual PIL_ERROR_CODE setChannelOffset(OSC_CHANNEL channel, double offset) = 0;
+    virtual PIL_ERROR_CODE setChannelScale(OSC_CHANNEL channel, double value) = 0;
+    virtual PIL_ERROR_CODE setChannelRange(OSC_CHANNEL channel, double value, bool is_v) = 0;
 
 
-    virtual int setTriggerEdge(TRIGGER_EDGE edge) = 0;
-    virtual int setTriggerSource(OSC_CHANNEL channel) = 0;
+    virtual PIL_ERROR_CODE setTriggerEdge(TRIGGER_EDGE edge) = 0;
+    virtual PIL_ERROR_CODE setTriggerSource(OSC_CHANNEL channel) = 0;
 };
 
 

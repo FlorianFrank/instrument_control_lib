@@ -17,11 +17,11 @@ public:
 
     DCPowerSupply(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
-    virtual int turnOn(DC_CHANNEL channel) = 0;
-    virtual int turnOff(DC_CHANNEL channel) = 0;
+    virtual PIL_ERROR_CODE turnOn(DC_CHANNEL channel) = 0;
+    virtual PIL_ERROR_CODE turnOff(DC_CHANNEL channel) = 0;
 
-    virtual int setCurrent(DC_CHANNEL channel, double current) = 0;
-    virtual double getCurrent(DC_CHANNEL channel) = 0;
+    virtual PIL_ERROR_CODE setCurrent(DC_CHANNEL channel, double current) = 0;
+    virtual PIL_ERROR_CODE  getCurrent(DC_CHANNEL channel, double* current) = 0;
 };
 
 

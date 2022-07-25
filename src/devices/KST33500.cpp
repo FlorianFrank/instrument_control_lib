@@ -19,80 +19,73 @@ KST33500::KST33500(const char *ip, int timeoutInMs, PIL::Logging *logger) : Func
 
 
 
-bool KST33500::display(std::string &text) {
+PIL_ERROR_CODE KST33500::display(std::string &text) {
   string msg = "DISP:TEXT '" + text + "'";
-    Exec(msg);
-  return 0;
-}
-
-bool KST33500::display_connection() {
-    Exec("DISP:TEXT 'Connected Successfully. Returning...'");
-  sleep(2);
-    Exec("DISP ON");
-    Exec("DISPlay:TEXT:CLEar");
-  return 0;
-}
-
-
-/**
- * argument unit: V
- * attention: offset would change voltage by double of your argument
- * */
-int KST33500::offset(double value) {
-  string msg = "VOLTage:OFFSet ";
-  msg += to_string(value);
   return Exec(msg);
 }
+
+PIL_ERROR_CODE KST33500::displayConnection() {
+    auto execRet = Exec("DISP:TEXT 'Connected Successfully. Returning...'");
+    if(execRet != PIL_NO_ERROR)
+        return execRet;
+
+  sleep(2);
+    execRet = Exec("DISP ON");
+    if(execRet != PIL_NO_ERROR)
+        return execRet;
+
+    return Exec("DISPlay:TEXT:CLEar");
+}
+
 
 /**
  * argument unit: ms
  * */
-int KST33500::set_pulse_width(double value) {
+PIL_ERROR_CODE KST33500::setPulseWidth(double value) {
   string msg = "FUNCtion:PULSe:WIDTh ";
   msg += to_string(value) + " ms";
   return Exec(msg);
 }
 
-bool KST33500::output(bool on) {
+PIL_ERROR_CODE KST33500::output(bool on) {
   string msg = "OUTPut";
   if (on) {
     msg += " ON";
   } else {
     msg += " OFF";
   }
-    Exec(msg);
-  return 0;
+    return Exec(msg);
 }
 
-int KST33500::turnOn(FunctionGenerator::FUNC_CHANNEL channel)
+PIL_ERROR_CODE KST33500::turnOn(FunctionGenerator::FUNC_CHANNEL channel)
 {
     return output(true);
 }
 
-int KST33500::turnOff(FunctionGenerator::FUNC_CHANNEL channel)
+PIL_ERROR_CODE KST33500::turnOff(FunctionGenerator::FUNC_CHANNEL channel)
 {
     return output(false);
 }
 
-int KST33500::setFrequency(FunctionGenerator::FUNC_CHANNEL channel, double value)
+PIL_ERROR_CODE KST33500::setFrequency(FunctionGenerator::FUNC_CHANNEL channel, double value)
 {
     string msg = "FREQuency " + to_string(value);
-    Exec(msg);
-    return 0;
+    return Exec(msg);
 }
 
-int KST33500::setAmplitude(FunctionGenerator::FUNC_CHANNEL channel, double value, const char *constrain)
+PIL_ERROR_CODE KST33500::setAmplitude(FunctionGenerator::FUNC_CHANNEL channel, double value, const char *constrain)
 {
     std::string msg = "VOLTage";
     if (strlen(constrain) > 0) {
         msg += ":" + std::string(constrain) + " ";
     }
     msg += " " + std::to_string(value);
-    if(!Exec(msg))
-        return false;
+    auto execRet = Exec(msg);
+    if(execRet != PIL_NO_ERROR)
+        return execRet;
 
     m_Amplitude = value;
-    return true;
+    return PIL_NO_ERROR;
 }
 
 
@@ -101,7 +94,7 @@ int KST33500::setAmplitude(FunctionGenerator::FUNC_CHANNEL channel, double value
  * @param functionType type of output function to set. E.g. SINUS or SQUARE for sinus and square waves
  * @return true if no error occurs. Otherwise the error could be read by calling return_error_message().
  */
-bool KST33500::setFunction(FunctionGenerator::FUNCTION_TYPE functionType)
+PIL_ERROR_CODE KST33500::setFunction(FunctionGenerator::FUNCTION_TYPE functionType)
 {
     std::string function;
     switch (functionType)
@@ -134,21 +127,27 @@ bool KST33500::setFunction(FunctionGenerator::FUNCTION_TYPE functionType)
             function = "SIN";
     }
     std::string msg = "FUNCtion " + function;
-    if(!Exec(msg))
-        return false;
+    auto execRet = Exec(msg);
+    if(execRet != PIL_NO_ERROR)
+        return execRet;
 
     m_CurrentFunction = functionType;
-    return true;
+    return PIL_NO_ERROR;
 }
 
-int KST33500::setPhase(FunctionGenerator::FUNC_CHANNEL channel, double value)
+PIL_ERROR_CODE KST33500::setPhase(FunctionGenerator::FUNC_CHANNEL channel, double value)
 {
     string msg = "PHASe " + std::to_string(value);
-    Exec(msg);
-    return false;
+    return Exec(msg);
 }
 
-bool KST33500::setOffset(FunctionGenerator::FUNC_CHANNEL channel, double offset)
+/**
+ * argument unit: V
+ * attention: offset would change voltage by double of your argument
+ * */
+PIL_ERROR_CODE KST33500::setOffset(FunctionGenerator::FUNC_CHANNEL channel, double offset)
 {
-    return false;
+    string msg = "VOLTage:OFFSet ";
+    msg += to_string(offset);
+    return Exec(msg);
 }
