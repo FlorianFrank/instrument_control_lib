@@ -1,10 +1,8 @@
 /**
  * @authors Wuhao Lius, Florian Frank
  */
-#include "iostream"
 #include "devices/KEI2600.h"
-
-using namespace std;
+#include "ctlib/Logging.hpp"
 
 KEI2600::KEI2600(const char *ip, int timeoutInMS, PIL::Logging *logger) : SMU(ip, timeoutInMS, logger) {
     this->m_DeviceName = DEVICE_NAME;
@@ -42,8 +40,8 @@ PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel) {
 
 
 PIL_ERROR_CODE KEI2600::setLevel(UNIT unit, SMU_CHANNEL channel, double level) {
-    string sValue = to_string(level);
-    string levelType;
+    auto sValue = std::to_string(level);
+    std::string levelType;
     switch (unit)
     {
         case CURRENT:
@@ -55,15 +53,14 @@ PIL_ERROR_CODE KEI2600::setLevel(UNIT unit, SMU_CHANNEL channel, double level) {
         default:
             return PIL_INVALID_ARGUMENTS;
     }
-
-    string command = "smu" + getChannelStringFromEnum(channel) + levelType + sValue;
+    auto command = "smu" + getChannelStringFromEnum(channel) + levelType + sValue;
     return Exec(command);
 }
 
 
 PIL_ERROR_CODE KEI2600::setLimit(UNIT unit, SMU_CHANNEL channel, double limit) {
-    string sValue = to_string(limit);
-    string limitType;
+    auto sValue = std::to_string(limit);
+    std::string limitType;
     switch (unit)
     {
         case CURRENT:
@@ -78,13 +75,13 @@ PIL_ERROR_CODE KEI2600::setLimit(UNIT unit, SMU_CHANNEL channel, double limit) {
         default:
             return PIL_INVALID_ARGUMENTS;
     }
-    string command = "smu" + getChannelStringFromEnum(channel) + limitType + sValue;
+    auto command = "smu" + getChannelStringFromEnum(channel) + limitType + sValue;
     return Exec(command);
 }
 
 
 PIL_ERROR_CODE KEI2600::enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel) {
-    string measureType;
+    std::string measureType;
     switch (unit)
     {
         case CURRENT:
@@ -102,7 +99,7 @@ PIL_ERROR_CODE KEI2600::enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel) {
 
 
 PIL_ERROR_CODE KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel) {
-    string measureType;
+    std::string measureType;
     switch (unit)
     {
         case CURRENT:
@@ -120,7 +117,7 @@ PIL_ERROR_CODE KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel) 
 
 
 PIL_ERROR_CODE KEI2600::enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel) {
-    string sourceType;
+    std::string sourceType;
     switch (unit)
     {
         case CURRENT:
@@ -138,7 +135,7 @@ PIL_ERROR_CODE KEI2600::enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel) {
 
 
 PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel) {
-    string sourceType;
+    std::string sourceType;
     switch (unit)
     {
         case CURRENT:
@@ -150,7 +147,6 @@ PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel) {
         default:
             return PIL_INVALID_ARGUMENTS;
     }
-
     auto channelStr = getChannelStringFromEnum(channel);
     return Exec("smu" + channelStr + sourceType + channelStr + ".AUTORANGE_ON");
 }
@@ -162,8 +158,8 @@ PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel) {
  * measure the assigned value. The instrument selects the best range for measuring a value of rangeValue
  * */
 PIL_ERROR_CODE KEI2600::setMeasureRange(UNIT unit, SMU_CHANNEL channel, double rangeValue) {
-    string measureRange;
-    string sValue = to_string(rangeValue);
+    std::string measureRange;
+    auto sValue = std::to_string(rangeValue);
     switch (unit)
     {
         case CURRENT:
@@ -180,8 +176,8 @@ PIL_ERROR_CODE KEI2600::setMeasureRange(UNIT unit, SMU_CHANNEL channel, double r
 
 
 PIL_ERROR_CODE KEI2600::setSourceRange(UNIT unit, SMU_CHANNEL channel, double rangeValue) {
-    string sValue = to_string(rangeValue);
-    string rangeType;
+    auto sValue = std::to_string(rangeValue);
+    std::string rangeType;
     switch (unit)
     {
         case CURRENT:
@@ -229,19 +225,20 @@ PIL_ERROR_CODE KEI2600::measureI(SMU_CHANNEL channel, double *value)
     if(!value)
         return PIL_INVALID_ARGUMENTS;
 
-    string command = "reading = smu" + getChannelStringFromEnum(channel) + ".measure.i()";
+    auto command = "reading = smu" + getChannelStringFromEnum(channel) + ".measure.i()";
     auto ret = Exec(command);
     if(ret != PIL_NO_ERROR)
         return ret;
 
-    char buffer[1024] = {0};
-    string response = "print(reading)";
+    char buffer[MEASURE_RET_BUFF_SIZE] = {0};
+    auto response = "print(reading)";
     ret = Exec(response, buffer);
     if(ret != PIL_NO_ERROR)
         return ret;
 
-    cout << "Received from measureI: " << buffer << endl; // TODO replace by logging function
-    *value = stod(buffer);
+    if(m_Logger)
+        m_Logger->LogMessage(DEBUG_LVL, __FILENAME__, __LINE__,"measureI returned: %s", buffer);
+    *value = std::stod(buffer);
     return PIL_NO_ERROR;
 }
 
@@ -251,20 +248,20 @@ PIL_ERROR_CODE KEI2600::measureV(SMU_CHANNEL channel, double *value)
     if(!value)
         return PIL_INVALID_ARGUMENTS;
 
-    string command = "reading = smu" + getChannelStringFromEnum(channel) + ".measure.v()";
+    auto command = "reading = smu" + getChannelStringFromEnum(channel) + ".measure.v()";
     auto ret = Exec(command);
     if (ret != PIL_NO_ERROR)
         return ret;
 
-    char buffer[1024] = "0";
-    string response = "print(reading)";
+    char buffer[MEASURE_RET_BUFF_SIZE] = "0";
+    auto response = "print(reading)";
     ret = Exec(response, buffer);
     if (ret != PIL_NO_ERROR)
         return ret;
 
-
-    cout << "Received from measureV: " << buffer << endl; // TODO replace by logging
-    *value = stod(buffer);
+    if(m_Logger)
+        m_Logger->LogMessage(DEBUG_LVL, __FILENAME__, __LINE__,"measureV returned: %s", buffer);
+    *value = std::stod(buffer);
     return PIL_NO_ERROR;
 }
 
@@ -274,13 +271,13 @@ PIL_ERROR_CODE KEI2600::measureR(SMU_CHANNEL channel, double *value)
     if(!value)
         return PIL_INVALID_ARGUMENTS;
 
-    string command = "reading = smu" + getChannelStringFromEnum(channel) + ".measure.r()";
-    char buffer[1024] = {0};
+    auto command = "reading = smu" + getChannelStringFromEnum(channel) + ".measure.r()";
+    char buffer[MEASURE_RET_BUFF_SIZE] = {0};
     auto ret = Exec(command, buffer);
     if (ret != PIL_NO_ERROR)
         return ret;
 
-    *value = stod(buffer);
+    *value = std::stod(buffer);
     return PIL_NO_ERROR;
 }
 
@@ -290,13 +287,13 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
     if(!value)
         return PIL_INVALID_ARGUMENTS;
 
-    string command = "reading = smu" + getChannelStringFromEnum(channel) + ".measure.p()";
-    char buffer[1024] = {0};
+    auto command = "reading = smu" + getChannelStringFromEnum(channel) + ".measure.p()";
+    char buffer[MEASURE_RET_BUFF_SIZE] = {0};
     auto ret = Exec(command, buffer);
     if (ret != PIL_NO_ERROR)
         return ret;
 
-    *value = stod(buffer);
+    *value = std::stod(buffer);
     return PIL_NO_ERROR;
 }
 
