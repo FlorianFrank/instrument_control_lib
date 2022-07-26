@@ -1,9 +1,9 @@
-//
-// Created by liuwuhao on 17.06.21.
-//
-
-#ifndef CE_DEVICE_KST3000_H
-#define CE_DEVICE_KST3000_H
+/**
+ * @brief This file contains the implementation of a communication interface to Keigsight KST300 series oscilloscopes.
+ * @authors Wuhao Liu, Florian Frank
+ * @copyright University of Passau - Chair of Computer Engineering
+ */
+#pragma once
 
 #include "types/Oscilloscope.h"
 
@@ -11,10 +11,20 @@ namespace PIL {
     class Logging;
 }
 
-class KST3000 : public Oscilloscope {
+#define DEVICE_NAME "Mixed Single Oscilloscope"
 
+#define MEASURE_RET_BUFF_SIZE 1024
+
+
+/**
+ * @class KST3000
+ * @brief Mixed Single Oscilloscope(Oscillator)
+ * Commend operations of a single generator are defined.
+ * KST3000 is the model of the device(keysight 3000 series).
+ */
+class KST3000 : public Oscilloscope
+{
 public:
-    // TODO: timeoutInMS -> Deice
     explicit KST3000(const char *ip, int timeoutInMS);
     KST3000(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
@@ -39,7 +49,7 @@ public:
     PIL_ERROR_CODE setWaveformPoints(int num_points);
     PIL_ERROR_CODE setWaveformPointsMode(std::string &mode);
     PIL_ERROR_CODE setWaveformFormat(FILE_FORMAT format);
-    PIL_ERROR_CODE saveWaveformData(std::string file_path = "./buffer"); // TODO remove unnecessary default argument
+    PIL_ERROR_CODE saveWaveformData(std::string &file_path); // TODO remove unnecessary default argument
 
     PIL_ERROR_CODE getWaveformData(char *data);
     PIL_ERROR_CODE getRealData(double **result);
@@ -57,5 +67,3 @@ private:
     static std::string getDisplayModeFromEnum(DISPLAY_MODES displayMode);
     static std::string getFileFormatStrFromEnum(FILE_FORMAT format);
 };
-
-#endif //CE_DEVICE_KST3000_H
