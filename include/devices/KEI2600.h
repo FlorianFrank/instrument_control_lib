@@ -1,20 +1,24 @@
-//
-// Created by sueaki on 03.06.22.
-//
-
-#ifndef INSTRUMENT_CONTROL_LIB_KEI2600_H
-#define INSTRUMENT_CONTROL_LIB_KEI2600_H
+/**
+ * @brief This file contains all functions to communicate with Keithley 2600 series SMU's.
+ * @author Wuhao Liu, Florian Frank
+ * @copyright University of Passau - Chair of computer engineering
+ */
+#pragma once
 
 #include "Device.h"
 #include "types/SMU.h"
 
-namespace PIL {
+namespace PIL
+{
     class Logging;
 }
 
-class KEI2600 : public SMU {
+/**
+ * @brief This class implements the basic functionality of Keithley 2600 series SMU's.
+ */
+class KEI2600 : public SMU
+{
 public:
-
     explicit KEI2600(PIL::Logging *logger, const char *ip, int timeoutInMS);
     KEI2600(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
@@ -47,9 +51,4 @@ private:
     PIL_ERROR_CODE measureV(SMU_CHANNEL channel, double *value);
     PIL_ERROR_CODE measureR(SMU_CHANNEL channel, double *value);
     PIL_ERROR_CODE measureP(SMU_CHANNEL channel, double *value);
-
-
-
 };
-
-#endif //INSTRUMENT_CONTROL_LIB_KEI2600_H
