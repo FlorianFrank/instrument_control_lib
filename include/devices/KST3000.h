@@ -26,7 +26,7 @@ public:
     PIL_ERROR_CODE setTimeRange(double value) override;
     PIL_ERROR_CODE setChannelOffset(OSC_CHANNEL channel, double offset) override;
     PIL_ERROR_CODE setChannelScale(OSC_CHANNEL channel, double value) override;
-    PIL_ERROR_CODE setChannelRange(OSC_CHANNEL channel, double value, bool is_v = true) override; // TODO what is is_v?
+    PIL_ERROR_CODE setChannelRange(OSC_CHANNEL channel, double value, VOLTAGE_UNIT voltageUnit) override; // TODO what is is_v?
 
     PIL_ERROR_CODE setTriggerEdge(TRIGGER_EDGE edge) override;
     PIL_ERROR_CODE setTriggerSource(OSC_CHANNEL channel) override;

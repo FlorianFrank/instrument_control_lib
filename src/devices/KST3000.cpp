@@ -131,14 +131,12 @@ PIL_ERROR_CODE KST3000::setChannelScale(OSC_CHANNEL channel, double value) {
  *              - true: use V as unit, default
  *              - false: use mV as unit
  * */
-PIL_ERROR_CODE KST3000::setChannelRange(OSC_CHANNEL channel, double range, bool is_v)
-{ // TODO remove this v
+PIL_ERROR_CODE KST3000::setChannelRange(OSC_CHANNEL channel, double range, VOLTAGE_UNIT voltageUnit)
+{
     // set the vertical range
     std::string command = "CHANnel" + getChannelFromEnum(channel) + ":RANGe " + std::to_string(range);
-    if (!is_v)
-    {
-        command += " mV"; // What is is_v?
-    }
+    if (voltageUnit == MILLI_VOLT)
+        command += " mV";
     return Exec(command);
 }
 
