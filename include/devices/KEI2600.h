@@ -13,14 +13,15 @@ namespace PIL
     class Logging;
 }
 
+#define DEVICE_NAME "Keithley SMU 2600B"
+
 /**
  * @brief This class implements the basic functionality of Keithley 2600 series SMU's.
  */
 class KEI2600 : public SMU
 {
 public:
-    explicit KEI2600(PIL::Logging *logger, const char *ip, int timeoutInMS);
-    KEI2600(const char *ip, int timeoutInMs, PIL::Logging *logger);
+    explicit KEI2600(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
     PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double* value) override;
 
@@ -51,4 +52,6 @@ private:
     PIL_ERROR_CODE measureV(SMU_CHANNEL channel, double *value);
     PIL_ERROR_CODE measureR(SMU_CHANNEL channel, double *value);
     PIL_ERROR_CODE measureP(SMU_CHANNEL channel, double *value);
+
+    static std::string getChannelStringFromEnum(SMU_CHANNEL channel);
 };

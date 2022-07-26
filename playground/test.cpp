@@ -26,7 +26,7 @@ int testSPD() {
 
 int testSMU(string ip) {
     PIL::Logging logger(INFO_LVL, nullptr);
-    KEI2600 *smu = new KEI2600(&logger, ip.c_str(), 0);
+    KEI2600 *smu = new KEI2600(ip.c_str(), 0, &logger);
     bool connectRet = smu->Connect();
     if(!connectRet) {
         cout << smu->ReturnErrorMessage() << std::endl;
