@@ -3,49 +3,93 @@ cmake_minimum_required(VERSION 3.4)
 set(PROJECT_NAME "py_icl")
 set(LIBRARY_NAME "lib${PROJECT_NAME}")
 
-find_package (Python)
+find_package (Python REQUIRED)
+find_package(PythonLibs)
 
 set(PYTHON_VERSION ${Python_VERSION_MAJOR}.${Python_VERSION_MINOR})
-message("Using python version: ${PYTHON_VERSION}")
+if (${Python_VERSION_MAJOR})
+	message(STATUS "Using python version: ${PYTHON_VERSION}")
+else()
+	message(FATAL_ERROR "ERROR. Python not found.")
+endif()
 
 
+set(BOOST_BOOTSTRAP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../boost/tools/build)
+
+message(${BOOST_BOOTSTRAP_DIR})
+if (NOT IS_DIRECTORY ${BOOST_BOOTSTRAP_DIR})
+	message(FATAL_ERROR "Boost build directory not found. Run `git submodule update --init --recursive` First")
+endif()
+
+# TODO: relocate
 set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../boost)
-set(BOOST_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../boost/stage/lib)
-set(BOOST_BOOTSTRAP_COMMAND ./bootstrap.sh --with-python-version=${PYTHON_VERSION})
-set(BOOST_BUILD_COMMAND ./b2 --with-python)
+set(BOOST_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../boost/build)
 
-if (NOT IS_DIRECTORY ${BOOST_LIB_DIR})
-	message("Start to build Boost library")
-	message(${BOOST_BOOTSTRAP_COMMAND})
+if(WIN32)
+	set(BOOST_BUILD_BINARY "${BOOST_BOOTSTRAP_DIR}/b2.exe")
+	set(BOOST_BOOTSTRAP_COMMAND cmd /C ".\\bootstrap.bat gcc --with-python-version=${PYTHON_VERSION}")
+	set(BOOST_BUILD_COMMAND cmd /C ".\\tools\\build\\b2.exe --with-python --prefix=build variant=release install")
+else()
+	# TODO: BOOST_BUILD_BINARY
+	set(BOOST_BOOTSTRAP_COMMAND "./bootstrap.sh --with-python-version=${PYTHON_VERSION}")
+endif()
+
+if (NOT EXISTS ${BOOST_BUILD_BINARY})
+	message(STATUS "Start to build boost build binary(b2) in: ${BOOST_BOOTSTRAP_DIR}")
+	message(STATUS ${BOOST_BOOTSTRAP_COMMAND})
 	execute_process(
 		COMMAND ${BOOST_BOOTSTRAP_COMMAND}
-		WORKING_DIRECTORY ${BOOST_ROOT}
-		OUTPUT_FILE bootstrap_boost.txt
+		WORKING_DIRECTORY ${BOOST_BOOTSTRAP_DIR}
 	)
-
-	message(${BOOST_BUILD_COMMAND})
+endif()
+if (NOT IS_DIRECTORY ${BOOST_LIB_DIR} )
+	message(STATUS "Start to build BOOST.PYTHON")
+	message(STATUS ${BOOST_BUILD_COMMAND})
 	execute_process(
 		COMMAND ${BOOST_BUILD_COMMAND}
 		WORKING_DIRECTORY ${BOOST_ROOT}
-		OUTPUT_FILE build_boost.txt
 	)
+endif()
+
+
+if (NOT IS_DIRECTORY ${BOOST_LIB_DIR})
+#	message("Start to build Boost library")
+#	message(${BOOST_BOOTSTRAP_COMMAND})
+#	execute_process(
+#		COMMAND ${BOOST_BOOTSTRAP_COMMAND}
+#		WORKING_DIRECTORY ${BOOST_ROOT}
+#		OUTPUT_FILE bootstrap_boost.txt
+#	)
+#
+#	message(${BOOST_BUILD_COMMAND})
+#	execute_process(
+#		COMMAND ${BOOST_BUILD_COMMAND}
+#		WORKING_DIRECTORY ${BOOST_ROOT}
+#		OUTPUT_FILE build_boost.txt
+#	)
 else()
 	message("Boost library built.")
 endif()
 
-link_directories(${BOOST_LIB_DIR})
+link_directories(${BOOST_LIB_DIR}/lib C:\\Python310)
 
 add_library(${PROJECT_NAME} SHARED main.cpp)
-
+message("${BOOST_LIB_DIR}/include")
 target_include_directories(${PROJECT_NAME} PRIVATE
+	"${BOOST_ROOT}"
+	"${BOOST_LIB_DIR}/include/boost-1_80"
+	"${PYTHON_INCLUDE_PATH}"
 	"/usr/include/python${PYTHON_VERSION}"
 	"${CMAKE_CURRENT_SOURCE_DIR}/../include"
 	"${CMAKE_CURRENT_SOURCE_DIR}/../boost"
 	"${CMAKE_CURRENT_SOURCE_DIR}/../common_tools_lib/ErrorHandling/include"
 )
 
-set(BOOST_PYTHON_LIB "boost_python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}")
+add_compile_options("-static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic")
 
-target_link_libraries(${PROJECT_NAME} PUBLIC instrument_control_lib ${BOOST_PYTHON_LIB})
+set(BOOST_PYTHON_LIB "boost_python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}")
+target_link_options(${PROJECT_NAME} PUBLIC -static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic)
+target_link_libraries(${PROJECT_NAME} PUBLIC instrument_control_lib boost_python310-mgw11-mt-x64-1_80 python3)
+
 
 configure_file(py_icl_test.py py_icl_test.py COPYONLY)
