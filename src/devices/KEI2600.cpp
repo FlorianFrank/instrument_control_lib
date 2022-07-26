@@ -27,19 +27,22 @@ PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double* value)
 }
 
 
-PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel) {
+PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel)
+{
     auto channelStr = getChannelStringFromEnum(channel);
     return Exec("smu" + channelStr + ".source.output = smu" + channelStr + ".OUTPUT_ON");
 }
 
 
-PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel) {
+PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel)
+{
     auto channelStr = getChannelStringFromEnum(channel);
     return Exec("smu" + channelStr + ".source.output = smu" + channelStr + ".OUTPUT_OFF");
 }
 
 
-PIL_ERROR_CODE KEI2600::setLevel(UNIT unit, SMU_CHANNEL channel, double level) {
+PIL_ERROR_CODE KEI2600::setLevel(UNIT unit, SMU_CHANNEL channel, double level)
+{
     auto sValue = std::to_string(level);
     std::string levelType;
     switch (unit)
@@ -58,7 +61,8 @@ PIL_ERROR_CODE KEI2600::setLevel(UNIT unit, SMU_CHANNEL channel, double level) {
 }
 
 
-PIL_ERROR_CODE KEI2600::setLimit(UNIT unit, SMU_CHANNEL channel, double limit) {
+PIL_ERROR_CODE KEI2600::setLimit(UNIT unit, SMU_CHANNEL channel, double limit)
+{
     auto sValue = std::to_string(limit);
     std::string limitType;
     switch (unit)
@@ -80,7 +84,8 @@ PIL_ERROR_CODE KEI2600::setLimit(UNIT unit, SMU_CHANNEL channel, double limit) {
 }
 
 
-PIL_ERROR_CODE KEI2600::enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel) {
+PIL_ERROR_CODE KEI2600::enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel)
+{
     std::string measureType;
     switch (unit)
     {
@@ -98,7 +103,8 @@ PIL_ERROR_CODE KEI2600::enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel) {
 }
 
 
-PIL_ERROR_CODE KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel) {
+PIL_ERROR_CODE KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel)
+{
     std::string measureType;
     switch (unit)
     {
@@ -116,7 +122,8 @@ PIL_ERROR_CODE KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel) 
 }
 
 
-PIL_ERROR_CODE KEI2600::enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel) {
+PIL_ERROR_CODE KEI2600::enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel)
+{
     std::string sourceType;
     switch (unit)
     {
@@ -134,7 +141,8 @@ PIL_ERROR_CODE KEI2600::enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel) {
 }
 
 
-PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel) {
+PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel)
+{
     std::string sourceType;
     switch (unit)
     {
@@ -157,7 +165,8 @@ PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel) {
  * currently using. Assigning a value to this attribute sets the SMU on a fixed range large enough to
  * measure the assigned value. The instrument selects the best range for measuring a value of rangeValue
  * */
-PIL_ERROR_CODE KEI2600::setMeasureRange(UNIT unit, SMU_CHANNEL channel, double rangeValue) {
+PIL_ERROR_CODE KEI2600::setMeasureRange(UNIT unit, SMU_CHANNEL channel, double rangeValue)
+{
     std::string measureRange;
     auto sValue = std::to_string(rangeValue);
     switch (unit)
@@ -175,7 +184,8 @@ PIL_ERROR_CODE KEI2600::setMeasureRange(UNIT unit, SMU_CHANNEL channel, double r
 }
 
 
-PIL_ERROR_CODE KEI2600::setSourceRange(UNIT unit, SMU_CHANNEL channel, double rangeValue) {
+PIL_ERROR_CODE KEI2600::setSourceRange(UNIT unit, SMU_CHANNEL channel, double rangeValue)
+{
     auto sValue = std::to_string(rangeValue);
     std::string rangeType;
     switch (unit)
@@ -193,29 +203,34 @@ PIL_ERROR_CODE KEI2600::setSourceRange(UNIT unit, SMU_CHANNEL channel, double ra
 }
 
 
-PIL_ERROR_CODE KEI2600::selectLocalSense(SMU_CHANNEL channel) {
+PIL_ERROR_CODE KEI2600::selectLocalSense(SMU_CHANNEL channel)
+{
     auto channelStr = getChannelStringFromEnum(channel);
     return Exec("smu" + channelStr + ".sense = smu" + channelStr + ".SENSE_LOCAL");
 }
 
 
-PIL_ERROR_CODE KEI2600::selectRemoteSense(SMU_CHANNEL channel) {
+PIL_ERROR_CODE KEI2600::selectRemoteSense(SMU_CHANNEL channel)
+{
     auto channelStr = getChannelStringFromEnum(channel);
     return Exec("smu" + channelStr + ".sense = smu" + channelStr + ".SENSE_REMOTE");
 }
 
 
-PIL_ERROR_CODE KEI2600::enableBeep() {
+PIL_ERROR_CODE KEI2600::enableBeep()
+{
     return Exec("beeper.enable = beeper.ON");
 }
 
 
-PIL_ERROR_CODE KEI2600::beep() {
+PIL_ERROR_CODE KEI2600::beep()
+{
     return Exec("beeper.beep(1, 2400)");
 }
 
 
-PIL_ERROR_CODE KEI2600::disableBeep() {
+PIL_ERROR_CODE KEI2600::disableBeep()
+{
     return Exec("beeper.enable = beeper.OFF");
 }
 
