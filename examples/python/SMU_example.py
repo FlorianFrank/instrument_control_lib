@@ -9,4 +9,5 @@ def test_SMU():
     smu.turnOn(SMU.CHANNEL_A)
 
     measured_voltage = 0
-    smumeasure(SMU.VOLTAGE, SMU.CHANNEL_A, measured_voltage);
+    smu.measure(SMU.VOLTAGE, SMU.CHANNEL_A, measured_voltage)
+    smu.Disconnect()
