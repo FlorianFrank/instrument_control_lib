@@ -36,7 +36,10 @@ public:
         BYTE =   2,
     };
 
-
+    enum VOLTAGE_UNIT {
+        VOLT,
+        MILLI_VOLT
+    };
 
     Oscilloscope(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
@@ -49,7 +52,7 @@ public:
     virtual PIL_ERROR_CODE setTimeRange(double value) = 0;
     virtual PIL_ERROR_CODE setChannelOffset(OSC_CHANNEL channel, double offset) = 0;
     virtual PIL_ERROR_CODE setChannelScale(OSC_CHANNEL channel, double value) = 0;
-    virtual PIL_ERROR_CODE setChannelRange(OSC_CHANNEL channel, double value, bool is_v) = 0;
+    virtual PIL_ERROR_CODE setChannelRange(OSC_CHANNEL channel, double value, VOLTAGE_UNIT voltageUnit) = 0;
 
 
     virtual PIL_ERROR_CODE setTriggerEdge(TRIGGER_EDGE edge) = 0;
