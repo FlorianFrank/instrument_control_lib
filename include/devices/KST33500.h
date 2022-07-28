@@ -17,25 +17,21 @@ public:
     explicit KST33500(const char *ip, int timeoutInMS);
     explicit KST33500(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
-    int turnOn(FUNC_CHANNEL channel) override;
-    int turnOff(FUNC_CHANNEL channel) override;
+    PIL_ERROR_CODE turnOn(FUNC_CHANNEL channel) override;
+    PIL_ERROR_CODE turnOff(FUNC_CHANNEL channel) override;
 
-    int setFrequency(FUNC_CHANNEL channel, double value) override;
-    int setAmplitude(FUNC_CHANNEL channel, double value, const char *constrain) override;
-    bool setOffset(FUNC_CHANNEL channel, double offset) override;
-    int setPhase(FUNC_CHANNEL channel, double value) override;
-    bool setFunction(FUNCTION_TYPE functionType) override;
+    PIL_ERROR_CODE setFrequency(FUNC_CHANNEL channel, double value) override;
+    PIL_ERROR_CODE setAmplitude(FUNC_CHANNEL channel, double value, const char *constrain) override;
+    PIL_ERROR_CODE setOffset(FUNC_CHANNEL channel, double offset) override;
+    PIL_ERROR_CODE setPhase(FUNC_CHANNEL channel, double value) override;
+    PIL_ERROR_CODE setFunction(FUNCTION_TYPE functionType) override;
 
-    bool display(std::string &text);
-    bool display_connection();
+    PIL_ERROR_CODE display(std::string &text);
+    PIL_ERROR_CODE displayConnection();
 
 private:
-    bool output(bool on);
-
-    int offset(double value);
-
-    int set_pulse_width(double value);
-
+    PIL_ERROR_CODE output(bool on);
+    PIL_ERROR_CODE setPulseWidth(double value);
 };
 
 #endif //CE_DEVICE_KST33500_H

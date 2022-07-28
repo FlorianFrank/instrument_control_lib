@@ -12,7 +12,8 @@ int testSPD() {
     power->Connect();
 
     power->setCurrent(DCPowerSupply::CHANNEL_1, 0.15);
-    double measureI = power->getCurrent(DCPowerSupply::CHANNEL_1);
+    double measureI;
+    power->getCurrent(DCPowerSupply::CHANNEL_1, &measureI);
     if (measureI != 0.15) {
         cout << "ERROR! Current test failed.\n";
         exit(1);
@@ -25,10 +26,12 @@ int testSPD() {
 
 int testSMU(string ip) {
     PIL::Logging logger(INFO_LVL, nullptr);
-    KEI2600 *smu = new KEI2600(&logger, ip.c_str(), 0);
+    KEI2600 *smu = new KEI2600(ip.c_str(), 0, &logger);
     bool connectRet = smu->Connect();
-    if(!connectRet)
+    if(!connectRet) {
         cout << smu->ReturnErrorMessage() << std::endl;
+        return 1;
+    }
 
     string id = smu->GetDeviceIdentifier();
     cout << "Connected to: " + id << endl;
@@ -53,7 +56,8 @@ int testSMU(string ip) {
     smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_A, 0.5);
     smu->enableMeasureAutoRange(SMU::VOLTAGE, SMU::CHANNEL_A);
     smu->turnOn(SMU::CHANNEL_A);
-    double measureV = smu->measure(SMU::VOLTAGE, SMU::CHANNEL_A);
+    double measureV;
+    smu->measure(SMU::VOLTAGE, SMU::CHANNEL_A, &measureV);
     if (measureV != 0.5) {
         cout << "ERROR! Voltage test failed!\n";
         exit(1);
@@ -68,7 +72,7 @@ int testSMU(string ip) {
     smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_B, 0.5);
     smu->setMeasureRange(SMU::VOLTAGE, SMU::CHANNEL_B, 0.5);
     smu->turnOn(SMU::CHANNEL_B);
-    measureV = smu->measure(SMU::VOLTAGE, SMU::CHANNEL_B);
+    smu->measure(SMU::VOLTAGE, SMU::CHANNEL_B, &measureV);
     if (measureV != 0.5) {
         cout << "ERROR! Voltage on Channel b test failed!\n";
         exit(1);
@@ -83,7 +87,8 @@ int testSMU(string ip) {
     smu->setLevel(SMU::CURRENT, SMU::CHANNEL_B, -1.1);
     smu->enableMeasureAutoRange(SMU::CURRENT, SMU::CHANNEL_B);
     smu->turnOn(SMU::CHANNEL_B);
-    double measureI = smu->measure(SMU::CURRENT, SMU::CHANNEL_B);
+    double measureI;
+    smu->measure(SMU::CURRENT, SMU::CHANNEL_B, &measureI);
     if (measureI != -1.1) {
         cout << "ERROR! Current test failed!\n";
         exit(1);
@@ -98,7 +103,7 @@ int testSMU(string ip) {
     smu->setLevel(SMU::CURRENT, SMU::CHANNEL_B, -1.1);
     smu->setMeasureRange(SMU::CURRENT, SMU::CHANNEL_B, -1.1);
     smu->turnOn(SMU::CHANNEL_B);
-    measureI = smu->measure(SMU::CURRENT, SMU::CHANNEL_B);
+    smu->measure(SMU::CURRENT, SMU::CHANNEL_B, &measureI);
     if (measureI != -1.1) {
         cout << "ERROR! Current test on Channel b failed!\n";
         exit(1);

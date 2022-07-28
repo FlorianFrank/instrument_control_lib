@@ -30,33 +30,26 @@ public:
     explicit Device(const char *ip, int timeoutInMs, PIL::Logging *logger);
     ~Device();
 
-    bool Connect();
-
-    bool Disconnect();
-
-    bool IsOpen() const;
+    PIL_ERROR_CODE Connect();
+    PIL_ERROR_CODE Disconnect();
+    [[nodiscard]] bool IsOpen() const;
 
     std::string GetDeviceIdentifier();
-
-    bool Exec(std::string message, char *result = nullptr, bool br = true, int size = 1024);
-
-    bool ExecCommands(std::string &commands);
-
     std::string WhatAmI();
+
+    PIL_ERROR_CODE Exec(std::string message, char *result = nullptr, bool br = true, int size = 1024);
+    PIL_ERROR_CODE ExecCommands(std::string &commands);
 
     std::string ReturnErrorMessage();
 
 protected:
     PIL_ErrorHandle m_ErrorHandle;
     std::string m_IPAddr;
-    int m_TimeoutInMs;
     std::string m_DeviceName{};
- //   int m_SocketHandle = 0;
     PIL::Socket *m_SocketHandle;
     PIL::Logging *m_Logger;
     int m_Port = 5025;
     bool m_IsOpen;
-
 };
 
 #endif //CE_DEVICE_DEVICE_H

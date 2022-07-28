@@ -1,55 +1,60 @@
-//
-// Created by sueaki on 03.06.22.
-//
-
-#ifndef INSTRUMENT_CONTROL_LIB_KEI2600_H
-#define INSTRUMENT_CONTROL_LIB_KEI2600_H
+/**
+ * @brief This file contains all functions to communicate with Keithley 2600 series SMU's.
+ * @author Wuhao Liu, Florian Frank
+ * @copyright University of Passau - Chair of computer engineering
+ */
+#pragma once
 
 #include "Device.h"
 #include "types/SMU.h"
 
-namespace PIL {
+namespace PIL
+{
     class Logging;
 }
 
-class KEI2600 : public SMU {
+#define DEVICE_NAME           "Keithley SMU 2600B"
+
+/** Buffer size when returning values from measureI, measureV or measureP*/
+#define MEASURE_RET_BUFF_SIZE 1024
+
+/**
+ * @brief This class implements the basic functionality of Keithley 2600 series SMU's.
+ */
+class KEI2600 : public SMU
+{
 public:
+    explicit KEI2600(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
-    explicit KEI2600(PIL::Logging *logger, const char *ip, int timeoutInMS);
-    KEI2600(const char *ip, int timeoutInMs, PIL::Logging *logger);
+    PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double* value) override;
 
-    double measure(UNIT unit, SMU_CHANNEL channel) override;
+    PIL_ERROR_CODE turnOn(SMU_CHANNEL channel) override;
+    PIL_ERROR_CODE turnOff(SMU_CHANNEL channel) override;
 
-    int turnOn(SMU_CHANNEL channel) override;
-    int turnOff(SMU_CHANNEL channel) override;
+    PIL_ERROR_CODE setLevel(UNIT unit, SMU_CHANNEL channel, double level) override;
+    PIL_ERROR_CODE setLimit(UNIT unit, SMU_CHANNEL channel, double limit) override;
 
-    int setLevel(UNIT unit, SMU_CHANNEL channel, double level) override;
-    int setLimit(UNIT unit, SMU_CHANNEL channel, double limit) override;
+    PIL_ERROR_CODE enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel);
+    PIL_ERROR_CODE disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel);
 
-    int enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel);
-    int disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel);
+    PIL_ERROR_CODE enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel);
+    PIL_ERROR_CODE disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel);
 
-    int enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel);
-    int disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel);
+    PIL_ERROR_CODE setMeasureRange(UNIT unit, SMU_CHANNEL channel, double range);
+    PIL_ERROR_CODE setSourceRange(UNIT unit, SMU_CHANNEL channel, double range);
 
-    int setMeasureRange(UNIT unit, SMU_CHANNEL channel, double range);
-    int setSourceRange(UNIT unit, SMU_CHANNEL channel, double range);
+    PIL_ERROR_CODE selectLocalSense(SMU_CHANNEL channel);
+    PIL_ERROR_CODE selectRemoteSense(SMU_CHANNEL channel);
 
-    int selectLocalSense(SMU_CHANNEL channel);
-    int selectRemoteSense(SMU_CHANNEL channel);
-
-    int enableBeep();
-    int beep();
-    int disableBeep();
+    PIL_ERROR_CODE enableBeep();
+    PIL_ERROR_CODE beep();
+    PIL_ERROR_CODE disableBeep();
 
 private:
-    double measureI(SMU_CHANNEL channel);
-    double measureV(SMU_CHANNEL channel);
-    double measureR(SMU_CHANNEL channel);
-    double measureP(SMU_CHANNEL channel);
+    PIL_ERROR_CODE measureI(SMU_CHANNEL channel, double *value);
+    PIL_ERROR_CODE measureV(SMU_CHANNEL channel, double *value);
+    PIL_ERROR_CODE measureR(SMU_CHANNEL channel, double *value);
+    PIL_ERROR_CODE measureP(SMU_CHANNEL channel, double *value);
 
-
-
+    static std::string getChannelStringFromEnum(SMU_CHANNEL channel);
 };
-
-#endif //INSTRUMENT_CONTROL_LIB_KEI2600_H
