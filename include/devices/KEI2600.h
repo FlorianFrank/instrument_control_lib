@@ -25,6 +25,7 @@ class KEI2600 : public SMU
 {
 public:
     explicit KEI2600(const char *ip, int timeoutInMs, PIL::Logging *logger);
+    explicit KEI2600(const char *ip, int timeoutInMs);
 
     PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double* value) override;
 

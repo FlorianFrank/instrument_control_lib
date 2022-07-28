@@ -8,6 +8,10 @@ KEI2600::KEI2600(const char *ip, int timeoutInMS, PIL::Logging *logger) : SMU(ip
     this->m_DeviceName = DEVICE_NAME;
 }
 
+KEI2600::KEI2600(const char *ip, int timeoutInMS) : SMU(ip, timeoutInMS, nullptr) {
+    this->m_DeviceName = DEVICE_NAME;
+}
+
 
 PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double* value)
 {
