@@ -7,3 +7,5 @@ cmake-build-relwithdebinfo
 .idea
 .vscode
 .DS_Store
+*.zip
+cmake-build*
