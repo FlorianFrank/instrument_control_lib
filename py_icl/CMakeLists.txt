@@ -3,9 +3,12 @@ cmake_minimum_required(VERSION 3.4)
 set(PROJECT_NAME "py_icl")
 set(LIBRARY_NAME "lib${PROJECT_NAME}")
 
+set(PYTHON_FOLDER "C:/Users/Administrator/AppData/Local/Programs/Python/Python310")
+
 find_package (Python REQUIRED)
 find_package(PythonLibs)
 
+add_definitions(/DBOOST_PYTHON_STATIC_LIB)
 set(PYTHON_VERSION ${Python_VERSION_MAJOR}.${Python_VERSION_MINOR})
 if (${Python_VERSION_MAJOR})
 	message(STATUS "Using python version: ${PYTHON_VERSION}")
@@ -28,7 +31,7 @@ set(BOOST_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../boost/build)
 if(WIN32)
 	set(BOOST_BUILD_BINARY "${BOOST_BOOTSTRAP_DIR}/b2.exe")
 	set(BOOST_BOOTSTRAP_COMMAND cmd /C ".\\bootstrap.bat gcc --with-python-version=${PYTHON_VERSION}")
-	set(BOOST_BUILD_COMMAND cmd /C ".\\tools\\build\\b2.exe --with-python --prefix=build variant=release install")
+	set(BOOST_BUILD_COMMAND cmd /C ".\\tools\\build\\b2.exe --with-python --prefix=build variant=release")
 else()
 	# TODO: BOOST_BUILD_BINARY
 	set(BOOST_BOOTSTRAP_COMMAND "./bootstrap.sh --with-python-version=${PYTHON_VERSION}")
@@ -71,10 +74,10 @@ else()
 	message("Boost library built.")
 endif()
 
-link_directories(${BOOST_LIB_DIR}/lib C:\\Python310)
-
+link_directories(${BOOST_LIB_DIR}/lib "${PYTHON_FOLDER}"
+									  "${BOOST_ROOT}/stage/lib")
 add_library(${PROJECT_NAME} SHARED main.cpp)
-message("${BOOST_LIB_DIR}/include")
+
 target_include_directories(${PROJECT_NAME} PRIVATE
 	"${BOOST_ROOT}"
 	"${BOOST_LIB_DIR}/include/boost-1_80"
@@ -85,11 +88,11 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 	"${CMAKE_CURRENT_SOURCE_DIR}/../common_tools_lib/ErrorHandling/include"
 )
 
-add_compile_options("-static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic")
 
 set(BOOST_PYTHON_LIB "boost_python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}")
-target_link_options(${PROJECT_NAME} PUBLIC -static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic)
-target_link_libraries(${PROJECT_NAME} PUBLIC instrument_control_lib boost_python310-mgw11-mt-x64-1_80 python3)
+target_link_directories(${PROJECT_NAME} PUBLIC "${BOOST_ROOT}\\stage\\lib")
 
+target_link_libraries(${PROJECT_NAME} PUBLIC instrument_control_lib boost_python310-mgw11-mt-x64-1_80 python310)
+set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".pyd")
 
 configure_file(py_icl_test.py py_icl_test.py COPYONLY)
