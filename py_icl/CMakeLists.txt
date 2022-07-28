@@ -94,5 +94,6 @@ target_link_directories(${PROJECT_NAME} PUBLIC "${BOOST_ROOT}\\stage\\lib")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC instrument_control_lib boost_python310-mgw11-mt-x64-1_80 python310)
 set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".pyd")
+target_link_options(${PROJECT_NAME} PUBLIC -static -static-libgcc -static-libstdc++)
 
 configure_file(py_icl_test.py py_icl_test.py COPYONLY)
