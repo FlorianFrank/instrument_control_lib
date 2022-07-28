@@ -6,5 +6,5 @@
 	url = git@github.com:zeux/pugixml.git
 [submodule "boost"]
 	path = boost
-	url = https://github.com/boostorg/boost.git
+	url = https://github.com/boostorg/boost/tree/5b2fb3d81fdfd73c81f6a7ce3c086889d9815a07
     ignore = all
