@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.4)
 
 set(PROJECT_NAME "py_icl")
 set(LIBRARY_NAME "lib${PROJECT_NAME}")
+set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../boost)
 
 add_definitions(/DBOOST_PYTHON_STATIC_LIB)
 
@@ -38,7 +39,6 @@ if (NOT EXISTS ${BOOST_BUILD_BINARY})
 	)
 endif()
 
-set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../boost)
 set(BOOST_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../boost/stage/lib)
 if (NOT IS_DIRECTORY ${BOOST_LIB_DIR} )
 	message(STATUS "Start to build BOOST.PYTHON")
