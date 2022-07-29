@@ -12,14 +12,14 @@ set(PYTHON_VERSION ${Python_VERSION_MAJOR}.${Python_VERSION_MINOR})
 message(STATUS "Using python version: ${PYTHON_VERSION}")
 
 set(BOOST_BOOTSTRAP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../boost/tools/build)
-if (NOT IS_DIRECTORY ${BOOST_BOOTSTRAP_DIR})
+#if (NOT IS_DIRECTORY ${BOOST_BOOTSTRAP_DIR})
 	message("Boost folder does not exists -> checkout this can take a while")
 	set(BOOST_CHECKOUT powershell "ls")
 	execute_process(
 			COMMAND ${BOOST_CHECKOUT}
 			WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/..
 	)
-endif()
+#endif()
 
 if(WIN32)
 	set(BOOST_BUILD_BINARY "${BOOST_BOOTSTRAP_DIR}/b2.exe")
