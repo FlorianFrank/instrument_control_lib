@@ -64,7 +64,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 # FIXME: mgw11-mt-x64 should not be a constant
 set(BOOST_PYTHON_LIB "boost_python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}-mgw11-mt-x64-1_80")
 message(${BOOST_PYTHON_LIB})
-target_link_directories(${PROJECT_NAME} PUBLIC "${BOOST_ROOT}\\stage\\lib")
+target_link_directories(${PROJECT_NAME} PUBLIC "${BOOST_ROOT}/stage/lib/"
+												"${BOOST_ROOT}/stage/lib/python/include")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC instrument_control_lib ${BOOST_PYTHON_LIB} ${PYTHON_LIBRARY})
 set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".pyd")
