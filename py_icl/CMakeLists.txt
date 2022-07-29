@@ -12,13 +12,18 @@ message(STATUS "Using python version: ${PYTHON_VERSION}")
 
 set(BOOST_BOOTSTRAP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../boost/tools/build)
 if (NOT IS_DIRECTORY ${BOOST_BOOTSTRAP_DIR})
-	message(FATAL_ERROR "Boost build directory not found. Run 'git submodule update --init --recursive' First")
+	message("Boost folder does not exists -> checkout this can take a while")
+	set(BOOST_CHECKOUT powershell "git submodule update --init --recursive")
+	execute_process(
+			COMMAND ${BOOST_CHECKOUT}
+			WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/..
+	)
 endif()
 
 if(WIN32)
 	set(BOOST_BUILD_BINARY "${BOOST_BOOTSTRAP_DIR}/b2.exe")
 	set(BOOST_BOOTSTRAP_COMMAND cmd /C ".\\bootstrap.bat gcc --with-python-version=${PYTHON_VERSION}")
-	set(BOOST_BUILD_COMMAND cmd /C ".\\tools\\build\\b2.exe toolset=gcc --with-python --prefix=build variant=release")
+	set(BOOST_BUILD_COMMAND cmd /C ".\\tools\\build\\b2.exe toolset=gcc link=static --with-python --prefix=build variant=release")
 else()
 	# TODO: linux
 	set(BOOST_BOOTSTRAP_COMMAND "./bootstrap.sh --with-python-version=${PYTHON_VERSION}")
