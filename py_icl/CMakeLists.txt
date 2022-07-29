@@ -11,15 +11,15 @@ find_package(PythonLibs REQUIRED)
 set(PYTHON_VERSION ${Python_VERSION_MAJOR}.${Python_VERSION_MINOR})
 message(STATUS "Using python version: ${PYTHON_VERSION}")
 
-set(BOOST_BOOTSTRAP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../boost/tools/build)
-#if (NOT IS_DIRECTORY ${BOOST_BOOTSTRAP_DIR})
+set(BOOST_BOOTSTRAP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/stage/lib/python/include/boost)
+if (NOT IS_DIRECTORY ${BOOST_BOOTSTRAP_DIR})
 	message("Boost folder does not exists -> checkout this can take a while")
 	set(BOOST_CHECKOUT powershell "ls")
 	execute_process(
 			COMMAND ${BOOST_CHECKOUT}
 			WORKING_DIRECTORY ${BOOST_ROOT}/stage/lib/python/include/boost
 	)
-#endif()
+endif()
 
 if(WIN32)
 	set(BOOST_BUILD_BINARY "${BOOST_BOOTSTRAP_DIR}/b2.exe")
@@ -65,7 +65,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 set(BOOST_PYTHON_LIB "boost_python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}-mgw11-mt-x64-1_80")
 message(${BOOST_PYTHON_LIB})
 target_link_directories(${PROJECT_NAME} PUBLIC "${BOOST_ROOT}/stage/lib/"
-												"${BOOST_ROOT}/stage/lib/python/include")
+												"${BOOST_ROOT}/libs/python/include")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC instrument_control_lib ${BOOST_PYTHON_LIB} ${PYTHON_LIBRARY})
 set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".pyd")
