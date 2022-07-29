@@ -17,7 +17,7 @@ set(BOOST_BOOTSTRAP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../boost/tools/build)
 	set(BOOST_CHECKOUT powershell "ls")
 	execute_process(
 			COMMAND ${BOOST_CHECKOUT}
-			WORKING_DIRECTORY ${BOOST_ROOT}
+			WORKING_DIRECTORY ${BOOST_ROOT}/stage/lib/python/include/boost
 	)
 #endif()
 
