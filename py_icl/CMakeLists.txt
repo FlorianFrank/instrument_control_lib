@@ -18,7 +18,7 @@ endif()
 if(WIN32)
 	set(BOOST_BUILD_BINARY "${BOOST_BOOTSTRAP_DIR}/b2.exe")
 	set(BOOST_BOOTSTRAP_COMMAND cmd /C ".\\bootstrap.bat gcc --with-python-version=${PYTHON_VERSION}")
-	set(BOOST_BUILD_COMMAND cmd /C ".\\tools\\build\\b2.exe --with-python --prefix=build variant=release")
+	set(BOOST_BUILD_COMMAND cmd /C ".\\tools\\build\\b2.exe toolset=gcc --with-python --prefix=build variant=release")
 else()
 	# TODO: linux
 	set(BOOST_BOOTSTRAP_COMMAND "./bootstrap.sh --with-python-version=${PYTHON_VERSION}")
