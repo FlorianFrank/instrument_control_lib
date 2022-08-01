@@ -324,5 +324,7 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
             return "a";
         case SMU::CHANNEL_B:
             return "b";
+        default:
+            return "a"; // find better solution
     }
 }
