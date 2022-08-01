@@ -15,21 +15,24 @@ else()
 	message(FATAL_ERROR "ERROR. Python not found.")
 endif()
 
-
+set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../boost)
 set(BOOST_BOOTSTRAP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../boost/tools/build)
 
-message(${BOOST_BOOTSTRAP_DIR})
-if (NOT IS_DIRECTORY ${BOOST_BOOTSTRAP_DIR})
-	message(FATAL_ERROR "Boost build directory not found. Run `git submodule update --init --recursive` First")
+message("BOOTSTRAP DIR ${BOOST_BOOTSTRAP_DIR}")
+#if (NOT IS_DIRECTORY ${BOOST_BOOTSTRAP_DIR})
+	#message(FATAL_ERROR "Boost build directory not found. Run `git submodule update --init --recursive` First")
+	if(WIN32)
 	set(BOOST_CHECKOUT powershell 'git submodule update --init --recursive')
+	else()
+		set(BOOST_CHECKOUT bash "-c" "git submodule update --init --recursive")
+	endif()
 	execute_process(
 			COMMAND ${BOOST_CHECKOUT}
 			WORKING_DIRECTORY ${BOOST_ROOT}
 	)
-endif()
+#endif()
 
 # TODO: relocate
-set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../boost)
 set(BOOST_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../boost/stage/lib)
 
 if(WIN32)
