@@ -2,6 +2,7 @@
 #include "Device.h"
 #include "devices/types/DCPowerSupply.h"
 #include "devices/SPD1305.h"
+#include "devices/types/SMU.h"
 #include "devices/KEI2600.h"
 #include "ctlib/Logging.hpp"
 
@@ -29,16 +30,39 @@ BOOST_PYTHON_MODULE(libpy_icl)
             .value("UNKNOWN_ERROR", PIL_ERROR_CODE::PIL_UNKNOWN_ERROR)
             .value("XML_PARSING_ERROR", PIL_ERROR_CODE::PIL_XML_PARSING_ERROR);
 
+    enum_<SMU::SMU_CHANNEL>("SMU_CHANNEL")
+            .value("CHANNEL_A", SMU::CHANNEL_A)
+            .value("CHANNEL_B", SMU::CHANNEL_B);
 
-
-    class_<SPD1305>("SPD1305", init<char *, int>())
-		.def("Connect", &SPD1305::Connect)
-		.def("setCurrent", &SPD1305::setCurrent)
-		.def("getCurrent", &SPD1305::getCurrent)
-		.def("Disconnect", &SPD1305::Disconnect);
-
+    enum_<SMU::UNIT>("SMU_UNIT")
+            .value("VOLTAGE", SMU::VOLTAGE)
+            .value("CURRENT", SMU::CURRENT)
+            .value("RESISTANCE", SMU::RESISTANCE)
+            .value("POWER", SMU::POWER);
 
     class_<KEI2600>("KEI2600", init<char *, int>())
             .def("Connect", &KEI2600::Connect)
-            .def("setCurrent", &KEI2600::Disconnect);
+            .def("setCurrent", &KEI2600::Disconnect)
+            .def("turnOn", &KEI2600::turnOn)
+            .def("turnOff", &KEI2600::turnOff)
+            .def("measure", &KEI2600::measure)
+            .def("setLevel", &KEI2600::setLevel)
+            .def("enableMeasureAutoRange", &KEI2600::enableMeasureAutoRange)
+            .def("disableMeasureAutoRange", &KEI2600::disableMeasureAutoRange)
+            .def("enableSourceAutoRange", &KEI2600::enableSourceAutoRange)
+            .def("disableSourceAutoRange", &KEI2600::disableSourceAutoRange)
+            .def("setSourceRange", &KEI2600::setSourceRange)
+            .def("selectLocalSense", &KEI2600::selectLocalSense)
+            .def("selectRemoteSense", &KEI2600::selectRemoteSense)
+            .def("GetDeviceIdentifier", &KEI2600::GetDeviceIdentifier)
+            ;
+
+
+
+    class_<SPD1305>("SPD1305", init<char *, int>())
+            .def("Connect", &SPD1305::Connect)
+            .def("setCurrent", &SPD1305::setCurrent)
+            .def("getCurrent", &SPD1305::getCurrent)
+            .def("Disconnect", &SPD1305::Disconnect);
+
 }

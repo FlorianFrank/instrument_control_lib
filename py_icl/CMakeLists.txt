@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.4)
 set(PROJECT_NAME "py_icl")
 set(LIBRARY_NAME "lib${PROJECT_NAME}")
 
-set(PYTHON_FOLDER "C:/Users/Administrator/AppData/Local/Programs/Python/Python310")
 
 find_package (Python REQUIRED)
 find_package(PythonLibs)
@@ -16,30 +15,34 @@ else()
 	message(FATAL_ERROR "ERROR. Python not found.")
 endif()
 
-
+set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../boost)
 set(BOOST_BOOTSTRAP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../boost/tools/build)
 
-message(${BOOST_BOOTSTRAP_DIR})
-if (NOT IS_DIRECTORY ${BOOST_BOOTSTRAP_DIR})
-	message(FATAL_ERROR "Boost build directory not found. Run `git submodule update --init --recursive` First")
+message("BOOTSTRAP DIR ${BOOST_BOOTSTRAP_DIR}")
+#if (NOT IS_DIRECTORY ${BOOST_BOOTSTRAP_DIR})
+	#message(FATAL_ERROR "Boost build directory not found. Run `git submodule update --init --recursive` First")
+	if(WIN32)
 	set(BOOST_CHECKOUT powershell 'git submodule update --init --recursive')
+	else()
+		set(BOOST_CHECKOUT bash "-c" "git submodule update --init --recursive")
+	endif()
 	execute_process(
 			COMMAND ${BOOST_CHECKOUT}
 			WORKING_DIRECTORY ${BOOST_ROOT}
 	)
-endif()
+#endif()
 
 # TODO: relocate
-set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../boost)
-set(BOOST_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../boost/build)
+set(BOOST_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../boost/stage/lib)
 
 if(WIN32)
 	set(BOOST_BUILD_BINARY "${BOOST_BOOTSTRAP_DIR}/b2.exe")
 	set(BOOST_BOOTSTRAP_COMMAND cmd /C ".\\bootstrap.bat gcc --with-python-version=${PYTHON_VERSION}")
-	set(BOOST_BUILD_COMMAND cmd /C ".\\tools\\build\\b2.exe toolset=gcc --with-python --prefix=build variant=release")
+	set(BOOST_BUILD_COMMAND cmd /C "${BOOST_BOOTSTRAP_DIR}/b2.exe toolset=gcc --with-python --prefix=build variant=release")
 else()
 	# TODO: BOOST_BUILD_BINARY
-	set(BOOST_BOOTSTRAP_COMMAND "./bootstrap.sh --with-python-version=${PYTHON_VERSION}")
+	set(BOOST_BUILD_COMMAND bash "-c" "${BOOST_BOOTSTRAP_DIR}/b2 toolset=gcc --with-python --prefix=build variant=release")
+	set(BOOST_BOOTSTRAP_COMMAND bash "-c" "./bootstrap.sh --with-python-version=${PYTHON_VERSION}")
 endif()
 
 if (NOT EXISTS ${BOOST_BUILD_BINARY})
@@ -79,8 +82,7 @@ else()
 	message("Boost library built.")
 endif()
 
-link_directories(${BOOST_LIB_DIR}/lib "${PYTHON_FOLDER}"
-		"${BOOST_ROOT}/stage/lib")
+link_directories(${BOOST_LIB_DIR}/lib "${BOOST_ROOT}/stage/lib")
 add_library(${PROJECT_NAME} SHARED main.cpp)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
@@ -93,17 +95,24 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 		"${CMAKE_CURRENT_SOURCE_DIR}/../common_tools_lib/ErrorHandling/include"
 		)
 
-
 set(BOOST_PYTHON_LIB "boost_python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}")
 target_link_directories(${PROJECT_NAME} PUBLIC "${BOOST_ROOT}\\stage\\lib")
 
-set(BOOST_PYTHON_LIB "boost_python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}-mgw11-mt-x64-1_80")
+if(WIN32)
+	set(BOOST_PYTHON_LIB "boost_python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}-mgw11-mt-x64-1_80")
+else()
+	set(BOOST_PYTHON_LIB "boost_python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}")
+endif()
 message("BOOST PYTHON LIB ${BOOST_PYTHON_LIB}")
 target_link_directories(${PROJECT_NAME} PUBLIC "${BOOST_ROOT}/stage/lib/"
 										       "${BOOST_ROOT}/libs/python/include")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC instrument_control_lib ${BOOST_PYTHON_LIB} ${PYTHON_LIBRARY})
-set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".pyd")
-target_link_options(${PROJECT_NAME} PUBLIC -static -static-libgcc -static-libstdc++)
+
+if(WIN32)
+	set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".pyd")
+	target_link_options(${PROJECT_NAME} PUBLIC -static -static-libgcc -static-libstdc++)
+endif()
 
 configure_file(py_icl_test.py py_icl_test.py COPYONLY)
+configure_file(libpy_icl.py libpy_icl.py COPYONLY)
