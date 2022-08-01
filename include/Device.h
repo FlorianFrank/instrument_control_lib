@@ -34,7 +34,7 @@ public:
     PIL_ERROR_CODE Disconnect();
     [[nodiscard]] bool IsOpen() const;
 
-    std::string GetDeviceIdentifier();
+    const char* GetDeviceIdentifier();
     std::string WhatAmI();
 
     PIL_ERROR_CODE Exec(std::string message, char *result = nullptr, bool br = true, int size = 1024);

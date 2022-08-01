@@ -31,6 +31,7 @@ if(NOT DEFINED WIN32)
 set(ENABLE_PYTHON 1)
 endif()
 # TODO temporary disable python interface to satisfy CI
+set(ENABLE_PYTHON 1)
 if(ENABLE_PYTHON)
     add_subdirectory(py_icl)
 endif() # ENABLE_PYTHON

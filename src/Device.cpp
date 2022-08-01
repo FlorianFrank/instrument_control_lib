@@ -107,7 +107,7 @@ std::string Device::WhatAmI() {
     return "My name is: " + m_DeviceName;
 }
 
-std::string Device::GetDeviceIdentifier()
+const char* Device::GetDeviceIdentifier()
 {
     if(!IsOpen())
     {
@@ -118,7 +118,7 @@ std::string Device::GetDeviceIdentifier()
     if(!Exec("*IDN?", buffer))
         return "Error while executing *IDN?";
 
-    return std::regex_replace(buffer, std::regex("\n"), "");
+    return std::regex_replace(buffer, std::regex("\n"), "").c_str();
 }
 
 
@@ -138,7 +138,7 @@ std::string Device::GetDeviceIdentifier()
  *      @endcode
  * */
 PIL_ERROR_CODE Device::Exec(std::string message, char *result, bool br, int size) {
-    if(!IsOpen()){
+    if(!m_SocketHandle->IsOpen()){
         PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_INTERFACE_CLOSED, "Error interface is closed");
         return PIL_INTERFACE_CLOSED;
     }
