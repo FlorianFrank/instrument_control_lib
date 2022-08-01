@@ -5,5 +5,7 @@ cmake-build-debug
 cmake-build-release
 cmake-build-relwithdebinfo
 .idea
-.DS_Store
 .vscode
+.DS_Store
+*.zip
+cmake-build*
