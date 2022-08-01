@@ -25,3 +25,5 @@ option(PIL_CXX              "Enable PIL C++ support"      ON)
 # PugiXML options
 option(BUILD_SHARED_LIBS    "Build pugiXML as shared lib" OFF)
 set(PUGI_XML_VERSION 1.12)
+
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
