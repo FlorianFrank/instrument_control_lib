@@ -27,6 +27,9 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/boost/include")
 add_subdirectory(common_tools_lib)
 add_subdirectory(playground)
 
+if(NOT DEFINED WIN32)
+set(ENABLE_PYTHON 1)
+endif()
 # TODO temporary disable python interface to satisfy CI
 if(ENABLE_PYTHON)
     add_subdirectory(py_icl)
