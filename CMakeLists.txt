@@ -26,7 +26,11 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/boost/include")
 #add_subdirectory(memristor_tester)
 add_subdirectory(common_tools_lib)
 add_subdirectory(playground)
-add_subdirectory(py_icl)
+
+# TODO temporary disable python interface to satisfy CI
+if(ENABLE_PYTHON)
+    add_subdirectory(py_icl)
+endif() # ENABLE_PYTHON
 
 if(BUILD_SHARED_LIBS)
     set(PUGIXML pugixml-shared)
