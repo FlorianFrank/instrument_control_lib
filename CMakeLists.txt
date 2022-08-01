@@ -33,7 +33,7 @@ endif()
 # TODO temporary disable python interface to satisfy CI
 set(ENABLE_PYTHON 1)
 if(ENABLE_PYTHON)
-    add_subdirectory(py_icl)
+    add_subdirectory(python_interface)
 endif() # ENABLE_PYTHON
 
 if(BUILD_SHARED_LIBS)

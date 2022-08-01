@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.4)
 
-set(PROJECT_NAME "py_icl")
+set(PROJECT_NAME "py_instrument_control_lib")
 set(LIBRARY_NAME "lib${PROJECT_NAME}")
 
 
@@ -83,7 +83,7 @@ else()
 endif()
 
 link_directories(${BOOST_LIB_DIR}/lib "${BOOST_ROOT}/stage/lib")
-add_library(${PROJECT_NAME} SHARED main.cpp)
+add_library(${PROJECT_NAME} SHARED boost_python_wrapper.cpp)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
 		"${BOOST_ROOT}"
@@ -114,5 +114,5 @@ if(WIN32)
 	target_link_options(${PROJECT_NAME} PUBLIC -static -static-libgcc -static-libstdc++)
 endif()
 
-configure_file(py_icl_test.py py_icl_test.py COPYONLY)
-configure_file(libpy_icl.py libpy_icl.py COPYONLY)
+configure_file(instrument_control_lib.py instrument_control_lib.py COPYONLY)
+configure_file(libpy_instrument_control_lib.py libpy_instrument_control_lib.py COPYONLY)
