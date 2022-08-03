@@ -4,6 +4,7 @@
 #include "devices/SPD1305.h"
 #include "devices/types/SMU.h"
 #include "devices/KEI2600.h"
+#include "devices/KST33500.h"
 #include "ctlib/Logging.hpp"
 
 using namespace boost::python;
@@ -57,6 +58,32 @@ BOOST_PYTHON_MODULE(libpy_icl)
             .def("getDeviceIdentifier", &KEI2600::GetDeviceIdentifier)
             ;
 
+    enum_<FunctionGenerator::FUNCTION_TYPE>("FUNCTION_TYPE")
+            .value("SIN", FunctionGenerator::SIN)
+            .value("SIN", FunctionGenerator::SQUARE)
+            .value("SIN", FunctionGenerator::RAMP)
+            .value("SIN", FunctionGenerator::NEGATIVE_RAM)
+            .value("SIN", FunctionGenerator::TRIANGLE)
+            .value("SIN", FunctionGenerator::NOISE)
+            .value("SIN", FunctionGenerator::PSEUDO_RANDOM_BIT_STREAM)
+            .value("SIN", FunctionGenerator::ARBITRARY);
+
+    enum_<FunctionGenerator::FUNC_CHANNEL>("FUNCTION_CHANNEL")
+            .value("CHANNEL_A", FunctionGenerator::CHANNEL_A)
+            .value("CHANNEL_B", FunctionGenerator::CHANNEL_B);
+
+    class_<KST33500>("KST33500", init<char*, int>())
+            .def("connect", &KST33500::Connect)
+            .def("disconnect", &KST33500::Disconnect)
+            .def("turnOn", &KST33500::turnOn)
+            .def("turnOff", &KST33500::turnOff)
+            .def("setFrequency", &KST33500::setFrequency)
+            .def("setAmplitude", &KST33500::setAmplitude)
+            .def("setOffset", &KST33500::setOffset)
+            .def("setFunction", &KST33500::setFunction)
+            .def("setPhase", &KST33500::setPhase)
+            .def("display", &KST33500::display)
+            .def("displayConnection", &KST33500::displayConnection);
 
 
     class_<SPD1305>("SPD1305", init<char *, int>())
