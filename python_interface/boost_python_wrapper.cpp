@@ -4,6 +4,7 @@
 #include "devices/SPD1305.h"
 #include "devices/types/SMU.h"
 #include "devices/KEI2600.h"
+#include "devices/KST3000.h"
 #include "devices/KST33500.h"
 #include "ctlib/Logging.hpp"
 
@@ -84,6 +85,62 @@ BOOST_PYTHON_MODULE(libpy_icl)
             .def("setPhase", &KST33500::setPhase)
             .def("display", &KST33500::display)
             .def("displayConnection", &KST33500::displayConnection);
+
+    enum_<Oscilloscope::OSC_CHANNEL>("OSC_CHANNEL")
+            .value("CHANNEL_1", Oscilloscope::CHANNEL_1)
+            .value("CHANNEL_2", Oscilloscope::CHANNEL_2)
+            .value("CHANNEL_3", Oscilloscope::CHANNEL_3)
+            .value("CHANNEL_4", Oscilloscope::CHANNEL_4);
+
+    enum_<Oscilloscope::TRIGGER_EDGE>("TRIGGER_EDGE")
+            .value("POS_EDGE", Oscilloscope::POS_EDGE)
+            .value("NEG_EDGE", Oscilloscope::NEG_EDGE)
+            .value("EITHER", Oscilloscope::EITHER)
+            .value("ALTERNATING", Oscilloscope::ALTERNATING);
+
+    enum_<Oscilloscope::DISPLAY_MODES>("DISPLAY_MODES")
+            .value("MAIN", Oscilloscope::MAIN)
+            .value("WIND", Oscilloscope::WIND)
+            .value("XY", Oscilloscope::XY)
+            .value("ROLL", Oscilloscope::ROLL);
+
+    enum_<Oscilloscope::FILE_FORMAT>("FILE_FORMAT")
+            .value("ASCII", Oscilloscope::ASCII)
+            .value("WORD", Oscilloscope::WORD)
+            .value("BYTE", Oscilloscope::BYTE);
+
+    enum_<Oscilloscope::VOLTAGE_UNIT>("VOLTAGE_UNIT")
+            .value("VOLT", Oscilloscope::VOLT)
+            .value("MILLI_VOLT", Oscilloscope::MILLI_VOLT);
+
+    class_<KST3000>("KST3000", init<char*, int>())
+            .def("connect", &KST3000::Connect)
+            .def("disconnect", &KST3000::Disconnect)
+            .def("run", &KST3000::run)
+            .def("stop", &KST3000::stop)
+            .def("single", &KST3000::single)
+            .def("autoScale", &KST3000::autoScale)
+            .def("setTimeRange", &KST3000::setTimeRange)
+            .def("setChannelOffset", &KST3000::setChannelOffset)
+            .def("setChannelScale", &KST3000::setChannelScale)
+            .def("setChannelRange", &KST3000::setChannelRange)
+            .def("setTriggerEdge", &KST3000::setTriggerEdge)
+            .def("setTriggerSource", &KST3000::setTriggerSource)
+            .def("setTimeDelay", &KST3000::setTimeDelay)
+            .def("setWaveformSource", &KST3000::setWaveformSource)
+            .def("getWaveformPreamble", &KST3000::getWaveformPreamble)
+            .def("getWaveformPoints", &KST3000::getWaveformPoints)
+            .def("setWaveformPoints", &KST3000::setWaveformPoints)
+            .def("setWaveformPointsMode", &KST3000::setWaveformPointsMode)
+            .def("setWaveformFormat", &KST3000::setWaveformFormat)
+            .def("saveWaveformData", &KST3000::saveWaveformData)
+            .def("getWaveformData", &KST3000::getWaveformData)
+            .def("getRealData", &KST3000::getRealData)
+            .def("digitize", &KST3000::digitize)
+            .def("getSystemSetup", &KST3000::getSystemSetup)
+            .def("setDisplayMode", &KST3000::setDisplayMode)
+            .def("displayConnection", &KST3000::displayConnection)
+            .def("setChannelDisplay", &KST3000::setChannelDisplay);
 
 
     class_<SPD1305>("SPD1305", init<char *, int>())
