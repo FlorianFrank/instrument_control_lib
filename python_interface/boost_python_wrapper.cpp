@@ -41,8 +41,8 @@ BOOST_PYTHON_MODULE(libpy_icl)
             .value("POWER", SMU::POWER);
 
     class_<KEI2600>("KEI2600", init<char *, int>())
-            .def("Connect", &KEI2600::Connect)
-            .def("setCurrent", &KEI2600::Disconnect)
+            .def("connect", &KEI2600::Connect)
+            .def("disconnect", &KEI2600::Disconnect)
             .def("turnOn", &KEI2600::turnOn)
             .def("turnOff", &KEI2600::turnOff)
             .def("measure", &KEI2600::measure)
