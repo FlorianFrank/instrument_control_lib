@@ -253,7 +253,7 @@ k.function("SIN");
   >>> 
   >>> import os
   >>> os.listdir()
-  ['instrument_control_lib.py', 'libpy_instrument_control_lib.py', 'libpy_instrument_control_lib.so']
+  ['instrument_control_lib.py', 'libpy_instrument_control_lib.pyd', 'libpy_instrument_control_lib.so']
   
   >>> from libpy_instrument_control_lib import *
   >>> smu = KEI2600("192.168.1.10", 2000)
