@@ -227,3 +227,137 @@ That's it. After that, you can use like:
 k.function("SIN");
 ```
 
+## Tutorial Python interface
+
+1. Download the most recent release from the repository
+  - Go to releases on the right side and click on the link
+  - There you see different tags e.g. 1.2.0
+  - Click on downloads 
+  - Download **libpy_instrument_control_lib.pyd**
+  - 
+![Screenshot release](docs_and_specs/figures/screen_shot_release.png)
+
+2. Go to folder where **libpy_instrument_control_lib.pyd** is stored
+3. Open the python console
+   1. Make sure the libpy_instrument_control_lib is in the folder
+   2. Open the library as module 
+   3. Create a SMU object with an IP and an timeout for the socket
+   4. Connect to the SMU
+   5. You can check the error code which should be ERROR_CODE.NO_ERROR
+      - All defined error codes are listed below
+  ```bash
+  $ python3.exe
+  Python 3.8.13 (default, Mar 28 2022, 11:38:47) 
+  [GCC 7.5.0] :: Anaconda, Inc. on linux
+  Type "help", "copyright", "credits" or "license" for more information.
+  >>> 
+  >>> import os
+  >>> os.listdir()
+  ['instrument_control_lib.py', 'libpy_instrument_control_lib.py', 'libpy_instrument_control_lib.so']
+  
+  >>> from libpy_instrument_control_lib import *
+  >>> smu = KEI2600("192.168.1.10", 2000)
+  >>> error_code = smu.connect()
+  >>> print(error_code)
+  ERROR_CODE.NO_ERROR
+  >>> device_identifier = smu.getDeviceIdentifier()
+  >>> print(device_identifier)
+  Keithley Instruments Inc*, Model 2636B, 4031
+  
+  >>> error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3)
+  >>> if error_code != ERROR_CODE.NO_ERROR: 
+        # stop execution or do some error handling
+        
+  >>> error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 5.0)
+  >>> # error handling
+  
+  >>> error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A)
+  >>> # error handling
+  
+  >>> measure_value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL_CHANNEL_B)
+  >>> print(measure_value)
+    3.04
+  >>> smu.disconnect()
+     
+  ```
+
+### Functions
+
+This list gives an overview of the smu functions and how to call them.
+
+```python
+    # Establish the ethernet connection to the device
+    error_code = smu.connect()
+    error_code = smu.disconnect()
+
+    error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A)
+    error_code = smu.turnOff(SMU_CHANNEL.CHANNEL_A)
+
+    value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)
+    value = smu.measure(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)
+    value = smu.measure(SMU_UNIT.RESISTANCE, SMU_CHANNEL.CHANNEL_A)
+    value = smu.measure(SMU_UNIT.POWER, SMU_CHANNEL.CHANNEL_A)
+    
+    error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3)
+    error_code = smu.setLevel(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, 0.1)
+
+    error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3)
+    error_code = smu.setLimit(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, 0.1)
+
+    error_code = smu.enableMeasureAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)
+    error_code = smu.enableMeasureAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)
+
+    error_code = smu.disableMeasureAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)
+    error_code = smu.disableMeasureAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)
+
+    error_code = smu.enableSourceAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)
+    error_code = smu.enableSourceeAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)
+
+    error_code = smu.disableSourceAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)
+    error_code = smu.disableSourceAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)
+
+    error_code = smu.setRemoteSense(SMU_CHANNEL.CHANNEL_A)
+    error_code = smu.setLocalSense(SMU_CHANNEL.CHANNEL_A)
+    
+    error_code = smu.setSourceRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.0)
+    
+    device_description = smu.getDeviceIdentifier()
+
+```
+
+### Error codes
+
+There exists a function which transforms the error codes into Strings. 
+Some error codes are not used in the library because these are derived from the abstraction library.
+**This function will be implemented in python soon!**
+```python
+            # No error occurred
+            NO_ERROR
+            # Invalid arguments passed to a function, e.g. passing a nullptr.
+            PIL_INVALID_ARGUMENT
+            # An error occured and an errno error code was set. 
+            # Internal error message can be requested by the error handle
+            ERRNO
+            # Error when performing an operation on a closed interface.
+            INTERFACE_CLOSED
+            # Error when baudrate cannot be set. E.g. when the approximation function has a higher deviation then 2 %.
+            INVALID_BAUDRATE
+            # Error insufficient resources.
+            INSUFFICIENT_RESOURCES
+            # Error, insufficient permissions to perform a certain operation.
+            INSUFFICIENT_PERMISSIONS
+            # Error, when deadlock is detected in a multithreaded application.
+            DEADLOCK_DETECTED
+            # Error while joining a thread.
+            THREAD_NOT_JOINABLE
+            # Error performing an operation on on a not initialized thread.
+            THREAD_NOT_FOUND
+            # Error entire file could not be written.
+            ONLY_PARTIALLY_READ_WRITTEN
+            # Error no such file or directory.
+            NO_SUCH_FILE
+            # Invalid error code.
+            UNKNOWN_ERROR
+            # Error while parsing an XML file.
+            XML_PARSING_ERROR
+```
