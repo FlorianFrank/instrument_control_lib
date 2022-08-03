@@ -31,6 +31,13 @@ PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double* value)
 }
 
 
+double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel)
+{
+    double value;
+    measure(unit, channel, &value);
+    return value;
+}
+
 PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel)
 {
     auto channelStr = getChannelStringFromEnum(channel);
