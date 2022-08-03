@@ -54,7 +54,7 @@ BOOST_PYTHON_MODULE(libpy_icl)
             .def("setSourceRange", &KEI2600::setSourceRange)
             .def("selectLocalSense", &KEI2600::selectLocalSense)
             .def("selectRemoteSense", &KEI2600::selectRemoteSense)
-            .def("GetDeviceIdentifier", &KEI2600::GetDeviceIdentifier)
+            .def("getDeviceIdentifier", &KEI2600::GetDeviceIdentifier)
             ;
 
 
