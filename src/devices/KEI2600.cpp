@@ -40,134 +40,223 @@ double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel)
 
 PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel)
 {
-    auto channelStr = getChannelStringFromEnum(channel);
-    return Exec("smu" + channelStr + ".source.output = smu" + channelStr + ".OUTPUT_ON");
+    SubArg subArg("source",".");
+           subArg.AddElem("output", ".");
+
+    SubArg outputArg("OUTPUT_ON", ".");
+
+    SubArg smuNumber("smu");
+           smuNumber.AddElem(getChannelStringFromEnum(channel));
+
+    ExecArgs execArgs;
+    execArgs.AddArgument("smu", getChannelStringFromEnum(channel))
+    .AddArgument(subArg, smuNumber, " = ")
+    .AddArgument(outputArg, "");
+
+    return Exec("", &execArgs);
 }
 
 
 PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel)
 {
-    auto channelStr = getChannelStringFromEnum(channel);
-    return Exec("smu" + channelStr + ".source.output = smu" + channelStr + ".OUTPUT_OFF");
+    SubArg subArg("source",".");
+    subArg.AddElem("output", ".");
+
+    SubArg outputArg("OUTPUT_OFF", ".");
+
+    SubArg smuNumber("smu");
+    smuNumber.AddElem(getChannelStringFromEnum(channel));
+
+    ExecArgs execArgs;
+    execArgs.AddArgument("smu", getChannelStringFromEnum(channel))
+            .AddArgument(subArg, smuNumber, " = ")
+            .AddArgument(outputArg, "");
+
+    return Exec("", &execArgs);
 }
 
-
+/**
+ * @brief smuA.source.leveli = 3
+ * @param unit
+ * @param channel
+ * @param level
+ * @return
+ */
 PIL_ERROR_CODE KEI2600::setLevel(UNIT unit, SMU_CHANNEL channel, double level)
 {
-    auto sValue = std::to_string(level);
-    std::string levelType;
+    SubArg subArg("");
+    subArg.AddElem("source", ".");
+
+    ExecArgs args;
+
     switch (unit)
     {
         case CURRENT:
-            levelType = ".source.leveli = ";
+            subArg.AddElem("leveli", ".");
             break;
         case VOLTAGE:
-            levelType = ".source.levelv = ";
+            subArg.AddElem("levelv", ".");
             break;
         default:
             return PIL_INVALID_ARGUMENTS;
     }
-    auto command = "smu" + getChannelStringFromEnum(channel) + levelType + sValue;
-    return Exec(command);
+
+    args.AddArgument("smu", getChannelStringFromEnum(channel));
+    args.AddArgument(subArg, level, " = ");
+
+    return Exec("", &args);
 }
 
 
 PIL_ERROR_CODE KEI2600::setLimit(UNIT unit, SMU_CHANNEL channel, double limit)
 {
-    auto sValue = std::to_string(limit);
-    std::string limitType;
+    SubArg subArg("");
+    subArg.AddElem("source", ".");
+
+    ExecArgs args;
+
     switch (unit)
     {
         case CURRENT:
-            limitType = ".source.limiti = ";
+            subArg.AddElem("limiti", ".");
             break;
         case VOLTAGE:
-            limitType = ".source.limitv = ";
+            subArg.AddElem("limitv", ".");
             break;
         case POWER:
-            limitType = ".source.limitp = ";
+            subArg.AddElem("limitp", ".");
             break;
         default:
             return PIL_INVALID_ARGUMENTS;
     }
-    auto command = "smu" + getChannelStringFromEnum(channel) + limitType + sValue;
-    return Exec(command);
+
+    args.AddArgument("smu", getChannelStringFromEnum(channel));
+    args.AddArgument(subArg, limit, " = ");
+
+    return Exec("", &args);
 }
 
 
 PIL_ERROR_CODE KEI2600::enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel)
 {
-    std::string measureType;
+    SubArg subArg("");
+    subArg.AddElem("measure", ".");
+
     switch (unit)
     {
         case CURRENT:
-            measureType = ".measure.autorangei = smu";
+            subArg.AddElem("autorangei", ".");
             break;
         case VOLTAGE:
-            measureType = ".measure.autorangev = smu";
+            subArg.AddElem("autorangev", ".");
             break;
         default:
             return PIL_INVALID_ARGUMENTS;
     }
-    auto channelStr = getChannelStringFromEnum(channel);
-    return Exec("smu" + channelStr + measureType + channelStr + ".AUTORANGE_ON");
+
+    SubArg subArgAutoRange("");
+    subArgAutoRange.AddElem("AUTORANGE_ON", ".");
+
+    SubArg smuArg("smu");
+           smuArg.AddElem(getChannelStringFromEnum(channel));
+
+    ExecArgs args;
+    args.AddArgument("smu", getChannelStringFromEnum(channel))
+        .AddArgument(subArg, smuArg, " = ") // TODO refactor
+        .AddArgument(subArgAutoRange,"");
+
+   // auto channelStr = getChannelStringFromEnum(channel);
+    return Exec("", &args);
 }
 
 
 PIL_ERROR_CODE KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel)
 {
-    std::string measureType;
+    SubArg subArg("");
+    subArg.AddElem("measure", ".");
+
     switch (unit)
     {
         case CURRENT:
-            measureType = ".measure.autorangei = smu";
+            subArg.AddElem("autorangei", ".");
             break;
         case VOLTAGE:
-            measureType = ".measure.autorangev = smu";
+            subArg.AddElem("autorangev", ".");
             break;
         default:
             return PIL_INVALID_ARGUMENTS;
     }
-    return Exec("smu" + getChannelStringFromEnum(channel) + measureType + getChannelStringFromEnum(channel) +
-                ".AUTORANGE_OFF");
+
+    SubArg subArgAutoRange("");
+    subArgAutoRange.AddElem("AUTORANGE_OFF", ".");
+
+    SubArg smuArg("smu");
+    smuArg.AddElem(getChannelStringFromEnum(channel));
+
+    ExecArgs args;
+    args.AddArgument("smu", getChannelStringFromEnum(channel))
+            .AddArgument(subArg, smuArg, " = ") // TODO refactor
+            .AddArgument(subArgAutoRange,"");
 }
 
 
 PIL_ERROR_CODE KEI2600::enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel)
 {
-    std::string sourceType;
+    SubArg subArg("");
+    subArg.AddElem("source", ".");
+
     switch (unit)
     {
         case CURRENT:
-            sourceType = ".source.autorangei = smu";
+            subArg.AddElem("autorangei", ".");
             break;
         case VOLTAGE:
-            sourceType = ".source.autorangei = smu";
+            subArg.AddElem("autorangev", ".");
             break;
         default:
             return PIL_INVALID_ARGUMENTS;
     }
-    auto channelStr = getChannelStringFromEnum(channel);
-    return Exec("smu" + channelStr + sourceType + channelStr + ".AUTORANGE_ON");
+
+    SubArg subArgAutoRange("");
+    subArgAutoRange.AddElem("AUTORANGE_ON", ".");
+
+    SubArg smuArg("smu");
+    smuArg.AddElem(getChannelStringFromEnum(channel));
+
+    ExecArgs args;
+    args.AddArgument("smu", getChannelStringFromEnum(channel))
+            .AddArgument(subArg, smuArg, " = ") // TODO refactor
+            .AddArgument(subArgAutoRange,"");
 }
 
 
 PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel)
 {
-    std::string sourceType;
+    SubArg subArg("");
+    subArg.AddElem("source", ".");
+
     switch (unit)
     {
         case CURRENT:
-            sourceType = ".source.autorangei = smu";
+            subArg.AddElem("autorangei", ".");
             break;
         case VOLTAGE:
-            sourceType = ".source.autorangei = smu";
+            subArg.AddElem("autorangev", ".");
             break;
         default:
             return PIL_INVALID_ARGUMENTS;
     }
-    auto channelStr = getChannelStringFromEnum(channel);
-    return Exec("smu" + channelStr + sourceType + channelStr + ".AUTORANGE_ON");
+
+    SubArg subArgAutoRange("");
+    subArgAutoRange.AddElem("AUTORANGE_OFF", ".");
+
+    SubArg smuArg("smu");
+    smuArg.AddElem(getChannelStringFromEnum(channel));
+
+    ExecArgs args;
+    args.AddArgument("smu", getChannelStringFromEnum(channel))
+            .AddArgument(subArg, smuArg, " = ") // TODO refactor
+            .AddArgument(subArgAutoRange,"");
 }
 
 
@@ -178,59 +267,91 @@ PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel)
  * */
 PIL_ERROR_CODE KEI2600::setMeasureRange(UNIT unit, SMU_CHANNEL channel, double rangeValue)
 {
-    std::string measureRange;
-    auto sValue = std::to_string(rangeValue);
+    SubArg subArg("measure", ".");
     switch (unit)
     {
         case CURRENT:
-            measureRange = ".measure.rangei = ";
+            subArg.AddElem("rangei", ".");
             break;
         case VOLTAGE:
-            measureRange = ".measure.rangev = ";
+            subArg.AddElem("rangev", ".");
             break;
         default:
             return PIL_INVALID_ARGUMENTS;
     }
-    return Exec("smu" + getChannelStringFromEnum(channel) + measureRange + sValue);
+
+    ExecArgs args;
+    args.AddArgument("smu", getChannelStringFromEnum(channel))
+        .AddArgument(subArg, rangeValue, " = ");
+
+    return Exec("", &args);
 }
 
 
 PIL_ERROR_CODE KEI2600::setSourceRange(UNIT unit, SMU_CHANNEL channel, double rangeValue)
 {
-    auto sValue = std::to_string(rangeValue);
-    std::string rangeType;
+    SubArg subArg("source", ".");
     switch (unit)
     {
         case CURRENT:
-            rangeType = ".source.rangei = ";
+            subArg.AddElem("rangei", ".");
             break;
         case VOLTAGE:
-            rangeType = ".source.rangev = ";
+            subArg.AddElem("rangev", ".");
             break;
         default:
             return PIL_INVALID_ARGUMENTS;
     }
-    return Exec("smu" + getChannelStringFromEnum(channel) + rangeType + sValue);
+
+    ExecArgs args;
+    args.AddArgument("smu", getChannelStringFromEnum(channel))
+        .AddArgument(subArg, rangeValue, " = ");
+
+    return Exec("", &args);
 }
 
 
 PIL_ERROR_CODE KEI2600::selectLocalSense(SMU_CHANNEL channel)
 {
-    auto channelStr = getChannelStringFromEnum(channel);
-    return Exec("smu" + channelStr + ".sense = smu" + channelStr + ".SENSE_LOCAL");
+    SubArg subArg("sense", ".");
+    SubArg smuArg("smu");
+    smuArg.AddElem(getChannelStringFromEnum(channel));
+    SubArg localSenseArg("SENSE_LOCAL", ".");
+
+    ExecArgs execArgs;
+             execArgs.AddArgument("smu", getChannelStringFromEnum(channel))
+             .AddArgument(subArg, smuArg, " = ")
+             .AddArgument(localSenseArg, "");
+
+    return Exec("", &execArgs);
 }
 
 
 PIL_ERROR_CODE KEI2600::selectRemoteSense(SMU_CHANNEL channel)
 {
-    auto channelStr = getChannelStringFromEnum(channel);
-    return Exec("smu" + channelStr + ".sense = smu" + channelStr + ".SENSE_REMOTE");
+    SubArg subArg("sense", ".");
+    SubArg smuArg("smu");
+    smuArg.AddElem(getChannelStringFromEnum(channel));
+    SubArg remoteSenseArg("SENSE_REMOTE", ".");
+
+    ExecArgs args;
+    args.AddArgument("smu", getChannelStringFromEnum(channel))
+        .AddArgument(subArg, smuArg, " = ")
+        .AddArgument(remoteSenseArg, "");
+
+    return Exec("", &args);
 }
 
 
 PIL_ERROR_CODE KEI2600::enableBeep()
 {
-    return Exec("beeper.enable = beeper.ON");
+    SubArg subArg("beeper");
+    subArg.AddElem("enable", ".");
+
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, "beeper.ON", " = ");
+
+    return Exec("", &execArgs);
 }
 
 
@@ -242,7 +363,16 @@ PIL_ERROR_CODE KEI2600::beep()
 
 PIL_ERROR_CODE KEI2600::disableBeep()
 {
-    return Exec("beeper.enable = beeper.OFF");
+    SubArg subArg("beeper");
+    subArg.AddElem("enable", ".");
+
+    SubArg beeperOffArg("beeper");
+           beeperOffArg.AddElem("OFF", ".");
+
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, beeperOffArg, " = ");
+
+    return Exec("", &execArgs);
 }
 
 
@@ -251,15 +381,28 @@ PIL_ERROR_CODE KEI2600::measureI(SMU_CHANNEL channel, double *value)
     if(!value)
         return PIL_INVALID_ARGUMENTS;
 
-    auto command = "reading = smu" + getChannelStringFromEnum(channel) + ".measure.i()";
-    auto ret = Exec(command);
-    if(ret != PIL_NO_ERROR)
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("measure", ".")
+            .AddElem("i()", ".");
+
+    ExecArgs args;
+    args.AddArgument(subArg, "");
+
+    auto ret = Exec("reading = ", &args);
+    if (ret != PIL_NO_ERROR)
         return ret;
 
     char buffer[MEASURE_RET_BUFF_SIZE] = {0};
-    auto response = "print(reading)";
-    ret = Exec(response, buffer);
-    if(ret != PIL_NO_ERROR)
+
+    SubArg subArgPrint("");
+    subArgPrint.AddElem("reading", "(", ")");
+
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, "");
+
+    ret = Exec("print", &execArgs, buffer);
+    if (ret != PIL_NO_ERROR)
         return ret;
 
     if(m_Logger)
@@ -274,14 +417,27 @@ PIL_ERROR_CODE KEI2600::measureV(SMU_CHANNEL channel, double *value)
     if(!value)
         return PIL_INVALID_ARGUMENTS;
 
-    auto command = "reading = smu" + getChannelStringFromEnum(channel) + ".measure.v()";
-    auto ret = Exec(command);
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("measure", ".")
+            .AddElem("v()", ".");
+
+    ExecArgs args;
+    args.AddArgument(subArg, "");
+
+    auto ret = Exec("reading = ", &args);
     if (ret != PIL_NO_ERROR)
         return ret;
 
-    char buffer[MEASURE_RET_BUFF_SIZE] = "0";
-    auto response = "print(reading)";
-    ret = Exec(response, buffer);
+    char buffer[MEASURE_RET_BUFF_SIZE] = {0};
+
+    SubArg subArgPrint("");
+    subArgPrint.AddElem("reading", "(", ")");
+
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, "");
+
+    ret = Exec("print", &execArgs, buffer);
     if (ret != PIL_NO_ERROR)
         return ret;
 
@@ -297,12 +453,32 @@ PIL_ERROR_CODE KEI2600::measureR(SMU_CHANNEL channel, double *value)
     if(!value)
         return PIL_INVALID_ARGUMENTS;
 
-    auto command = "reading = smu" + getChannelStringFromEnum(channel) + ".measure.r()";
-    char buffer[MEASURE_RET_BUFF_SIZE] = {0};
-    auto ret = Exec(command, buffer);
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("measure", ".")
+            .AddElem("r()", ".");
+
+    ExecArgs args;
+    args.AddArgument(subArg, "");
+
+    auto ret = Exec("reading = ", &args);
     if (ret != PIL_NO_ERROR)
         return ret;
 
+    char buffer[MEASURE_RET_BUFF_SIZE] = {0};
+
+    SubArg subArgPrint("");
+    subArgPrint.AddElem("reading", "(", ")");
+
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, "");
+
+    ret = Exec("print", &execArgs, buffer);
+    if (ret != PIL_NO_ERROR)
+        return ret;
+
+    if(m_Logger)
+        m_Logger->LogMessage(DEBUG_LVL, __FILENAME__, __LINE__,"measureR returned: %s", buffer);
     *value = std::stod(buffer);
     return PIL_NO_ERROR;
 }
@@ -313,12 +489,32 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
     if(!value)
         return PIL_INVALID_ARGUMENTS;
 
-    auto command = "reading = smu" + getChannelStringFromEnum(channel) + ".measure.p()";
-    char buffer[MEASURE_RET_BUFF_SIZE] = {0};
-    auto ret = Exec(command, buffer);
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("measure", ".")
+            .AddElem("p()", ".");
+
+    ExecArgs args;
+    args.AddArgument(subArg, "");
+
+    auto ret = Exec("reading = ", &args);
     if (ret != PIL_NO_ERROR)
         return ret;
 
+    char buffer[MEASURE_RET_BUFF_SIZE] = {0};
+
+    SubArg subArgPrint("");
+    subArgPrint.AddElem("reading", "(", ")");
+
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, "");
+
+    ret = Exec("print", &execArgs, buffer);
+    if (ret != PIL_NO_ERROR)
+        return ret;
+
+    if(m_Logger)
+        m_Logger->LogMessage(DEBUG_LVL, __FILENAME__, __LINE__,"measureP returned: %s", buffer);
     *value = std::stod(buffer);
     return PIL_NO_ERROR;
 }
