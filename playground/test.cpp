@@ -5,6 +5,7 @@
 #include "test.h"
 #include "unistd.h"
 #include "ctlib/Logging.hpp"
+#include "devices/KST3000.h"
 
 int testSPD() {
 //    SPD1305 power("132.231.14.176", 0);
@@ -21,6 +22,12 @@ int testSPD() {
         cout << "Current test passed.\n";
     }
     power->Disconnect();
+    return 0;
+}
+
+int testOscillosope() {
+    auto osci = KST3000("1282", 0, nullptr);
+    osci.setTriggerEdge(Oscilloscope::POS_EDGE);
     return 0;
 }
 
@@ -42,7 +49,7 @@ int testSMU(string ip) {
     string print_str = "print(testResult)";
     smu->Exec(bo_str);
     char buffer[1024] = "0";
-    smu->Exec(print_str, buffer);
+    smu->Exec(print_str, nullptr, buffer);
     cout << "bitxor(10, 9) is: " << buffer;
 
 
