@@ -9,6 +9,8 @@
 #include <vector>
 #include <tuple>
 
+#include "SubArg.h"
+
 class ExecArgs
 {
     enum ARGUMENT_TYPE
@@ -21,9 +23,16 @@ class ExecArgs
 public:
     explicit ExecArgs() = default;
 
-    ExecArgs* AddArgument(std::string argument, int value, std::string seperator="");
-    ExecArgs* AddArgument(std::string argument, double value, std::string seperator= "");
-    ExecArgs* AddArgument(std::string argument, std::string value, std::string seperator="");
+    ExecArgs & AddArgument(std::string argument, int value, std::string seperator= "");
+    ExecArgs & AddArgument(std::string argument, double value, std::string seperator= "");
+    ExecArgs & AddArgument(std::string argument, std::string value, std::string seperator= "");
+
+    ExecArgs & AddArgument(SubArg argument, int value, std::string seperator= "");
+    ExecArgs & AddArgument(SubArg argument, double value, std::string seperator= "");
+    ExecArgs & AddArgument(SubArg argument, std::string value, std::string seperator= "");
+
+    ExecArgs & AddArgument(SubArg argument, SubArg& value, std::string seperator= "");
+
 
     std::string GetArgumentsAsString();
 

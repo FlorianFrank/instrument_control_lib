@@ -11,7 +11,9 @@
 
 class SubArg {
 public:
-    explicit SubArg(std::string arg);
+    explicit SubArg(std::string arg, std::string prefix = "", std::string postfix = "");
+
+
     SubArg& AddElem(std::string, std::string prefix="", std::string postfix="");
     SubArg& AddElem(int value, std::string prefix="", std::string postfix="");
     SubArg& AddElem(double value, std::string prefix="", std::string postfix="");

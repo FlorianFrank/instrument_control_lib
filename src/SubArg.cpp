@@ -4,9 +4,9 @@
 
 #include "SubArg.h"
 
-SubArg::SubArg(std::string arg)
+SubArg::SubArg(std::string arg, std::string prefix, std::string postfix)
 {
-    AddElem(arg, "", "");
+    AddElem(arg, prefix, postfix);
 }
 
 SubArg& SubArg::AddElem(std::string value, std::string prefix, std::string postfix)
