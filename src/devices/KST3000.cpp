@@ -20,13 +20,13 @@
 // TODO: these two instructor seem not necessary, could coverd by Device
 KST3000::KST3000(const char *ip, int timeoutInMS) : Oscilloscope(ip, timeoutInMS, nullptr)
 {
-    m_DeviceName = DEVICE_NAME;
+    //m_DeviceName = DEVICE_NAME;
 }
 
 
 KST3000::KST3000(const char *ip, int timeoutInMS, PIL::Logging *logger) : Oscilloscope(ip, timeoutInMS, logger)
 {
-    m_DeviceName = DEVICE_NAME;
+    //m_DeviceName = DEVICE_NAME;
 }
 
 
@@ -38,16 +38,32 @@ KST3000::KST3000(const char *ip, int timeoutInMS, PIL::Logging *logger) : Oscill
 
 PIL_ERROR_CODE KST3000::displayConnection()
 {
-    auto ret = Exec("DISP:TEXT 'Connected Successfully. Returning...'");
-    if(ret != PIL_NO_ERROR)
+    SubArg subArg("DISP");
+    subArg.AddElem("TEXT", ":");
+
+    ExecArgs args;
+    args.AddArgument(subArg, "'Connected Successfully. Returning...'", " ");
+
+    auto ret = Exec("", &args);
+    if (ret != PIL_NO_ERROR)
         return ret;
 
     sleep(SLEEP_DISPLAY_CONNECTION); // TODO no numberic values direcly in the source code.
-    ret = Exec("DISP ON");
-    if(ret != PIL_NO_ERROR)
+
+    ExecArgs argsDisp;
+    argsDisp.AddArgument("DISP", "ON", " ");
+    ret = Exec("", &argsDisp);
+    if (ret != PIL_NO_ERROR)
         return ret;
 
-    return Exec("DISPlay:TEXT:CLEar");
+    SubArg subArgClear("DISPlay");
+    subArgClear.AddElem("TEXT", ":")
+    .AddElem("CLEar", ":");
+
+    ExecArgs argsClear;
+    argsClear.AddArgument(subArgClear, "");
+
+    return Exec("", &argsClear);
 }
 
 
@@ -93,7 +109,13 @@ PIL_ERROR_CODE KST3000::autoScale()
  * */
 PIL_ERROR_CODE KST3000::setTriggerEdge(TRIGGER_EDGE edge)
 {
-    return Exec("TRIGger:SLOPe " + getTriggerEdgeStr(edge));
+    SubArg triggerArg("TRIGger");
+    triggerArg.AddElem("SLOPe", ":");
+
+    ExecArgs args;
+    args.AddArgument(triggerArg, getTriggerEdgeStr(edge), " ");
+
+    return Exec("", &args);
 }
 
 
@@ -103,7 +125,14 @@ PIL_ERROR_CODE KST3000::setTriggerEdge(TRIGGER_EDGE edge)
  * */
 PIL_ERROR_CODE KST3000::setTriggerSource(OSC_CHANNEL channel)
 {
-    return Exec("TRIGger:SOURce CHAN" + getChannelFromEnum(channel));
+    SubArg subArg("TRIGger");
+    subArg.AddElem("SOURce", ":")
+    .AddElem("CHAN");
+
+    ExecArgs args;
+    args.AddArgument(subArg, getChannelFromEnum(channel));
+
+    return Exec("", &args);
 }
 
 /**
@@ -112,28 +141,48 @@ PIL_ERROR_CODE KST3000::setTriggerSource(OSC_CHANNEL channel)
  * */
 PIL_ERROR_CODE KST3000::setTimeRange(double range)
 {
-    return Exec("TIMebase:RANGe " + std::to_string(range));
+    SubArg subArg("TIMebase");
+    subArg.AddElem("RANGe", ":");
+
+    ExecArgs args;
+    args.AddArgument(subArg, range, " ");
+
+    return Exec("", &args);
 }
 
 /**
  * @brief Set timebase(horizontal) delay; Equivalent to adjust the delay knob in Horizontal controls.
+ * e.g. TIMebase:DElay 5
  * @param delay: time delay, unit seconds
  * */
 PIL_ERROR_CODE KST3000::setTimeDelay(double delay)
 {
-    return Exec("TIMebase:DELay " + std::to_string(delay));
+    SubArg subArg("TIMebase");
+    subArg.AddElem("DELay", ":");
+
+    ExecArgs args;
+    args.AddArgument(subArg, delay, " ");
+
+    return Exec("", &args);
 }
 
 /**
  * @brief Equivalent to adjust the knob above channel numbers.
+ *          e.g. CHANnel3:SCALe 5
  * @param scale: units(voltage) per division(grid)
  * @param channel:  target channel: default 1
  * */
 PIL_ERROR_CODE KST3000::setChannelScale(OSC_CHANNEL channel, double value)
 {
     // set the vertical scale
-    auto command = "CHANnel" + std::to_string(channel) + ":SCALe " + getChannelFromEnum(channel);
-    return Exec(command);
+    SubArg subArg("CHANnel");
+    subArg.AddElem(channel);
+    subArg.AddElem("SCALe", ":");
+
+    ExecArgs args;
+    args.AddArgument(subArg, value, " ");
+
+    return Exec("", &args);
 }
 
 /**
@@ -147,10 +196,16 @@ PIL_ERROR_CODE KST3000::setChannelScale(OSC_CHANNEL channel, double value)
 PIL_ERROR_CODE KST3000::setChannelRange(OSC_CHANNEL channel, double range, VOLTAGE_UNIT voltageUnit)
 {
     // set the vertical range
-    auto command = "CHANnel" + getChannelFromEnum(channel) + ":RANGe " + std::to_string(range);
+    SubArg subArg("CHANnel");
+    subArg.AddElem(getChannelFromEnum(channel))
+    .AddElem("RANGe", ":");
+
+    ExecArgs args;
+    args.AddArgument(subArg, range, " ");
+
     if (voltageUnit == MILLI_VOLT)
-        command += " mV";
-    return Exec(command);
+        args.AddArgument("", "mV");
+    return Exec("", &args);
 }
 
 /**
@@ -161,8 +216,14 @@ PIL_ERROR_CODE KST3000::setChannelRange(OSC_CHANNEL channel, double range, VOLTA
 PIL_ERROR_CODE KST3000::setChannelOffset(OSC_CHANNEL channel, double offset)
 {
     // set the vertical offset
-    auto command = "CHANnel" + getChannelFromEnum(channel) + ":offset " + std::to_string(offset);
-    return Exec(command);
+    SubArg subArg("CHANnel");
+    subArg.AddElem(getChannelFromEnum(channel))
+    .AddElem("offset", ":");
+
+    ExecArgs args;
+    args.AddArgument(subArg, offset, " ");
+
+    return Exec("", &args);
 }
 
 /**
@@ -173,8 +234,14 @@ PIL_ERROR_CODE KST3000::setChannelOffset(OSC_CHANNEL channel, double offset)
 PIL_ERROR_CODE KST3000::setChannelDisplay(OSC_CHANNEL channel, int on)
 {
     // turns the channel on(1) or off(0)
-    auto command = "CHANnel" + getChannelFromEnum(channel) + ":DISPlay " + std::to_string(on);
-    return Exec(command);
+    SubArg subArg("CHANnel");
+    subArg.AddElem(getChannelFromEnum(channel))
+    .AddElem("DISPLAY", ":");
+
+    ExecArgs args;
+    args.AddArgument(subArg, on, " ");
+
+    return Exec("", &args);
 }
 
 std::vector<std::string> split(const char *splitStr, std::string &delimiter)
@@ -197,7 +264,7 @@ std::vector<std::string> split(const char *splitStr, std::string &delimiter)
 }
 
 /**
- * @brief Query the preamble of waveform data
+ * @brief Query the preamble of waveform data, e.g. WAVeform:PREamble?
  * @return a array containing preamble
  * [Waveform format, Acquire type, Waveform points desired, Waveform average count,
  *  Waveform X increment, Waveform X origin, Waveform X reference,
@@ -205,8 +272,13 @@ std::vector<std::string> split(const char *splitStr, std::string &delimiter)
  * */
 PIL_ERROR_CODE KST3000::getWaveformPreamble(char *preamble)
 {
-    auto command = "WAVeform:PREamble?";
-    return Exec(command, preamble);
+    SubArg subArg("WAVeform");
+    subArg.AddElem("PREamble", ":", "?");
+
+    ExecArgs args;
+    args.AddArgument(subArg, "");
+
+    return Exec("", &args);
 }
 
 /**
@@ -218,9 +290,13 @@ PIL_ERROR_CODE KST3000::getWaveformPoints(int *nrWaveformPoints)
     if (!nrWaveformPoints)
         return PIL_INVALID_ARGUMENTS;
 
-    auto command = "WAVeform:POINts?";
+    SubArg subArg("WAVeform");
+    subArg.AddElem("POINts", ":", "?");
+    // TODO sovle that
+    ExecArgs args;
+    args.AddArgument("WAVeform", ":POINts?");
     char buffer[MEASURE_RET_BUFF_SIZE] = {0};
-    auto ret = Exec(command, buffer);
+    auto ret = Exec("", &args);
     if (ret != PIL_NO_ERROR)
         return ret;
 
@@ -237,8 +313,12 @@ PIL_ERROR_CODE KST3000::getWaveformPoints(int *nrWaveformPoints)
  * */
 PIL_ERROR_CODE KST3000::setWaveformPointsMode(std::string &mode)
 {
-    auto command = "WAVeform:POINts:MODE " + mode;
-    return Exec(command);
+    SubArg subArg("WAVeform");
+    subArg.AddElem("POINts", ":")
+    .AddElem("MODE", ":");
+    ExecArgs args;
+    args.AddArgument(subArg, mode, " ");
+    return Exec("", &args);
 }
 
 /**
@@ -246,8 +326,12 @@ PIL_ERROR_CODE KST3000::setWaveformPointsMode(std::string &mode)
  * */
 PIL_ERROR_CODE KST3000::setWaveformPoints(int num_points)
 {
-    auto command = "WAVeform:POINts " + std::to_string(num_points);
-    return Exec(command);
+    SubArg subArg("WAVeform");
+    subArg.AddElem("POINts", ":");
+
+    ExecArgs args;
+    args.AddArgument(subArg, num_points, " ");
+    return Exec("", &args);
 }
 
 /**
@@ -255,8 +339,11 @@ PIL_ERROR_CODE KST3000::setWaveformPoints(int num_points)
  * */
 PIL_ERROR_CODE KST3000::setWaveformFormat(FILE_FORMAT format)
 {
-    auto command = "WAVeform:FORMat" + getFileFormatStrFromEnum(format);
-    return Exec(command);
+    SubArg subArg("WAVeform");
+    subArg.AddElem("FORMat", ":");
+    ExecArgs args;
+    args.AddArgument(subArg, getFileFormatStrFromEnum(format));
+    return Exec("", &args);
 }
 
 /**
@@ -296,7 +383,12 @@ PIL_ERROR_CODE KST3000::getWaveformData(char *data)
     if(!data)
         return PIL_INVALID_ARGUMENTS;
 
-    auto command = "WAVeform:DATA?";
+    SubArg subArg("WAVeform");
+    subArg.AddElem("DATA", ":", "?");
+
+    ExecArgs args;
+    args.AddArgument(subArg, "");
+
     int num;
     auto retGetWaveFormPoints = getWaveformPoints(&num);
     if(retGetWaveFormPoints != PIL_NO_ERROR)
@@ -304,7 +396,7 @@ PIL_ERROR_CODE KST3000::getWaveformData(char *data)
 
     int data_length = 10 + num + 1;  //TODO 10 is the length of <header>, 1 is the end breakline(\n)
     char buffer[data_length];
-    auto execRet = Exec(command, buffer, true, data_length);
+    auto execRet = Exec("", &args, buffer, true, data_length);
     if(execRet != PIL_NO_ERROR)
         return execRet;
 
@@ -373,6 +465,7 @@ PIL_ERROR_CODE KST3000::getRealData(double **result)
  * plt.plot(data['time(ms)'], data['voltage(V)'])
  * @endcode
  * */
+ // TODO refactor to csv handler class
 PIL_ERROR_CODE KST3000::saveWaveformData(std::string &file_path)
 {
     char preamble[1024]; // TODO avoid static numeric definitions in source code
@@ -422,7 +515,9 @@ PIL_ERROR_CODE KST3000::saveWaveformData(std::string &file_path)
  * */
 PIL_ERROR_CODE KST3000::setDisplayMode(DISPLAY_MODES mode)
 {
-    return Exec("TIMebase:MODE " + getDisplayModeFromEnum(mode));
+    ExecArgs args;
+    args.AddArgument("TIMebase:MODE", getDisplayModeFromEnum(mode), " ");
+    return Exec("", &args);
 }
 
 /**
@@ -430,7 +525,8 @@ PIL_ERROR_CODE KST3000::setDisplayMode(DISPLAY_MODES mode)
  * */
 PIL_ERROR_CODE KST3000::digitize()
 {
-    return Exec("DIGitize");
+    ExecArgs args;
+    return Exec("DIGitize", &args);
 }
 
 /**
@@ -438,7 +534,14 @@ PIL_ERROR_CODE KST3000::digitize()
  * */
 PIL_ERROR_CODE KST3000::getSystemSetup(char *buffer)
 {
-    return Exec("SYSTem:SETup?", buffer);
+    SubArg subArg("SYSTem");
+    subArg.AddElem("SETup", ":", "?");
+
+    ExecArgs args;
+    args.AddArgument(subArg, "");
+
+    // TODO
+    return Exec("", &args, buffer);
 }
 
 /**
@@ -446,7 +549,9 @@ PIL_ERROR_CODE KST3000::getSystemSetup(char *buffer)
  * */
 PIL_ERROR_CODE KST3000::setWaveformSource(OSC_CHANNEL channel)
 {
-    return Exec("WAVeform:SOURce CHANnel" + getChannelFromEnum(channel));
+    ExecArgs execArgs;
+    execArgs.AddArgument("CHANnel", getChannelFromEnum(channel));
+    return Exec("WAVeform:SOURce", &execArgs);
 }
 
 /*static*/ std::string KST3000::getTriggerEdgeStr(Oscilloscope::TRIGGER_EDGE edge)

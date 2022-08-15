@@ -32,6 +32,7 @@ public:
 private:
     PIL_ERROR_CODE output(bool on);
     PIL_ERROR_CODE setPulseWidth(double value);
+    std::string GetFunctionStr(FUNCTION_TYPE functionType);
 };
 
 #endif //CE_DEVICE_KST33500_H
