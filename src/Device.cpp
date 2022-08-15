@@ -116,7 +116,13 @@ const char* Device::GetDeviceIdentifier()
         return PIL_ReturnErrorMessageAsString(&m_ErrorHandle);
     }
     char buffer[512];
-    if(!Exec("*IDN?", nullptr, buffer))
+
+    SubArg arg("IDN", "*", "?");
+
+    ExecArgs args;
+    args.AddArgument(arg, "");
+
+    if(!Exec("", &args, buffer))
         return "Error while executing *IDN?";
 
     return std::regex_replace(buffer, std::regex("\n"), "").c_str();
