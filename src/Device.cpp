@@ -8,6 +8,7 @@
 
 #include <cstring>
 #include <regex>
+#include <iostream>
 
 #include "ctlib/Socket.hpp"
 #include "ctlib/Logging.hpp"
@@ -115,12 +116,17 @@ const char* Device::GetDeviceIdentifier()
         return PIL_ReturnErrorMessageAsString(&m_ErrorHandle);
     }
     char buffer[512];
-    if(!Exec("*IDN?", buffer))
+
+    SubArg arg("IDN", "*", "?");
+
+    ExecArgs args;
+    args.AddArgument(arg, "");
+
+    if(!Exec("", &args, buffer))
         return "Error while executing *IDN?";
 
     return std::regex_replace(buffer, std::regex("\n"), "").c_str();
 }
-
 
 /**
  * @brief execute a (SCPI) command
@@ -137,7 +143,12 @@ const char* Device::GetDeviceIdentifier()
  *      KST3000 k.Exec("RSTater?", buffer);
  *      @endcode
  * */
-PIL_ERROR_CODE Device::Exec(std::string message, char *result, bool br, int size) {
+PIL_ERROR_CODE Device::Exec(std::string command, ExecArgs *args, char *result, bool br, int size)
+{
+
+    std::string message = command;
+    if(args)
+        message += args->GetArgumentsAsString();
     if(!m_SocketHandle->IsOpen()){
         PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_INTERFACE_CLOSED, "Error interface is closed");
         return PIL_INTERFACE_CLOSED;
@@ -146,12 +157,12 @@ PIL_ERROR_CODE Device::Exec(std::string message, char *result, bool br, int size
     if (br) {
     message += '\n';
   }
-  char *command = const_cast<char *>(message.c_str());
+  char *c = const_cast<char *>(message.c_str());
 
   // TODO: add timeout
   // testcase: KST3000 k.exec("STATus? CHANnel2", buffer);
-  int commandLen = static_cast<int>(strlen(command));
-  if(m_SocketHandle->Send(reinterpret_cast<uint8_t*>(command), &commandLen) != PIL_NO_ERROR)
+  int commandLen = static_cast<int>(strlen(c));
+  if(m_SocketHandle->Send(reinterpret_cast<uint8_t*>(c), &commandLen) != PIL_NO_ERROR)
   {
       if(m_Logger)
           m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__,
@@ -162,7 +173,7 @@ PIL_ERROR_CODE Device::Exec(std::string message, char *result, bool br, int size
 
     if(m_Logger)
         m_Logger->LogMessage(INFO_LVL, __FILENAME__, __LINE__,
-                             "Command %s successfully executed", command);
+                             "Command %s successfully executed", c);
 
   if (result) { // not all operation need a result
     if(m_SocketHandle->Receive(reinterpret_cast<uint8_t*>(result), reinterpret_cast<uint32_t*>(&size)) != PIL_NO_ERROR)
@@ -182,6 +193,11 @@ PIL_ERROR_CODE Device::Exec(std::string message, char *result, bool br, int size
     return PIL_NO_ERROR;
 }
 
+/***
+ * @brief
+ * @param commands
+ * @return
+ */
 PIL_ERROR_CODE Device::ExecCommands(std::string &commands) {
   std::stringstream s_commands(commands);
   std::string command;

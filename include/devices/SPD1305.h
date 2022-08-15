@@ -24,7 +24,7 @@ public:
 
     PIL_ERROR_CODE setCurrent(DC_CHANNEL channel, double current) override;
     PIL_ERROR_CODE getCurrent(DC_CHANNEL channel, double* current) override;
-
+    // TODO add missing functions
 private:
     static std::string getStrFromDCChannelEnum(DC_CHANNEL channel);
 };

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.4)
 
-set(PROJECT_NAME "py_icl")
+set(PROJECT_NAME "py_instrument_control_lib")
 set(LIBRARY_NAME "lib${PROJECT_NAME}")
 
 set(Python_VERSION_MAJOR 3)

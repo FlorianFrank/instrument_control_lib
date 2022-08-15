@@ -11,7 +11,7 @@ namespace PIL {
     class Logging;
 }
 
-#define DEVICE_NAME "Mixed Single Oscilloscope"
+//#define DEVICE_NAME "Mixed Single Oscilloscope" TODO
 
 #define MEASURE_RET_BUFF_SIZE 1024
 

@@ -15,16 +15,21 @@ SPD1305::SPD1305(const char *ip, PIL::Logging *logger, int timeoutInMs) : DCPowe
   this->m_DeviceName = "DC Power Supply";
 }
 
-PIL_ERROR_CODE SPD1305::setCurrent(DC_CHANNEL channel, double current) {
-  std::string msg = "CH" + getStrFromDCChannelEnum(channel) + ":CURRent " + std::to_string(current);
-  return Exec(msg);
+PIL_ERROR_CODE SPD1305::setCurrent(DC_CHANNEL channel, double current)
+{
+  SubArg surrentArg("CURRent", ":");
+  ExecArgs args;
+           args.AddArgument("CH", getStrFromDCChannelEnum(channel))
+                .AddArgument(surrentArg, current);
+
+  return Exec("OUTPut", &args);
 }
 
 PIL_ERROR_CODE SPD1305::getCurrent(DC_CHANNEL channel, double *current) {
   std::string msg = "CH" + getStrFromDCChannelEnum(channel) + ":CURRent?";
   // TODO: 20 ?
   char result[20] = {0};
-  auto execRet = Exec(msg, result);
+  auto execRet = Exec(msg, nullptr, result);
   if(execRet != PIL_NO_ERROR)
       return execRet;
   *current = atof(result);
@@ -32,16 +37,21 @@ PIL_ERROR_CODE SPD1305::getCurrent(DC_CHANNEL channel, double *current) {
 }
 
 PIL_ERROR_CODE SPD1305::turnOn(DC_CHANNEL channel) {
-  std::string msg = "OUTPut CH" + getStrFromDCChannelEnum(channel) + ",ON";
-    return Exec(msg, nullptr, false);
+    SubArg surrentArg("CURRent", ":");
+    ExecArgs args;
+    args.AddArgument("CH", getStrFromDCChannelEnum(channel))
+            .AddArgument("", "ON", ",");
+
+    return Exec("OUTPut", &args);
 }
 
 PIL_ERROR_CODE SPD1305::turnOff(DC_CHANNEL channel) {
-  std::string str = "OUTPut CH" + getStrFromDCChannelEnum(channel) + ",OFF";
-  std::cout << str;
-  char command[str.length() + 1];
-  strcpy(command, str.c_str());
-  return Exec(command, nullptr, false);
+    SubArg surrentArg("CURRent", ":");
+    ExecArgs args;
+    args.AddArgument("CH", getStrFromDCChannelEnum(channel))
+            .AddArgument("", "OFF", ",");
+
+    return Exec("OUTPut", &args);
 }
 
 /*static*/ std::string SPD1305::getStrFromDCChannelEnum(DCPowerSupply::DC_CHANNEL channel)

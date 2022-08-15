@@ -11,7 +11,10 @@ extern "C" {
 #include "ctlib/ErrorCodeDefines.h"
 };
 
+#include "ExecArgs.h"
+
 #include <string>
+#include <vector>
 
 namespace PIL
 {
@@ -37,7 +40,7 @@ public:
     const char* GetDeviceIdentifier();
     std::string WhatAmI();
 
-    PIL_ERROR_CODE Exec(std::string message, char *result = nullptr, bool br = true, int size = 1024);
+    PIL_ERROR_CODE Exec(std::string command, ExecArgs *args = nullptr, char *result = nullptr, bool br = true, int size = 1024);
     PIL_ERROR_CODE ExecCommands(std::string &commands);
 
     std::string ReturnErrorMessage();

@@ -18,12 +18,18 @@ KST33500::KST33500(const char *ip, int timeoutInMs, PIL::Logging *logger) : Func
 }
 
 
+PIL_ERROR_CODE KST33500::display(std::string &text)
+{
+    SubArg arg("DISP");
+    arg.AddElem("TEXT", ":");
 
-PIL_ERROR_CODE KST33500::display(std::string &text) {
-  string msg = "DISP:TEXT '" + text + "'";
-  return Exec(msg);
+    ExecArgs args;
+    args.AddArgument(arg, "'" + text + "'", " ");
+
+    return Exec("", &args);
 }
 
+// TODO not needed I guess
 PIL_ERROR_CODE KST33500::displayConnection() {
     auto execRet = Exec("DISP:TEXT 'Connected Successfully. Returning...'");
     if(execRet != PIL_NO_ERROR)
@@ -43,18 +49,25 @@ PIL_ERROR_CODE KST33500::displayConnection() {
  * */
 PIL_ERROR_CODE KST33500::setPulseWidth(double value) {
   string msg = "FUNCtion:PULSe:WIDTh ";
-  msg += to_string(value) + " ms";
-  return Exec(msg);
+
+  SubArg arg("FUNCtion");
+  arg.AddElem("PULSe", ":")
+  .AddElem("WIDTh", ":");
+
+  ExecArgs args;
+  args.AddArgument(arg, msg + " ms", " ");
+
+  return Exec("", &args);
 }
 
 PIL_ERROR_CODE KST33500::output(bool on) {
-  string msg = "OUTPut";
-  if (on) {
-    msg += " ON";
-  } else {
-    msg += " OFF";
-  }
-    return Exec(msg);
+  ExecArgs args;
+  if (on)
+    args.AddArgument("ON", " ");
+  else
+      args.AddArgument("OFF", " ");
+
+    return Exec("OUTPut", &args);
 }
 
 PIL_ERROR_CODE KST33500::turnOn(FunctionGenerator::FUNC_CHANNEL channel)
@@ -70,9 +83,12 @@ PIL_ERROR_CODE KST33500::turnOff(FunctionGenerator::FUNC_CHANNEL channel)
 PIL_ERROR_CODE KST33500::setFrequency(FunctionGenerator::FUNC_CHANNEL channel, double value)
 {
     string msg = "FREQuency " + to_string(value);
-    return Exec(msg);
+    ExecArgs args;
+    args.AddArgument("", value);
+    return Exec("FREQuency ", &args);
 }
 
+// TODO unclear
 PIL_ERROR_CODE KST33500::setAmplitude(FunctionGenerator::FUNC_CHANNEL channel, double value, const char *constrain)
 {
     std::string msg = "VOLTage";
@@ -96,38 +112,13 @@ PIL_ERROR_CODE KST33500::setAmplitude(FunctionGenerator::FUNC_CHANNEL channel, d
  */
 PIL_ERROR_CODE KST33500::setFunction(FunctionGenerator::FUNCTION_TYPE functionType)
 {
-    std::string function;
-    switch (functionType)
-    {
-        case SIN:
-            function = "SIN";
-            break;
-        case SQUARE:
-            function = "SQU";
-            break;
-        case RAMP:
-            function = "RAMP";
-            break;
-        case NEGATIVE_RAM:
-            function = "NRAM";
-            break;
-        case TRIANGLE:
-            function = "TRI";
-            break;
-        case NOISE:
-            function = "NOIS";
-            break;
-        case PSEUDO_RANDOM_BIT_STREAM:
-            function = "PRBS";
-            break;
-        case ARBITRARY:
-            function = "ARB";
-            break;
-        default:
-            function = "SIN";
-    }
-    std::string msg = "FUNCtion " + function;
-    auto execRet = Exec(msg);
+    auto function = GetFunctionStr(functionType);
+
+
+    ExecArgs args;
+    args.AddArgument("FUNCtion", function, " ");
+
+    auto execRet = Exec("", &args);
     if(execRet != PIL_NO_ERROR)
         return execRet;
 
@@ -137,8 +128,9 @@ PIL_ERROR_CODE KST33500::setFunction(FunctionGenerator::FUNCTION_TYPE functionTy
 
 PIL_ERROR_CODE KST33500::setPhase(FunctionGenerator::FUNC_CHANNEL channel, double value)
 {
-    string msg = "PHASe " + std::to_string(value);
-    return Exec(msg);
+    ExecArgs args;
+    args.AddArgument("PHASe", value, " ");
+    return Exec("", &args);
 }
 
 /**
@@ -147,7 +139,35 @@ PIL_ERROR_CODE KST33500::setPhase(FunctionGenerator::FUNC_CHANNEL channel, doubl
  * */
 PIL_ERROR_CODE KST33500::setOffset(FunctionGenerator::FUNC_CHANNEL channel, double offset)
 {
-    string msg = "VOLTage:OFFSet ";
-    msg += to_string(offset);
-    return Exec(msg);
+    SubArg voltageOffset("VOLTage");
+    voltageOffset.AddElem("OFFSet", ":");
+
+    ExecArgs args;
+    args.AddArgument(voltageOffset, offset, " ");
+    return Exec("", &args);
+}
+
+std::string KST33500::GetFunctionStr(FUNCTION_TYPE functionType)
+{
+    switch (functionType)
+    {
+        case SIN:
+            return "SIN";
+        case SQUARE:
+            return "SQU";
+        case RAMP:
+            return "RAMP";
+        case NEGATIVE_RAM:
+            return "NRAM";
+        case TRIANGLE:
+            return "TRI";
+        case NOISE:
+            return "NOIS";
+        case PSEUDO_RANDOM_BIT_STREAM:
+            return "PRBS";
+        case ARBITRARY:
+            return "ARB";
+        default:
+            return "SIN";
+    }
 }

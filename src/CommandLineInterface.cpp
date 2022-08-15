@@ -244,7 +244,7 @@ void CommandLineInterface::Disconnect(std::string &args)
     std::cout << output;
 
     char retBuff[1024];
-    d->Exec(output.c_str(), retBuff);
+    d->Exec(output.c_str(), nullptr, retBuff);
 
     std::cout << "Returns: " << retBuff << std::endl;
 }
