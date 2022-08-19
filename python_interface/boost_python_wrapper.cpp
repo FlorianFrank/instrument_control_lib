@@ -10,7 +10,7 @@
 
 using namespace boost::python;
 
-BOOST_PYTHON_MODULE(libpy_icl)
+BOOST_PYTHON_MODULE(libpy_instrument_control_lib)
 {
 	enum_<DCPowerSupply::DC_CHANNEL>("DC_CHANNEL")
 		.value("CHANNEL_1", DCPowerSupply::DC_CHANNEL::CHANNEL_1)
@@ -52,6 +52,8 @@ BOOST_PYTHON_MODULE(libpy_icl)
             .def("enableMeasureAutoRange", &KEI2600::enableMeasureAutoRange)
             .def("disableMeasureAutoRange", &KEI2600::disableMeasureAutoRange)
             .def("enableSourceAutoRange", &KEI2600::enableSourceAutoRange)
+            .def("enableMeasureAnalogFilter", &KEI2600::enableMeasureAnalogFilter)
+            .def("disableMeasureAnalogFilter", &KEI2600::disableMeasureAnalogFilter)
             .def("disableSourceAutoRange", &KEI2600::disableSourceAutoRange)
             .def("setSourceRange", &KEI2600::setSourceRange)
             .def("selectLocalSense", &KEI2600::selectLocalSense)
