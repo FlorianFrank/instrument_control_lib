@@ -169,7 +169,6 @@ PIL_ERROR_CODE KEI2600::enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel)
     return Exec("", &args);
 }
 
-
 PIL_ERROR_CODE KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel)
 {
     SubArg subArg("");
@@ -257,6 +256,32 @@ PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel)
     args.AddArgument("smu", getChannelStringFromEnum(channel))
             .AddArgument(subArg, smuArg, " = ") // TODO refactor
             .AddArgument(subArgAutoRange,"");
+}
+
+
+PIL_ERROR_CODE KEI2600::enableMeasureAnalogFilter(SMU_CHANNEL smuChannel)
+{
+    SubArg subArg(getChannelStringFromEnum(smuChannel), ".");
+    subArg.AddElem("measure", ".")
+    .AddElem("analogfilter");
+
+    ExecArgs arg;
+    arg.AddArgument(subArg, "1", " = ");
+
+    return Exec("", &arg);
+}
+
+
+PIL_ERROR_CODE KEI2600::disableMeasureAnalogFilter(SMU_CHANNEL smuChannel)
+{
+    SubArg subArg(getChannelStringFromEnum(smuChannel), ".");
+    subArg.AddElem("measure", ".")
+            .AddElem("analogfilter");
+
+    ExecArgs arg;
+    arg.AddArgument(subArg, "0", " = ");
+
+    return Exec("", &arg);
 }
 
 

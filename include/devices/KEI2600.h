@@ -42,6 +42,9 @@ public:
     PIL_ERROR_CODE enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel);
     PIL_ERROR_CODE disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel);
 
+    PIL_ERROR_CODE enableMeasureAnalogFilter(SMU_CHANNEL channel);
+    PIL_ERROR_CODE disableMeasureAnalogFilter(SMU_CHANNEL channel);
+
     PIL_ERROR_CODE setMeasureRange(UNIT unit, SMU_CHANNEL channel, double range);
     PIL_ERROR_CODE setSourceRange(UNIT unit, SMU_CHANNEL channel, double range);
 
