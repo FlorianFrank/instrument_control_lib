@@ -103,24 +103,7 @@ if (NOT IS_DIRECTORY ${BOOST_LIB_DIR} )
 endif()
 
 
-if (NOT IS_DIRECTORY ${BOOST_LIB_DIR})
-	#	message("Start to build Boost library")
-	#	message(${BOOST_BOOTSTRAP_COMMAND})
-	#	execute_process(
-	#		COMMAND ${BOOST_BOOTSTRAP_COMMAND}
-	#		WORKING_DIRECTORY ${BOOST_ROOT}
-	#		OUTPUT_FILE bootstrap_boost.txt
-	#	)
-	#
-	#	message(${BOOST_BUILD_COMMAND})
-	#	execute_process(
-	#		COMMAND ${BOOST_BUILD_COMMAND}
-	#		WORKING_DIRECTORY ${BOOST_ROOT}
-	#		OUTPUT_FILE build_boost.txt
-	#	)
-else()
-	message("Boost library built.")
-endif()
+
 
 link_directories(${BOOST_LIB_DIR}/lib "${BOOST_ROOT}/stage/lib" ${PYTHON_LIB_DIR})
 add_library(${PROJECT_NAME} SHARED boost_python_wrapper.cpp)
