@@ -32,6 +32,7 @@ else()
 endif()
 
 set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../boost)
+set(BOOST_BOOTSTRAP_DIR ${BOOST_ROOT})
 
 if (NOT EXISTS ${BOOST_ROOT})
 	message("Create Boost ROOT DIR (${BOOST_ROOT})")
