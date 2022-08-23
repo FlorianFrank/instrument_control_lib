@@ -57,6 +57,8 @@ public:
     PIL_ERROR_CODE setMeasureCount(SMU_CHANNEL channel, int nrOfMeasurements);
     PIL_ERROR_CODE setSourceFunction(SMU_CHANNEL channel, SRC_FUNC srcFunc);
     PIL_ERROR_CODE setSourceOffMode(SMU_CHANNEL channel, SRC_OFF_MODE srcOffMode);
+    PIL_ERROR_CODE setSourceSettling(SMU_CHANNEL channel, SRC_SETTLING srcSettling);
+
 
     PIL_ERROR_CODE enableBeep();
     PIL_ERROR_CODE beep();
@@ -72,4 +74,5 @@ private:
     static std::string getStringFromAutoZeroEnum(AUTOZERO autoZero);
     static std::string getStringFromSrcFuncEnum(SRC_FUNC srcFunc);
     static std::string getStringFromOffModeEnum(SRC_OFF_MODE offMode);
+    std::string getStringFromSettleEnum(SRC_SETTLING srcSettling);
 };

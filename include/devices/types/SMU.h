@@ -61,6 +61,21 @@ public:
         OUTPUT_HIGH_Z
     };
 
+    enum SRC_SETTLING {
+        /** Turns off additional settling operations. **/
+        SETTLING_SMOOTH,
+        /** Using a faster procedure when changing ranges. **/
+        FAST_RANGE,
+        /** Change polarity without going to zero. **/
+        FAST_POLARITY,
+        /** Change the current range directly. **/
+        DIRECT_IRANGE,
+        /** Enables the sue of range rampers for the 100 nA range. **/
+        SMOOTH_100NA,
+        /** Enables SETTLE_FAST operations. **/
+        FAST_ALL
+    };
+
     explicit SMU(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
     virtual PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double* value) = 0;
