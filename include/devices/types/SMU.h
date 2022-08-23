@@ -63,7 +63,7 @@ public:
 
     enum SRC_SETTLING {
         /** Turns off additional settling operations. **/
-        SMOOTH,
+        SETTLING_SMOOTH,
         /** Using a faster procedure when changing ranges. **/
         FAST_RANGE,
         /** Change polarity without going to zero. **/
@@ -74,17 +74,6 @@ public:
         SMOOTH_100NA,
         /** Enables SETTLE_FAST operations. **/
         FAST_ALL
-    };
-
-    enum SMU_DISPLAY {
-        /** Display current measurement function. **/
-        MEASURE_DC_AMPS,
-        /** Display voltage measurement function. **/
-        MEASURE_DC_VOLTS,
-        /** Display resistance measurement function. **/
-        MEASURE_OHMS,
-        /** Display power measurement function. **/
-        MEASURE_WATTS,
     };
 
     explicit SMU(const char *ip, int timeoutInMs, PIL::Logging *logger);

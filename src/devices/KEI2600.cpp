@@ -501,6 +501,28 @@ PIL_ERROR_CODE KEI2600::setSourceOffMode(SMU_CHANNEL channel, SRC_OFF_MODE offMo
     return Exec("", &arg);
 }
 
+
+/**
+ * @brief Set the source settling mode. (See SRC_SETTLING enum for more information)
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param srcSettling settling mode. (See SRC_SETTLING enum for more information)
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::setSourceSettling(SMU::SMU_CHANNEL channel, SRC_SETTLING srcSettling)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("source", ".")
+            .AddElem("settling", ".");
+
+    ExecArgs arg;
+    // TODO avoid concatination
+    arg.AddArgument(subArg, "smu" + getChannelStringFromEnum(channel) + "." + getStringFromSettleEnum(srcSettling), " = ");
+
+    return Exec("", &arg);
+}
+
+
 PIL_ERROR_CODE KEI2600::enableBeep()
 {
     SubArg subArg("beeper");
@@ -729,4 +751,22 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
     }
 }
 
+/*static*/ std::string KEI2600::getStringFromSettleEnum(SRC_SETTLING srcSettling)
+{
+    switch (srcSettling)
+    {
+        case SETTLING_SMOOTH:
+            return "SETTLE_SMOOTH";
+        case FAST_RANGE:
+            return "SETTLE_FAST_RANGE";
+        case FAST_POLARITY:
+            return "SETTLE_FAST_POLARITY";
+        case DIRECT_IRANGE:
+            return "SETTLE_DIRECT_IRANGE";
+        case SMOOTH_100NA:
+            return "SETTLE_SMOOTH_100NA";
+        case FAST_ALL:
+            return "SETTLE_FAST_ALL";
+    }
+}
 
