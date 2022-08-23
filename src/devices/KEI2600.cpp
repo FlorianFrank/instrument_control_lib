@@ -481,6 +481,25 @@ PIL_ERROR_CODE KEI2600::setSourceFunction(SMU_CHANNEL channel, SRC_FUNC srcFunc)
     return Exec("", &arg);
 }
 
+/**
+ * @brief Sets the source output-off mode
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param offMode can be either a OUTPUT_NORMAL defined by offfunc, ZERO or HIGH_Z.
+ * @return error code
+ */
+PIL_ERROR_CODE KEI2600::setSourceOffMode(SMU_CHANNEL channel, SRC_OFF_MODE offMode)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("source", ".")
+            .AddElem("offmode", ".");
+
+    ExecArgs arg;
+    // TODO avoid concatination
+    arg.AddArgument(subArg, "smu" + getChannelStringFromEnum(channel) + "." + getStringFromOffModeEnum(offMode), " = ");
+
+    return Exec("", &arg);
+}
 
 PIL_ERROR_CODE KEI2600::enableBeep()
 {
@@ -696,4 +715,18 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
             return "OUTPUT_DCVOLTS";
     }
 }
+
+/*static*/ std::string KEI2600::getStringFromOffModeEnum(SRC_OFF_MODE offMode)
+{
+    switch (offMode)
+    {
+        case OUTPUT_NORMAL:
+            return "OUTPUT_NORMAL";
+        case OUTPUT_ZERO:
+            return "OUTPUT_ZERO";
+        case OUTPUT_HIGH_Z:
+            return "OUTPUT_HIGH_Z";
+    }
+}
+
 
