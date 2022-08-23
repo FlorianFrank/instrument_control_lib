@@ -63,7 +63,7 @@ public:
 
     enum SRC_SETTLING {
         /** Turns off additional settling operations. **/
-        SETTLING_SMOOTH,
+        SMOOTH,
         /** Using a faster procedure when changing ranges. **/
         FAST_RANGE,
         /** Change polarity without going to zero. **/
@@ -76,7 +76,7 @@ public:
         FAST_ALL
     };
 
-    enum DISPLAY_MEASURE_FUNC {
+    enum SMU_DISPLAY {
         /** Display current measurement function. **/
         MEASURE_DC_AMPS,
         /** Display voltage measurement function. **/
