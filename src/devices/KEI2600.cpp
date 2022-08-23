@@ -436,11 +436,30 @@ PIL_ERROR_CODE KEI2600::setMeasureAutoZero(SMU_CHANNEL channel, AUTOZERO autoZer
 
     ExecArgs arg;
     // TODO avoid concatination
-    arg.AddArgument(subArg, "smu"+ getChannelStringFromEnum(channel)+"."+getStringFromAutoZeroEnum(autoZero));
+    arg.AddArgument(subArg, "smu"+ getChannelStringFromEnum(channel)+"."+getStringFromAutoZeroEnum(autoZero), " = ");
 
     return Exec("", &arg);
 }
 
+
+/**
+ * @brief Sets the number of measurements made when a measurement is requested.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param nrOfMeasurements number of measurements made.
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::setMeasureCount(SMU_CHANNEL channel, int nrOfMeasurements)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("measure", ".")
+            .AddElem("count", ".");
+
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, nrOfMeasurements, " = ");
+
+    return Exec("", &execArgs);
+}
 
 
 PIL_ERROR_CODE KEI2600::enableBeep()
