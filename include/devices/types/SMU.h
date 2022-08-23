@@ -52,6 +52,15 @@ public:
         DC_VOLTS
     };
 
+    enum SRC_OFF_MODE {
+        /** Configures the source function according to source.offfunc. Currently not supported! **/
+        OUTPUT_NORMAL,
+        /** Set source output to 0V. **/
+        OUTPUT_ZERO,
+        /** Open source output relay. **/
+        OUTPUT_HIGH_Z
+    };
+
     explicit SMU(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
     virtual PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double* value) = 0;
