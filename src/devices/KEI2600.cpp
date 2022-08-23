@@ -421,6 +421,26 @@ PIL_ERROR_CODE KEI2600::setMeasureLowRange(UNIT unit, SMU_CHANNEL channel, doubl
     return Exec("", &execArgs);
 }
 
+/**
+ * @brief Enables or disableds automatic updates to the internal reference measurements (autozero) of the instrument.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param autoZero can be set either to OFF, AUTO or ONCE. (See AUTOZERO enum)
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::setMeasureAutoZero(SMU_CHANNEL channel, AUTOZERO autoZero)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+    .AddElem("measure", ".")
+    .AddElem("autozero", ".");
+
+    ExecArgs arg;
+    // TODO avoid concatination
+    arg.AddArgument(subArg, "smu"+ getChannelStringFromEnum(channel)+"."+getStringFromAutoZeroEnum(autoZero));
+
+    return Exec("", &arg);
+}
+
 
 
 PIL_ERROR_CODE KEI2600::enableBeep()
@@ -612,5 +632,17 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
     }
 }
 
+/*static*/ std::string KEI2600::getStringFromAutoZeroEnum(AUTOZERO autoZero)
+{
+    switch (autoZero)
+    {
 
+        case OFF:
+            return "AUTOZERO_OFF";
+        case ONCE:
+            return "AUTOZERO_ONCE";
+        case AUTO:
+            return "AUTOZERO_AUTO";
+    }
+}
 
