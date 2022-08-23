@@ -42,6 +42,34 @@ BOOST_PYTHON_MODULE(libpy_instrument_control_lib)
             .value("RESISTANCE", SMU::RESISTANCE)
             .value("POWER", SMU::POWER);
 
+    enum_<SMU::AUTOZERO>("SMU_AUTOZERO")
+            .value("OFF", SMU::OFF)
+            .value("ONCE", SMU::ONCE)
+            .value("AUTO", SMU::AUTO);
+
+    enum_<SMU::SRC_FUNC>("SRC_FUNC")
+            .value("DC_AMPS", SMU::DC_AMPS)
+            .value("DC_VOLTS", SMU::DC_VOLTS);
+
+    enum_<SMU::SRC_OFF_MODE>("SRC_OFF_MODE")
+            .value("NORMAL", SMU::OUTPUT_NORMAL)
+            .value("ZERO", SMU::OUTPUT_ZERO)
+            .value("HIGH_Z", SMU::OUTPUT_HIGH_Z);
+
+    enum_<SMU::SRC_SETTLING>("SRC_SETTLING")
+            .value("SMOOTH", SMU::SMOOTH)
+            .value("FAST_RANGE", SMU::FAST_RANGE)
+            .value("FAST_POLARITY", SMU::FAST_POLARITY)
+            .value("DIRECT_IRANGE", SMU::DIRECT_IRANGE)
+            .value("SMOOTH_100NA", SMU::SMOOTH_100NA)
+            .value("FAST_ALL", SMU::FAST_ALL);
+
+    enum_<SMU::SMU_DISPLAY>("SMU_DISPLAY")
+            .value("DC_AMPS", SMU::MEASURE_DC_AMPS)
+            .value("DC_VOLTS", SMU::MEASURE_DC_VOLTS)
+            .value("OHMS", SMU::MEASURE_OHMS)
+            .value("WATTS", SMU::MEASURE_WATTS);
+
     class_<KEI2600>("KEI2600", init<char *, int>())
             .def("connect", &KEI2600::Connect)
             .def("disconnect", &KEI2600::Disconnect)
@@ -59,6 +87,16 @@ BOOST_PYTHON_MODULE(libpy_instrument_control_lib)
             .def("selectLocalSense", &KEI2600::selectLocalSense)
             .def("selectRemoteSense", &KEI2600::selectRemoteSense)
             .def("getDeviceIdentifier", &KEI2600::GetDeviceIdentifier)
+            .def("setMeasurePLC", &KEI2600::setMeasurePLC)
+            .def("setMeasureLowRange", &KEI2600::setMeasureLowRange)
+            .def("setMeasureAutoZero", &KEI2600::setMeasureAutoZero)
+            .def("setMeasureCount", &KEI2600::setMeasureCount)
+            .def("setSourceFunction", &KEI2600::setSourceFunction)
+            .def("setSourceOffMode", &KEI2600::setSourceOffMode)
+            .def("setSourceSettling", &KEI2600::setSourceSettling)
+            .def("enableSourceSink", &KEI2600::enableSourceSink)
+            .def("disableSourceSink", &KEI2600::disableSourceSink)
+            .def("displayMeasureFunction", &KEI2600::displayMeasureFunction)
             ;
 
     enum_<FunctionGenerator::FUNCTION_TYPE>("FUNCTION_TYPE")
