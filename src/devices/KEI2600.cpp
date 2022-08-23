@@ -565,7 +565,7 @@ PIL_ERROR_CODE KEI2600::disableSourceSink(SMU_CHANNEL channel)
  * @param measureFunc show amps, volts, ohms or watts.
  * @return error code.
  */
-PIL_ERROR_CODE KEI2600::displayMeasureFunction(SMU::SMU_CHANNEL channel, DISPLAY_MEASURE_FUNC measureFunc)
+PIL_ERROR_CODE KEI2600::displayMeasureFunction(SMU::SMU_CHANNEL channel, SMU_DISPLAY measureFunc)
 {
     SubArg subArg("display");
     subArg.AddElem("smu")
@@ -814,7 +814,7 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
 {
     switch (srcSettling)
     {
-        case SETTLING_SMOOTH:
+        case SMOOTH:
             return "SETTLE_SMOOTH";
         case FAST_RANGE:
             return "SETTLE_FAST_RANGE";
@@ -829,7 +829,7 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
     }
 }
 
-/*static*/ std::string KEI2600::getStringFromMeasureDisplayFunction(DISPLAY_MEASURE_FUNC displayMeausreFunc)
+/*static*/ std::string KEI2600::getStringFromMeasureDisplayFunction(SMU_DISPLAY displayMeausreFunc)
 {
     switch (displayMeausreFunc)
     {
