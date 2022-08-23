@@ -522,6 +522,44 @@ PIL_ERROR_CODE KEI2600::setSourceSettling(SMU::SMU_CHANNEL channel, SRC_SETTLING
     return Exec("", &arg);
 }
 
+/**
+ * @brief Turns on the source sink mode.
+ * This reduces the source limit inaccuracy that occurs when operating in quadrants II and IV
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::enableSourceSink(SMU_CHANNEL channel)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("source", ".")
+            .AddElem("sink", ".");
+
+    ExecArgs arg;
+    arg.AddArgument(subArg, "1", " = ");
+
+    return Exec("", &arg);
+}
+
+/**
+ * @brief Turns off the source sink mode.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::disableSourceSink(SMU_CHANNEL channel)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("source", ".")
+            .AddElem("sink", ".");
+
+    ExecArgs arg;
+    arg.AddArgument(subArg, "0", " = ");
+
+    return Exec("", &arg);
+}
+
+
 
 PIL_ERROR_CODE KEI2600::enableBeep()
 {
@@ -769,4 +807,3 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
             return "SETTLE_FAST_ALL";
     }
 }
-
