@@ -461,6 +461,26 @@ PIL_ERROR_CODE KEI2600::setMeasureCount(SMU_CHANNEL channel, int nrOfMeasurement
     return Exec("", &execArgs);
 }
 
+/**
+ * @brief Set the source function which can bei either voltage or current.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param srcFunc Voltage or Current function to set.
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::setSourceFunction(SMU_CHANNEL channel, SRC_FUNC srcFunc)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("source", ".")
+            .AddElem("func", ".");
+
+    ExecArgs arg;
+    // TODO avoid concatination
+    arg.AddArgument(subArg, "smu"+ getChannelStringFromEnum(channel)+"."+getStringFromSrcFuncEnum(srcFunc), " = ");
+
+    return Exec("", &arg);
+}
+
 
 PIL_ERROR_CODE KEI2600::enableBeep()
 {
@@ -662,6 +682,18 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
             return "AUTOZERO_ONCE";
         case AUTO:
             return "AUTOZERO_AUTO";
+    }
+}
+
+/*static*/ std::string KEI2600::getStringFromSrcFuncEnum(SRC_FUNC srcFunc)
+{
+    switch (srcFunc)
+    {
+
+        case DC_AMPS:
+            return "OUTPUT_DCAMPS";
+        case DC_VOLTS:
+            return "OUTPUT_DCVOLTS";
     }
 }
 
