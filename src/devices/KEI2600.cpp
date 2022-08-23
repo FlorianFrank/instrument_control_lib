@@ -370,7 +370,7 @@ PIL_ERROR_CODE KEI2600::selectRemoteSense(SMU_CHANNEL channel)
 /**
  * @brief Sets the integration apeture for measurements.
  * @param channel channel which should be set
- * @return
+ * @return error code
  */
 PIL_ERROR_CODE KEI2600::setMeasurePLC(SMU_CHANNEL channel, double value)
 {
@@ -379,15 +379,49 @@ PIL_ERROR_CODE KEI2600::setMeasurePLC(SMU_CHANNEL channel, double value)
 
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
+    .AddElem("measure", ".")
     .AddElem("nplc", ".");
 
     ExecArgs args;
     args.AddArgument(subArg, value, " = ");
 
     return Exec("", &args);
-
-    return PIL_ERRNO;
 }
+
+/**
+ * @brief Sets the lowest measurement range that is used when the instrument is autoranging.
+ * @param unit low range unit to set. Allowed are Current and voltage.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param value value to set.
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::setMeasureLowRange(UNIT unit, SMU_CHANNEL channel, double value)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("measure", ".")
+            .AddElem("lowrange");
+
+    switch (unit)
+    {
+
+        case VOLTAGE:
+            subArg.AddElem("v");
+            break;
+        case CURRENT:
+            subArg.AddElem("i");
+            break;
+        default:
+            return PIL_INVALID_ARGUMENTS;
+    }
+
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, value, " = ");
+
+    return Exec("", &execArgs);
+}
+
+
 
 PIL_ERROR_CODE KEI2600::enableBeep()
 {
@@ -577,4 +611,6 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
             return "a"; // find better solution
     }
 }
+
+
 

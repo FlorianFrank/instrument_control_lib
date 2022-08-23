@@ -52,6 +52,7 @@ public:
     PIL_ERROR_CODE selectRemoteSense(SMU_CHANNEL channel);
 
     PIL_ERROR_CODE setMeasurePLC(SMU_CHANNEL channel, double value);
+    PIL_ERROR_CODE setMeasureLowRange(UNIT unit, SMU_CHANNEL channel, double value);
 
     PIL_ERROR_CODE enableBeep();
     PIL_ERROR_CODE beep();
