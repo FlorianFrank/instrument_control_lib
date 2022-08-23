@@ -559,6 +559,27 @@ PIL_ERROR_CODE KEI2600::disableSourceSink(SMU_CHANNEL channel)
     return Exec("", &arg);
 }
 
+/**
+ * @brief Specify the type of measurement currently displayed.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param measureFunc show amps, volts, ohms or watts.
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::displayMeasureFunction(SMU::SMU_CHANNEL channel, DISPLAY_MEASURE_FUNC measureFunc)
+{
+    SubArg subArg("display");
+    subArg.AddElem("smu")
+    .AddElem(getChannelStringFromEnum(channel))
+            .AddElem("measure", ".")
+            .AddElem("func", ".");
+
+    ExecArgs arg;
+    // TODO avoid concatination
+    arg.AddArgument(subArg, "display" + std::string(".") +
+    getStringFromMeasureDisplayFunction(measureFunc), " = ");
+
+    return Exec("", &arg);
+}
 
 
 PIL_ERROR_CODE KEI2600::enableBeep()
@@ -805,5 +826,21 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
             return "SETTLE_SMOOTH_100NA";
         case FAST_ALL:
             return "SETTLE_FAST_ALL";
+    }
+}
+
+/*static*/ std::string KEI2600::getStringFromMeasureDisplayFunction(DISPLAY_MEASURE_FUNC displayMeausreFunc)
+{
+    switch (displayMeausreFunc)
+    {
+
+        case MEASURE_DC_AMPS:
+            return "MEASURE_DC_AMPS";
+        case MEASURE_DC_VOLTS:
+            return "MEASURE_DC_VOLTS";
+        case MEASURE_OHMS:
+            return "MEASURE_OHMS";
+        case MEASURE_WATTS:
+            return "MEASURE_WATTS";
     }
 }

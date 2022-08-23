@@ -76,6 +76,17 @@ public:
         FAST_ALL
     };
 
+    enum DISPLAY_MEASURE_FUNC {
+        /** Display current measurement function. **/
+        MEASURE_DC_AMPS,
+        /** Display voltage measurement function. **/
+        MEASURE_DC_VOLTS,
+        /** Display resistance measurement function. **/
+        MEASURE_OHMS,
+        /** Display power measurement function. **/
+        MEASURE_WATTS,
+    };
+
     explicit SMU(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
     virtual PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double* value) = 0;
