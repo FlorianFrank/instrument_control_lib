@@ -367,6 +367,27 @@ PIL_ERROR_CODE KEI2600::selectRemoteSense(SMU_CHANNEL channel)
     return Exec("", &args);
 }
 
+/**
+ * @brief Sets the integration apeture for measurements.
+ * @param channel channel which should be set
+ * @return
+ */
+PIL_ERROR_CODE KEI2600::setMeasurePLC(SMU_CHANNEL channel, double value)
+{
+    if(value < 0.001 || value > 25)
+        return PIL_INVALID_ARGUMENTS;
+
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+    .AddElem("nplc", ".");
+
+    ExecArgs args;
+    args.AddArgument(subArg, value, " = ");
+
+    return Exec("", &args);
+
+    return PIL_ERRNO;
+}
 
 PIL_ERROR_CODE KEI2600::enableBeep()
 {
@@ -556,3 +577,4 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
             return "a"; // find better solution
     }
 }
+
