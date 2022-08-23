@@ -367,6 +367,220 @@ PIL_ERROR_CODE KEI2600::selectRemoteSense(SMU_CHANNEL channel)
     return Exec("", &args);
 }
 
+/**
+ * @brief Sets the integration apeture for measurements.
+ * @param channel channel which should be set
+ * @return error code
+ */
+PIL_ERROR_CODE KEI2600::setMeasurePLC(SMU_CHANNEL channel, double value)
+{
+    if(value < 0.001 || value > 25)
+        return PIL_INVALID_ARGUMENTS;
+
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+    .AddElem("measure", ".")
+    .AddElem("nplc", ".");
+
+    ExecArgs args;
+    args.AddArgument(subArg, value, " = ");
+
+    return Exec("", &args);
+}
+
+/**
+ * @brief Sets the lowest measurement range that is used when the instrument is autoranging.
+ * @param unit low range unit to set. Allowed are Current and voltage.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param value value to set.
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::setMeasureLowRange(UNIT unit, SMU_CHANNEL channel, double value)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("measure", ".")
+            .AddElem("lowrange");
+
+    switch (unit)
+    {
+
+        case VOLTAGE:
+            subArg.AddElem("v");
+            break;
+        case CURRENT:
+            subArg.AddElem("i");
+            break;
+        default:
+            return PIL_INVALID_ARGUMENTS;
+    }
+
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, value, " = ");
+
+    return Exec("", &execArgs);
+}
+
+/**
+ * @brief Enables or disableds automatic updates to the internal reference measurements (autozero) of the instrument.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param autoZero can be set either to OFF, AUTO or ONCE. (See AUTOZERO enum)
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::setMeasureAutoZero(SMU_CHANNEL channel, AUTOZERO autoZero)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+    .AddElem("measure", ".")
+    .AddElem("autozero", ".");
+
+    ExecArgs arg;
+    // TODO avoid concatination
+    arg.AddArgument(subArg, "smu"+ getChannelStringFromEnum(channel)+"."+getStringFromAutoZeroEnum(autoZero), " = ");
+
+    return Exec("", &arg);
+}
+
+
+/**
+ * @brief Sets the number of measurements made when a measurement is requested.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param nrOfMeasurements number of measurements made.
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::setMeasureCount(SMU_CHANNEL channel, int nrOfMeasurements)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("measure", ".")
+            .AddElem("count", ".");
+
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, nrOfMeasurements, " = ");
+
+    return Exec("", &execArgs);
+}
+
+/**
+ * @brief Set the source function which can bei either voltage or current.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param srcFunc Voltage or Current function to set.
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::setSourceFunction(SMU_CHANNEL channel, SRC_FUNC srcFunc)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("source", ".")
+            .AddElem("func", ".");
+
+    ExecArgs arg;
+    // TODO avoid concatination
+    arg.AddArgument(subArg, "smu"+ getChannelStringFromEnum(channel)+"."+getStringFromSrcFuncEnum(srcFunc), " = ");
+
+    return Exec("", &arg);
+}
+
+/**
+ * @brief Sets the source output-off mode
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param offMode can be either a OUTPUT_NORMAL defined by offfunc, ZERO or HIGH_Z.
+ * @return error code
+ */
+PIL_ERROR_CODE KEI2600::setSourceOffMode(SMU_CHANNEL channel, SRC_OFF_MODE offMode)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("source", ".")
+            .AddElem("offmode", ".");
+
+    ExecArgs arg;
+    // TODO avoid concatination
+    arg.AddArgument(subArg, "smu" + getChannelStringFromEnum(channel) + "." + getStringFromOffModeEnum(offMode), " = ");
+
+    return Exec("", &arg);
+}
+
+
+/**
+ * @brief Set the source settling mode. (See SRC_SETTLING enum for more information)
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param srcSettling settling mode. (See SRC_SETTLING enum for more information)
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::setSourceSettling(SMU::SMU_CHANNEL channel, SRC_SETTLING srcSettling)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("source", ".")
+            .AddElem("settling", ".");
+
+    ExecArgs arg;
+    // TODO avoid concatination
+    arg.AddArgument(subArg, "smu" + getChannelStringFromEnum(channel) + "." + getStringFromSettleEnum(srcSettling), " = ");
+
+    return Exec("", &arg);
+}
+
+/**
+ * @brief Turns on the source sink mode.
+ * This reduces the source limit inaccuracy that occurs when operating in quadrants II and IV
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::enableSourceSink(SMU_CHANNEL channel)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("source", ".")
+            .AddElem("sink", ".");
+
+    ExecArgs arg;
+    arg.AddArgument(subArg, "1", " = ");
+
+    return Exec("", &arg);
+}
+
+/**
+ * @brief Turns off the source sink mode.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::disableSourceSink(SMU_CHANNEL channel)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("source", ".")
+            .AddElem("sink", ".");
+
+    ExecArgs arg;
+    arg.AddArgument(subArg, "0", " = ");
+
+    return Exec("", &arg);
+}
+
+/**
+ * @brief Specify the type of measurement currently displayed.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param measureFunc show amps, volts, ohms or watts.
+ * @return error code.
+ */
+PIL_ERROR_CODE KEI2600::displayMeasureFunction(SMU::SMU_CHANNEL channel, SMU_DISPLAY measureFunc)
+{
+    SubArg subArg("display");
+    subArg.AddElem("smu")
+    .AddElem(getChannelStringFromEnum(channel))
+            .AddElem("measure", ".")
+            .AddElem("func", ".");
+
+    ExecArgs arg;
+    // TODO avoid concatination
+    arg.AddArgument(subArg, "display" + std::string(".") +
+    getStringFromMeasureDisplayFunction(measureFunc), " = ");
+
+    return Exec("", &arg);
+}
+
 
 PIL_ERROR_CODE KEI2600::enableBeep()
 {
@@ -554,5 +768,79 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
             return "b";
         default:
             return "a"; // find better solution
+    }
+}
+
+/*static*/ std::string KEI2600::getStringFromAutoZeroEnum(AUTOZERO autoZero)
+{
+    switch (autoZero)
+    {
+
+        case OFF:
+            return "AUTOZERO_OFF";
+        case ONCE:
+            return "AUTOZERO_ONCE";
+        case AUTO:
+            return "AUTOZERO_AUTO";
+    }
+}
+
+/*static*/ std::string KEI2600::getStringFromSrcFuncEnum(SRC_FUNC srcFunc)
+{
+    switch (srcFunc)
+    {
+
+        case DC_AMPS:
+            return "OUTPUT_DCAMPS";
+        case DC_VOLTS:
+            return "OUTPUT_DCVOLTS";
+    }
+}
+
+/*static*/ std::string KEI2600::getStringFromOffModeEnum(SRC_OFF_MODE offMode)
+{
+    switch (offMode)
+    {
+        case OUTPUT_NORMAL:
+            return "OUTPUT_NORMAL";
+        case OUTPUT_ZERO:
+            return "OUTPUT_ZERO";
+        case OUTPUT_HIGH_Z:
+            return "OUTPUT_HIGH_Z";
+    }
+}
+
+/*static*/ std::string KEI2600::getStringFromSettleEnum(SRC_SETTLING srcSettling)
+{
+    switch (srcSettling)
+    {
+        case SMOOTH:
+            return "SETTLE_SMOOTH";
+        case FAST_RANGE:
+            return "SETTLE_FAST_RANGE";
+        case FAST_POLARITY:
+            return "SETTLE_FAST_POLARITY";
+        case DIRECT_IRANGE:
+            return "SETTLE_DIRECT_IRANGE";
+        case SMOOTH_100NA:
+            return "SETTLE_SMOOTH_100NA";
+        case FAST_ALL:
+            return "SETTLE_FAST_ALL";
+    }
+}
+
+/*static*/ std::string KEI2600::getStringFromMeasureDisplayFunction(SMU_DISPLAY displayMeausreFunc)
+{
+    switch (displayMeausreFunc)
+    {
+
+        case MEASURE_DC_AMPS:
+            return "MEASURE_DC_AMPS";
+        case MEASURE_DC_VOLTS:
+            return "MEASURE_DC_VOLTS";
+        case MEASURE_OHMS:
+            return "MEASURE_OHMS";
+        case MEASURE_WATTS:
+            return "MEASURE_WATTS";
     }
 }

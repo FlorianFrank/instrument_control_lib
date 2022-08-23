@@ -22,6 +22,8 @@ public:
         CHANNEL_B = 'b'
     };
 
+
+
     /**
      * @brief Unit which should be changed or measured.
      */
@@ -31,6 +33,58 @@ public:
         CURRENT = 1,
         RESISTANCE = 2,
         POWER = 3
+    };
+
+    enum AUTOZERO
+    {
+        /** AutoZero Disabled **/
+        OFF,
+        /** Perform AutoZero once and disable afterwards. **/
+        ONCE,
+        /** Automatic check the reference and zero measurements. An AutoZero is performed when needed. **/
+        AUTO
+    };
+
+    enum SRC_FUNC {
+        /** Current source function **/
+        DC_AMPS,
+        /** Voltage source function **/
+        DC_VOLTS
+    };
+
+    enum SRC_OFF_MODE {
+        /** Configures the source function according to source.offfunc. Currently not supported! **/
+        OUTPUT_NORMAL,
+        /** Set source output to 0V. **/
+        OUTPUT_ZERO,
+        /** Open source output relay. **/
+        OUTPUT_HIGH_Z
+    };
+
+    enum SRC_SETTLING {
+        /** Turns off additional settling operations. **/
+        SMOOTH,
+        /** Using a faster procedure when changing ranges. **/
+        FAST_RANGE,
+        /** Change polarity without going to zero. **/
+        FAST_POLARITY,
+        /** Change the current range directly. **/
+        DIRECT_IRANGE,
+        /** Enables the sue of range rampers for the 100 nA range. **/
+        SMOOTH_100NA,
+        /** Enables SETTLE_FAST operations. **/
+        FAST_ALL
+    };
+
+    enum SMU_DISPLAY {
+        /** Display current measurement function. **/
+        MEASURE_DC_AMPS,
+        /** Display voltage measurement function. **/
+        MEASURE_DC_VOLTS,
+        /** Display resistance measurement function. **/
+        MEASURE_OHMS,
+        /** Display power measurement function. **/
+        MEASURE_WATTS,
     };
 
     explicit SMU(const char *ip, int timeoutInMs, PIL::Logging *logger);
