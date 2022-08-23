@@ -58,8 +58,9 @@ public:
     PIL_ERROR_CODE setSourceFunction(SMU_CHANNEL channel, SRC_FUNC srcFunc);
     PIL_ERROR_CODE setSourceOffMode(SMU_CHANNEL channel, SRC_OFF_MODE srcOffMode);
     PIL_ERROR_CODE setSourceSettling(SMU_CHANNEL channel, SRC_SETTLING srcSettling);
-    PIL_ERROR_CODE enableSourceSink(SMU_CHANNEL);
-    PIL_ERROR_CODE disableSourceSink(SMU_CHANNEL);
+    PIL_ERROR_CODE enableSourceSink(SMU_CHANNEL channel);
+    PIL_ERROR_CODE disableSourceSink(SMU_CHANNEL channel);
+    PIL_ERROR_CODE displayMeasureFunction(SMU_CHANNEL channel, DISPLAY_MEASURE_FUNC displayMeasureFunc);
 
     PIL_ERROR_CODE enableBeep();
     PIL_ERROR_CODE beep();
@@ -76,4 +77,5 @@ private:
     static std::string getStringFromSrcFuncEnum(SRC_FUNC srcFunc);
     static std::string getStringFromOffModeEnum(SRC_OFF_MODE offMode);
     std::string getStringFromSettleEnum(SRC_SETTLING srcSettling);
+    std::string getStringFromMeasureDisplayFunction(DISPLAY_MEASURE_FUNC displayMeausreFunc);
 };
