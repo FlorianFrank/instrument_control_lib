@@ -18,6 +18,8 @@ else() # build shared lib
     add_library(instrument_control_lib SHARED ${source_files} ${device_files} ${device_type_files})
 endif()
 
+target_compile_options(instrument_control_lib PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
 # Build third party libraries and executables
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/pugixml")
 add_subdirectory(instrument_cmd_tool)
