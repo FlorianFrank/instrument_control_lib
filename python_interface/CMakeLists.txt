@@ -106,7 +106,7 @@ endif()
 
 
 link_directories(${BOOST_LIB_DIR}/lib "${BOOST_ROOT}/stage/lib" ${PYTHON_LIB_DIR})
-add_library(${PROJECT_NAME} SHARED boost_python_wrapper.cpp)
+add_library(${PROJECT_NAME} MODULE boost_python_wrapper.cpp)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
 		"${BOOST_ROOT}"
@@ -117,6 +117,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 		"${CMAKE_CURRENT_SOURCE_DIR}/../boost"
 		"${CMAKE_CURRENT_SOURCE_DIR}/../common_tools_lib/ErrorHandling/include"
 		)
+
 
 set(BOOST_PYTHON_LIB "boost_python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}")
 target_link_directories(${PROJECT_NAME} PUBLIC "${BOOST_ROOT}\\stage\\lib")
@@ -130,11 +131,11 @@ target_link_directories(${PROJECT_NAME} PUBLIC "${BOOST_ROOT}/stage/lib/"
 										       "${BOOST_ROOT}/libs/python/include")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC instrument_control_lib ${BOOST_PYTHON_LIB} python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR})
-
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
 if(WIN32)
 	set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".pyd")
 	target_link_options(${PROJECT_NAME} PUBLIC -static -static-libgcc -static-libstdc++)
 endif()
 
 configure_file(instrument_control_lib.py instrument_control_lib.py COPYONLY)
-configure_file(libpy_instrument_control_lib.py libpy_instrument_control_lib.py COPYONLY)
+configure_file(__init__.py __init__.py COPYONLY)

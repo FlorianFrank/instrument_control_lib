@@ -1,5 +1,5 @@
 
-from libpy_instrument_control_lib import *
+from py_instrument_control_lib import *
 import os
 import sys
 
