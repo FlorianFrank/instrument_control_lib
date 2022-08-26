@@ -3,6 +3,12 @@
 //
 #include "devices/types/SMU.h"
 
+SMU::SMU(const char *ip, int timeoutInMs): Device(ip, timeoutInMs)
+{
+
+}
+
 SMU::SMU(const char *ip, int timeoutInMs, PIL::Logging *logger): Device(ip, timeoutInMs, logger)
 {
 }
+

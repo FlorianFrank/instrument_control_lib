@@ -87,6 +87,7 @@ public:
         MEASURE_WATTS,
     };
 
+    explicit SMU(const char *ip, int timeoutInMs);
     explicit SMU(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
     virtual PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double* value) = 0;
