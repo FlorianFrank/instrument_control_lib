@@ -89,7 +89,7 @@ bool CommandLineInterface::Start()
  * @brief This method prints an overview of available commands on the command line interface.
  * @param args Arguments are ignored.
  */
-/*static*/ void CommandLineInterface::PrintHelp(std::string &args)
+/*static*/ void CommandLineInterface::PrintHelp(std::string&)
 {
     std::cout << "    Available commands: " << std::endl;
     for (const auto &[key, value]: m_DescriptionMap)
@@ -202,7 +202,7 @@ void CommandLineInterface::Disconnect(std::string &args)
         }
     }
     else {
-        int id = atoi(argumentList[0].c_str());
+        unsigned int id = atoi(argumentList[0].c_str());
         if(m_DeviceList.empty() || id > m_DeviceList.size()-1)
         {
             std::cout << "Error ID not found. Execute command 'available_devices' to get list of available devices."
@@ -233,7 +233,7 @@ void CommandLineInterface::Disconnect(std::string &args)
     bool Exec(std::string message, char *result = nullptr, bool br = true, int size = 1024);
 
     std::string output;
-    for (int i = 1; i < argumentList.size(); i++)
+    for (unsigned int i = 1; i < argumentList.size(); i++)
     {
         if (i < argumentList.size() - 1)
             output += argumentList[i] + " ";
@@ -250,7 +250,7 @@ void CommandLineInterface::Disconnect(std::string &args)
 }
 
 
-/*static*/ void CommandLineInterface::GetSupportedDevices(std::string &args)
+/*static*/ void CommandLineInterface::GetSupportedDevices(std::string &)
 {
     // TODO register devices somewhere else
     std::cout << "    List of supported devices" << std::endl;
@@ -260,17 +260,17 @@ void CommandLineInterface::Disconnect(std::string &args)
     }
 }
 
-void CommandLineInterface::Quit(std::string &args)
+void CommandLineInterface::Quit(std::string&)
 {
     std::string closeAll = "all";
     Disconnect(closeAll);
     m_ExitCLI = true;
 }
 
-void CommandLineInterface::ActiveDevices(std::string &args)
+void CommandLineInterface::ActiveDevices(std::string&)
 {
     std::cout << "    List active devices: " << std::endl;
-    for(int i = 0; i < m_DeviceList.size(); i++)
+    for(unsigned int i = 0; i < m_DeviceList.size(); i++)
     {
         std::cout << "         ID: " << i << " " << m_DeviceNameList[i] << " IP: " << m_DeviceIPList[i] << " " << (m_DeviceList[i]->IsOpen() ? "Connected" : "Disconnected") << std::endl;
     }
@@ -285,7 +285,7 @@ void CommandLineInterface::SelectDevice(std::string &args)
         return;
     }
 
-    int index = atoi(argumentList[0].c_str());
+    unsigned int index = atoi(argumentList[0].c_str());
     if(m_DeviceList.empty() || index > m_DeviceList.size() -1 )
     {
         std::cout << "    Error ID not found. Execute command 'available_devices' to get list of available devices." << std::endl;
@@ -304,7 +304,7 @@ void CommandLineInterface::GetDeviceIdentifier(std::string &args)
         return;
     }
 
-    int index = atoi(argumentList[0].c_str());
+    unsigned int index = atoi(argumentList[0].c_str());
     if(m_DeviceList.empty() || index > m_DeviceList.size() -1 )
     {
         std::cout << "    Error ID not found. Execute command 'available_devices' to get list of available devices." << std::endl;
