@@ -113,7 +113,7 @@ std::string Device::WhatAmI() {
     return "My name is: " + m_DeviceName;
 }
 
-const char* Device::GetDeviceIdentifier()
+std::string Device::GetDeviceIdentifier()
 {
     if(!IsOpen())
     {
@@ -130,7 +130,7 @@ const char* Device::GetDeviceIdentifier()
     if(!Exec("", &args, buffer))
         return "Error while executing *IDN?";
 
-    return std::regex_replace(buffer, std::regex("\n"), "").c_str();
+    return std::regex_replace(buffer, std::regex("\n"), "");
 }
 
 /**
