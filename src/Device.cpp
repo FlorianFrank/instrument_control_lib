@@ -22,11 +22,16 @@ extern "C" {
 
 // TODO add further comments and cleanup some code
 
+Device::Device(const char *ip, int timeoutInMs) : Device(ip, timeoutInMs, nullptr)
+{
+}
+
+
 /**
  * @brief Constructor of Device
  * @param ip: the m_IPAddr address of the target device
  */
-Device::Device(const char *ip, int timeoutInMs, PIL::Logging *logger) : m_IPAddr(ip), m_ErrorHandle(), m_IsOpen(false)
+Device::Device(const char *ip, int timeoutInMs, PIL::Logging *logger) : m_IPAddr(ip), m_ErrorHandle()
 {
     m_SocketHandle = new PIL::Socket(TCP, IPv4, ip, m_Port, timeoutInMs);
     m_ErrorHandle.m_ErrorCode = PIL_NO_ERROR;

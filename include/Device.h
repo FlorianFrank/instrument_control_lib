@@ -30,6 +30,7 @@ namespace PIL
 class Device {
 
 public:
+    explicit Device(const char *ip, int timeoutInMs);
     explicit Device(const char *ip, int timeoutInMs, PIL::Logging *logger);
     ~Device();
 
@@ -46,13 +47,12 @@ public:
     std::string ReturnErrorMessage();
 
 protected:
-    PIL_ErrorHandle m_ErrorHandle;
     std::string m_IPAddr;
+    PIL_ErrorHandle m_ErrorHandle;
     std::string m_DeviceName{};
     PIL::Socket *m_SocketHandle;
     PIL::Logging *m_Logger;
     int m_Port = 5025;
-    bool m_IsOpen;
 };
 
 #endif //CE_DEVICE_DEVICE_H
