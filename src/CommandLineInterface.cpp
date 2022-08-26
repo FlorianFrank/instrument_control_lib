@@ -1,9 +1,10 @@
 #include "CommandLineInterface.h"
 #include "Device.h"
 #include "ConfigFileParser.h"
-extern "C" {
+extern "C"
+{
 #include "ctlib/ErrorHandler.h"
-};
+}
 
 #include <csignal> // std::signal to capture CTR + C
 #include <iostream> // std::cout

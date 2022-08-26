@@ -7,9 +7,10 @@
 #ifndef CE_DEVICE_DEVICE_H
 #define CE_DEVICE_DEVICE_H
 
-extern "C" {
+extern "C"
+{
 #include "ctlib/ErrorCodeDefines.h"
-};
+}
 
 #include "ExecArgs.h"
 
