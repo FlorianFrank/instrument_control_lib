@@ -421,6 +421,7 @@ PIL_ERROR_CODE KEI2600::setMeasureLowRange(UNIT unit, SMU_CHANNEL channel, doubl
     return Exec("", &execArgs);
 }
 
+<<<<<<< HEAD
 /**
  * @brief Enables or disableds automatic updates to the internal reference measurements (autozero) of the instrument.
  * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
@@ -580,6 +581,8 @@ PIL_ERROR_CODE KEI2600::displayMeasureFunction(SMU::SMU_CHANNEL channel, SMU_DIS
 
     return Exec("", &arg);
 }
+=======
+>>>>>>> 75e5695 (Add setMeasureLowRange-function to the repository)
 
 
 PIL_ERROR_CODE KEI2600::enableBeep()
@@ -771,6 +774,7 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
     }
 }
 
+<<<<<<< HEAD
 /*static*/ std::string KEI2600::getStringFromAutoZeroEnum(AUTOZERO autoZero)
 {
     switch (autoZero)
@@ -844,3 +848,7 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
             return "MEASURE_WATTS";
     }
 }
+=======
+
+
+>>>>>>> 75e5695 (Add setMeasureLowRange-function to the repository)
