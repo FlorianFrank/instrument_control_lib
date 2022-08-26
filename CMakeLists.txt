@@ -18,9 +18,8 @@ else() # build shared lib
     add_library(instrument_control_lib SHARED ${source_files} ${device_files} ${device_type_files})
 endif()
 
-if (DEFINED RELEASE)
-    target_compile_options(instrument_control_lib PRIVATE -Wall -Wextra -Wpedantic -Werror)
-endif()
+target_compile_options(instrument_control_lib PRIVATE -Wall -Wextra -Wpedantic -Werror)
+
 # Build third party libraries and executables
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/pugixml")
 add_subdirectory(instrument_cmd_tool)
@@ -30,11 +29,7 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/boost/include")
 add_subdirectory(common_tools_lib)
 add_subdirectory(playground)
 
-if(NOT DEFINED WIN32)
-set(ENABLE_PYTHON 1)
-endif()
-# TODO temporary disable python interface to satisfy CI
-set(ENABLE_PYTHON 1)
+
 if(ENABLE_PYTHON)
     add_subdirectory(python_interface)
 endif() # ENABLE_PYTHON
