@@ -22,11 +22,16 @@ extern "C" {
 
 // TODO add further comments and cleanup some code
 
+Device::Device(const char *ip, int timeoutInMs) : Device(ip, timeoutInMs, nullptr)
+{
+}
+
+
 /**
  * @brief Constructor of Device
  * @param ip: the m_IPAddr address of the target device
  */
-Device::Device(const char *ip, int timeoutInMs, PIL::Logging *logger) : m_IPAddr(ip), m_ErrorHandle(), m_IsOpen(false)
+Device::Device(const char *ip, int timeoutInMs, PIL::Logging *logger) : m_IPAddr(ip), m_ErrorHandle()
 {
     m_SocketHandle = new PIL::Socket(TCP, IPv4, ip, m_Port, timeoutInMs);
     m_ErrorHandle.m_ErrorCode = PIL_NO_ERROR;
@@ -108,7 +113,7 @@ std::string Device::WhatAmI() {
     return "My name is: " + m_DeviceName;
 }
 
-const char* Device::GetDeviceIdentifier()
+std::string Device::GetDeviceIdentifier()
 {
     if(!IsOpen())
     {
@@ -125,7 +130,7 @@ const char* Device::GetDeviceIdentifier()
     if(!Exec("", &args, buffer))
         return "Error while executing *IDN?";
 
-    return std::regex_replace(buffer, std::regex("\n"), "").c_str();
+    return std::regex_replace(buffer, std::regex("\n"), "");
 }
 
 /**

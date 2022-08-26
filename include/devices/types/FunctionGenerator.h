@@ -36,14 +36,14 @@ public:
 
     explicit FunctionGenerator(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
-    virtual PIL_ERROR_CODE turnOn(FUNC_CHANNEL channel) = 0;
-    virtual PIL_ERROR_CODE turnOff(FUNC_CHANNEL channel) = 0;
+    virtual PIL_ERROR_CODE turnOn() = 0;
+    virtual PIL_ERROR_CODE turnOff() = 0;
 
-    virtual PIL_ERROR_CODE setFrequency(FUNC_CHANNEL channel, double value) = 0;
-    virtual PIL_ERROR_CODE setAmplitude(FUNC_CHANNEL channel, double value,  const char *constrain) = 0;
-    virtual PIL_ERROR_CODE setPhase(FUNC_CHANNEL channel, double value) = 0;
+    virtual PIL_ERROR_CODE setFrequency(double value) = 0;
+    virtual PIL_ERROR_CODE setAmplitude(double value, const char *constrain) = 0;
+    virtual PIL_ERROR_CODE setPhase(double value) = 0;
     virtual PIL_ERROR_CODE setFunction(FUNCTION_TYPE functionType) = 0;
-    virtual PIL_ERROR_CODE setOffset(FUNC_CHANNEL channel, double offset) = 0;
+    virtual PIL_ERROR_CODE setOffset(double offset) = 0;
 
     FUNCTION_TYPE getOutputFunction() const;
     bool isOutputEnabled() const;

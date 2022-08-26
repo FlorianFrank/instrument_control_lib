@@ -196,6 +196,7 @@ PIL_ERROR_CODE KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel)
     args.AddArgument("smu", getChannelStringFromEnum(channel))
             .AddArgument(subArg, smuArg, " = ") // TODO refactor
             .AddArgument(subArgAutoRange,"");
+    return Exec("", &args);
 }
 
 
@@ -226,6 +227,7 @@ PIL_ERROR_CODE KEI2600::enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel)
     args.AddArgument("smu", getChannelStringFromEnum(channel))
             .AddArgument(subArg, smuArg, " = ") // TODO refactor
             .AddArgument(subArgAutoRange,"");
+    return Exec("", &args);
 }
 
 
@@ -256,6 +258,7 @@ PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel)
     args.AddArgument("smu", getChannelStringFromEnum(channel))
             .AddArgument(subArg, smuArg, " = ") // TODO refactor
             .AddArgument(subArgAutoRange,"");
+    return Exec("", &args);
 }
 
 
@@ -783,18 +786,19 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
         case AUTO:
             return "AUTOZERO_AUTO";
     }
+    return "AUTOZERO_OFF";
 }
 
 /*static*/ std::string KEI2600::getStringFromSrcFuncEnum(SRC_FUNC srcFunc)
 {
     switch (srcFunc)
     {
-
         case DC_AMPS:
             return "OUTPUT_DCAMPS";
         case DC_VOLTS:
             return "OUTPUT_DCVOLTS";
     }
+    return "OUTPUT_DCAMPS";
 }
 
 /*static*/ std::string KEI2600::getStringFromOffModeEnum(SRC_OFF_MODE offMode)
@@ -808,6 +812,7 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
         case OUTPUT_HIGH_Z:
             return "OUTPUT_HIGH_Z";
     }
+    return "OUTPUT_NORMAL";
 }
 
 /*static*/ std::string KEI2600::getStringFromSettleEnum(SRC_SETTLING srcSettling)
@@ -827,12 +832,12 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
         case FAST_ALL:
             return "SETTLE_FAST_ALL";
     }
+    return "SETTLE_SMOOTH";
 }
 
 /*static*/ std::string KEI2600::getStringFromMeasureDisplayFunction(SMU_DISPLAY displayMeausreFunc)
 {
-    switch (displayMeausreFunc)
-    {
+    switch (displayMeausreFunc){
 
         case MEASURE_DC_AMPS:
             return "MEASURE_DC_AMPS";
@@ -843,4 +848,5 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
         case MEASURE_WATTS:
             return "MEASURE_WATTS";
     }
+    return "MEASURE_DC_AMPS";
 }

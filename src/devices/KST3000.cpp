@@ -270,7 +270,7 @@ std::vector<std::string> split(const char *splitStr, std::string &delimiter)
  *  Waveform X increment, Waveform X origin, Waveform X reference,
  *  Waveform Y increment, Waveform Y origin, Waveform Y reference]
  * */
-PIL_ERROR_CODE KST3000::getWaveformPreamble(char *preamble)
+PIL_ERROR_CODE KST3000::getWaveformPreamble()
 {
     SubArg subArg("WAVeform");
     subArg.AddElem("PREamble", ":", "?");
@@ -395,12 +395,16 @@ PIL_ERROR_CODE KST3000::getWaveformData(char *data)
         return retGetWaveFormPoints;
 
     int data_length = 10 + num + 1;  //TODO 10 is the length of <header>, 1 is the end breakline(\n)
-    char buffer[data_length];
+    char* buffer = new char(data_length);
     auto execRet = Exec("", &args, buffer, true, data_length);
     if(execRet != PIL_NO_ERROR)
+    {
+        delete buffer;
         return execRet;
+    }
 
     memcpy(data, buffer + 10, num); // TODO: add check if data is large enough
+    delete buffer;
     return PIL_NO_ERROR;
 }
 
@@ -417,13 +421,13 @@ PIL_ERROR_CODE KST3000::getRealData(double **result)
     if (getWaveFormPointsRet != PIL_NO_ERROR)
         return getWaveFormPointsRet;
 
-    char data[points];
+    char* data = new char(points);
     auto getWaveFormDataRet = getWaveformData(data);
     if(getWaveFormDataRet != PIL_NO_ERROR)
         return getWaveFormDataRet;
 
     char preamble[MEASURE_RET_BUFF_SIZE];
-    auto getWaveFormPreambleRet = getWaveformPreamble(preamble);
+    auto getWaveFormPreambleRet = getWaveformPreamble();
     if(getWaveFormPreambleRet != PIL_NO_ERROR)
         return getWaveFormPreambleRet;
 
@@ -449,6 +453,7 @@ PIL_ERROR_CODE KST3000::getRealData(double **result)
         double voltage = ((voltage_data - y_reference) * y_increment) + y_origin;
         result[1][i] = voltage;
     }
+    delete data;
     return PIL_NO_ERROR;
 }
 
@@ -469,7 +474,7 @@ PIL_ERROR_CODE KST3000::getRealData(double **result)
 PIL_ERROR_CODE KST3000::saveWaveformData(std::string &file_path)
 {
     char preamble[1024]; // TODO avoid static numeric definitions in source code
-    auto getWaveFormPreambleRet = getWaveformPreamble(preamble);
+    auto getWaveFormPreambleRet = getWaveformPreamble();
     if(getWaveFormPreambleRet != PIL_NO_ERROR)
         return getWaveFormPreambleRet;
 

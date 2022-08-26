@@ -17,13 +17,13 @@ public:
     explicit KST33500(const char *ip, int timeoutInMS);
     explicit KST33500(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
-    PIL_ERROR_CODE turnOn(FUNC_CHANNEL channel) override;
-    PIL_ERROR_CODE turnOff(FUNC_CHANNEL channel) override;
+    PIL_ERROR_CODE turnOn() override;
+    PIL_ERROR_CODE turnOff() override;
 
-    PIL_ERROR_CODE setFrequency(FUNC_CHANNEL channel, double value) override;
-    PIL_ERROR_CODE setAmplitude(FUNC_CHANNEL channel, double value, const char *constrain) override;
-    PIL_ERROR_CODE setOffset(FUNC_CHANNEL channel, double offset) override;
-    PIL_ERROR_CODE setPhase(FUNC_CHANNEL channel, double value) override;
+    PIL_ERROR_CODE setFrequency(double value) override;
+    PIL_ERROR_CODE setAmplitude(double value, const char *constrain) override;
+    PIL_ERROR_CODE setOffset(double offset) override;
+    PIL_ERROR_CODE setPhase(double value) override;
     PIL_ERROR_CODE setFunction(FUNCTION_TYPE functionType) override;
 
     PIL_ERROR_CODE display(std::string &text);

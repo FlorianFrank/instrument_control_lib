@@ -44,7 +44,7 @@ public:
     PIL_ERROR_CODE setTimeDelay(double delay);
 
     PIL_ERROR_CODE setWaveformSource(OSC_CHANNEL channel);
-    PIL_ERROR_CODE getWaveformPreamble(char *preamble);
+    PIL_ERROR_CODE getWaveformPreamble();
     PIL_ERROR_CODE getWaveformPoints(int* nrWaveFormPoints);
     PIL_ERROR_CODE setWaveformPoints(int num_points);
     PIL_ERROR_CODE setWaveformPointsMode(std::string &mode);
