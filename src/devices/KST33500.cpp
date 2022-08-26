@@ -48,14 +48,13 @@ PIL_ERROR_CODE KST33500::displayConnection() {
  * argument unit: ms
  * */
 PIL_ERROR_CODE KST33500::setPulseWidth(double value) {
-  string msg = "FUNCtion:PULSe:WIDTh ";
 
   SubArg arg("FUNCtion");
   arg.AddElem("PULSe", ":")
   .AddElem("WIDTh", ":");
 
   ExecArgs args;
-  args.AddArgument(arg, msg + " ms", " ");
+  args.AddArgument(arg, std::to_string(value) + " ms", " ");
 
   return Exec("", &args);
 }
@@ -70,26 +69,25 @@ PIL_ERROR_CODE KST33500::output(bool on) {
     return Exec("OUTPut", &args);
 }
 
-PIL_ERROR_CODE KST33500::turnOn(FunctionGenerator::FUNC_CHANNEL channel)
+PIL_ERROR_CODE KST33500::turnOn()
 {
     return output(true);
 }
 
-PIL_ERROR_CODE KST33500::turnOff(FunctionGenerator::FUNC_CHANNEL channel)
+PIL_ERROR_CODE KST33500::turnOff()
 {
     return output(false);
 }
 
-PIL_ERROR_CODE KST33500::setFrequency(FunctionGenerator::FUNC_CHANNEL channel, double value)
+PIL_ERROR_CODE KST33500::setFrequency(double value)
 {
-    string msg = "FREQuency " + to_string(value);
     ExecArgs args;
     args.AddArgument("", value);
     return Exec("FREQuency ", &args);
 }
 
 // TODO unclear
-PIL_ERROR_CODE KST33500::setAmplitude(FunctionGenerator::FUNC_CHANNEL channel, double value, const char *constrain)
+PIL_ERROR_CODE KST33500::setAmplitude(double value, const char *constrain)
 {
     std::string msg = "VOLTage";
     if (strlen(constrain) > 0) {
@@ -126,7 +124,7 @@ PIL_ERROR_CODE KST33500::setFunction(FunctionGenerator::FUNCTION_TYPE functionTy
     return PIL_NO_ERROR;
 }
 
-PIL_ERROR_CODE KST33500::setPhase(FunctionGenerator::FUNC_CHANNEL channel, double value)
+PIL_ERROR_CODE KST33500::setPhase(double value)
 {
     ExecArgs args;
     args.AddArgument("PHASe", value, " ");
@@ -137,7 +135,7 @@ PIL_ERROR_CODE KST33500::setPhase(FunctionGenerator::FUNC_CHANNEL channel, doubl
  * argument unit: V
  * attention: offset would change voltage by double of your argument
  * */
-PIL_ERROR_CODE KST33500::setOffset(FunctionGenerator::FUNC_CHANNEL channel, double offset)
+PIL_ERROR_CODE KST33500::setOffset(double offset)
 {
     SubArg voltageOffset("VOLTage");
     voltageOffset.AddElem("OFFSet", ":");
