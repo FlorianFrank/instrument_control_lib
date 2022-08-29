@@ -181,7 +181,8 @@ PIL_ERROR_CODE Device::Exec(std::string command, ExecArgs *args, char *result, b
                              "Command %s successfully executed", c);
 
   if (result) { // not all operation need a result
-    if(m_SocketHandle->Receive(reinterpret_cast<uint8_t*>(result), reinterpret_cast<uint32_t*>(&size)) != PIL_NO_ERROR)
+      uint32_t len = 2048;
+    if(m_SocketHandle->Receive(m_recvBuff, &len) != PIL_NO_ERROR)
     {
         if(m_Logger)
             m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__,
@@ -189,6 +190,7 @@ PIL_ERROR_CODE Device::Exec(std::string command, ExecArgs *args, char *result, b
         PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while calling read");
         return PIL_ERRNO;
     }
+      snprintf(result, size, "%s", m_recvBuff);
   }
     if(m_Logger)
         m_Logger->LogMessage(INFO_LVL, __FILENAME__, __LINE__,

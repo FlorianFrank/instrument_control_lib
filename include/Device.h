@@ -53,6 +53,7 @@ protected:
     std::string m_DeviceName{};
     PIL::Socket *m_SocketHandle;
     PIL::Logging *m_Logger;
+    uint8_t m_recvBuff[2048];
     int m_Port = 5025;
 };
 
