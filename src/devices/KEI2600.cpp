@@ -13,32 +13,42 @@ KEI2600::KEI2600(const char *ip, int timeoutInMS) : SMU(ip, timeoutInMS, nullptr
 }
 
 
-PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double* value)
+PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double *value, bool checkErrorBuffer)
 {
+    auto ret = PIL_NO_ERROR;
     switch (unit)
     {
         case SMU::CURRENT:
-            return measureI(channel, value);
+            ret = measureI(channel, value);
+            break;
         case SMU::VOLTAGE:
-            return measureV(channel, value);
+            ret = measureV(channel, value);
+            break;
         case SMU::RESISTANCE:
-            return measureR(channel, value);
+            ret = measureR(channel, value);
+            break;
         case SMU::POWER:
-            return measureP(channel, value);
+            ret = measureP(channel, value);
+            break;
         default:
             return PIL_INVALID_ARGUMENTS;
     }
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
 double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel)
 {
     double value;
-    measure(unit, channel, &value);
+    measure(unit, channel, &value, true);
     return value;
 }
 
-PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel)
+PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel, bool checkErrorBuffer)
 {
     SubArg subArg("source",".");
            subArg.AddElem("output", ".");
@@ -53,11 +63,16 @@ PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel)
     .AddArgument(subArg, smuNumber, " = ")
     .AddArgument(outputArg, "");
 
-    return Exec("", &execArgs);
+    auto ret = Exec("", &execArgs);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
-PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel)
+PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel, bool checkErrorBuffer)
 {
     SubArg subArg("source",".");
     subArg.AddElem("output", ".");
@@ -72,7 +87,12 @@ PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel)
             .AddArgument(subArg, smuNumber, " = ")
             .AddArgument(outputArg, "");
 
-    return Exec("", &execArgs);
+    auto ret = Exec("", &execArgs);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 /**
@@ -82,7 +102,7 @@ PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel)
  * @param level
  * @return
  */
-PIL_ERROR_CODE KEI2600::setLevel(UNIT unit, SMU_CHANNEL channel, double level)
+PIL_ERROR_CODE KEI2600::setLevel(UNIT unit, SMU_CHANNEL channel, double level, bool checkErrorBuffer)
 {
     SubArg subArg("");
     subArg.AddElem("source", ".");
@@ -104,11 +124,16 @@ PIL_ERROR_CODE KEI2600::setLevel(UNIT unit, SMU_CHANNEL channel, double level)
     args.AddArgument("smu", getChannelStringFromEnum(channel));
     args.AddArgument(subArg, level, " = ");
 
-    return Exec("", &args);
+    auto ret = Exec("", &args);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
-PIL_ERROR_CODE KEI2600::setLimit(UNIT unit, SMU_CHANNEL channel, double limit)
+PIL_ERROR_CODE KEI2600::setLimit(UNIT unit, SMU_CHANNEL channel, double limit, bool checkErrorBuffer)
 {
     SubArg subArg("");
     subArg.AddElem("source", ".");
@@ -133,74 +158,38 @@ PIL_ERROR_CODE KEI2600::setLimit(UNIT unit, SMU_CHANNEL channel, double limit)
     args.AddArgument("smu", getChannelStringFromEnum(channel));
     args.AddArgument(subArg, limit, " = ");
 
-    return Exec("", &args);
+    auto ret = Exec("", &args);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
-PIL_ERROR_CODE KEI2600::enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel)
+PIL_ERROR_CODE KEI2600::enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
 {
-    SubArg subArg("");
-    subArg.AddElem("measure", ".");
-
-    switch (unit)
-    {
-        case CURRENT:
-            subArg.AddElem("autorangei", ".");
-            break;
-        case VOLTAGE:
-            subArg.AddElem("autorangev", ".");
-            break;
-        default:
-            return PIL_INVALID_ARGUMENTS;
-    }
-
-    SubArg subArgAutoRange("");
-    subArgAutoRange.AddElem("AUTORANGE_ON", ".");
-
-    SubArg smuArg("smu");
-           smuArg.AddElem(getChannelStringFromEnum(channel));
-
-    ExecArgs args;
-    args.AddArgument("smu", getChannelStringFromEnum(channel))
-        .AddArgument(subArg, smuArg, " = ") // TODO refactor
-        .AddArgument(subArgAutoRange,"");
-
-   // auto channelStr = getChannelStringFromEnum(channel);
-    return Exec("", &args);
+    auto ret = measureAutoRangeHelperFunction(channel, unit, true);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
-PIL_ERROR_CODE KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel)
+PIL_ERROR_CODE KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
 {
-    SubArg subArg("");
-    subArg.AddElem("measure", ".");
+    auto ret = measureAutoRangeHelperFunction(channel, unit, false);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 
-    switch (unit)
-    {
-        case CURRENT:
-            subArg.AddElem("autorangei", ".");
-            break;
-        case VOLTAGE:
-            subArg.AddElem("autorangev", ".");
-            break;
-        default:
-            return PIL_INVALID_ARGUMENTS;
-    }
-
-    SubArg subArgAutoRange("");
-    subArgAutoRange.AddElem("AUTORANGE_OFF", ".");
-
-    SubArg smuArg("smu");
-    smuArg.AddElem(getChannelStringFromEnum(channel));
-
-    ExecArgs args;
-    args.AddArgument("smu", getChannelStringFromEnum(channel))
-            .AddArgument(subArg, smuArg, " = ") // TODO refactor
-            .AddArgument(subArgAutoRange,"");
-    return Exec("", &args);
 }
 
 
-PIL_ERROR_CODE KEI2600::enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel)
+PIL_ERROR_CODE KEI2600::enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
 {
     SubArg subArg("");
     subArg.AddElem("source", ".");
@@ -227,11 +216,17 @@ PIL_ERROR_CODE KEI2600::enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel)
     args.AddArgument("smu", getChannelStringFromEnum(channel))
             .AddArgument(subArg, smuArg, " = ") // TODO refactor
             .AddArgument(subArgAutoRange,"");
-    return Exec("", &args);
+    auto ret = Exec("", &args);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
+
 }
 
 
-PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel)
+PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
 {
     SubArg subArg("");
     subArg.AddElem("source", ".");
@@ -258,33 +253,34 @@ PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel)
     args.AddArgument("smu", getChannelStringFromEnum(channel))
             .AddArgument(subArg, smuArg, " = ") // TODO refactor
             .AddArgument(subArgAutoRange,"");
-    return Exec("", &args);
+    auto ret = Exec("", &args);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
-PIL_ERROR_CODE KEI2600::enableMeasureAnalogFilter(SMU_CHANNEL smuChannel)
+PIL_ERROR_CODE KEI2600::enableMeasureAnalogFilter(SMU_CHANNEL smuChannel, bool checkErrorBuffer)
 {
-    SubArg subArg(getChannelStringFromEnum(smuChannel), ".");
-    subArg.AddElem("measure", ".")
-    .AddElem("analogfilter");
-
-    ExecArgs arg;
-    arg.AddArgument(subArg, "1", " = ");
-
-    return Exec("", &arg);
+    auto ret = analogFilterHelperFunction(smuChannel, true);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
-PIL_ERROR_CODE KEI2600::disableMeasureAnalogFilter(SMU_CHANNEL smuChannel)
+PIL_ERROR_CODE KEI2600::disableMeasureAnalogFilter(SMU_CHANNEL smuChannel, bool checkErrorBuffer)
 {
-    SubArg subArg(getChannelStringFromEnum(smuChannel), ".");
-    subArg.AddElem("measure", ".")
-            .AddElem("analogfilter");
-
-    ExecArgs arg;
-    arg.AddArgument(subArg, "0", " = ");
-
-    return Exec("", &arg);
+    auto ret = analogFilterHelperFunction(smuChannel, false);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
@@ -293,7 +289,7 @@ PIL_ERROR_CODE KEI2600::disableMeasureAnalogFilter(SMU_CHANNEL smuChannel)
  * currently using. Assigning a value to this attribute sets the SMU on a fixed range large enough to
  * measure the assigned value. The instrument selects the best range for measuring a value of rangeValue
  * */
-PIL_ERROR_CODE KEI2600::setMeasureRange(UNIT unit, SMU_CHANNEL channel, double rangeValue)
+PIL_ERROR_CODE KEI2600::setMeasureRange(UNIT unit, SMU_CHANNEL channel, double rangeValue, bool checkErrorBuffer)
 {
     SubArg subArg("measure", ".");
     switch (unit)
@@ -312,11 +308,16 @@ PIL_ERROR_CODE KEI2600::setMeasureRange(UNIT unit, SMU_CHANNEL channel, double r
     args.AddArgument("smu", getChannelStringFromEnum(channel))
         .AddArgument(subArg, rangeValue, " = ");
 
-    return Exec("", &args);
+    auto ret = Exec("", &args);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
-PIL_ERROR_CODE KEI2600::setSourceRange(UNIT unit, SMU_CHANNEL channel, double rangeValue)
+PIL_ERROR_CODE KEI2600::setSourceRange(UNIT unit, SMU_CHANNEL channel, double rangeValue, bool checkErrorBuffer)
 {
     SubArg subArg("source", ".");
     switch (unit)
@@ -335,11 +336,16 @@ PIL_ERROR_CODE KEI2600::setSourceRange(UNIT unit, SMU_CHANNEL channel, double ra
     args.AddArgument("smu", getChannelStringFromEnum(channel))
         .AddArgument(subArg, rangeValue, " = ");
 
-    return Exec("", &args);
+    auto ret = Exec("", &args);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
-PIL_ERROR_CODE KEI2600::selectLocalSense(SMU_CHANNEL channel)
+PIL_ERROR_CODE KEI2600::selectLocalSense(SMU_CHANNEL channel, bool checkErrorBuffer)
 {
     SubArg subArg("sense", ".");
     SubArg smuArg("smu");
@@ -351,11 +357,16 @@ PIL_ERROR_CODE KEI2600::selectLocalSense(SMU_CHANNEL channel)
              .AddArgument(subArg, smuArg, " = ")
              .AddArgument(localSenseArg, "");
 
-    return Exec("", &execArgs);
+    auto ret = Exec("", &execArgs);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
-PIL_ERROR_CODE KEI2600::selectRemoteSense(SMU_CHANNEL channel)
+PIL_ERROR_CODE KEI2600::selectRemoteSense(SMU_CHANNEL channel, bool checkErrorBuffer)
 {
     SubArg subArg("sense", ".");
     SubArg smuArg("smu");
@@ -367,7 +378,12 @@ PIL_ERROR_CODE KEI2600::selectRemoteSense(SMU_CHANNEL channel)
         .AddArgument(subArg, smuArg, " = ")
         .AddArgument(remoteSenseArg, "");
 
-    return Exec("", &args);
+    auto ret = Exec("", &args);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 /**
@@ -375,7 +391,7 @@ PIL_ERROR_CODE KEI2600::selectRemoteSense(SMU_CHANNEL channel)
  * @param channel channel which should be set
  * @return error code
  */
-PIL_ERROR_CODE KEI2600::setMeasurePLC(SMU_CHANNEL channel, double value)
+PIL_ERROR_CODE KEI2600::setMeasurePLC(SMU_CHANNEL channel, double value, bool checkErrorBuffer)
 {
     if(value < 0.001 || value > 25)
         return PIL_INVALID_ARGUMENTS;
@@ -388,7 +404,12 @@ PIL_ERROR_CODE KEI2600::setMeasurePLC(SMU_CHANNEL channel, double value)
     ExecArgs args;
     args.AddArgument(subArg, value, " = ");
 
-    return Exec("", &args);
+    auto ret = Exec("", &args);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 /**
@@ -398,7 +419,7 @@ PIL_ERROR_CODE KEI2600::setMeasurePLC(SMU_CHANNEL channel, double value)
  * @param value value to set.
  * @return error code.
  */
-PIL_ERROR_CODE KEI2600::setMeasureLowRange(UNIT unit, SMU_CHANNEL channel, double value)
+PIL_ERROR_CODE KEI2600::setMeasureLowRange(UNIT unit, SMU_CHANNEL channel, double value, bool checkErrorBuffer)
 {
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
@@ -421,7 +442,13 @@ PIL_ERROR_CODE KEI2600::setMeasureLowRange(UNIT unit, SMU_CHANNEL channel, doubl
     ExecArgs execArgs;
     execArgs.AddArgument(subArg, value, " = ");
 
-    return Exec("", &execArgs);
+    auto ret = Exec("", &execArgs);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
+
 }
 
 /**
@@ -430,7 +457,7 @@ PIL_ERROR_CODE KEI2600::setMeasureLowRange(UNIT unit, SMU_CHANNEL channel, doubl
  * @param autoZero can be set either to OFF, AUTO or ONCE. (See AUTOZERO enum)
  * @return error code.
  */
-PIL_ERROR_CODE KEI2600::setMeasureAutoZero(SMU_CHANNEL channel, AUTOZERO autoZero)
+PIL_ERROR_CODE KEI2600::setMeasureAutoZero(SMU_CHANNEL channel, AUTOZERO autoZero, bool checkErrorBuffer)
 {
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
@@ -441,7 +468,12 @@ PIL_ERROR_CODE KEI2600::setMeasureAutoZero(SMU_CHANNEL channel, AUTOZERO autoZer
     // TODO avoid concatination
     arg.AddArgument(subArg, "smu"+ getChannelStringFromEnum(channel)+"."+getStringFromAutoZeroEnum(autoZero), " = ");
 
-    return Exec("", &arg);
+    auto ret = Exec("", &arg);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
@@ -451,7 +483,7 @@ PIL_ERROR_CODE KEI2600::setMeasureAutoZero(SMU_CHANNEL channel, AUTOZERO autoZer
  * @param nrOfMeasurements number of measurements made.
  * @return error code.
  */
-PIL_ERROR_CODE KEI2600::setMeasureCount(SMU_CHANNEL channel, int nrOfMeasurements)
+PIL_ERROR_CODE KEI2600::setMeasureCount(SMU_CHANNEL channel, int nrOfMeasurements, bool checkErrorBuffer)
 {
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
@@ -461,7 +493,12 @@ PIL_ERROR_CODE KEI2600::setMeasureCount(SMU_CHANNEL channel, int nrOfMeasurement
     ExecArgs execArgs;
     execArgs.AddArgument(subArg, nrOfMeasurements, " = ");
 
-    return Exec("", &execArgs);
+    auto ret = Exec("", &execArgs);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 /**
@@ -470,7 +507,7 @@ PIL_ERROR_CODE KEI2600::setMeasureCount(SMU_CHANNEL channel, int nrOfMeasurement
  * @param srcFunc Voltage or Current function to set.
  * @return error code.
  */
-PIL_ERROR_CODE KEI2600::setSourceFunction(SMU_CHANNEL channel, SRC_FUNC srcFunc)
+PIL_ERROR_CODE KEI2600::setSourceFunction(SMU_CHANNEL channel, SRC_FUNC srcFunc, bool checkErrorBuffer)
 {
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
@@ -481,7 +518,12 @@ PIL_ERROR_CODE KEI2600::setSourceFunction(SMU_CHANNEL channel, SRC_FUNC srcFunc)
     // TODO avoid concatination
     arg.AddArgument(subArg, "smu"+ getChannelStringFromEnum(channel)+"."+getStringFromSrcFuncEnum(srcFunc), " = ");
 
-    return Exec("", &arg);
+    auto ret = Exec("", &arg);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 /**
@@ -490,7 +532,7 @@ PIL_ERROR_CODE KEI2600::setSourceFunction(SMU_CHANNEL channel, SRC_FUNC srcFunc)
  * @param offMode can be either a OUTPUT_NORMAL defined by offfunc, ZERO or HIGH_Z.
  * @return error code
  */
-PIL_ERROR_CODE KEI2600::setSourceOffMode(SMU_CHANNEL channel, SRC_OFF_MODE offMode)
+PIL_ERROR_CODE KEI2600::setSourceOffMode(SMU_CHANNEL channel, SRC_OFF_MODE offMode, bool checkErrorBuffer)
 {
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
@@ -501,7 +543,12 @@ PIL_ERROR_CODE KEI2600::setSourceOffMode(SMU_CHANNEL channel, SRC_OFF_MODE offMo
     // TODO avoid concatination
     arg.AddArgument(subArg, "smu" + getChannelStringFromEnum(channel) + "." + getStringFromOffModeEnum(offMode), " = ");
 
-    return Exec("", &arg);
+    auto ret =  Exec("", &arg);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
@@ -511,7 +558,7 @@ PIL_ERROR_CODE KEI2600::setSourceOffMode(SMU_CHANNEL channel, SRC_OFF_MODE offMo
  * @param srcSettling settling mode. (See SRC_SETTLING enum for more information)
  * @return error code.
  */
-PIL_ERROR_CODE KEI2600::setSourceSettling(SMU::SMU_CHANNEL channel, SRC_SETTLING srcSettling)
+PIL_ERROR_CODE KEI2600::setSourceSettling(SMU::SMU_CHANNEL channel, SRC_SETTLING srcSettling, bool checkErrorBuffer)
 {
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
@@ -522,7 +569,12 @@ PIL_ERROR_CODE KEI2600::setSourceSettling(SMU::SMU_CHANNEL channel, SRC_SETTLING
     // TODO avoid concatination
     arg.AddArgument(subArg, "smu" + getChannelStringFromEnum(channel) + "." + getStringFromSettleEnum(srcSettling), " = ");
 
-    return Exec("", &arg);
+    auto ret = Exec("", &arg);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 /**
@@ -531,7 +583,7 @@ PIL_ERROR_CODE KEI2600::setSourceSettling(SMU::SMU_CHANNEL channel, SRC_SETTLING
  * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
  * @return error code.
  */
-PIL_ERROR_CODE KEI2600::enableSourceSink(SMU_CHANNEL channel)
+PIL_ERROR_CODE KEI2600::enableSourceSink(SMU_CHANNEL channel, bool checkErrorBuffer)
 {
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
@@ -541,7 +593,12 @@ PIL_ERROR_CODE KEI2600::enableSourceSink(SMU_CHANNEL channel)
     ExecArgs arg;
     arg.AddArgument(subArg, "1", " = ");
 
-    return Exec("", &arg);
+    auto ret = Exec("", &arg);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 /**
@@ -549,7 +606,7 @@ PIL_ERROR_CODE KEI2600::enableSourceSink(SMU_CHANNEL channel)
  * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
  * @return error code.
  */
-PIL_ERROR_CODE KEI2600::disableSourceSink(SMU_CHANNEL channel)
+PIL_ERROR_CODE KEI2600::disableSourceSink(SMU_CHANNEL channel, bool checkErrorBuffer)
 {
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
@@ -559,19 +616,25 @@ PIL_ERROR_CODE KEI2600::disableSourceSink(SMU_CHANNEL channel)
     ExecArgs arg;
     arg.AddArgument(subArg, "0", " = ");
 
-    return Exec("", &arg);
+    auto ret = Exec("", &arg);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
+#include "iostream"
 /**
  * @brief Specify the type of measurement currently displayed.
  * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
  * @param measureFunc show amps, volts, ohms or watts.
  * @return error code.
  */
-PIL_ERROR_CODE KEI2600::displayMeasureFunction(SMU::SMU_CHANNEL channel, SMU_DISPLAY measureFunc)
+PIL_ERROR_CODE KEI2600::displayMeasureFunction(SMU::SMU_CHANNEL channel, SMU_DISPLAY measureFunc, bool checkErrorBuffer)
 {
     SubArg subArg("display");
-    subArg.AddElem("smu")
+    subArg.AddElem("smu", ".")
     .AddElem(getChannelStringFromEnum(channel))
             .AddElem("measure", ".")
             .AddElem("func", ".");
@@ -581,11 +644,16 @@ PIL_ERROR_CODE KEI2600::displayMeasureFunction(SMU::SMU_CHANNEL channel, SMU_DIS
     arg.AddArgument(subArg, "display" + std::string(".") +
     getStringFromMeasureDisplayFunction(measureFunc), " = ");
 
-    return Exec("", &arg);
+    auto ret = Exec("", &arg);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
-PIL_ERROR_CODE KEI2600::enableBeep()
+PIL_ERROR_CODE KEI2600::enableBeep(bool checkErrorBuffer)
 {
     SubArg subArg("beeper");
     subArg.AddElem("enable", ".");
@@ -593,17 +661,27 @@ PIL_ERROR_CODE KEI2600::enableBeep()
     ExecArgs execArgs;
     execArgs.AddArgument(subArg, "beeper.ON", " = ");
 
-    return Exec("", &execArgs);
+    auto ret = Exec("", &execArgs);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
-PIL_ERROR_CODE KEI2600::beep()
+PIL_ERROR_CODE KEI2600::beep(float time, int frequency, bool checkErrorBuffer)
 {
-    return Exec("beeper.beep(1, 2400)");
+    auto ret = Exec("beeper.beep("+std::to_string(time)+","+std::to_string(frequency) +")");
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
-PIL_ERROR_CODE KEI2600::disableBeep()
+PIL_ERROR_CODE KEI2600::disableBeep(bool checkErrorBuffer)
 {
     SubArg subArg("beeper");
     subArg.AddElem("enable", ".");
@@ -614,7 +692,12 @@ PIL_ERROR_CODE KEI2600::disableBeep()
     ExecArgs execArgs;
     execArgs.AddArgument(subArg, beeperOffArg, " = ");
 
-    return Exec("", &execArgs);
+    auto ret = Exec("", &execArgs);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+    if(checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 
@@ -840,13 +923,113 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
     switch (displayMeausreFunc){
 
         case MEASURE_DC_AMPS:
-            return "MEASURE_DC_AMPS";
+            return "MEASURE_DCAMPS";
         case MEASURE_DC_VOLTS:
-            return "MEASURE_DC_VOLTS";
+            return "MEASURE_DCVOLTS";
         case MEASURE_OHMS:
             return "MEASURE_OHMS";
         case MEASURE_WATTS:
             return "MEASURE_WATTS";
     }
     return "MEASURE_DC_AMPS";
+}
+
+#include "iostream"
+PIL_ERROR_CODE KEI2600::analogFilterHelperFunction(SMU::SMU_CHANNEL channel, bool enable)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("measure", ".")
+            .AddElem("analogfilter", ".");
+
+    ExecArgs arg;
+    if (enable)
+        arg.AddArgument(subArg, "1", " = ");
+    else
+        arg.AddArgument(subArg, "0", " = ");
+
+    return Exec("", &arg);
+}
+
+PIL_ERROR_CODE KEI2600::measureAutoRangeHelperFunction(SMU_CHANNEL channel, UNIT unit, bool enable)
+{
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("measure", ".");
+
+    switch (unit)
+    {
+        case CURRENT:
+            subArg.AddElem("autorangei", ".");
+            break;
+        case VOLTAGE:
+            subArg.AddElem("autorangev", ".");
+            break;
+        default:
+            return PIL_INVALID_ARGUMENTS;
+    }
+
+    ExecArgs args;
+    if(enable)
+        args.AddArgument(subArg, "1", " = ");
+    else
+        args.AddArgument(subArg, "0", " = ");
+
+    // auto channelStr = getChannelStringFromEnum(channel);
+    return Exec("", &args);
+}
+
+std::string KEI2600::getLastError()
+{
+    ExecArgs argsErrorQueue;
+    argsErrorQueue.AddArgument("errorcode, message = errorqueue.next()", "");
+    auto ret = Exec("", &argsErrorQueue);
+    if(ret != PIL_NO_ERROR)
+        return "INTERNAL ERROR";
+
+    char errorBuffer[2048];
+    ExecArgs argsPrintError;
+    argsPrintError.AddArgument("print(errorcode, message)", "");
+    ret = Exec("", &argsPrintError, errorBuffer, true, 2048);
+    if(ret != PIL_NO_ERROR)
+        return "INTERNAL ERROR";
+    std::string  retStr = std::string(errorBuffer);
+    return retStr.substr(0, retStr.find('\n'));
+}
+
+PIL_ERROR_CODE KEI2600::clearErrorBuffer()
+{
+    ExecArgs args;
+    args.AddArgument("errorqueue", "clear()", ".");
+
+    return Exec("", &args);
+}
+
+#include "iostream"
+PIL_ERROR_CODE KEI2600::getErrorBufferStatus()
+{
+    ExecArgs argsErrorQueue;
+    argsErrorQueue.AddArgument("count = errorqueue.count", "");
+    auto ret = Exec("", &argsErrorQueue);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+
+    char errorBuffer[2048];
+    ExecArgs argsPrintError;
+    argsPrintError.AddArgument("print(count)", "");
+    ret = Exec("", &argsPrintError, errorBuffer, true, 2048);
+    if(ret != PIL_NO_ERROR)
+        return ret;
+
+    std::string retStr = std::string(errorBuffer);
+    retStr = retStr.substr(0, retStr.find('\n'));
+    try
+    {
+    if(std::stoi(retStr) > 0)
+        return PIL_ITEM_IN_ERROR_QUEUE;
+    } catch (const std::invalid_argument & e)
+    {
+        return PIL_UNKNOWN_ERROR;
+    }
+    return PIL_NO_ERROR;
 }
