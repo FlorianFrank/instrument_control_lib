@@ -185,6 +185,7 @@ PIL_ERROR_CODE KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel, 
     if(checkErrorBuffer)
         return getErrorBufferStatus();
     return PIL_NO_ERROR;
+
 }
 
 
@@ -221,6 +222,7 @@ PIL_ERROR_CODE KEI2600::enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bo
     if(checkErrorBuffer)
         return getErrorBufferStatus();
     return PIL_NO_ERROR;
+
 }
 
 
