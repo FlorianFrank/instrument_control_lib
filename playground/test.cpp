@@ -54,15 +54,15 @@ int testSMU(string ip) {
 
 
     // beep
-    smu->enableBeep();
-    smu->beep();
+    smu->enableBeep(false);
+    smu->beep(100, 1000, false);
     usleep(1000000);
     smu->disableBeep();
 
     smu->enableSourceAutoRange(SMU::VOLTAGE, SMU::CHANNEL_A);
-    smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_A, 0.5);
-    smu->enableMeasureAutoRange(SMU::VOLTAGE, SMU::CHANNEL_A);
-    smu->turnOn(SMU::CHANNEL_A);
+    smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_A, 0.5, false);
+    smu->enableMeasureAutoRange(SMU::VOLTAGE, SMU::CHANNEL_A, false);
+    smu->turnOn(SMU::CHANNEL_A, false);
     double measureV;
     smu->measure(SMU::VOLTAGE, SMU::CHANNEL_A, &measureV);
     if (measureV != 0.5) {
@@ -71,14 +71,14 @@ int testSMU(string ip) {
     } else {
         cout << "Voltage test passed!\n";
         smu->disableSourceAutoRange(SMU::VOLTAGE, SMU::CHANNEL_A);
-        smu->disableMeasureAutoRange(SMU::VOLTAGE, SMU::CHANNEL_A);
-        smu->turnOff(SMU::CHANNEL_A);
+        smu->disableMeasureAutoRange(SMU::VOLTAGE, SMU::CHANNEL_A, false);
+        smu->turnOff(SMU::CHANNEL_A, false);
     }
 
     smu->setSourceRange(SMU::VOLTAGE, SMU::CHANNEL_B, 0.5);
-    smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_B, 0.5);
+    smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_B, 0.5, false);
     smu->setMeasureRange(SMU::VOLTAGE, SMU::CHANNEL_B, 0.5);
-    smu->turnOn(SMU::CHANNEL_B);
+    smu->turnOn(SMU::CHANNEL_B, false);
     smu->measure(SMU::VOLTAGE, SMU::CHANNEL_B, &measureV);
     if (measureV != 0.5) {
         cout << "ERROR! Voltage on Channel b test failed!\n";
@@ -86,14 +86,14 @@ int testSMU(string ip) {
     } else {
         cout << "Voltage test on Channel b passed!\n";
         smu->enableSourceAutoRange(SMU::VOLTAGE, SMU::CHANNEL_B);
-        smu->enableMeasureAutoRange(SMU::VOLTAGE, SMU::CHANNEL_B);
-        smu->turnOff(SMU::CHANNEL_B);
+        smu->enableMeasureAutoRange(SMU::VOLTAGE, SMU::CHANNEL_B, false);
+        smu->turnOff(SMU::CHANNEL_B, false);
     }
 
     smu->enableSourceAutoRange(SMU::CURRENT, SMU::CHANNEL_B);
-    smu->setLevel(SMU::CURRENT, SMU::CHANNEL_B, -1.1);
-    smu->enableMeasureAutoRange(SMU::CURRENT, SMU::CHANNEL_B);
-    smu->turnOn(SMU::CHANNEL_B);
+    smu->setLevel(SMU::CURRENT, SMU::CHANNEL_B, -1.1, false);
+    smu->enableMeasureAutoRange(SMU::CURRENT, SMU::CHANNEL_B, false);
+    smu->turnOn(SMU::CHANNEL_B, false);
     double measureI;
     smu->measure(SMU::CURRENT, SMU::CHANNEL_B, &measureI);
     if (measureI != -1.1) {
@@ -102,14 +102,14 @@ int testSMU(string ip) {
     } else {
         cout << "Current test passed!\n";
         smu->disableSourceAutoRange(SMU::CURRENT, SMU::CHANNEL_B);
-        smu->disableMeasureAutoRange(SMU::CURRENT, SMU::CHANNEL_B);
-        smu->turnOn(SMU::CHANNEL_B);
+        smu->disableMeasureAutoRange(SMU::CURRENT, SMU::CHANNEL_B, false);
+        smu->turnOn(SMU::CHANNEL_B, false);
     }
 
     smu->setSourceRange(SMU::CURRENT, SMU::CHANNEL_B, -1.1);
-    smu->setLevel(SMU::CURRENT, SMU::CHANNEL_B, -1.1);
+    smu->setLevel(SMU::CURRENT, SMU::CHANNEL_B, -1.1, false);
     smu->setMeasureRange(SMU::CURRENT, SMU::CHANNEL_B, -1.1);
-    smu->turnOn(SMU::CHANNEL_B);
+    smu->turnOn(SMU::CHANNEL_B, false);
     smu->measure(SMU::CURRENT, SMU::CHANNEL_B, &measureI);
     if (measureI != -1.1) {
         cout << "ERROR! Current test on Channel b failed!\n";
@@ -117,18 +117,18 @@ int testSMU(string ip) {
     } else {
         cout << "Current test on Channel b passed!\n";
         smu->disableSourceAutoRange(SMU::CURRENT, SMU::CHANNEL_B);
-        smu->disableMeasureAutoRange(SMU::CURRENT, SMU::CHANNEL_B);
-        smu->turnOn(SMU::CHANNEL_B);
+        smu->disableMeasureAutoRange(SMU::CURRENT, SMU::CHANNEL_B, false);
+        smu->turnOn(SMU::CHANNEL_B, false);
     }
 
-    smu->setLimit(SMU::CURRENT, SMU::CHANNEL_B, -1.5);
+    smu->setLimit(SMU::CURRENT, SMU::CHANNEL_B, -1.5, false);
     // this should fail.
-    smu->setLevel(SMU::CURRENT, SMU::CHANNEL_B, -1.6);
+    smu->setLevel(SMU::CURRENT, SMU::CHANNEL_B, -1.6, false);
     cout << "Current on Channel a should not be -1.6. Maybe 0.5\n";
     sleep(2);
 
-    smu->setLimit(SMU::VOLTAGE, SMU::CHANNEL_B, 0.5);
-    smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_B, 0.6);
+    smu->setLimit(SMU::VOLTAGE, SMU::CHANNEL_B, 0.5, false);
+    smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_B, 0.6, false);
     cout << "Voltage on Channel a should not be 0.6. Maybe 1.5\n";
     sleep(2);
 
