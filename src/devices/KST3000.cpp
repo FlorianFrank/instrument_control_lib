@@ -394,17 +394,17 @@ PIL_ERROR_CODE KST3000::getWaveformData(char *data)
     if(retGetWaveFormPoints != PIL_NO_ERROR)
         return retGetWaveFormPoints;
 
-    int data_length = 10 + num + 1;  //TODO 10 is the length of <header>, 1 is the end breakline(\n)
-    char* buffer = new char(data_length);
+    int data_length = 20 + num + 1;  //TODO 10 is the length of <header>, 1 is the end breakline(\n)
+    char* buffer = new char[data_length];
     auto execRet = Exec("", &args, buffer, true, data_length);
     if(execRet != PIL_NO_ERROR)
     {
-        delete buffer;
+        delete[] buffer;
         return execRet;
     }
 
     memcpy(data, buffer + 10, num); // TODO: add check if data is large enough
-    delete buffer;
+    delete[] buffer;
     return PIL_NO_ERROR;
 }
 
