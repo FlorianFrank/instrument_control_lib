@@ -64,7 +64,7 @@ int testSMU(string ip) {
     smu->enableMeasureAutoRange(SMU::VOLTAGE, SMU::CHANNEL_A, false);
     smu->turnOn(SMU::CHANNEL_A, false);
     double measureV;
-    smu->measure(SMU::VOLTAGE, SMU::CHANNEL_A, &measureV);
+    smu->measure(SMU::VOLTAGE, SMU::CHANNEL_A, &measureV, false);
     if (measureV != 0.5) {
         cout << "ERROR! Voltage test failed!\n";
         exit(1);
@@ -79,7 +79,7 @@ int testSMU(string ip) {
     smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_B, 0.5, false);
     smu->setMeasureRange(SMU::VOLTAGE, SMU::CHANNEL_B, 0.5);
     smu->turnOn(SMU::CHANNEL_B, false);
-    smu->measure(SMU::VOLTAGE, SMU::CHANNEL_B, &measureV);
+    smu->measure(SMU::VOLTAGE, SMU::CHANNEL_B, &measureV, false);
     if (measureV != 0.5) {
         cout << "ERROR! Voltage on Channel b test failed!\n";
         exit(1);
@@ -95,7 +95,7 @@ int testSMU(string ip) {
     smu->enableMeasureAutoRange(SMU::CURRENT, SMU::CHANNEL_B, false);
     smu->turnOn(SMU::CHANNEL_B, false);
     double measureI;
-    smu->measure(SMU::CURRENT, SMU::CHANNEL_B, &measureI);
+    smu->measure(SMU::CURRENT, SMU::CHANNEL_B, &measureI, false);
     if (measureI != -1.1) {
         cout << "ERROR! Current test failed!\n";
         exit(1);
@@ -110,7 +110,7 @@ int testSMU(string ip) {
     smu->setLevel(SMU::CURRENT, SMU::CHANNEL_B, -1.1, false);
     smu->setMeasureRange(SMU::CURRENT, SMU::CHANNEL_B, -1.1);
     smu->turnOn(SMU::CHANNEL_B, false);
-    smu->measure(SMU::CURRENT, SMU::CHANNEL_B, &measureI);
+    smu->measure(SMU::CURRENT, SMU::CHANNEL_B, &measureI, false);
     if (measureI != -1.1) {
         cout << "ERROR! Current test on Channel b failed!\n";
         exit(1);
