@@ -29,7 +29,7 @@ public:
     [[maybe_unused]] explicit KEI2600(const char *ip, int timeoutInMs);
 
     PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double *value, bool checkErrorBuffer) override;
-    double measurePy(UNIT unit, SMU_CHANNEL channel);
+    double measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer);
 
     PIL_ERROR_CODE turnOn(SMU_CHANNEL channel, bool checkErrorBuffer) override;
     PIL_ERROR_CODE turnOff(SMU_CHANNEL channel, bool checkErrorBuffer) override;
