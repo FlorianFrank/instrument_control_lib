@@ -27,6 +27,8 @@ KEI2600::KEI2600(const char *ip, int timeoutInMS, PIL::Logging *logger) : SMU(ip
  */
 [[maybe_unused]] KEI2600::KEI2600(const char *ip, int timeoutInMS) : SMU(ip, timeoutInMS, nullptr) {
     this->m_DeviceName = DEVICE_NAME;
+    std::string logFile = "instrument_control.log";
+    m_Logger = new PIL::Logging(INFO_LVL, &logFile);
 }
 
 /**
@@ -72,13 +74,18 @@ PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double *value, b
  * @param channel Channel to measure (Channel A or Channel B).
  * @return measurement value returned by the measure function.
  */
-double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel)
+double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
 {
     double value;
     auto ret = measure(unit, channel, &value, true);
     if (ret != PIL_NO_ERROR && m_Logger)
         m_Logger->LogMessage(WARNING_LVL, __FILENAME__, __LINE__,
                              "Error while executing measure: %s", PIL_ErrorCodeToString(ret));
+    if(checkErrorBuffer)
+    {
+        if(getErrorBufferStatus() != PIL_NO_ERROR)
+            m_Logger->LogMessage(WARNING_LVL, __FILENAME__, __LINE__, getLastError().c_str());
+    }
     return value;
 }
 
@@ -829,7 +836,7 @@ PIL_ERROR_CODE KEI2600::measureI(SMU_CHANNEL channel, double *value)
     subArgPrint.AddElem("reading", "(", ")");
 
     ExecArgs execArgs;
-    execArgs.AddArgument(subArg, "");
+    execArgs.AddArgument(subArgPrint, "");
 
     ret = Exec("print", &execArgs, buffer);
     if (ret != PIL_NO_ERROR)
@@ -870,7 +877,7 @@ PIL_ERROR_CODE KEI2600::measureV(SMU_CHANNEL channel, double *value)
     subArgPrint.AddElem("reading", "(", ")");
 
     ExecArgs execArgs;
-    execArgs.AddArgument(subArg, "");
+    execArgs.AddArgument(subArgPrint, "");
 
     ret = Exec("print", &execArgs, buffer);
     if (ret != PIL_NO_ERROR)
@@ -911,7 +918,7 @@ PIL_ERROR_CODE KEI2600::measureR(SMU_CHANNEL channel, double *value)
     subArgPrint.AddElem("reading", "(", ")");
 
     ExecArgs execArgs;
-    execArgs.AddArgument(subArg, "");
+    execArgs.AddArgument(subArgPrint, "");
 
     ret = Exec("print", &execArgs, buffer);
     if (ret != PIL_NO_ERROR)
@@ -952,7 +959,7 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
     subArgPrint.AddElem("reading", "(", ")");
 
     ExecArgs execArgs;
-    execArgs.AddArgument(subArg, "");
+    execArgs.AddArgument(subArgPrint, "");
 
     ret = Exec("print", &execArgs, buffer);
     if (ret != PIL_NO_ERROR)
