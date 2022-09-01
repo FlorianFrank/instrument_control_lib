@@ -78,6 +78,11 @@ BOOST_PYTHON_MODULE(py_instrument_control_lib)
             .value("OHMS", SMU::MEASURE_OHMS)
             .value("WATTS", SMU::MEASURE_WATTS);
 
+    enum_<SMU::SMU_SENSE>("SMU_SENSE")
+            .value("LOCAL", SMU::SMU_SENSE::LOCAL)
+            .value("REMOTE", SMU::SMU_SENSE::REMOTE)
+            .value("CALIBRATION", SMU::SMU_SENSE::CALIBRATION);
+
     class_<KEI2600>("KEI2600", init<char *, int>())
             .def("enableBeep", &KEI2600::enableBeep)
             .def("disableBeep", &KEI2600::disableBeep)
@@ -97,8 +102,7 @@ BOOST_PYTHON_MODULE(py_instrument_control_lib)
             .def("disableMeasureAnalogFilter", &KEI2600::disableMeasureAnalogFilter)
             .def("disableSourceAutoRange", &KEI2600::disableSourceAutoRange)
             .def("setSourceRange", &KEI2600::setSourceRange)
-            .def("selectLocalSense", &KEI2600::selectLocalSense)
-            .def("selectRemoteSense", &KEI2600::selectRemoteSense)
+            .def("selectLocalSense", &KEI2600::setSenseMode)
             .def("getDeviceIdentifier", &KEI2600::GetDeviceIdentifier)
 
             .def("setMeasurePLC", &KEI2600::setMeasurePLC)
