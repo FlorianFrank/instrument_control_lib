@@ -87,6 +87,15 @@ public:
         MEASURE_WATTS,
     };
 
+    enum SMU_SENSE {
+        /** Selects local sense (2-wire) **/
+        LOCAL,
+        /** Select remote sense (4-wire) **/
+        REMOTE,
+        /** Selects calibration sense mode **/
+        CALIBRATION
+    };
+
     explicit SMU(const char *ip, int timeoutInMs);
     explicit SMU(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
