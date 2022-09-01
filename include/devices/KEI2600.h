@@ -25,10 +25,11 @@ class KEI2600 : public SMU
 {
 public:
     explicit KEI2600(const char *ip, int timeoutInMs, PIL::Logging *logger);
-    explicit KEI2600(const char *ip, int timeoutInMs);
 
-    PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double *value, bool checkErrorBuffer = true) override;
-    double measurePy(UNIT unit, SMU_CHANNEL channel);
+    [[maybe_unused]] explicit KEI2600(const char *ip, int timeoutInMs);
+
+    PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double *value, bool checkErrorBuffer) override;
+    double measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer);
 
     PIL_ERROR_CODE turnOn(SMU_CHANNEL channel, bool checkErrorBuffer) override;
     PIL_ERROR_CODE turnOff(SMU_CHANNEL channel, bool checkErrorBuffer) override;
@@ -42,15 +43,13 @@ public:
     PIL_ERROR_CODE enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer = true);
     PIL_ERROR_CODE disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer = true);
 
-    PIL_ERROR_CODE enableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer = true);
-    PIL_ERROR_CODE disableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer = true);
+    [[maybe_unused]] PIL_ERROR_CODE enableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer = true);
+    [[maybe_unused]] PIL_ERROR_CODE disableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer = true);
 
     PIL_ERROR_CODE setMeasureRange(UNIT unit, SMU_CHANNEL channel, double range, bool checkErrorBuffer = true);
     PIL_ERROR_CODE setSourceRange(UNIT unit, SMU_CHANNEL channel, double range, bool checkErrorBuffer = true);
 
-    PIL_ERROR_CODE selectLocalSense(SMU_CHANNEL channel, bool checkErrorBuffer = true);
-    PIL_ERROR_CODE selectRemoteSense(SMU_CHANNEL channel, bool checkErrorBuffer = true);
-
+    PIL_ERROR_CODE setSenseMode(SMU_CHANNEL channel, SMU_SENSE senseArg, bool checkErrorBuffer = true);
     PIL_ERROR_CODE setMeasurePLC(SMU_CHANNEL channel, double value, bool checkErrorBuffer = true);
     PIL_ERROR_CODE setMeasureLowRange(UNIT unit, SMU_CHANNEL channel, double value, bool checkErrorBuffer = true);
     PIL_ERROR_CODE setMeasureAutoZero(SMU_CHANNEL channel, AUTOZERO autoZero, bool checkErrorBuffer = true);
@@ -63,7 +62,7 @@ public:
     PIL_ERROR_CODE displayMeasureFunction(SMU_CHANNEL channel, SMU_DISPLAY displayMeasureFunc, bool checkErrorBuffer = true);
 
     PIL_ERROR_CODE enableBeep(bool checkErrorBuffer = true);
-    PIL_ERROR_CODE beep(float time, int frequency, bool checkErrorBuffer = true);
+    PIL_ERROR_CODE beep(float timeInSeconds, int frequency, bool checkErrorBuffer = true);
     PIL_ERROR_CODE disableBeep(bool checkErrorBuffer = true);
 
     std::string getLastError();
@@ -78,11 +77,13 @@ private:
 
     PIL_ERROR_CODE analogFilterHelperFunction(SMU_CHANNEL channel, bool enable);
     PIL_ERROR_CODE measureAutoRangeHelperFunction(SMU_CHANNEL channel, UNIT unit, bool enable);
+    PIL_ERROR_CODE enableDisableBeepHelperFunction(bool enable);
 
     static std::string getChannelStringFromEnum(SMU_CHANNEL channel);
     static std::string getStringFromAutoZeroEnum(AUTOZERO autoZero);
     static std::string getStringFromSrcFuncEnum(SRC_FUNC srcFunc);
     static std::string getStringFromOffModeEnum(SRC_OFF_MODE offMode);
-    std::string getStringFromSettleEnum(SRC_SETTLING srcSettling);
-    std::string getStringFromMeasureDisplayFunction(SMU_DISPLAY displayMeausreFunc);
+    static std::string getStringFromSettleEnum(SRC_SETTLING srcSettling);
+    static std::string getStringFromMeasureDisplayFunction(SMU_DISPLAY displayMeasureFunc);
+    static std::string getStringFromSenseValue(SMU_SENSE sense);
 };
