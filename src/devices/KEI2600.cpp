@@ -5,7 +5,10 @@
 #include <stdexcept>
 #include "devices/KEI2600.h"
 #include "ctlib/Logging.hpp"
+
+extern "C" {
 #include "ctlib/ErrorHandler.h"
+}
 
 /**
  * @brief Constructor initializes the ip address and timeout. Disables the logger.
