@@ -1,26 +1,28 @@
-//
-// Created by florianfrank on 15.08.22.
-//
-
 #ifndef INSTRUMENT_CONTROL_LIB_SUBARG_H
 #define INSTRUMENT_CONTROL_LIB_SUBARG_H
 
-#include <vector>
-#include <tuple>
-#include <string>
+#include <vector> // std::vector
+#include <tuple> // std::tuple
+#include <string> // std::string
 
-class SubArg {
+/**
+ * @brief This class implements sub-arguments which can be added to a ExecArgs object.
+ * This is required, when parts of the command contains a substructure, e.g. smua.voltage = 10,
+ * then smu.voltage can be represented as SubArg.
+ */
+class SubArg
+{
 public:
-    explicit SubArg(std::string arg, std::string prefix = "", std::string postfix = "");
+    explicit SubArg(const std::string& arg, const std::string& prefix = "", const std::string& suffix = "");
 
-
-    SubArg& AddElem(std::string, std::string prefix="", std::string postfix="");
-    SubArg& AddElem(int value, std::string prefix="", std::string postfix="");
-    SubArg& AddElem(double value, std::string prefix="", std::string postfix="");
+    SubArg& AddElem(const std::string&, const std::string& prefix="", const std::string& suffix="");
+    SubArg& AddElem(int value, const std::string& prefix="", const std::string& postfix="");
+    SubArg& AddElem(double value, const std::string& prefix="", const std::string& postfix="");
 
     std::string toString();
 
 private:
+    /** Tuple consisting of parameter, prefix and suffix. **/
     std::vector<std::tuple<std::string, std::string, std::string>> m_SubArgElem;
 };
 
