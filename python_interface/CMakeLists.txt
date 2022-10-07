@@ -123,14 +123,17 @@ set(BOOST_PYTHON_LIB "boost_python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}
 target_link_directories(${PROJECT_NAME} PUBLIC "${BOOST_ROOT}\\stage\\lib")
 
 if(WIN32)
-	set(BOOST_PYTHON_LIB "boost_python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}-mgw11-mt-x64-1_80")
+	# TODO: remove hardcoded filepath
+	set(BOOST_PYTHON_LIB "boost_python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}-mgw11-mt-x64-1_81")
 else()
 	set(BOOST_PYTHON_LIB "boost_python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}")
 endif()
 target_link_directories(${PROJECT_NAME} PUBLIC "${BOOST_ROOT}/stage/lib/"
-										       "${BOOST_ROOT}/libs/python/include")
+										       "${BOOST_ROOT}/libs/python/include"
+                                               "C:\\Users\\bra-a\\AppData\\Local\\Programs\\Python\\Python310\\libs")
+# TODO: REMOVE absolute path! ^
 
-target_link_libraries(${PROJECT_NAME} PUBLIC instrument_control_lib ${BOOST_PYTHON_LIB} python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR})
+target_link_libraries(${PROJECT_NAME} PUBLIC instrument_control_lib ${BOOST_PYTHON_LIB} python310)
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
 if(WIN32)
 	set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".pyd")

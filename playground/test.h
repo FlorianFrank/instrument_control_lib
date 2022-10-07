@@ -11,7 +11,7 @@
 
 using namespace std;
 
-int testSMU(string ip);
+int testSMU(string ip, double doubleTolerance);
 
 int testSPD();
 
