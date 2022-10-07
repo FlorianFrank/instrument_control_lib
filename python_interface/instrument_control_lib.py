@@ -16,10 +16,10 @@ def spd_test():
 
 def smu_test():
 	smu = KEI2600("192.168.1.10", 2000)
-	errorCode = smu.Connect()
+	errorCode = smu.connect()
 	if errorCode != ERROR_CODE.NO_ERROR:
 		print(errorCode)
-	print(smu.GetDeviceIdentifier())
+	print(smu.getDeviceIdentifier())
 	errorCode = smu.turnOn(SMU_CHANNEL.CHANNEL_A)
 	if errorCode != ERROR_CODE.NO_ERROR:
 		print(errorCode)
