@@ -31,11 +31,14 @@ int testOscillosope() {
     return 0;
 }
 
-int testSMU(string ip) {
+bool doubleInRange(double value, double comparisonValue, double tolerance) {
+    return value >= comparisonValue - tolerance && value <= comparisonValue + tolerance;
+}
+
+int testSMU(string ip, double doubleTolerance) {
     PIL::Logging logger(INFO_LVL, nullptr);
     KEI2600 *smu = new KEI2600(ip.c_str(), 0, &logger);
-    bool connectRet = smu->Connect();
-    if(!connectRet) {
+    if(smu->Connect() != PIL_NO_ERROR) {
         cout << smu->ReturnErrorMessage() << std::endl;
         return 1;
     }
@@ -55,8 +58,8 @@ int testSMU(string ip) {
 
     // beep
     smu->enableBeep(false);
-    smu->beep(100, 1000, false);
-    usleep(1000000);
+    //smu->beep(100, 1000, false);
+    //usleep(1000000);
     smu->disableBeep();
 
     smu->enableSourceAutoRange(SMU::VOLTAGE, SMU::CHANNEL_A);
@@ -65,7 +68,7 @@ int testSMU(string ip) {
     smu->turnOn(SMU::CHANNEL_A, false);
     double measureV;
     smu->measure(SMU::VOLTAGE, SMU::CHANNEL_A, &measureV, false);
-    if (measureV != 0.5) {
+    if (!doubleInRange(measureV, 0.5, doubleTolerance)) {
         cout << "ERROR! Voltage test failed!\n";
         exit(1);
     } else {
@@ -80,7 +83,7 @@ int testSMU(string ip) {
     smu->setMeasureRange(SMU::VOLTAGE, SMU::CHANNEL_B, 0.5);
     smu->turnOn(SMU::CHANNEL_B, false);
     smu->measure(SMU::VOLTAGE, SMU::CHANNEL_B, &measureV, false);
-    if (measureV != 0.5) {
+    if (!doubleInRange(measureV, 0.5, doubleTolerance)) {
         cout << "ERROR! Voltage on Channel b test failed!\n";
         exit(1);
     } else {
@@ -138,7 +141,7 @@ int testSMU(string ip) {
         smu->Exec(command);
     }
     smu->Disconnect();
-    
+
     return 0;
 }
 
