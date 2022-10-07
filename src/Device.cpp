@@ -127,7 +127,7 @@ std::string Device::GetDeviceIdentifier()
     ExecArgs args;
     args.AddArgument(arg, "");
 
-    if(!Exec("", &args, buffer))
+    if(Exec("", &args, buffer) != PIL_NO_ERROR)
         return "Error while executing *IDN?";
 
     return std::regex_replace(buffer, std::regex("\n"), "");
