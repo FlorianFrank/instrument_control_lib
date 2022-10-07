@@ -7,7 +7,6 @@ timeout = 2000
 
 def handle_error_code(code, command):
     print(f'{command: <15} executed with error code {code}')
-    sleep(1)
 
 
 def test_smu(smu):
