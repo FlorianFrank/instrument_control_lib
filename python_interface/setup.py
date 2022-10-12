@@ -1,3 +1,7 @@
+# Setup file for pip
+# Do not touch content!
+# One is only allowed to change the setup config below
+
 import os
 import re
 import subprocess
@@ -120,9 +124,9 @@ class CMakeBuild(build_ext):
 
 setup(
     name="py_instrument_control_lib",
-    version="0.1.1",
-    author="...",
-    author_email="...",
+    version="1.0",
+    author="",
+    author_email="",
     description="Py Instrument Control Lib",
     long_description="",
     ext_modules=[CMakeExtension("py_instrument_control_lib")],
