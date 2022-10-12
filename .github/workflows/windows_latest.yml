@@ -30,9 +30,6 @@ jobs:
           }
 
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node }}
 
       - name: install Dependencies Linux
         if: matrix.config.os == 'ubuntu-latest'
@@ -45,7 +42,7 @@ jobs:
 
       - uses: actions/checkout@v3
         with:
-          submodules: true
+          submodules: recursive
 
       - name: Setup Ninja
         if: matrix.config.os == 'windows-latest'
@@ -65,13 +62,12 @@ jobs:
           cxx: ${{ matrix.config.cxx }}
           configure-options: -G Ninja
           build-type: Release
-      # run: cmake ${{runner.workspace}}/common_tools_lib -G "${{ matrix.config.generators }}"  -DALL=1
+        #run: cmake "-DCMAKE_MAKE_PROGRAM=ninja" -G Ninja -S ..\.. -B .
 
       - name: Build
         working-directory: ${{runner.workspace}}/build
         shell: bash
-        # Execute the build.  You can specify a specific target with "--target <NAME>"
-        run: cmake --build . --config $BUILD_TYPE
+        run: cmake --build . --config ${{ matrix.config.build_type }} --target all
 
       - name: Test
         if: matrix.config.os != 'windows-latest'
@@ -84,3 +80,12 @@ jobs:
         with:
           name: test_results_xml
           path: ${{runner.workspace}}/build/test-results/**/*.xml
+      
+      - name: Rename py_instrument_control_lub
+        run: move ${{runner.workspace}}\build\lib\python_interface\py_instrument_control_lib*.pyd ${{runner.workspace}}\build\lib\python_interface\py_instrument_control_lib.pyd
+      
+      - name: Upload py_instrument_control_lib.pyd
+        uses: actions/upload-artifact@v2
+        with:
+          name: py_instrument_control_lib.pyd
+          path: ${{runner.workspace}}/build/lib/python_interface/py_instrument_control_lib.pyd
