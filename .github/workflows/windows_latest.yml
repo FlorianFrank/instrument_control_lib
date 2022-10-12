@@ -79,10 +79,6 @@ jobs:
         with:
           name: test_results_xml
           path: ${{runner.workspace}}/build/test-results/**/*.xml
-      
-      - name: Rename py_instrument_control_lub
-        working-directory: ${{runner.workspace}}\build\lib\python_interface
-        run: move py_instrument_control_lib*.pyd py_instrument_control_lib.pyd
         
       - name: Echo 1
         working-directory: ${{runner.workspace}}
@@ -103,6 +99,10 @@ jobs:
       - name: Echo 5
         working-directory: ${{runner.workspace}}/build/lib
         run: ls
+        
+      - name: Rename py_instrument_control_lub
+        working-directory: ${{runner.workspace}}\build\lib\python_interface
+        run: move py_instrument_control_lib*.pyd py_instrument_control_lib.pyd
     
       - name: Upload py_instrument_control_lib.pyd
         uses: actions/upload-artifact@v2
