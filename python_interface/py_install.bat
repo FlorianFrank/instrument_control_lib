@@ -1,6 +1,10 @@
 
-python .\setup.py build
-python .\setup.py install
 rmdir /s /q build
 rmdir /s /q dist
-rmdir /s /q instrument_control_lib.egg-info
+rmdir /s /q py_instrument_control_lib.egg-info
+
+pip install .
+
+rmdir /s /q build
+rmdir /s /q dist
+rmdir /s /q py_instrument_control_lib.egg-info
