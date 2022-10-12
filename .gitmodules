@@ -4,7 +4,3 @@
 [submodule "pugixml"]
 	path = pugixml
 	url = git@github.com:zeux/pugixml.git
-[submodule "boost"]
-	path = boost
-	url = https://github.com/boostorg/boost.git
-    ignore = all
