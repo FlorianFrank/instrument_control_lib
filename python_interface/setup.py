@@ -119,13 +119,13 @@ class CMakeBuild(build_ext):
 
 
 setup(
-    name="instrument_control_lib",
+    name="py_instrument_control_lib",
     version="0.1.1",
     author="...",
     author_email="...",
-    description="Instrument control lib",
+    description="Py Instrument Control Lib",
     long_description="",
-    ext_modules=[CMakeExtension("instrument_control_lib")],
+    ext_modules=[CMakeExtension("py_instrument_control_lib")],
     cmdclass={"build_ext": CMakeBuild},
     zip_safe=False,
     extras_require={"test": ["pytest>=6.0"]},
