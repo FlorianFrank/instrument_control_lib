@@ -85,15 +85,15 @@ jobs:
         run: ls
       
       - name: Echo 2
-        working-directory: ${{runner.workspace}}}\build
+        working-directory: ${{runner.workspace}}}/build
         run: ls
         
       - name: Echo 3
-        working-directory: ${{runner.workspace}}\build\lib
+        working-directory: ${{runner.workspace}}/build/lib
         run: ls
         
       - name: Echo 4
-        working-directory: ${{runner.workspace}}\build\lib\python_interface
+        working-directory: ${{runner.workspace}}/build/lib/python_interface
         run: ls
         
       - name: Echo 5
