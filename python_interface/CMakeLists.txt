@@ -15,6 +15,4 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 		"${CMAKE_CURRENT_SOURCE_DIR}/../common_tools_lib/Logging/include"
 )
 
-configure_file(instrument_control_lib.py instrument_control_lib.py COPYONLY)
-configure_file(test_pybind.py test_pybind.py COPYONLY)
 configure_file(testSMU.py testSMU.py COPYONLY)
