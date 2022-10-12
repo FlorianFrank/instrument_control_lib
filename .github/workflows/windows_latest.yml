@@ -84,4 +84,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: py_instrument_control_lib.pyd
-          path: ${{runner.workspace}}/build/lib/python_interface/py_instrument_control_lib.cp39-win_amd64.pyd
+          path: ${{ runner.workspace }}/build/lib/python_interface/py_instrument_control_lib.cp39-win_amd64.pyd
