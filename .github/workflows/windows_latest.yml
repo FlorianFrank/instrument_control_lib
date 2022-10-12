@@ -63,10 +63,10 @@ jobs:
           build-type: Release
         #run: cmake "-DCMAKE_MAKE_PROGRAM=ninja" -G Ninja -S ..\.. -B .
 
-      - name: Build
-        working-directory: ${{runner.workspace}}/build
-        shell: bash
-        run: cmake --build . --config ${{ matrix.config.build_type }} --target all
+      #- name: Build
+      #  working-directory: ${{runner.workspace}}/build
+      #  shell: bash
+      #  run: cmake --build . --config ${{ matrix.config.build_type }} --target all
 
       - name: Test
         if: matrix.config.os != 'windows-latest'
@@ -81,7 +81,8 @@ jobs:
           path: ${{runner.workspace}}/build/test-results/**/*.xml
       
       - name: Rename py_instrument_control_lub
-        run: move ${{runner.workspace}}\build\lib\python_interface\py_instrument_control_lib*.pyd ${{runner.workspace}}\build\lib\python_interface\py_instrument_control_lib.pyd
+        working-directory: ${{runner.workspace}}/build/lib/python_interface
+        run: move py_instrument_control_lib*.pyd py_instrument_control_lib.pyd
       
       - name: Upload py_instrument_control_lib.pyd
         uses: actions/upload-artifact@v2
