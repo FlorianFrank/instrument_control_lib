@@ -4,7 +4,6 @@
 [submodule "pugixml"]
 	path = pugixml
 	url = git@github.com:zeux/pugixml.git
-[submodule "boost"]
-	path = boost
-	url = https://github.com/boostorg/boost.git
-    ignore = all
+[submodule "pybind11"]
+	path = python_interface/pybind11
+	url = git@github.com:pybind/pybind11.git
