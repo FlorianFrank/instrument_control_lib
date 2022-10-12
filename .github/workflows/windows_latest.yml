@@ -36,8 +36,7 @@ jobs:
         run: sudo apt-get install libgtest-dev
 
       - name: Googletest installer
-        # You may pin to the exact commit or the version.
-        # uses: MarkusJx/googletest-installer@2dbed3d0a9dc19bebe3e36773185ab9c17664c8d
+        if: matrix.config.os != 'windows-latest'
         uses: MarkusJx/googletest-installer@v1.1
 
       - uses: actions/checkout@v3
