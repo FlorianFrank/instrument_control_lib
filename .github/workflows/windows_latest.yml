@@ -87,4 +87,4 @@ jobs:
           path: ${{ runner.workspace }}/build/lib/python_interface/py_instrument_control_lib.cp39-win_amd64.pyd
           
       - name: ls
-        run: ls ${{ runner.workspace }}/build
+        run: ls ${{ runner.workspace }}/build/python_interface
