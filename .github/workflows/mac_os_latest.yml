@@ -77,8 +77,8 @@ jobs:
         uses: ashutoshvarma/action-cmake-build@master
         with:
           build-dir: ${{ runner.workspace }}/build
-          cc: ${{ matrix.config.cc }}
-          cxx: ${{ matrix.config.cxx }}
+          cc: ${{matrix.config.cc}}
+          cxx: ${{matrix.config.cxx}}
           configure-options: -G Ninja
           build-type: Release
       # run: cmake ${{runner.workspace}}/common_tools_lib -G "${{ matrix.config.generators }}"  -DALL=1
