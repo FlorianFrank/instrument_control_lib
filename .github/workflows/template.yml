@@ -1,0 +1,95 @@
+name: ubuntu_latest
+
+on: [push]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config: 
+        - {
+            name: "",
+            os: ,
+            artifact: "",
+            build_type: $BUILD_TYPE,
+            cc: "",
+            cxx: "",
+            archiver: "7z a",
+            generators: "Ninja"
+          }
+
+    steps:
+      - name: Install Dependencies Linux
+        if: matrix.config.os == 'ubuntu-latest'
+        run: sudo apt-get install libgtest-dev
+
+      - name: Googletest installer
+        uses: MarkusJx/googletest-installer@v1.1
+
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Setup Ninja Windows
+        if: matrix.config.os == 'windows-latest'
+        uses: ashutoshvarma/setup-ninja@master
+      
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{runner.workspace}}/build
+      
+      - name: Configure CMake Ubuntu & MacOS
+        if: matrix.config.os != 'windows-latest'
+        working-directory: ${{runner.workspace}}/build
+        # Note the current convention is to use the -S and -B options here to specify source
+        # and build directories, but this is only available with CMake 3.13 and higher.
+        # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=${{matrix.config.build_type}}
+
+      - name: Configure CMake Windows
+        if: matrix.config.os == 'windows-latest'
+        uses: ashutoshvarma/action-cmake-build@master
+        with:
+          build-dir: ${{ runner.workspace }}/build
+          cc: ${{ matrix.config.cc }}
+          cxx: ${{ matrix.config.cxx }}
+          configure-options: -G Ninja
+          build-type: Release
+      
+      - name: Build project
+        working-directory: ${{runner.workspace}}/build
+        shell: bash
+        run: cmake --build . --config ${{ matrix.config.build_type }} --target all
+      
+      - name: Execute tests
+        if: matrix.config.os != 'windows-latest'
+        working-directory: ${{runner.workspace}}/build
+        run: GTEST_OUTPUT=xml:test-results/ GTEST_COLOR=1 ctest -V
+      
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: test_results_xml
+          path: ${{runner.workspace}}/build/test-results/**/*.xml
+
+      - name: Upload python lib Ubuntu & MacOS
+        if: matrix.config.os != 'windows-latest'
+        uses: actions/upload-artifact@v2
+        with:
+          name: py_instrument_control_lib.so
+          path: ${{runner.workspace}}/build/python_interface/py_instrument_control_lib*.so
+      
+      - name: Upload python lib Windows
+        if: matrix.config.os == 'windows-latest'
+        uses: actions/upload-artifact@v2
+        with:
+          name: py_instrument_control_lib.pyd
+          path: ${{ runner.workspace }}/build/python_interface/py_instrument_control_lib*.pyd
