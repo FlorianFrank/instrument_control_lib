@@ -45,7 +45,7 @@ jobs:
 
       - uses: actions/checkout@v3
         with:
-          submodules: true
+          submodules: recursive
 
       - name: Set up MinGW
         if: matrix.config.os == 'windows-latest'
@@ -96,7 +96,13 @@ jobs:
 
       - name: Upload test results
         uses: actions/upload-artifact@v2
-        if: failure()
+        #if: failure()
         with:
           name: test_results_xml
           path: ${{runner.workspace}}/build/test-results/**/*.xml
+          
+      - name: Upload py_instrument_control_lib (Ubuntu & MacOS)
+        uses: actions/upload-artifact@v2
+        with:
+          name: py_instrument_control_lib.so
+          path: ${{runner.workspace}}/build/python_interface/py_instrument_control_lib*.so
