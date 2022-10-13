@@ -15,12 +15,12 @@ jobs:
       matrix:
         config: 
         - {
-            name: "Windows Latest MinGW",
-            os: windows-latest,
-            artifact: "windows_mingw.7z",
-            build_type: "Release",
-            cc: "gcc",
-            cxx: "g++",
+            name: "",
+            os: ,
+            artifact: "",
+            build_type: $BUILD_TYPE,
+            cc: "",
+            cxx: "",
             archiver: "7z a",
             generators: "Ninja"
           }
