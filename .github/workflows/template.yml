@@ -1,4 +1,4 @@
-name: ubuntu_latest
+name: os_latest
 
 on: [push]
 
@@ -15,12 +15,12 @@ jobs:
       matrix:
         config: 
         - {
-            name: "",
-            os: ,
-            artifact: "",
-            build_type: $BUILD_TYPE,
-            cc: "",
-            cxx: "",
+            name: "Windows Latest MinGW",
+            os: windows-latest,
+            artifact: "windows_mingw.7z",
+            build_type: "Release",
+            cc: "gcc",
+            cxx: "g++",
             archiver: "7z a",
             generators: "Ninja"
           }
