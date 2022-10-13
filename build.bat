@@ -1,13 +1,11 @@
-#!/bin/bash
-
-rm -rf out
-rm -rf build
+rmdir /s /q build
 mkdir build
-mkdir build/lib
+mkdir build\lib
 
-pushd build/lib
-cmake ../.. -D CMAKE_INSTALL_PREFIX=../../out 
-make
-make install
+pushd build\lib
+cmake "-DCMAKE_MAKE_PROGRAM=ninja" -G Ninja -S ..\.. -B .
+cmake --build . --target all -j 6
+pushd python_interface
+move py_instrument_control_lib*.pyd py_instrument_control_lib.pyd
 popd
-
+popd

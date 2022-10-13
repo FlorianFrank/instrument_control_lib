@@ -1,4 +1,4 @@
-name: mac_os_latest
+name: template
 
 on: [push]
 
@@ -15,13 +15,13 @@ jobs:
       matrix:
         config: 
         - {
-            name: "macOS Latest Clang",
-            os: macos-latest,
-            artifact: "macos_clang.7z",
-            build_type: "Release",
-            cc: "clang",
-            cxx: "clang++",
-            archiver: "7za a",
+            name: "",
+            os: ,
+            artifact: "",
+            build_type: $BUILD_TYPE,
+            cc: "",
+            cxx: "",
+            archiver: "7z a",
             generators: "Ninja"
           }
 

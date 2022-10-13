@@ -3,22 +3,18 @@ name: windows_latest
 on: [push]
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
 
 jobs:
   build:
-    # The CMake configure and build commands are platform agnostic and should work equally
-    # well on Windows or Mac.  You can convert this to a matrix build if you need
-    # cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     strategy:
       fail-fast: false
       matrix:
-        config:
-          - {
+        config: 
+        - {
             name: "Windows Latest MinGW",
             os: windows-latest,
             artifact: "windows_mingw.7z",
@@ -30,31 +26,32 @@ jobs:
           }
 
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node }}
-
-      - name: install Dependencies Linux
+      - name: Install Dependencies Linux
         if: matrix.config.os == 'ubuntu-latest'
         run: sudo apt-get install libgtest-dev
 
       - name: Googletest installer
-        # You may pin to the exact commit or the version.
-        # uses: MarkusJx/googletest-installer@2dbed3d0a9dc19bebe3e36773185ab9c17664c8d
         uses: MarkusJx/googletest-installer@v1.1
 
-      - uses: actions/checkout@v3
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
         with:
-          submodules: true
+          submodules: recursive
 
-      - name: Setup Ninja
+      - name: Setup Ninja Windows
         if: matrix.config.os == 'windows-latest'
         uses: ashutoshvarma/setup-ninja@master
-
+      
       - name: Create Build Environment
-        # Some projects don't allow in-source building, so create a separate build directory
-        # We'll use this as our working directory for all subsequent commands
         run: cmake -E make_directory ${{runner.workspace}}/build
+      
+      - name: Configure CMake Ubuntu & MacOS
+        if: matrix.config.os != 'windows-latest'
+        working-directory: ${{runner.workspace}}/build
+        # Note the current convention is to use the -S and -B options here to specify source
+        # and build directories, but this is only available with CMake 3.13 and higher.
+        # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=${{matrix.config.build_type}}
 
       - name: Configure CMake Windows
         if: matrix.config.os == 'windows-latest'
@@ -65,22 +62,34 @@ jobs:
           cxx: ${{ matrix.config.cxx }}
           configure-options: -G Ninja
           build-type: Release
-      # run: cmake ${{runner.workspace}}/common_tools_lib -G "${{ matrix.config.generators }}"  -DALL=1
-
-      - name: Build
+      
+      - name: Build project
         working-directory: ${{runner.workspace}}/build
         shell: bash
-        # Execute the build.  You can specify a specific target with "--target <NAME>"
-        run: cmake --build . --config $BUILD_TYPE
-
-      - name: Test
+        run: cmake --build . --config ${{ matrix.config.build_type }} --target all
+      
+      - name: Execute tests
         if: matrix.config.os != 'windows-latest'
         working-directory: ${{runner.workspace}}/build
         run: GTEST_OUTPUT=xml:test-results/ GTEST_COLOR=1 ctest -V
-
+      
       - name: Upload test results
         uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: test_results_xml
           path: ${{runner.workspace}}/build/test-results/**/*.xml
+
+      - name: Upload python lib Ubuntu & MacOS
+        if: matrix.config.os != 'windows-latest'
+        uses: actions/upload-artifact@v2
+        with:
+          name: py_instrument_control_lib.so
+          path: ${{runner.workspace}}/build/python_interface/py_instrument_control_lib*.so
+      
+      - name: Upload python lib Windows
+        if: matrix.config.os == 'windows-latest'
+        uses: actions/upload-artifact@v2
+        with:
+          name: py_instrument_control_lib.pyd
+          path: ${{ runner.workspace }}/build/python_interface/py_instrument_control_lib*.pyd
