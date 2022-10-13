@@ -1,4 +1,4 @@
-name: os_latest
+name: ubuntu_latest
 
 on: [push]
 
