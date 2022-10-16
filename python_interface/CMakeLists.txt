@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.4...3.18)
 
-include("${CMAKE_CURRENT_SOURCE_DIR}/../build_config/general_config.cmake")
-
 project(py_instrument_control_lib)
 
 add_subdirectory(pybind11)
