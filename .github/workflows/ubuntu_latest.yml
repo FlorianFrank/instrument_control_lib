@@ -97,3 +97,9 @@ jobs:
         with:
           name: py_instrument_control_lib.pyd
           path: ${{ runner.workspace }}/build/python_interface/py_instrument_control_lib*.pyd
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build/doc/html
