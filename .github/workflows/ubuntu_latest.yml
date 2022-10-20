@@ -34,7 +34,7 @@ jobs:
         uses: MarkusJx/googletest-installer@v1.1
 
       - name: Install Doxygen
-        run: sudo apt-get install doxygen -y
+        run: sudo apt-get install doxygen -y & sudo apt-get install graphviz
         shell: bash
 
       - name: Checkout repository and submodules
