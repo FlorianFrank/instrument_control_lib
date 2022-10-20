@@ -102,4 +102,4 @@ jobs:
         id: deployment
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build/doc/html
+          folder: ${{runner.workspace}}/build/html
