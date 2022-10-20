@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Instrument Control Lib: Main Page</title>
+<title>Instrument Control Lib: Instrument Control Lib</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -81,11 +81,383 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">Instrument Control Lib Documentation</div>  </div>
+<div class="title">Instrument Control Lib </div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p><object type="image/svg+xml" data="docs_and_specs/figures/Logo.svg" style="pointer-events: none;"></object></p>
+<p>This repository contains the code to configure oscilloscopes, signal generators, DC Power-supplies and other measurement devices. <br  />
+<br  />
+ It provides following functionality: <br  />
+</p><ul>
+<li>Establishing a network connection and identifying the different types of devices <br  />
+</li>
+<li>Execution of VISA commands on the devices. E.g. setting the voltage on a DC power-supply, Setting voltage limits on SMUs or to gather the current data of an oscilloscope <br  />
+</li>
+<li>CSV export function to directly store the output of measure devices in an *.csv file. <br  />
+</li>
+<li>Environment to set up test cases, configured by an XML file. <br  />
+</li>
+<li>Platform independent implementation (tested on Windows, MAC OS and Ubuntu)</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Supported Devices</h1>
+<h3><a class="anchor" id="autotoc_md2"></a>
+    - SPD1305X DC Power Supply</h3>
+<h3><a class="anchor" id="autotoc_md3"></a>
+   - Keysight 33500B Waveform Generator</h3>
+<h3><a class="anchor" id="autotoc_md4"></a>
+   - Keysight InfiniiVision 3000A X-Series Oscilloscopes</h3>
+<h3><a class="anchor" id="autotoc_md5"></a>
+   - Tektronix 2600B Series SMU</h3>
+<h1><a class="anchor" id="autotoc_md6"></a>
+Continuous integration</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadCenter">OS </th><th class="markdownTableHeadCenter">Status  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">Windows Latest </td><td class="markdownTableBodyCenter"><object type="image/svg+xml" data="https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/windows_latest.yml/badge.svg" style="pointer-events: none;">Windows latest</object>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">Mac OS Latest </td><td class="markdownTableBodyCenter"><object type="image/svg+xml" data="https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/mac_os_latest.yml/badge.svg" style="pointer-events: none;">MAC OS latest</object>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">Ubuntu Latest </td><td class="markdownTableBodyCenter"><object type="image/svg+xml" data="https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/ubuntu_latest.yml/badge.svg" style="pointer-events: none;">Ubuntu Latest</object>  </td></tr>
+</table>
+<h1><a class="anchor" id="autotoc_md7"></a>
+Build</h1>
+<h2><a class="anchor" id="autotoc_md8"></a>
+1. Build from master branch</h2>
+<h3><a class="anchor" id="autotoc_md9"></a>
+1.1 Checkout repository</h3>
+<div class="fragment"><div class="line">git clone git@github.com:FlorianFrank/instrument_control_lib.git</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md10"></a>
+1.2 Configure build</h3>
+<p>Adjust the configuration files according to your needs.</p>
+<div class="fragment"><div class="line">option(INSTRUMENT_LIB_BUILD_STATIC &quot;Build instrument lib as static library&quot;     ON)</div>
+<div class="line"> </div>
+<div class="line"># Definitions for the platform independent abstraction layer.</div>
+<div class="line">option(PIL_COMMUNICATION    &quot;Enable PIL Sockets&quot;          ON)</div>
+<div class="line">option(PIL_THREADING        &quot;Enable PIL Threads&quot;          ON)</div>
+<div class="line">option(PIL_LOGGING          &quot;Enable Logging support&quot;      ON)</div>
+<div class="line">option(PIL_SHARED           &quot;BUILD PIL as shared library&quot; OFF)</div>
+<div class="line">option(PIL_STATIC           &quot;BUILD PIL as static library&quot; ON)</div>
+<div class="line">option(PIL_CXX              &quot;Enable PIL C++ support&quot;      ON)</div>
+<div class="line"> </div>
+<div class="line"># PugiXML options</div>
+<div class="line">option(BUILD_SHARED_LIBS    &quot;Build pugiXML as shared lib&quot; OFF)</div>
+<div class="line">set(PUGI_XML_VERSION 1.12)</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md11"></a>
+1.3 Build the library</h3>
+<p>On Linux and MAC OS run: </p><div class="fragment"><div class="line">./build.sh</div>
+</div><!-- fragment --><p>On Windows run:</p>
+<div class="fragment"><div class="line">.\build.bat</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md12"></a>
+1.4 Exporting the library</h3>
+<p>You can find the library in the <b>build</b> folder. </p><div class="fragment"><div class="line">out</div>
+<div class="line">├── include          Here you can find the device and include fines for the project</div>
+<div class="line">├── ĺib              Here you can find the libraries to link to your project.</div>
+<div class="line">├── bin              In this folder you can find sample test programs, like a command line interface.</div>
+<div class="line">├── doc              This folder contains the doxygen documentation.</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md13"></a>
+2. Download pre-installed packages</h2>
+<h3><a class="anchor" id="autotoc_md14"></a>
+2.1 Download a released version from github.</h3>
+<p>Go to:<br  />
+ <a href="https://github.com/FlorianFrank/instrument_control_lib/tags">Instrument Control Packages</a> and download the preferred version.</p>
+<h3><a class="anchor" id="autotoc_md15"></a>
+2.2 Install the package</h3>
+<h3><a class="anchor" id="autotoc_md16"></a>
+2.2.1 On Debian based systems</h3>
+<p>Execute:</p>
+<div class="fragment"><div class="line">dpkg -i instrument_control_lib.deb</div>
+</div><!-- fragment --><p>The files are copied into the **/usr/bin, /usr/lib/,** and **/usr/include** folders and can be linked and included in any program.</p>
+<h3><a class="anchor" id="autotoc_md17"></a>
+2.2.2 On Windows systems</h3>
+<p>Run the graphical installer.</p>
+<h3><a class="anchor" id="autotoc_md18"></a>
+2.2.3 On MAC OS systems</h3>
+<p>Run the graphical installer.</p>
+<h1><a class="anchor" id="autotoc_md19"></a>
+Supported Commands per device</h1>
+<p><br  />
+<br  />
+</p>
+<h3><a class="anchor" id="autotoc_md20"></a>
+SPD1305X DC Power Supply</h3>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone"><b>Function</b> </th><th class="markdownTableHeadNone"><b>Parameters</b> </th><th class="markdownTableHeadNone"><b>Description</b> </th><th class="markdownTableHeadNone"><b>Value Range</b>  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">setCurrent() </td><td class="markdownTableBodyNone">channel, current </td><td class="markdownTableBodyNone">Sets the current of the DC power-supply. </td><td class="markdownTableBodyNone">See manual.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">getCurrent() </td><td class="markdownTableBodyNone">channel </td><td class="markdownTableBodyNone">Get the currently adjusted current of a certain channel. </td><td class="markdownTableBodyNone">See manual.  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">setVoltage() </td><td class="markdownTableBodyNone">channel, voltage </td><td class="markdownTableBodyNone">Sets the voltage on the DC power-supply. </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">getVoltage() </td><td class="markdownTableBodyNone">channel </td><td class="markdownTableBodyNone">Get the currently adjusted voltage of a certain channel. </td><td class="markdownTableBodyNone">See manual  </td></tr>
+</table>
+<p><br  />
+<br  />
+ </p>
+<h3><a class="anchor" id="autotoc_md21"></a>
+Keysight 33500B Waveform Generator</h3>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone"><b>Function</b> </th><th class="markdownTableHeadNone"><b>Parameters</b> </th><th class="markdownTableHeadNone"><b>Description</b> </th><th class="markdownTableHeadNone"><b>Value Range</b>  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">run() </td><td class="markdownTableBodyNone">- </td><td class="markdownTableBodyNone">Start the acquisition on the instrument. </td><td class="markdownTableBodyNone">-  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">stop() </td><td class="markdownTableBodyNone">- </td><td class="markdownTableBodyNone">Stop the acquisition on the instrument. </td><td class="markdownTableBodyNone">-  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">single() </td><td class="markdownTableBodyNone">- </td><td class="markdownTableBodyNone">Wait for the first signal which is triggered and stop the measurement. </td><td class="markdownTableBodyNone">-  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">autoScale() </td><td class="markdownTableBodyNone">- </td><td class="markdownTableBodyNone">The oscilloscope tries to find the best vertical channel, timebase and trigger setting for the current experiment. </td><td class="markdownTableBodyNone">-  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">setTimeRange() </td><td class="markdownTableBodyNone">timeRange </td><td class="markdownTableBodyNone">Sets the full-cale horizontal time in seconds for the main window. </td><td class="markdownTableBodyNone">10x current time-per-devision setting  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">setChannelOffset() </td><td class="markdownTableBodyNone">channel, offset, unit </td><td class="markdownTableBodyNone">Set the offset of a channel in volts or milli volts. </td><td class="markdownTableBodyNone">When amplitude is below 400 mV the offset is limited to 500 mV  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">setChannelScale() </td><td class="markdownTableBodyNone">channel, scale </td><td class="markdownTableBodyNone">Sets the vertical scale or units per division of a specified channel. </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">setChannelRange() </td><td class="markdownTableBodyNone">channel, range </td><td class="markdownTableBodyNone">Defines the full-scale vertical axis on the selected channel </td><td class="markdownTableBodyNone">8 mV - 40 V  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">getWaveFormData() </td><td class="markdownTableBodyNone">data </td><td class="markdownTableBodyNone">Return the currently captured waveform, which is visualized on the oscilloscopes screen. The data is formated in IEEE 488.2 arbitrary block data format. </td><td class="markdownTableBodyNone">-  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">getRealData() </td><td class="markdownTableBodyNone">double **result </td><td class="markdownTableBodyNone">Captures data from the oscilloscope and transforms the data from binary array to a double array. </td><td class="markdownTableBodyNone">-  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">digitize() </td><td class="markdownTableBodyNone">- </td><td class="markdownTableBodyNone">Specialized run command. Captures waveforms according to the settings of the :ACQuire format. (Can only be executed with :TIMbased:MODE being MAIN or WINDow) </td><td class="markdownTableBodyNone">-  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">getSystemSetup() </td><td class="markdownTableBodyNone">- </td><td class="markdownTableBodyNone">Outputs the current oscilloscope setup as string. </td><td class="markdownTableBodyNone">-  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">setDisplayMode() </td><td class="markdownTableBodyNone">mode </td><td class="markdownTableBodyNone">Sets the mode of the oscilloscope either to normal mode, time based mode, XY or roll mode. </td><td class="markdownTableBodyNone">NORMAL, TIME_BASED; XY, ROLL  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">setChannelDisplay() </td><td class="markdownTableBodyNone">channel </td><td class="markdownTableBodyNone">Turns the output of a channel on or off. </td><td class="markdownTableBodyNone">ON / OFF  </td></tr>
+</table>
+<p><br  />
+<br  />
+ </p>
+<h3><a class="anchor" id="autotoc_md22"></a>
+Tektronix 2600B Series SMU</h3>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone"><b>Function</b> </th><th class="markdownTableHeadNone"><b>Parameters</b> </th><th class="markdownTableHeadNone"><b>Description</b> </th><th class="markdownTableHeadNone"><b>Value Range</b>  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">turnOn() </td><td class="markdownTableBodyNone">channel </td><td class="markdownTableBodyNone">Enable a channel on the <a class="el" href="classSMU.html" title="Dummy class to allow assignment to SMU class.">SMU</a>. </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">turnOff() </td><td class="markdownTableBodyNone">channel </td><td class="markdownTableBodyNone">Disable a channel on the <a class="el" href="classSMU.html" title="Dummy class to allow assignment to SMU class.">SMU</a>. </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">measure() </td><td class="markdownTableBodyNone">channel, unit </td><td class="markdownTableBodyNone">Measure a certain unit (voltage, current, power) and return the measure results. </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">setLevel() </td><td class="markdownTableBodyNone">channel, unit </td><td class="markdownTableBodyNone">Set voltage, current source level </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">setLimit() </td><td class="markdownTableBodyNone">channel, unit </td><td class="markdownTableBodyNone">Set voltage, current or power limit. </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">enableMeasureAutoRange() </td><td class="markdownTableBodyNone">unit, channel </td><td class="markdownTableBodyNone">Enable voltage or current measure auto range. </td><td class="markdownTableBodyNone">ON  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">disableMeasureAutoRange() </td><td class="markdownTableBodyNone">unit, channel </td><td class="markdownTableBodyNone">Disable voltage or current measure auto range. </td><td class="markdownTableBodyNone">OFF  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">enableSourceAutoRange() </td><td class="markdownTableBodyNone">unit, channel </td><td class="markdownTableBodyNone">Enable voltage or current measure auto range. </td><td class="markdownTableBodyNone">ON  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">disableSourceAutoRange() </td><td class="markdownTableBodyNone">unit, channel </td><td class="markdownTableBodyNone">Disable voltage or current measure auto range. </td><td class="markdownTableBodyNone">OFF  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">setMeasureRange() </td><td class="markdownTableBodyNone">unit, channel, range </td><td class="markdownTableBodyNone">Set voltage or current measure range. </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">setSourceRange() </td><td class="markdownTableBodyNone">unit, channel, range </td><td class="markdownTableBodyNone">Set voltage or current source range. </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">selectLocalSense() </td><td class="markdownTableBodyNone">unit, channel </td><td class="markdownTableBodyNone">Select local sense (2-wire). </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">setRemoteSense() </td><td class="markdownTableBodyNone">unit, channel </td><td class="markdownTableBodyNone">Select remote sense (4-wire). </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">enableBeep() </td><td class="markdownTableBodyNone">- </td><td class="markdownTableBodyNone">Enable the execution of a beep sound on the oscilloscope. </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">enableBeep() </td><td class="markdownTableBodyNone">- </td><td class="markdownTableBodyNone">Disable the execution of a beep sound on the oscilloscope. </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">beep() </td><td class="markdownTableBodyNone">- </td><td class="markdownTableBodyNone">Send a beep signal to the <a class="el" href="classSMU.html" title="Dummy class to allow assignment to SMU class.">SMU</a>. </td><td class="markdownTableBodyNone">See manual.  </td></tr>
+</table>
+<p><br  />
+<br  />
+ </p>
+<h3><a class="anchor" id="autotoc_md23"></a>
+Keysight 33500B Waveform Generator</h3>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone"><b>Function</b> </th><th class="markdownTableHeadNone"><b>Parameters</b> </th><th class="markdownTableHeadNone"><b>Description</b> </th><th class="markdownTableHeadNone"><b>Value Range</b>  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">turnOn() </td><td class="markdownTableBodyNone">channel </td><td class="markdownTableBodyNone">Turn on the channel (A or B) on the function generator. </td><td class="markdownTableBodyNone">-  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">turnOff() </td><td class="markdownTableBodyNone">channel </td><td class="markdownTableBodyNone">Turn off the channel (A or B) on the function generator. </td><td class="markdownTableBodyNone">-  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">setFrequency() </td><td class="markdownTableBodyNone">channel, frequency </td><td class="markdownTableBodyNone">Set a certain frequency on a channel of the function generator. </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">setAmplitude() </td><td class="markdownTableBodyNone">channel, amplitude </td><td class="markdownTableBodyNone">Set a certain amplitude on a channel of the function generator. </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">setOffset() </td><td class="markdownTableBodyNone">channel, offset </td><td class="markdownTableBodyNone">Set a voltage offset on a certain channel of the function generator. </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">setPhase() </td><td class="markdownTableBodyNone">channel, phase </td><td class="markdownTableBodyNone">Adjust the phase on a certain function generator channel. </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">setFunction() </td><td class="markdownTableBodyNone">funcType </td><td class="markdownTableBodyNone">Set the function currently used (allowed: sinus, square, ramp, negative ramp, triangle, noise, pseudo random bit stream, arbitrary) </td><td class="markdownTableBodyNone">See manual  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">display() </td><td class="markdownTableBodyNone">text </td><td class="markdownTableBodyNone">Display text on display of function generator. </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">displayConnection() </td><td class="markdownTableBodyNone">- </td><td class="markdownTableBodyNone">- </td><td class="markdownTableBodyNone">-  </td></tr>
+</table>
+<h1><a class="anchor" id="autotoc_md24"></a>
+Examples</h1>
+<h2><a class="anchor" id="autotoc_md25"></a>
+Connect to devices</h2>
+<div class="fragment"><div class="line"> {c++}</div>
+<div class="line">#include &quot;kst33500.h&quot; // include right device header file</div>
+<div class="line"> </div>
+<div class="line">int main() {</div>
+<div class="line">    // provide a IP address, some devices may need an extra port parameter</div>
+<div class="line">    KST33500 k(&quot;xx.xx.xx.xx&quot;); </div>
+<div class="line">    k.Connect();</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md26"></a>
+Development</h1>
+<p>In this lab, we use socket to send SCPI commands to devices in order control them remotely. <br  />
+ Check the documents in <a href="./docs%20and%20specs">Docs</a> for SCPI commands.</p>
+<p>Basically, you can run any commands using Exec commands. For saving time, we wrapped some frequently used commands. But we cannot wrap all the commands.</p>
+<p>Here is an instruction for wrapping a command. Let's say you want to wrap a command of Keysight waveform generator: </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">FUNCtion &lt;function&gt;</div>
+</div><!-- fragment --><p>which set a &lt;function&gt; waveform. <br  />
+ Go to kst33500.h file and add a function signature called "function". </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">int function(string fun);</div>
+</div><!-- fragment --><p>Go to skt33500.cpp file and add the implementation of this function. What you need to do is making an SCPI command and invoke the Exec function. </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">int KST33500::function(string fun) {</div>
+<div class="line">    string msg = &quot;FUNCtion &quot; + fun;</div>
+<div class="line">    Exec(msg);</div>
+<div class="line">    return 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>That's it. After that, you can use like: </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">k.function(&quot;SIN&quot;);</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md27"></a>
+Tutorial Python interface</h1>
+<ol type="1">
+<li>Download the most recent release from the repository<ul>
+<li>Go to releases on the right side and click on the link</li>
+<li>There you see different tags e.g. 1.2.0</li>
+<li>Click on downloads</li>
+<li>Download <b>libpy_instrument_control_lib.pyd</b></li>
+<li><img src="docs_and_specs/figures/screen_shot_release.png" alt="Screenshot release" class="inline"/></li>
+</ul>
+</li>
+<li>Go to folder where <b>libpy_instrument_control_lib.pyd</b> is stored</li>
+<li>Open the python console<ol type="a">
+<li>Make sure the libpy_instrument_control_lib is in the folder</li>
+<li>Open the library as module</li>
+<li>Create a <a class="el" href="classSMU.html" title="Dummy class to allow assignment to SMU class.">SMU</a> object with an IP and an timeout for the socket</li>
+<li>Connect to the <a class="el" href="classSMU.html" title="Dummy class to allow assignment to SMU class.">SMU</a></li>
+<li>You can check the error code which should be ERROR_CODE.NO_ERROR<ul>
+<li>All defined error codes are listed below <div class="fragment"><div class="line">$ python3.exe</div>
+<div class="line">Python 3.8.13 (default, Mar 28 2022, 11:38:47) </div>
+<div class="line">[GCC 7.5.0] :: Anaconda, Inc. on linux</div>
+<div class="line">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</div>
+<div class="line">&gt;&gt;&gt; </div>
+<div class="line">&gt;&gt;&gt; import os</div>
+<div class="line">&gt;&gt;&gt; os.listdir()</div>
+<div class="line">[&#39;instrument_control_lib.py&#39;, &#39;libpy_instrument_control_lib.pyd&#39;, &#39;libpy_instrument_control_lib.so&#39;]</div>
+<div class="line"> </div>
+<div class="line">&gt;&gt;&gt; from libpy_instrument_control_lib import *</div>
+<div class="line">&gt;&gt;&gt; smu = KEI2600(&quot;192.168.1.10&quot;, 2000)</div>
+<div class="line">&gt;&gt;&gt; error_code = smu.connect()</div>
+<div class="line">&gt;&gt;&gt; print(error_code)</div>
+<div class="line">ERROR_CODE.NO_ERROR</div>
+<div class="line">&gt;&gt;&gt; device_identifier = smu.getDeviceIdentifier()</div>
+<div class="line">&gt;&gt;&gt; print(device_identifier)</div>
+<div class="line">Keithley Instruments Inc*, Model 2636B, 4031</div>
+<div class="line"> </div>
+<div class="line">&gt;&gt;&gt; error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3)</div>
+<div class="line">&gt;&gt;&gt; if error_code != ERROR_CODE.NO_ERROR: </div>
+<div class="line">      # stop execution or do some error handling</div>
+<div class="line">      </div>
+<div class="line">&gt;&gt;&gt; error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 5.0)</div>
+<div class="line">&gt;&gt;&gt; # error handling</div>
+<div class="line"> </div>
+<div class="line">&gt;&gt;&gt; error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">&gt;&gt;&gt; # error handling</div>
+<div class="line"> </div>
+<div class="line">&gt;&gt;&gt; measure_value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL_CHANNEL_B)</div>
+<div class="line">&gt;&gt;&gt; print(measure_value)</div>
+<div class="line">  3.04</div>
+<div class="line">&gt;&gt;&gt; smu.disconnect()</div>
+</div><!-- fragment --></li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md28"></a>
+Functions</h2>
+<p>This list gives an overview of the smu functions and how to call them.</p>
+<div class="fragment"><div class="line"># Establish the ethernet connection to the device</div>
+<div class="line">error_code = smu.connect()</div>
+<div class="line">error_code = smu.disconnect()</div>
+<div class="line"> </div>
+<div class="line">error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">error_code = smu.turnOff(SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line"> </div>
+<div class="line">value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">value = smu.measure(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">value = smu.measure(SMU_UNIT.RESISTANCE, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">value = smu.measure(SMU_UNIT.POWER, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line"> </div>
+<div class="line">error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3)</div>
+<div class="line">error_code = smu.setLevel(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, 0.1)</div>
+<div class="line"> </div>
+<div class="line">error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3)</div>
+<div class="line">error_code = smu.setLimit(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, 0.1)</div>
+<div class="line"> </div>
+<div class="line">error_code = smu.enableMeasureAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">error_code = smu.enableMeasureAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line"> </div>
+<div class="line">error_code = smu.disableMeasureAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">error_code = smu.disableMeasureAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line"> </div>
+<div class="line">error_code = smu.enableSourceAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">error_code = smu.enableSourceeAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line"> </div>
+<div class="line">error_code = smu.disableSourceAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">error_code = smu.disableSourceAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line"> </div>
+<div class="line">error_code = smu.setRemoteSense(SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">error_code = smu.setLocalSense(SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line"> </div>
+<div class="line">error_code = smu.setSourceRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.0)</div>
+<div class="line"> </div>
+<div class="line">device_description = smu.getDeviceIdentifier()</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md29"></a>
+Error codes</h2>
+<p>There exists a function which transforms the error codes into Strings. Some error codes are not used in the library because these are derived from the abstraction library. <b>This function will be implemented in python soon!</b> </p><div class="fragment"><div class="line"># No error occurred</div>
+<div class="line">NO_ERROR</div>
+<div class="line"># Invalid arguments passed to a function, e.g. passing a nullptr.</div>
+<div class="line">PIL_INVALID_ARGUMENT</div>
+<div class="line"># An error occured and an errno error code was set. </div>
+<div class="line"># Internal error message can be requested by the error handle</div>
+<div class="line">ERRNO</div>
+<div class="line"># Error when performing an operation on a closed interface.</div>
+<div class="line">INTERFACE_CLOSED</div>
+<div class="line"># Error when baudrate cannot be set. E.g. when the approximation function has a higher deviation then 2 %.</div>
+<div class="line">INVALID_BAUDRATE</div>
+<div class="line"># Error insufficient resources.</div>
+<div class="line">INSUFFICIENT_RESOURCES</div>
+<div class="line"># Error, insufficient permissions to perform a certain operation.</div>
+<div class="line">INSUFFICIENT_PERMISSIONS</div>
+<div class="line"># Error, when deadlock is detected in a multithreaded application.</div>
+<div class="line">DEADLOCK_DETECTED</div>
+<div class="line"># Error while joining a thread.</div>
+<div class="line">THREAD_NOT_JOINABLE</div>
+<div class="line"># Error performing an operation on on a not initialized thread.</div>
+<div class="line">THREAD_NOT_FOUND</div>
+<div class="line"># Error entire file could not be written.</div>
+<div class="line">ONLY_PARTIALLY_READ_WRITTEN</div>
+<div class="line"># Error no such file or directory.</div>
+<div class="line">NO_SUCH_FILE</div>
+<div class="line"># Invalid error code.</div>
+<div class="line">UNKNOWN_ERROR</div>
+<div class="line"># Error while parsing an XML file.</div>
+<div class="line">XML_PARSING_ERROR</div>
+</div><!-- fragment --> </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
