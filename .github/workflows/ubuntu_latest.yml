@@ -33,6 +33,10 @@ jobs:
       - name: Googletest installer
         uses: MarkusJx/googletest-installer@v1.1
 
+      - name: Install Doxygen
+        run: sudo apt-get install doxygen -y
+        shell: bash
+
       - name: Checkout repository and submodules
         uses: actions/checkout@v3
         with:
