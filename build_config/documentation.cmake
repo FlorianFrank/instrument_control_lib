@@ -5,7 +5,7 @@ function(build_documentation)
 
         # set input and output files
         set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/config_files/doc/Doxyfile.in)
-        set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/doc)
+        set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR})
 
         message("BINARY DIR " ${CMAKE_CURRENT_BINARY_DIR})
 
@@ -14,8 +14,8 @@ function(build_documentation)
         message("Doxygen build started")
 
         add_custom_target(generate_documentation ALL
-                COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
-                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_IN}
+                WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
                 COMMENT "Generating API documentation with Doxygen"
                 VERBATIM)
 
