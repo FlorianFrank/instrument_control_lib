@@ -4,7 +4,7 @@ function(build_documentation)
     if (DOXYGEN_FOUND)
 
         # set input and output files
-        set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/config_files/Doxyfile.in)
+        set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/config_files/doc/Doxyfile.in)
         set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/doc)
 
         # request to configure the file
