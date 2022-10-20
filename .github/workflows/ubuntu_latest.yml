@@ -65,14 +65,14 @@ jobs:
         if: matrix.config.os == 'windows-latest'
         uses: ashutoshvarma/action-cmake-build@master
         with:
-          build-dir: ${{ runner.workspace }}/build
+          build-dir: $GITHUB_WORKSPACE/build
           cc: ${{ matrix.config.cc }}
           cxx: ${{ matrix.config.cxx }}
           configure-options: -G Ninja
           build-type: Release
       
       - name: Build project
-        working-directory: ${{runner.workspace}}/build
+        working-directory: $GITHUB_WORKSPACE/build
         shell: bash
         run: cmake --build . --config ${{ matrix.config.build_type }} --target all
       
@@ -86,24 +86,24 @@ jobs:
         if: failure()
         with:
           name: test_results_xml
-          path: ${{runner.workspace}}/build/test-results/**/*.xml
+          path: $GITHUB_WORKSPACE/build/test-results/**/*.xml
 
       - name: Upload python lib Ubuntu & MacOS
         if: matrix.config.os != 'windows-latest'
         uses: actions/upload-artifact@v2
         with:
           name: py_instrument_control_lib.so
-          path: ${{runner.workspace}}/build/python_interface/py_instrument_control_lib*.so
+          path: $GITHUB_WORKSPACE/build/python_interface/py_instrument_control_lib*.so
       
       - name: Upload python lib Windows
         if: matrix.config.os == 'windows-latest'
         uses: actions/upload-artifact@v2
         with:
           name: py_instrument_control_lib.pyd
-          path: ${{ runner.workspace }}/build/python_interface/py_instrument_control_lib*.pyd
+          path: $GITHUB_WORKSPACE/build/python_interface/py_instrument_control_lib*.pyd
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ${{runner.workspace}}/build/doc/html
+          folder: $GITHUB_WORKSPACE/build/doc/html
