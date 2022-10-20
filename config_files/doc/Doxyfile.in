@@ -1111,7 +1111,7 @@ HTML_STYLESHEET        =
 # list). For an example see the documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_STYLESHEET  = config_files/doc/doxygen-awesome-css/doxygen-awesome.css config_files/doc/doxygen-awesome-css/doxygen-awesome-sidebar-only.css
+HTML_EXTRA_STYLESHEET  = ../instrument_control_lib/config_files/doc/doxygen-awesome-css/doxygen-awesome.css ../instrument_control_lib/config_files/doc/doxygen-awesome-css/doxygen-awesome-sidebar-only.css
 
 FULL_SIDEBAR = NO
 
@@ -1123,7 +1123,7 @@ FULL_SIDEBAR = NO
 # files will be copied as-is; there are no commands or markers available.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_FILES       = config_files/doc/doxygen-awesome-css/doxygen-awesome-darkmode-toggle.js
+HTML_EXTRA_FILES       = ../instrument_control_lib/config_files/doc/doxygen-awesome-css/doxygen-awesome-darkmode-toggle.js
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
 # will adjust the colors in the style sheet and background images according to
