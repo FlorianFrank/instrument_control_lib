@@ -1,9 +1,8 @@
-name: ubuntu_latest
+name: publish_doxygen
 
 on:
   push:
     branches:
-      - feature/publish_doxygen
       - master
 
 env:
@@ -19,7 +18,7 @@ jobs:
       matrix:
         config:
           - {
-            name: "Ubuntu_Latest_GCC",
+            name: "Publish Doxygen",
             os: ubuntu-latest,
             artifact: "ubuntu_gcc.7z",
             build_type: "Release",
