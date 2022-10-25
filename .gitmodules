@@ -7,3 +7,6 @@
 [submodule "pybind11"]
 	path = python_interface/pybind11
 	url = git@github.com:pybind/pybind11.git
+[submodule "config_files/doc/doxygen-awesome-css"]
+	path = config_files/doc/doxygen-awesome-css
+	url = https://github.com/jothepro/doxygen-awesome-css.git

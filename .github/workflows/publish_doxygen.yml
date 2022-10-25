@@ -1,6 +1,9 @@
-name: template
+name: publish_doxygen
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 env:
   BUILD_TYPE: Release
@@ -13,14 +16,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        config: 
-        - {
-            name: "",
-            os: ,
-            artifact: "",
-            build_type: $BUILD_TYPE,
-            cc: "",
-            cxx: "",
+        config:
+          - {
+            name: "Publish Doxygen",
+            os: ubuntu-latest,
+            artifact: "ubuntu_gcc.7z",
+            build_type: "Release",
+            cc: "gcc",
+            cxx: "g++",
             archiver: "7z a",
             generators: "Ninja"
           }
@@ -33,18 +36,22 @@ jobs:
       - name: Googletest installer
         uses: MarkusJx/googletest-installer@v1.1
 
+      - name: Install Doxygen
+        run: sudo apt-get install doxygen -y
+        shell: bash
+
+      - name: Install Graphiz
+        run: sudo apt-get install graphviz -y
+        shell: bash
+
       - name: Checkout repository and submodules
         uses: actions/checkout@v3
         with:
           submodules: recursive
 
-      - name: Setup Ninja Windows
-        if: matrix.config.os == 'windows-latest'
-        uses: ashutoshvarma/setup-ninja@master
-      
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build
-      
+
       - name: Configure CMake Ubuntu & MacOS
         if: matrix.config.os != 'windows-latest'
         working-directory: ${{runner.workspace}}/build
@@ -53,26 +60,16 @@ jobs:
         # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
         run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=${{matrix.config.build_type}}
 
-      - name: Configure CMake Windows
-        if: matrix.config.os == 'windows-latest'
-        uses: ashutoshvarma/action-cmake-build@master
-        with:
-          build-dir: ${{ runner.workspace }}/build
-          cc: ${{ matrix.config.cc }}
-          cxx: ${{ matrix.config.cxx }}
-          configure-options: -G Ninja
-          build-type: Release
-      
       - name: Build project
         working-directory: ${{runner.workspace}}/build
         shell: bash
         run: cmake --build . --config ${{ matrix.config.build_type }} --target all
-      
+
       - name: Execute tests
         if: matrix.config.os != 'windows-latest'
         working-directory: ${{runner.workspace}}/build
         run: GTEST_OUTPUT=xml:test-results/ GTEST_COLOR=1 ctest -V
-      
+
       - name: Upload test results
         uses: actions/upload-artifact@v2
         if: failure()
@@ -86,10 +83,16 @@ jobs:
         with:
           name: py_instrument_control_lib.so
           path: ${{runner.workspace}}/build/python_interface/py_instrument_control_lib*.so
-      
+
       - name: Upload python lib Windows
         if: matrix.config.os == 'windows-latest'
         uses: actions/upload-artifact@v2
         with:
           name: py_instrument_control_lib.pyd
           path: ${{ runner.workspace }}/build/python_interface/py_instrument_control_lib*.pyd
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ${{runner.workspace}}/build/doc/html

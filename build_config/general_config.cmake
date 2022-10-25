@@ -4,7 +4,6 @@ add_definitions(-DDEVICE_CONFIG_FILE="${CMAKE_CURRENT_SOURCE_DIR}/config_files/S
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=x86-64 -static -static-libgcc -static-libstdc++")
 #set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -march=x86-64 -static -static-libgcc -static-libstdc++")
 
-
 option(INSTRUMENT_LIB_BUILD_STATIC "Build instrument lib as static library"     ON)
 
 # Set new CMP0077 policy used to build pugixml
@@ -27,3 +26,5 @@ option(BUILD_SHARED_LIBS    "Build pugiXML as shared lib" OFF)
 set(PUGI_XML_VERSION 1.12)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+option(BUILD_DOCUMENTATION "Build and publish a Doxygen documentation" ON)
