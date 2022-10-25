@@ -33,14 +33,6 @@ jobs:
       - name: Googletest installer
         uses: MarkusJx/googletest-installer@v1.1
 
-      - name: Install Doxygen
-        run: sudo apt-get install doxygen -y
-        shell: bash
-
-      - name: Install Graphiz
-        run: sudo apt-get install graphviz -y
-        shell: bash
-
       - name: Checkout repository and submodules
         uses: actions/checkout@v3
         with:
@@ -101,9 +93,3 @@ jobs:
         with:
           name: py_instrument_control_lib.pyd
           path: ${{ runner.workspace }}/build/python_interface/py_instrument_control_lib*.pyd
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: ${{runner.workspace}}/build/doc/html
