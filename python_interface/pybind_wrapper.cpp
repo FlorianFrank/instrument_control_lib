@@ -13,9 +13,6 @@ using namespace pybind11;
 namespace py = pybind11;
 
 PYBIND11_MODULE(py_instrument_control_lib, m) {
-    enum_<DCPowerSupply::DC_CHANNEL>(m, "DC_CHANNEL")
-            .value("CHANNEL_1", DCPowerSupply::DC_CHANNEL::CHANNEL_1)
-            .value("CHANNEL_2", DCPowerSupply::DC_CHANNEL::CHANNEL_2);
 
     enum_<PIL_ERROR_CODE>(m, "ERROR_CODE")
         .value("NO_ERROR", PIL_ERROR_CODE::PIL_NO_ERROR)
@@ -34,49 +31,19 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
         .value("XML_PARSING_ERROR", PIL_ERROR_CODE::PIL_XML_PARSING_ERROR)
         .value("PIL_ITEM_IN_ERROR_QUEUE", PIL_ERROR_CODE::PIL_ITEM_IN_ERROR_QUEUE);
 
-    enum_<SMU::SMU_CHANNEL>(m, "SMU_CHANNEL")
-        .value("CHANNEL_A", SMU::CHANNEL_A)
-        .value("CHANNEL_B", SMU::CHANNEL_B);
+    /** DC Powersupply **/
+    class_<SPD1305>(m, "SPD1305")
+        .def(pybind11::init<char *, int>())
+        .def("turnOn", &SPD1305::turnOn)
+        .def("turnOff", &SPD1305::turnOff)
+        .def("setCurrent", &SPD1305::setCurrent)
+        .def("getCurrent", &SPD1305::getCurrent);
 
-    enum_<SMU::UNIT>(m, "SMU_UNIT")
-        .value("VOLTAGE", SMU::VOLTAGE)
-        .value("CURRENT", SMU::CURRENT)
-        .value("RESISTANCE", SMU::RESISTANCE)
-        .value("POWER", SMU::POWER);
+    enum_<DCPowerSupply::DC_CHANNEL>(m, "DC_CHANNEL")
+        .value("CHANNEL_1", DCPowerSupply::DC_CHANNEL::CHANNEL_1)
+        .value("CHANNEL_2", DCPowerSupply::DC_CHANNEL::CHANNEL_2);
 
-    enum_<SMU::AUTOZERO>(m, "SMU_AUTOZERO")
-        .value("OFF", SMU::OFF)
-        .value("ONCE", SMU::ONCE)
-        .value("AUTO", SMU::AUTO);
-
-    enum_<SMU::SRC_FUNC>(m, "SRC_FUNC")
-        .value("DC_AMPS", SMU::DC_AMPS)
-        .value("DC_VOLTS", SMU::DC_VOLTS);
-
-    enum_<SMU::SRC_OFF_MODE>(m, "SRC_OFF_MODE")
-        .value("NORMAL", SMU::OUTPUT_NORMAL)
-        .value("ZERO", SMU::OUTPUT_ZERO)
-        .value("HIGH_Z", SMU::OUTPUT_HIGH_Z);
-
-    enum_<SMU::SRC_SETTLING>(m, "SRC_SETTLING")
-        .value("SMOOTH", SMU::SMOOTH)
-        .value("FAST_RANGE", SMU::FAST_RANGE)
-        .value("FAST_POLARITY", SMU::FAST_POLARITY)
-        .value("DIRECT_IRANGE", SMU::DIRECT_IRANGE)
-        .value("SMOOTH_100NA", SMU::SMOOTH_100NA)
-        .value("FAST_ALL", SMU::FAST_ALL);
-
-    enum_<SMU::SMU_DISPLAY>(m, "SMU_DISPLAY")
-        .value("DC_AMPS", SMU::MEASURE_DC_AMPS)
-        .value("DC_VOLTS", SMU::MEASURE_DC_VOLTS)
-        .value("OHMS", SMU::MEASURE_OHMS)
-        .value("WATTS", SMU::MEASURE_WATTS);
-
-    enum_<SMU::SMU_SENSE>(m, "SMU_SENSE")
-        .value("LOCAL", SMU::SMU_SENSE::LOCAL)
-        .value("REMOTE", SMU::SMU_SENSE::REMOTE)
-        .value("CALIBRATION", SMU::SMU_SENSE::CALIBRATION);
-
+    /** SMU **/
     class_<KEI2600>(m, "KEI2600")
         .def(pybind11::init<char *, int>())
         .def("enableBeep", &KEI2600::enableBeep)
@@ -114,19 +81,77 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
         .def("clearErrorBuffer", &KEI2600::clearErrorBuffer)
         .def("getErrorBufferStatus", &KEI2600::getErrorBufferStatus);
 
-    enum_<FunctionGenerator::FUNCTION_TYPE>(m, "FUNCTION_TYPE")
-        .value("SIN", FunctionGenerator::SIN)
-        .value("SQUARE", FunctionGenerator::SQUARE)
-        .value("RAMP", FunctionGenerator::RAMP)
-        .value("NEGATIVE_RAM", FunctionGenerator::NEGATIVE_RAM)
-        .value("TRIANGLE", FunctionGenerator::TRIANGLE)
-        .value("NOISE", FunctionGenerator::NOISE)
-        .value("PSEUDO_RANDOM_BIT_STREAM", FunctionGenerator::PSEUDO_RANDOM_BIT_STREAM)
-        .value("ARBITRARY", FunctionGenerator::ARBITRARY);
+    enum_<SMU::SMU_CHANNEL>(m, "SMU_CHANNEL")
+            .value("CHANNEL_A", SMU::CHANNEL_A)
+            .value("CHANNEL_B", SMU::CHANNEL_B);
 
-    enum_<FunctionGenerator::FUNC_CHANNEL>(m, "FUNCTION_CHANNEL")
-        .value("CHANNEL_A", FunctionGenerator::CHANNEL_A)
-        .value("CHANNEL_B", FunctionGenerator::CHANNEL_B);
+    enum_<SMU::UNIT>(m, "SMU_UNIT")
+            .value("VOLTAGE", SMU::VOLTAGE)
+            .value("CURRENT", SMU::CURRENT)
+            .value("RESISTANCE", SMU::RESISTANCE)
+            .value("POWER", SMU::POWER);
+
+    enum_<SMU::AUTOZERO>(m, "SMU_AUTOZERO")
+            .value("OFF", SMU::OFF)
+            .value("ONCE", SMU::ONCE)
+            .value("AUTO", SMU::AUTO);
+
+    enum_<SMU::SRC_FUNC>(m, "SRC_FUNC")
+            .value("DC_AMPS", SMU::DC_AMPS)
+            .value("DC_VOLTS", SMU::DC_VOLTS);
+
+    enum_<SMU::SRC_OFF_MODE>(m, "SRC_OFF_MODE")
+            .value("NORMAL", SMU::OUTPUT_NORMAL)
+            .value("ZERO", SMU::OUTPUT_ZERO)
+            .value("HIGH_Z", SMU::OUTPUT_HIGH_Z);
+
+    enum_<SMU::SRC_SETTLING>(m, "SRC_SETTLING")
+            .value("SMOOTH", SMU::SMOOTH)
+            .value("FAST_RANGE", SMU::FAST_RANGE)
+            .value("FAST_POLARITY", SMU::FAST_POLARITY)
+            .value("DIRECT_IRANGE", SMU::DIRECT_IRANGE)
+            .value("SMOOTH_100NA", SMU::SMOOTH_100NA)
+            .value("FAST_ALL", SMU::FAST_ALL);
+
+    enum_<SMU::SMU_DISPLAY>(m, "SMU_DISPLAY")
+            .value("DC_AMPS", SMU::MEASURE_DC_AMPS)
+            .value("DC_VOLTS", SMU::MEASURE_DC_VOLTS)
+            .value("OHMS", SMU::MEASURE_OHMS)
+            .value("WATTS", SMU::MEASURE_WATTS);
+
+    enum_<SMU::SMU_SENSE>(m, "SMU_SENSE")
+            .value("LOCAL", SMU::SMU_SENSE::LOCAL)
+            .value("REMOTE", SMU::SMU_SENSE::REMOTE)
+            .value("CALIBRATION", SMU::SMU_SENSE::CALIBRATION);
+
+    /** Oscilloscope**/
+    class_<KST3000>(m, "KST3000")
+        .def(pybind11::init<char *, int>())
+        .def("run", &KST3000::run)
+        .def("stop", &KST3000::stop)
+        .def("single", &KST3000::single)
+        .def("autoScale", &KST3000::autoScale)
+        .def("setTimeRange", &KST3000::setTimeRange)
+        .def("setChannelOffset", &KST3000::setChannelOffset)
+        .def("setChannelScale", &KST3000::setChannelScale)
+        .def("setChannelRange", &KST3000::setChannelRange)
+        .def("setTriggerEdge", &KST3000::setTriggerEdge)
+        .def("setTriggerSource", &KST3000::setTriggerSource)
+        .def("setTimeDelay", &KST3000::setTimeDelay)
+        .def("setWaveformSource", &KST3000::setWaveformSource)
+        .def("getWaveformPreamble", &KST3000::getWaveformPreamble)
+        .def("getWaveformPoints", &KST3000::getWaveformPoints)
+        .def("setWaveformPoints", &KST3000::setWaveformPoints)
+        .def("setWaveformPointsMode", &KST3000::setWaveformPointsMode)
+        .def("setWaveformFormat", &KST3000::setWaveformFormat)
+        .def("saveWaveformData", &KST3000::saveWaveformData)
+        .def("getWaveformData", &KST3000::getWaveformData)
+      //  .def("getRealData", &KST3000::getRealData)
+        .def("digitize", &KST3000::digitize)
+        .def("getSystemSetup", &KST3000::getSystemSetup)
+        .def("setDisplayMode", &KST3000::setDisplayMode)
+        .def("displayConnection", &KST3000::displayConnection)
+        .def("setChannelDisplay", &KST3000::setChannelDisplay);
 
 
     enum_<Oscilloscope::OSC_CHANNEL>(m, "OSC_CHANNEL")
@@ -155,4 +180,32 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
     enum_<Oscilloscope::VOLTAGE_UNIT>(m, "VOLTAGE_UNIT")
         .value("VOLT", Oscilloscope::VOLT)
         .value("MILLI_VOLT", Oscilloscope::MILLI_VOLT);
+
+    /** Function Generator **/
+    class_<KST33500>(m, "KST33500")
+            .def(pybind11::init<char *, int>())
+            .def("turnOn", &KST33500::turnOn)
+            .def("turnOff", &KST33500::turnOff)
+            .def("setFrequency", &KST33500::setFrequency)
+            .def("setAmplitude", &KST33500::setAmplitude)
+            .def("setOffset", &KST33500::setOffset)
+            .def("setPhase", &KST33500::setPhase)
+            .def("setFunction", &KST33500::setFunction)
+            .def("display", &KST33500::display)
+            .def("display", &KST33500::displayConnection);
+
+    enum_<FunctionGenerator::FUNCTION_TYPE>(m, "FUNCTION_TYPE")
+        .value("SIN", FunctionGenerator::SIN)
+        .value("SQUARE", FunctionGenerator::SQUARE)
+        .value("RAMP", FunctionGenerator::RAMP)
+        .value("NEGATIVE_RAM", FunctionGenerator::NEGATIVE_RAM)
+        .value("TRIANGLE", FunctionGenerator::TRIANGLE)
+        .value("NOISE", FunctionGenerator::NOISE)
+        .value("PSEUDO_RANDOM_BIT_STREAM", FunctionGenerator::PSEUDO_RANDOM_BIT_STREAM)
+        .value("ARBITRARY", FunctionGenerator::ARBITRARY);
+
+    enum_<FunctionGenerator::FUNC_CHANNEL>(m, "FUNCTION_CHANNEL")
+            .value("CHANNEL_A", FunctionGenerator::CHANNEL_A)
+            .value("CHANNEL_B", FunctionGenerator::CHANNEL_B);
+
 }
