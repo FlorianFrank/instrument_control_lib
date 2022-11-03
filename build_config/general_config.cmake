@@ -11,7 +11,7 @@ set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
 
 # Set general CXX options
 set(CMAKE_CXX_STANDARD 17)
-add_definitions(-DCXX=1)
+add_definitions(-DPIL_CXX=1)
 
 # Definitions for the platform independent abstraction layer.
 option(PIL_COMMUNICATION    "Enable PIL Sockets"          ON)
@@ -20,6 +20,8 @@ option(PIL_LOGGING          "Enable Logging support"      ON)
 option(PIL_SHARED           "BUILD PIL as shared library" OFF)
 option(PIL_STATIC           "BUILD PIL as static library" ON)
 option(PIL_CXX              "Enable PIL C++ support"      ON)
+
+option(BLOCKING_RECEIVE "If ON blocking receive functions are used otherwise use asynchronous callback function" OFF)
 
 # PugiXML options
 option(BUILD_SHARED_LIBS    "Build pugiXML as shared lib" OFF)
