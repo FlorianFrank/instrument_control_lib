@@ -3,7 +3,9 @@
 //
 #include <iostream>
 
+#if __linux__
 #include <netinet/in.h>
+#endif // Linux
 #include "ctlib/Socket.hpp"
 
 #include <sstream>
