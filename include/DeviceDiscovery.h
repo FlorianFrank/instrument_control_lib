@@ -1,6 +1,3 @@
-//
-// Created by florianfrank on 28.10.22.
-//
 
 #ifndef INSTRUMENT_CONTROL_LIB_DEVICEDISCOVERY_HPP
 #define INSTRUMENT_CONTROL_LIB_DEVICEDISCOVERY_HPP
@@ -22,13 +19,13 @@ class DeviceDiscovery
 public:
     DeviceDiscovery(std::string &interface, PIL::Logging *logging = nullptr);
     ~DeviceDiscovery();
-    std::vector<Device> startDiscovery();
+    std::vector<Device *> startDiscovery();
 
 private:
-    IPRange getAddressRange(std::string &ip, std::string &mask);
+    static IPRange getAddressRange(std::string &ip, std::string &mask);
     PIL_ERROR_CODE setDeviceList();
-    std::vector<Device> testIRange(IPRange& ipRange);
-
+    void testIPRange(IPRange& ipRange, std::vector<Device*>* deviceList);
+    static Device * createDeviceFromDeviceString(std::string &deviceStr, std::vector<uint8_t> &ip);
 
     InterfaceInfoList m_DeviceList{};
     std::string m_InterfaceName;
