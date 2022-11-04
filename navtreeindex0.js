@@ -5,10 +5,11 @@ var NAVTREEINDEX0 =
 "ConfigFileDefines_8h_source.html":[10,0,0,0,3],
 "ConfigFileParser_8h_source.html":[10,0,0,0,4],
 "DCPowerSupply_8h_source.html":[10,0,0,0,0,0,0],
+"DeviceDiscovery_8h_source.html":[10,0,0,0,6],
 "Device_8h_source.html":[10,0,0,0,5],
-"ErrorCodeDefines_8h_source.html":[10,0,0,0,6],
-"ErrorHandler_8h_source.html":[10,0,0,0,7],
-"ExecArgs_8h_source.html":[10,0,0,0,8],
+"ErrorCodeDefines_8h_source.html":[10,0,0,0,7],
+"ErrorHandler_8h_source.html":[10,0,0,0,8],
+"ExecArgs_8h_source.html":[10,0,0,0,9],
 "FunctionGenerator_8h_source.html":[10,0,0,0,0,0,1],
 "KEI2600_8h_source.html":[10,0,0,0,0,1],
 "KST3000_8h_source.html":[10,0,0,0,0,2],
@@ -16,7 +17,7 @@ var NAVTREEINDEX0 =
 "Oscilloscope_8h_source.html":[10,0,0,0,0,0,2],
 "SMU_8h_source.html":[10,0,0,0,0,0,3],
 "SPD1305_8h_source.html":[10,0,0,0,0,4],
-"SubArg_8h_source.html":[10,0,0,0,9],
+"SubArg_8h_source.html":[10,0,0,0,10],
 "annotated.html":[9,0],
 "classCommandLineInterface.html":[9,0,1],
 "classCommandLineInterface.html#a68a64fba7e3e5fb659119f98d8e63cd2":[9,0,1,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "classSPD1305.html#ab94984c32777ab027f0d316b53e24915":[9,0,13,1],
 "classSPD1305.html#af28d414d1bd330d5c4a003d2e9397f3a":[9,0,13,2],
 "classSubArg.html":[9,0,14],
-"classSubArg.html#aa66bc190da6599439cd60c9751bb1c5f":[9,0,14,3],
-"classSubArg.html#aa70484f7db8e646ec2fe4de7c1de3f04":[9,0,14,4]
+"classSubArg.html#aa66bc190da6599439cd60c9751bb1c5f":[9,0,14,3]
 };

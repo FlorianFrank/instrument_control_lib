@@ -6,6 +6,7 @@ var dir_3dd97237eab0d9af71ca96e14d012ab8 =
     [ "ConfigFileDefines.h", "ConfigFileDefines_8h_source.html", null ],
     [ "ConfigFileParser.h", "ConfigFileParser_8h_source.html", null ],
     [ "Device.h", "Device_8h_source.html", null ],
+    [ "DeviceDiscovery.h", "DeviceDiscovery_8h_source.html", null ],
     [ "ErrorCodeDefines.h", "ErrorCodeDefines_8h_source.html", null ],
     [ "ErrorHandler.h", "ErrorHandler_8h_source.html", null ],
     [ "ExecArgs.h", "ExecArgs_8h_source.html", null ],
