@@ -52,6 +52,7 @@ target_link_libraries(instrument_control_lib PUBLIC ${PUGIXML} ${COMMON_TOOLS_LI
 target_include_directories(instrument_control_lib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/pugixml-1.12/src"
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/Communication/include"
+                                                          "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/Threading/include"
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/Additional"
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/ErrorHandling/include"
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/Logging/include")
