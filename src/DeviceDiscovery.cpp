@@ -1,11 +1,6 @@
-//
-// Created by florianfrank on 28.10.22.
-//
+#if __linux__
 #include <iostream>
 
-#if __linux__
-#include <netinet/in.h>
-#endif // Linux
 #include "ctlib/Socket.hpp"
 
 #include <sstream>
@@ -249,3 +244,4 @@ std::vector<uint8_t> DeviceDiscovery::splitIpAddr(const std::string &string)
     return new Device(nullptr, 0);
 }
 
+#endif // __linux

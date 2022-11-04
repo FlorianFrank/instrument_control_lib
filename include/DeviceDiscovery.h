@@ -1,3 +1,4 @@
+
 /**
  * @brief This file contains the code to discover measurement devices in the network.
  * @author Florian Frank
@@ -5,7 +6,7 @@
  */
 #ifndef INSTRUMENT_CONTROL_LIB_DEVICEDISCOVERY_HPP
 #define INSTRUMENT_CONTROL_LIB_DEVICEDISCOVERY_HPP
-
+#if __linux__
 
 #include <string>
 #include <vector>
@@ -38,4 +39,5 @@ private:
     std::string m_InterfaceName;
     PIL::Logging *m_Logging;
 };
+#endif // __linux__
 #endif //INSTRUMENT_CONTROL_LIB_DEVICEDISCOVERY_HPP
