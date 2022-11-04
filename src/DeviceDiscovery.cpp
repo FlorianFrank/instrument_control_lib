@@ -33,64 +33,34 @@ void handler(int)
     //std::cout << "HANDLER " << std::endl;
 }
 
-std::vector<uint8_t> split(const std::string &string, char delimiter)
-{
-    std::vector<uint8_t> result;
-    std::stringstream stringStream(string);
-    std::string element;
-
-    while (getline(stringStream, element, delimiter))
-    {
-        result.push_back(atoi(element.c_str()));
-    }
-
-    return result;
-}
-
-PIL_ERROR_CODE DeviceDiscovery::setDeviceList()
-{
-    std::string addr = "localhost";
-    PIL::Socket socket(UDP, IPv4, addr, TEST_PORT, SOCKET_TIMEOUT);
-    auto errCode = socket.GetInterfaceInfos(&m_DeviceList);
-    if (errCode != PIL_NO_ERROR)
-        return errCode;
-
-    if (m_Logging)
-    {
-        for (uint32_t i = 0; i < m_DeviceList.availableInterfaces; i++)
-        {
-            m_Logging->LogMessage(INFO_LVL, __FILENAME__, __LINE__, "Interface: %s, IP: %s, Mask: %s",
-                                  m_DeviceList.interfaces[i].m_InterfaceName, m_DeviceList.interfaces[i].m_IPAddr,
-                                  m_DeviceList.interfaces[i].m_NetMask);
-        }
-    }
-    return PIL_NO_ERROR;
-}
-
-
-std::vector<Device *> DeviceDiscovery::startDiscovery()
+/**
+ * @brief Starts the discovery protocol. Starts threads for each ip in the ip range, specified by the netmask retrieved
+ * from each network interface. If interfaceName = 'all' search in range of each interface.
+ * @return List of found devices.
+ */
+std::vector<Device*> DeviceDiscovery::startDiscovery()
 {
     // TODO avoid SIGPIPE
     signal(SIGPIPE, handler);
+
     std::vector<Device*> deviceList;
 
-
-    auto errCode = setDeviceList();
+    auto errCode = setInterfaceList();
     if (errCode != PIL_NO_ERROR)
         return {};
 
-    for (uint32_t i = 0; i < m_DeviceList.availableInterfaces; i++)
+    for (uint32_t i = 0; i < m_InterfaceList.availableInterfaces; i++)
     {
-        if (m_InterfaceName == "all" || m_DeviceList.interfaces[i].m_InterfaceName == m_InterfaceName)
+        if ((m_InterfaceName == "all" || m_InterfaceList.interfaces[i].m_InterfaceName == m_InterfaceName) &&
+            m_InterfaceName != "lo")
         {
-            std::string ip = m_DeviceList.interfaces[i].m_IPAddr;
-            std::string mask = m_DeviceList.interfaces[i].m_NetMask;
+            std::string ip = m_InterfaceList.interfaces[i].m_IPAddr;
+            std::string mask = m_InterfaceList.interfaces[i].m_NetMask;
             auto ipRange = getAddressRange(ip, mask);
             if (m_Logging)
             {
-                m_Logging->LogMessage(INFO_LVL, __FILENAME__, __LINE__,
-                                      "If: %s, Start: %u.%u.%u.%u End: %u.%u.%u.%u",
-                                      m_DeviceList.interfaces[i].m_InterfaceName, ipRange.m_startIPRange[0],
+                m_Logging->LogMessage(INFO_LVL, __FILENAME__, __LINE__, "If: %s, Start: %u.%u.%u.%u End: %u.%u.%u.%u",
+                                      m_InterfaceList.interfaces[i].m_InterfaceName, ipRange.m_startIPRange[0],
                                       ipRange.m_startIPRange[1], ipRange.m_startIPRange[2], ipRange.m_startIPRange[3],
                                       ipRange.m_stopIPRange[0], ipRange.m_stopIPRange[1], ipRange.m_stopIPRange[2],
                                       ipRange.m_stopIPRange[3]);
@@ -101,7 +71,73 @@ std::vector<Device *> DeviceDiscovery::startDiscovery()
     return deviceList;
 }
 
+/**
+ * @brief This function retrieves the name: e.g. wlan0, the ip and netmask of all local interfaces and stores
+ * the information in m_InterfaceList.
+ * @return PIL_NO_ERROR if no error occurred. Otherwise return and error code.
+ */
+PIL_ERROR_CODE DeviceDiscovery::setInterfaceList()
+{
+    std::string addr = "localhost";
+    PIL::Socket socket(UDP, IPv4, addr, TEST_PORT, SOCKET_TIMEOUT);
+    auto errCode = socket.GetInterfaceInfos(&m_InterfaceList);
+    if (errCode != PIL_NO_ERROR)
+        return errCode;
 
+    if (m_Logging)
+    {
+        for (uint32_t i = 0; i < m_InterfaceList.availableInterfaces; i++)
+        {
+            m_Logging->LogMessage(INFO_LVL, __FILENAME__, __LINE__, "Interface: %s, IP: %s, Mask: %s",
+                                  m_InterfaceList.interfaces[i].m_InterfaceName, m_InterfaceList.interfaces[i].m_IPAddr,
+                                  m_InterfaceList.interfaces[i].m_NetMask);
+        }
+    }
+    return PIL_NO_ERROR;
+}
+
+/**
+ * @brief Get Address range specified by an IP and network mask. If an IP e.g. '132.231.14.50' is passed
+ * and the network mask is '255.255.255.0' then a range of 132.231.14.1 - 132.231.14.254 is returned.
+ * @param ip IP-address of a local IP interface, to specify the part where the netmask contains binary 1's.
+ * @param mask Mask used to to retrieve the ip-range.
+ * @return IPRange struct containing the start and end address of the range.
+ */
+/*static*/ IPRange DeviceDiscovery::getAddressRange(std::string &ip, std::string &mask)
+{
+    auto ipAddrList = splitIpAddr(ip);
+    auto maskList = splitIpAddr(mask);
+
+    std::vector<uint8_t> startRange;
+    std::vector<uint8_t> endRange;
+
+    for (uint32_t i = 0; i < maskList.size(); i++)
+    {
+        if ((maskList[i] ^ 255) == 0)
+        {
+            startRange.push_back(ipAddrList[i]);
+            endRange.push_back(ipAddrList[i]);
+
+        } else
+        {
+            startRange.push_back((ipAddrList[i] & maskList[i]) + 1 /* do not include net address*/);
+            endRange.push_back(((ipAddrList[i] & maskList[i]) | ~maskList[i]) - 1 /* do not include broadcast*/);
+        }
+    }
+
+    IPRange ipRange = {startRange, endRange};
+
+    return ipRange;
+}
+
+/**
+ * @brief This function opens a connection for each IP-address in the address range and test if the *IDN? command
+ * returns any information. Each socket is executed in a dedicated thread, allowing for a highly parallel execution
+ * of the discovery. It parses the string returned by *IDN? and generates a device specific object, which can further
+ * be used to execute tests.
+ * @param ipRange IP range containing the start and end address.
+ * @param deviceList List of devices which are returned by this function.
+ */
 void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *deviceList)
 {
     std::vector<uint8_t> temporaryIP = ipRange.m_startIPRange;
@@ -130,6 +166,7 @@ void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *device
         if (ret == PIL_NO_ERROR)
         {
             std::string devIdentifier = dev.GetDeviceIdentifier();
+            std::cout << devIdentifier << std::endl;
             if (devIdentifier.find("Error") == std::string::npos)
             {
                 std::get<1>(*devTuple) = devIdentifier;
@@ -173,34 +210,31 @@ void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *device
         m_Logging->LogMessage(INFO_LVL, __FILENAME__, __LINE__, "Found 10 devices");
 }
 
-
-/*static*/ IPRange DeviceDiscovery::getAddressRange(std::string &ip, std::string &mask)
+/**
+ * @brief Helper function to split an ip-address string into single integer values.
+ * @param string ip address e.g. "192.168.0.2" to parse. Currently only IPv4 addresses are supported.
+ * @return
+ */
+std::vector<uint8_t> DeviceDiscovery::splitIpAddr(const std::string &string)
 {
-    auto ipAddrList = split(ip, '.');
-    auto maskList = split(mask, '.');
+    std::vector<uint8_t> result;
+    std::stringstream stringStream(string);
+    std::string element;
 
-    std::vector<uint8_t> startRange;
-    std::vector<uint8_t> endRange;
-
-    for (uint32_t i = 0; i < maskList.size(); i++)
+    while (getline(stringStream, element, '.'))
     {
-        if ((maskList[i] ^ 255) == 0)
-        {
-            startRange.push_back(ipAddrList[i]);
-            endRange.push_back(ipAddrList[i]);
-
-        } else
-        {
-            startRange.push_back((ipAddrList[i] & maskList[i]) + 1 /* do not include net address*/);
-            endRange.push_back(((ipAddrList[i] & maskList[i]) | ~maskList[i]) - 1 /* do not include broadcast*/);
-        }
+        result.push_back(atoi(element.c_str()));
     }
 
-    IPRange ipRange = {startRange, endRange};
-
-    return ipRange;
+    return result;
 }
 
+/**
+ * @brief Creates a device specific object based on the string returned by *IDN?.
+ * @param deviceStr device string to pass.
+ * @param ip IP used for the device creation.
+ * @return Pointer to a device. TODO: Device is allocated on heap, to avoid slicing problem.
+ */
 /*static*/ Device* DeviceDiscovery::createDeviceFromDeviceString(std::string &deviceStr, std::vector<uint8_t> &ip)
 {
     std::string ipAddrStr =
