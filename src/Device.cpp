@@ -52,11 +52,11 @@ Device::~Device()
 PIL_ERROR_CODE Device::Connect()
 {
     if (m_Logger)
-        m_Logger->LogMessage(INFO_LVL, __FILENAME__, __LINE__, "Device %s is connecting.", m_DeviceName.c_str());
+        m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Device %s is connecting.", m_DeviceName.c_str());
     if (m_SocketHandle->GetLastError() != PIL_NO_ERROR)
     {
         if(m_Logger)
-            m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__,
+            m_Logger->LogMessage(PIL::ERROR, __FILENAME__, __LINE__,
                                  PIL_ErrorCodeToString(m_SocketHandle->GetLastError()));
         PIL_SetLastErrorMsg(&m_ErrorHandle, m_SocketHandle->GetLastError(), "Could not open socket");
         return m_SocketHandle->GetLastError();
@@ -65,13 +65,13 @@ PIL_ERROR_CODE Device::Connect()
     if (m_SocketHandle->Connect(m_IPAddr, m_Port) != PIL_NO_ERROR)
     {
         if(m_Logger)
-            m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__, PIL_ErrorCodeToString(m_SocketHandle->GetLastError()));
+            m_Logger->LogMessage(PIL::ERROR, __FILENAME__, __LINE__, PIL_ErrorCodeToString(m_SocketHandle->GetLastError()));
         return m_SocketHandle->GetLastError();
     }
     else
     {
         if(m_Logger)
-            m_Logger->LogMessage(INFO_LVL, __FILENAME__, __LINE__, "Connection to device %s:%d established!",
+            m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Connection to device %s:%d established!",
                              m_IPAddr.c_str(), m_Port);
     }
 
@@ -86,17 +86,17 @@ PIL_ERROR_CODE Device::Disconnect()
         if(m_SocketHandle->Close() != PIL_NO_ERROR)
         {
             if(m_Logger)
-                m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__,
+                m_Logger->LogMessage(PIL::ERROR, __FILENAME__, __LINE__,
                                  PIL_ErrorCodeToString(m_SocketHandle->GetLastError()));
             PIL_SetLastError(&m_ErrorHandle, m_SocketHandle->GetLastError());
             return m_SocketHandle->GetLastError();
         }
         if(m_Logger)
-            m_Logger->LogMessage(DEBUG_LVL, __FILENAME__, __LINE__,"Socket disconnected");
+            m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"Socket disconnected");
         return PIL_NO_ERROR;
     }
     if(m_Logger)
-        m_Logger->LogMessage(DEBUG_LVL, __FILENAME__, __LINE__,"Socket already closed");
+        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"Socket already closed");
     return PIL_INTERFACE_CLOSED;
 }
 
@@ -170,7 +170,7 @@ PIL_ERROR_CODE Device::Exec(std::string command, ExecArgs *args, char *result, b
   if(m_SocketHandle->Send(reinterpret_cast<uint8_t*>(c), &commandLen) != PIL_NO_ERROR)
   {
       if(m_Logger)
-          m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__,
+          m_Logger->LogMessage(PIL::ERROR, __FILENAME__, __LINE__,
                                PIL_ErrorCodeToString(m_SocketHandle->GetLastError()));
       PIL_SetLastErrorMsg(&m_ErrorHandle, m_SocketHandle->GetLastError(), "Error while calling send");
       return m_SocketHandle->GetLastError();
@@ -180,7 +180,7 @@ PIL_ERROR_CODE Device::Exec(std::string command, ExecArgs *args, char *result, b
     {
         std::string logStr(c);
         logStr = logStr.replace(logStr.find('\n'),1, "\\n");
-        m_Logger->LogMessage(INFO_LVL, __FILENAME__, __LINE__, "Command %s successfully executed", logStr.c_str());
+        m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Command %s successfully executed", logStr.c_str());
     }
 
   if (result) { // not all operation need a result
@@ -189,7 +189,7 @@ PIL_ERROR_CODE Device::Exec(std::string command, ExecArgs *args, char *result, b
     if(m_SocketHandle->Receive(m_recvBuff, &len) != PIL_NO_ERROR)
     {
         if(m_Logger)
-            m_Logger->LogMessage(ERROR_LVL, __FILENAME__, __LINE__,
+            m_Logger->LogMessage(PIL::ERROR, __FILENAME__, __LINE__,
                              PIL_ErrorCodeToString(m_SocketHandle->GetLastError()));
         PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while calling read");
         return PIL_ERRNO;
@@ -200,7 +200,7 @@ PIL_ERROR_CODE Device::Exec(std::string command, ExecArgs *args, char *result, b
       snprintf(result, size, "%s", m_recvBuff);
   }
     if(m_Logger)
-        m_Logger->LogMessage(INFO_LVL, __FILENAME__, __LINE__,
+        m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__,
                              "Receive result: %s", result);
 
     PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);

@@ -56,7 +56,7 @@ std::vector<Device*> DeviceDiscovery::startDiscovery()
             auto ipRange = getAddressRange(ip, mask);
             if (m_Logging)
             {
-                m_Logging->LogMessage(INFO_LVL, __FILENAME__, __LINE__, "If: %s, Start: %u.%u.%u.%u End: %u.%u.%u.%u",
+                m_Logging->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "If: %s, Start: %u.%u.%u.%u End: %u.%u.%u.%u",
                                       m_InterfaceList.interfaces[i].m_InterfaceName, ipRange.m_startIPRange[0],
                                       ipRange.m_startIPRange[1], ipRange.m_startIPRange[2], ipRange.m_startIPRange[3],
                                       ipRange.m_stopIPRange[0], ipRange.m_stopIPRange[1], ipRange.m_stopIPRange[2],
@@ -85,7 +85,7 @@ PIL_ERROR_CODE DeviceDiscovery::setInterfaceList()
     {
         for (uint32_t i = 0; i < m_InterfaceList.availableInterfaces; i++)
         {
-            m_Logging->LogMessage(INFO_LVL, __FILENAME__, __LINE__, "Interface: %s, IP: %s, Mask: %s",
+            m_Logging->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Interface: %s, IP: %s, Mask: %s",
                                   m_InterfaceList.interfaces[i].m_InterfaceName, m_InterfaceList.interfaces[i].m_IPAddr,
                                   m_InterfaceList.interfaces[i].m_NetMask);
         }
@@ -181,7 +181,7 @@ void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *device
         auto *threading = new PIL::Threading(threading_function, (void *) t);
         threadingList.push_back(threading);
         if (m_Logging)
-            m_Logging->LogMessage(INFO_LVL, __FILENAME__, __LINE__, "Start Thread #%d for IP: %d.%d.%d.%d", threadCtr,
+            m_Logging->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Start Thread #%d for IP: %d.%d.%d.%d", threadCtr,
                                   temporaryIP[0], temporaryIP[1], temporaryIP[2], temporaryIP[3]);
         threading->Run();
 
@@ -192,7 +192,7 @@ void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *device
     for (uint32_t i = 0; i < temporaryIPList.size(); i++)
     {
         if (m_Logging)
-            m_Logging->LogMessage(INFO_LVL, __FILENAME__, __LINE__, "Join Thread #%d", i);
+            m_Logging->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Join Thread #%d", i);
         threadingList[i]->Join();
         delete threadingList[i];
         std::string identifier = std::get<1>(*temporaryIPList[i]);
@@ -204,7 +204,7 @@ void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *device
         delete temporaryIPList[i];
     }
     if (m_Logging)
-        m_Logging->LogMessage(INFO_LVL, __FILENAME__, __LINE__, "Found 10 devices");
+        m_Logging->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Found 10 devices");
 }
 
 /**
