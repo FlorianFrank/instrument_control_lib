@@ -208,4 +208,13 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
             .value("CHANNEL_A", FunctionGenerator::CHANNEL_A)
             .value("CHANNEL_B", FunctionGenerator::CHANNEL_B);
 
+    class_<PIL::Logging>(m, "Logging")
+            .def(pybind11::init<>())
+            .def("LogMessage", &PIL::Logging::Log);
+
+    enum_<PIL::Level>(m, "Log_Level")
+            .value("INFO", PIL::INFO)
+            .value("DEBUG", PIL::DEBUG)
+            .value("WARNING", PIL::WARNING)
+            .value("ERROR", PIL::ERROR);
 }
