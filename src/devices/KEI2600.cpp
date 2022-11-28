@@ -28,7 +28,7 @@ KEI2600::KEI2600(const char *ip, int timeoutInMS, PIL::Logging *logger) : SMU(ip
 [[maybe_unused]] KEI2600::KEI2600(const char *ip, int timeoutInMS) : SMU(ip, timeoutInMS, nullptr) {
     this->m_DeviceName = DEVICE_NAME;
     std::string logFile = "instrument_control.log";
-    m_Logger = new PIL::Logging(INFO_LVL, &logFile);
+    m_Logger = new PIL::Logging(PIL::INFO, &logFile);
 }
 
 /**
@@ -79,12 +79,12 @@ double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
     double value;
     auto ret = measure(unit, channel, &value, true);
     if (ret != PIL_NO_ERROR && m_Logger)
-        m_Logger->LogMessage(WARNING_LVL, __FILENAME__, __LINE__,
+        m_Logger->LogMessage(PIL::WARNING, __FILENAME__, __LINE__,
                              "Error while executing measure: %s", PIL_ErrorCodeToString(ret));
     if(checkErrorBuffer)
     {
         if(getErrorBufferStatus() != PIL_NO_ERROR)
-            m_Logger->LogMessage(WARNING_LVL, __FILENAME__, __LINE__, getLastError().c_str());
+            m_Logger->LogMessage(PIL::WARNING, __FILENAME__, __LINE__, getLastError().c_str());
     }
     return value;
 }
@@ -843,7 +843,7 @@ PIL_ERROR_CODE KEI2600::measureI(SMU_CHANNEL channel, double *value)
         return ret;
 
     if(m_Logger)
-        m_Logger->LogMessage(DEBUG_LVL, __FILENAME__, __LINE__,"measureI returned: %s", buffer);
+        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureI returned: %s", buffer);
     *value = std::stod(buffer);
     return PIL_NO_ERROR;
 }
@@ -884,7 +884,7 @@ PIL_ERROR_CODE KEI2600::measureV(SMU_CHANNEL channel, double *value)
         return ret;
 
     if(m_Logger)
-        m_Logger->LogMessage(DEBUG_LVL, __FILENAME__, __LINE__,"measureV returned: %s", buffer);
+        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureV returned: %s", buffer);
     *value = std::stod(buffer);
     return PIL_NO_ERROR;
 }
@@ -925,7 +925,7 @@ PIL_ERROR_CODE KEI2600::measureR(SMU_CHANNEL channel, double *value)
         return ret;
 
     if(m_Logger)
-        m_Logger->LogMessage(DEBUG_LVL, __FILENAME__, __LINE__,"measureR returned: %s", buffer);
+        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureR returned: %s", buffer);
     *value = std::stod(buffer);
     return PIL_NO_ERROR;
 }
@@ -966,7 +966,7 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
         return ret;
 
     if(m_Logger)
-        m_Logger->LogMessage(DEBUG_LVL, __FILENAME__, __LINE__,"measureP returned: %s", buffer);
+        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureP returned: %s", buffer);
     *value = std::stod(buffer);
     return PIL_NO_ERROR;
 }
