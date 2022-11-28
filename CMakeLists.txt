@@ -27,7 +27,6 @@ set(BoostRoot "${CMAKE_CURRENT_SOURCE_DIR}/boost")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/boost/include")
 #add_subdirectory(memristor_tester)
 add_subdirectory(common_tools_lib)
-add_subdirectory(playground)
 
 set(ENABLE_PYTHON 1)
 if(ENABLE_PYTHON)
