@@ -8,7 +8,7 @@
 
 int main()
 {
-    PIL::Logging logger(INFO_LVL, nullptr);
+    PIL::Logging logger(PIL::DEBUG, nullptr);
     CommandLineInterface commandLineInterface(&logger);
     commandLineInterface.Start();
 
