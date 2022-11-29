@@ -84,7 +84,7 @@ double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
     if(checkErrorBuffer)
     {
         if(getErrorBufferStatus() != PIL_NO_ERROR)
-            m_Logger->LogMessage(PIL::WARNING, __FILENAME__, __LINE__, getLastError().c_str());
+            m_Logger->LogMessage(PIL::WARNING, __FILENAME__, __LINE__, getLastError());
     }
     return value;
 }

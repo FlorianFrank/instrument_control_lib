@@ -99,13 +99,13 @@ public:
     explicit SMU(const char *ip, int timeoutInMs);
     explicit SMU(const char *ip, int timeoutInMs, PIL::Logging *logger);
 
-    virtual PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double *value, bool checkErrorBuffer = true) = 0;
+    virtual PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double *value, bool checkErrorBuffer) = 0;
 
-    virtual PIL_ERROR_CODE turnOn(SMU_CHANNEL channel, bool checkErrorBuffer = true) = 0;
-    virtual PIL_ERROR_CODE turnOff(SMU_CHANNEL channel, bool checkErrorBuffer = true) = 0;
+    virtual PIL_ERROR_CODE turnOn(SMU_CHANNEL channel, bool checkErrorBuffer) = 0;
+    virtual PIL_ERROR_CODE turnOff(SMU_CHANNEL channel, bool checkErrorBuffer) = 0;
 
-    virtual PIL_ERROR_CODE setLimit(UNIT unit, SMU_CHANNEL channel, double limit, bool checkErrorBuffer = true) = 0;
-    virtual PIL_ERROR_CODE setLevel(UNIT unit, SMU_CHANNEL channel, double level, bool checkErrorBuffer = true) = 0;
+    virtual PIL_ERROR_CODE setLimit(UNIT unit, SMU_CHANNEL channel, double limit, bool checkErrorBuffer) = 0;
+    virtual PIL_ERROR_CODE setLevel(UNIT unit, SMU_CHANNEL channel, double level, bool checkErrorBuffer) = 0;
 };
 
 

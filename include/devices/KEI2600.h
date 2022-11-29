@@ -42,30 +42,30 @@ public:
     PIL_ERROR_CODE enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer);
     PIL_ERROR_CODE disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer);
 
-    PIL_ERROR_CODE enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer = true);
-    PIL_ERROR_CODE disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer = true);
+    PIL_ERROR_CODE enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer);
+    PIL_ERROR_CODE disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer);
 
-    [[maybe_unused]] PIL_ERROR_CODE enableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer = true);
-    [[maybe_unused]] PIL_ERROR_CODE disableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer = true);
+    [[maybe_unused]] PIL_ERROR_CODE enableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer);
+    [[maybe_unused]] PIL_ERROR_CODE disableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer);
 
-    PIL_ERROR_CODE setMeasureRange(UNIT unit, SMU_CHANNEL channel, double range, bool checkErrorBuffer = true);
-    PIL_ERROR_CODE setSourceRange(UNIT unit, SMU_CHANNEL channel, double range, bool checkErrorBuffer = true);
+    PIL_ERROR_CODE setMeasureRange(UNIT unit, SMU_CHANNEL channel, double range, bool checkErrorBuffer);
+    PIL_ERROR_CODE setSourceRange(UNIT unit, SMU_CHANNEL channel, double range, bool checkErrorBuffer);
 
-    PIL_ERROR_CODE setSenseMode(SMU_CHANNEL channel, SMU_SENSE senseArg, bool checkErrorBuffer = true);
-    PIL_ERROR_CODE setMeasurePLC(SMU_CHANNEL channel, double value, bool checkErrorBuffer = true);
-    PIL_ERROR_CODE setMeasureLowRange(UNIT unit, SMU_CHANNEL channel, double value, bool checkErrorBuffer = true);
-    PIL_ERROR_CODE setMeasureAutoZero(SMU_CHANNEL channel, AUTOZERO autoZero, bool checkErrorBuffer = true);
-    PIL_ERROR_CODE setMeasureCount(SMU_CHANNEL channel, int nrOfMeasurements, bool checkErrorBuffer = true);
-    PIL_ERROR_CODE setSourceFunction(SMU_CHANNEL channel, SRC_FUNC srcFunc, bool checkErrorBuffer = true);
-    PIL_ERROR_CODE setSourceOffMode(SMU_CHANNEL channel, SRC_OFF_MODE srcOffMode, bool checkErrorBuffer = true);
-    PIL_ERROR_CODE setSourceSettling(SMU_CHANNEL channel, SRC_SETTLING srcSettling, bool checkErrorBuffer = true);
-    PIL_ERROR_CODE enableSourceSink(SMU_CHANNEL channel, bool checkErrorBuffer = true);
-    PIL_ERROR_CODE disableSourceSink(SMU_CHANNEL channel, bool checkErrorBuffer = true);
-    PIL_ERROR_CODE displayMeasureFunction(SMU_CHANNEL channel, SMU_DISPLAY displayMeasureFunc, bool checkErrorBuffer = true);
+    PIL_ERROR_CODE setSenseMode(SMU_CHANNEL channel, SMU_SENSE senseArg, bool checkErrorBuffer);
+    PIL_ERROR_CODE setMeasurePLC(SMU_CHANNEL channel, double value, bool checkErrorBuffer);
+    PIL_ERROR_CODE setMeasureLowRange(UNIT unit, SMU_CHANNEL channel, double value, bool checkErrorBuffer);
+    PIL_ERROR_CODE setMeasureAutoZero(SMU_CHANNEL channel, AUTOZERO autoZero, bool checkErrorBuffer);
+    PIL_ERROR_CODE setMeasureCount(SMU_CHANNEL channel, int nrOfMeasurements, bool checkErrorBuffer);
+    PIL_ERROR_CODE setSourceFunction(SMU_CHANNEL channel, SRC_FUNC srcFunc, bool checkErrorBuffer);
+    PIL_ERROR_CODE setSourceOffMode(SMU_CHANNEL channel, SRC_OFF_MODE srcOffMode, bool checkErrorBuffer);
+    PIL_ERROR_CODE setSourceSettling(SMU_CHANNEL channel, SRC_SETTLING srcSettling, bool checkErrorBuffer);
+    PIL_ERROR_CODE enableSourceSink(SMU_CHANNEL channel, bool checkErrorBuffer);
+    PIL_ERROR_CODE disableSourceSink(SMU_CHANNEL channel, bool checkErrorBuffer);
+    PIL_ERROR_CODE displayMeasureFunction(SMU_CHANNEL channel, SMU_DISPLAY displayMeasureFunc, bool checkErrorBuffer);
 
     PIL_ERROR_CODE enableBeep(bool checkErrorBuffer = true);
-    PIL_ERROR_CODE beep(float timeInSeconds, int frequency, bool checkErrorBuffer = true);
-    PIL_ERROR_CODE disableBeep(bool checkErrorBuffer = true);
+    PIL_ERROR_CODE beep(float timeInSeconds, int frequency, bool checkErrorBuffer);
+    PIL_ERROR_CODE disableBeep(bool checkErrorBuffer);
 
     std::string getLastError();
     PIL_ERROR_CODE clearErrorBuffer();
