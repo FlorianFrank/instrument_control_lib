@@ -167,21 +167,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0d66427362f865a3eb5136392ba7cb55"><td class="memItemLeft" align="right" valign="top"><a id="a0d66427362f865a3eb5136392ba7cb55"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SMU</b> (const char *ip, int timeoutInMs, PIL::Logging *logger)</td></tr>
 <tr class="separator:a0d66427362f865a3eb5136392ba7cb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a233c01c43791851e6be2ee7c18950a6a"><td class="memItemLeft" align="right" valign="top"><a id="a233c01c43791851e6be2ee7c18950a6a"></a>
-virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>measure</b> (<a class="el" href="classSMU.html#a4c7be94a316d3928411f15ebad515fb7">UNIT</a> unit, <a class="el" href="classSMU.html#a987e4da8cebd76020fdd12c1ceea78bc">SMU_CHANNEL</a> channel, double *value, bool checkErrorBuffer=true)=0</td></tr>
-<tr class="separator:a233c01c43791851e6be2ee7c18950a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8eb4ab3c8c1e0b95ac93996179215333"><td class="memItemLeft" align="right" valign="top"><a id="a8eb4ab3c8c1e0b95ac93996179215333"></a>
-virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>turnOn</b> (<a class="el" href="classSMU.html#a987e4da8cebd76020fdd12c1ceea78bc">SMU_CHANNEL</a> channel, bool checkErrorBuffer=true)=0</td></tr>
-<tr class="separator:a8eb4ab3c8c1e0b95ac93996179215333"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa31e20b02b301100f61d361c7f58afc2"><td class="memItemLeft" align="right" valign="top"><a id="aa31e20b02b301100f61d361c7f58afc2"></a>
-virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>turnOff</b> (<a class="el" href="classSMU.html#a987e4da8cebd76020fdd12c1ceea78bc">SMU_CHANNEL</a> channel, bool checkErrorBuffer=true)=0</td></tr>
-<tr class="separator:aa31e20b02b301100f61d361c7f58afc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a656accf1a7d2f0455b0ecfd424a23b80"><td class="memItemLeft" align="right" valign="top"><a id="a656accf1a7d2f0455b0ecfd424a23b80"></a>
-virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>setLimit</b> (<a class="el" href="classSMU.html#a4c7be94a316d3928411f15ebad515fb7">UNIT</a> unit, <a class="el" href="classSMU.html#a987e4da8cebd76020fdd12c1ceea78bc">SMU_CHANNEL</a> channel, double limit, bool checkErrorBuffer=true)=0</td></tr>
-<tr class="separator:a656accf1a7d2f0455b0ecfd424a23b80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2502768865356db94c85a276c840b36"><td class="memItemLeft" align="right" valign="top"><a id="ac2502768865356db94c85a276c840b36"></a>
-virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>setLevel</b> (<a class="el" href="classSMU.html#a4c7be94a316d3928411f15ebad515fb7">UNIT</a> unit, <a class="el" href="classSMU.html#a987e4da8cebd76020fdd12c1ceea78bc">SMU_CHANNEL</a> channel, double level, bool checkErrorBuffer=true)=0</td></tr>
-<tr class="separator:ac2502768865356db94c85a276c840b36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34d0094e9535acb3ebf535919418aa8b"><td class="memItemLeft" align="right" valign="top"><a id="a34d0094e9535acb3ebf535919418aa8b"></a>
+virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>measure</b> (<a class="el" href="classSMU.html#a4c7be94a316d3928411f15ebad515fb7">UNIT</a> unit, <a class="el" href="classSMU.html#a987e4da8cebd76020fdd12c1ceea78bc">SMU_CHANNEL</a> channel, double *value, bool checkErrorBuffer)=0</td></tr>
+<tr class="separator:a34d0094e9535acb3ebf535919418aa8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d7386bbf844ab13d99bd48e5836fb4a"><td class="memItemLeft" align="right" valign="top"><a id="a6d7386bbf844ab13d99bd48e5836fb4a"></a>
+virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>turnOn</b> (<a class="el" href="classSMU.html#a987e4da8cebd76020fdd12c1ceea78bc">SMU_CHANNEL</a> channel, bool checkErrorBuffer)=0</td></tr>
+<tr class="separator:a6d7386bbf844ab13d99bd48e5836fb4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55762dd58ae0afb21024c1735d1ce9ad"><td class="memItemLeft" align="right" valign="top"><a id="a55762dd58ae0afb21024c1735d1ce9ad"></a>
+virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>turnOff</b> (<a class="el" href="classSMU.html#a987e4da8cebd76020fdd12c1ceea78bc">SMU_CHANNEL</a> channel, bool checkErrorBuffer)=0</td></tr>
+<tr class="separator:a55762dd58ae0afb21024c1735d1ce9ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6b7d447a9039ca653ca12fd4fd1a7e0"><td class="memItemLeft" align="right" valign="top"><a id="ac6b7d447a9039ca653ca12fd4fd1a7e0"></a>
+virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>setLimit</b> (<a class="el" href="classSMU.html#a4c7be94a316d3928411f15ebad515fb7">UNIT</a> unit, <a class="el" href="classSMU.html#a987e4da8cebd76020fdd12c1ceea78bc">SMU_CHANNEL</a> channel, double limit, bool checkErrorBuffer)=0</td></tr>
+<tr class="separator:ac6b7d447a9039ca653ca12fd4fd1a7e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33d2a4bb0912931c4468805d8b5ba15f"><td class="memItemLeft" align="right" valign="top"><a id="a33d2a4bb0912931c4468805d8b5ba15f"></a>
+virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>setLevel</b> (<a class="el" href="classSMU.html#a4c7be94a316d3928411f15ebad515fb7">UNIT</a> unit, <a class="el" href="classSMU.html#a987e4da8cebd76020fdd12c1ceea78bc">SMU_CHANNEL</a> channel, double level, bool checkErrorBuffer)=0</td></tr>
+<tr class="separator:a33d2a4bb0912931c4468805d8b5ba15f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classDevice"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classDevice')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classDevice.html">Device</a></td></tr>
 <tr class="memitem:a4e786d9fc2c0e57b6b55ee262209dc86 inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a4e786d9fc2c0e57b6b55ee262209dc86">Device</a> (const char *ip, int timeoutInMs)</td></tr>
 <tr class="memdesc:a4e786d9fc2c0e57b6b55ee262209dc86 inherit pub_methods_classDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class containing the base functionality of all devices. And parameters to store the name connection type, etc.  <a href="classDevice.html#a4e786d9fc2c0e57b6b55ee262209dc86">More...</a><br /></td></tr>

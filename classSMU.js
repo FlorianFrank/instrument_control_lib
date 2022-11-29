@@ -45,9 +45,9 @@ var classSMU =
     ] ],
     [ "SMU", "classSMU.html#af37a4817588aebf5a97f5396b5caa2e7", null ],
     [ "SMU", "classSMU.html#a0d66427362f865a3eb5136392ba7cb55", null ],
-    [ "measure", "classSMU.html#a233c01c43791851e6be2ee7c18950a6a", null ],
-    [ "setLevel", "classSMU.html#ac2502768865356db94c85a276c840b36", null ],
-    [ "setLimit", "classSMU.html#a656accf1a7d2f0455b0ecfd424a23b80", null ],
-    [ "turnOff", "classSMU.html#aa31e20b02b301100f61d361c7f58afc2", null ],
-    [ "turnOn", "classSMU.html#a8eb4ab3c8c1e0b95ac93996179215333", null ]
+    [ "measure", "classSMU.html#a34d0094e9535acb3ebf535919418aa8b", null ],
+    [ "setLevel", "classSMU.html#a33d2a4bb0912931c4468805d8b5ba15f", null ],
+    [ "setLimit", "classSMU.html#ac6b7d447a9039ca653ca12fd4fd1a7e0", null ],
+    [ "turnOff", "classSMU.html#a55762dd58ae0afb21024c1735d1ce9ad", null ],
+    [ "turnOn", "classSMU.html#a6d7386bbf844ab13d99bd48e5836fb4a", null ]
 ];

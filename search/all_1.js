@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['beep_5',['beep',['../classKEI2600.html#a6c0dcd0099370ac8710a89622f1a235e',1,'KEI2600']]]
+  ['beep_5',['beep',['../classKEI2600.html#a295c11141ff72a00c1455c6a2983c3fa',1,'KEI2600']]]
 ];
