@@ -264,17 +264,17 @@ k.function("SIN");
   >>> print(device_identifier)
   Keithley Instruments Inc*, Model 2636B, 4031
   
-  >>> error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3)
+  >>> error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3, False)
   >>> if error_code != ERROR_CODE.NO_ERROR: 
         # stop execution or do some error handling
         
-  >>> error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 5.0)
+  >>> error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 5.0, False)
   >>> # error handling
   
-  >>> error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A)
+  >>> error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A, False)
   >>> # error handling
   
-  >>> measure_value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL_CHANNEL_B)
+  >>> measure_value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_B, False)
   >>> print(measure_value)
     3.04
   >>> smu.disconnect()
@@ -290,36 +290,35 @@ This list gives an overview of the smu functions and how to call them.
     error_code = smu.connect()
     error_code = smu.disconnect()
 
-    error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A)
-    error_code = smu.turnOff(SMU_CHANNEL.CHANNEL_A)
+    error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A, False)
+    error_code = smu.turnOff(SMU_CHANNEL.CHANNEL_A, False)
 
-    value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)
-    value = smu.measure(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)
-    value = smu.measure(SMU_UNIT.RESISTANCE, SMU_CHANNEL.CHANNEL_A)
-    value = smu.measure(SMU_UNIT.POWER, SMU_CHANNEL.CHANNEL_A)
+    value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, False)
+    value = smu.measure(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, False)
+    value = smu.measure(SMU_UNIT.RESISTANCE, SMU_CHANNEL.CHANNEL_A, False)
+    value = smu.measure(SMU_UNIT.POWER, SMU_CHANNEL.CHANNEL_A, False)
     
-    error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3)
-    error_code = smu.setLevel(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, 0.1)
+    error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3, False)
+    error_code = smu.setLevel(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, 0.1, False)
 
-    error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3)
-    error_code = smu.setLimit(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, 0.1)
+    error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3, False)
+    error_code = smu.setLimit(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, 0.1, False)
 
-    error_code = smu.enableMeasureAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)
-    error_code = smu.enableMeasureAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)
+    error_code = smu.enableMeasureAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, False)
+    error_code = smu.enableMeasureAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, False)
 
-    error_code = smu.disableMeasureAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)
-    error_code = smu.disableMeasureAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)
+    error_code = smu.disableMeasureAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, False)
+    error_code = smu.disableMeasureAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, False)
 
-    error_code = smu.enableSourceAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)
-    error_code = smu.enableSourceeAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)
+    error_code = smu.enableSourceAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, False)
+    error_code = smu.enableSourceeAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, False)
 
-    error_code = smu.disableSourceAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)
-    error_code = smu.disableSourceAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)
+    error_code = smu.disableSourceAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, False)
+    error_code = smu.disableSourceAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, False)
 
-    error_code = smu.setRemoteSense(SMU_CHANNEL.CHANNEL_A)
-    error_code = smu.setLocalSense(SMU_CHANNEL.CHANNEL_A)
+    smu.setSenseMode(SMU_CHANNEL.CHANNEL_A, SMU_SENSE.LOCAL,FALSE)
     
-    error_code = smu.setSourceRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.0)
+    error_code = smu.setSourceRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.0, False)
     
     device_description = smu.getDeviceIdentifier()
 
