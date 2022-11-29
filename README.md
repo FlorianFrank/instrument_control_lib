@@ -147,24 +147,23 @@ Run the graphical installer.
 <br><br>
 #### Tektronix 2600B Series SMU
 
-| **Function**              | **Parameters**       | **Description**                                                                  | **Value Range** |
-|---------------------------|----------------------|----------------------------------------------------------------------------------|-----------------|
-| turnOn()                  | channel              | Enable a channel on the SMU.                                                     | See manual      |
-| turnOff()                 | channel              | Disable a channel on the SMU.                                                    | See manual      |
-| measure()                 | channel, unit        | Measure a certain unit (voltage, current, power) and return the measure results. | See manual      |
-| setLevel()                | channel, unit        | Set voltage, current source level                                                | See manual      |
-| setLimit()                | channel, unit        | Set voltage, current or power limit.                                             | See manual      |
-| enableMeasureAutoRange()  | unit, channel        | Enable voltage or current measure auto range.                                    | ON              |
-| disableMeasureAutoRange() | unit, channel        | Disable voltage or current measure auto range.                                   | OFF             |
-| enableSourceAutoRange()   | unit, channel        | Enable voltage or current measure auto range.                                    | ON              |
-| disableSourceAutoRange()  | unit, channel        | Disable voltage or current measure auto range.                                   | OFF             |
-| setMeasureRange()         | unit, channel, range | Set voltage or current measure range.                                            | See manual      |
-| setSourceRange()          | unit, channel, range | Set voltage or current source range.                                             | See manual      |
-| selectLocalSense()        | unit, channel        | Select local sense (2-wire).                                                     | See manual      |
-| setRemoteSense()          | unit, channel        | Select remote sense (4-wire).                                                    | See manual      |
-| enableBeep()              | -                    | Enable the execution of a beep sound on the oscilloscope.                        | See manual      |
-| enableBeep()              | -                    | Disable the execution of a beep sound on the oscilloscope.                       | See manual      |
-| beep()                    | -                    | Send a beep signal to the SMU.                                                   | See manual.     |
+| **Function**              | **Parameters**            | **Description**                                                                  | **Value Range** |
+|---------------------------|---------------------------|----------------------------------------------------------------------------------|-----------------|
+| turnOn()                  | channel                   | Enable a channel on the SMU.                                                     | See manual      |
+| turnOff()                 | channel                   | Disable a channel on the SMU.                                                    | See manual      |
+| measure()                 | channel, unit             | Measure a certain unit (voltage, current, power) and return the measure results. | See manual      |
+| setLevel()                | channel, unit             | Set voltage, current source level                                                | See manual      |
+| setLimit()                | channel, unit             | Set voltage, current or power limit.                                             | See manual      |
+| enableMeasureAutoRange()  | unit, channel             | Enable voltage or current measure auto range.                                    | ON              |
+| disableMeasureAutoRange() | unit, channel             | Disable voltage or current measure auto range.                                   | OFF             |
+| enableSourceAutoRange()   | unit, channel             | Enable voltage or current measure auto range.                                    | ON              |
+| disableSourceAutoRange()  | unit, channel             | Disable voltage or current measure auto range.                                   | OFF             |
+| setMeasureRange()         | unit, channel, range      | Set voltage or current measure range.                                            | See manual      |
+| setSourceRange()          | unit, channel, range      | Set voltage or current source range.                                             | See manual      |
+| setSenseMode()            | unit, channel, sense-mode | Select local sense (2-wire) remote sense (4-wire) or calibration mode.           | See manual      |
+| enableBeep()              | -                         | Enable the execution of a beep sound on the oscilloscope.                        | See manual      |
+| enableBeep()              | -                         | Disable the execution of a beep sound on the oscilloscope.                       | See manual      |
+| beep()                    | -                         | Send a beep signal to the SMU.                                                   | See manual.     |
 
 <br><br>
 #### Keysight 33500B Waveform Generator
@@ -321,7 +320,6 @@ This list gives an overview of the smu functions and how to call them.
     error_code = smu.setSourceRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.0, False)
     
     device_description = smu.getDeviceIdentifier()
-
 ```
 
 ### Error codes
