@@ -369,17 +369,17 @@ Tutorial Python interface</h1>
 <div class="line">&gt;&gt;&gt; print(device_identifier)</div>
 <div class="line">Keithley Instruments Inc*, Model 2636B, 4031</div>
 <div class="line"> </div>
-<div class="line">&gt;&gt;&gt; error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3)</div>
+<div class="line">&gt;&gt;&gt; error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3, False)</div>
 <div class="line">&gt;&gt;&gt; if error_code != ERROR_CODE.NO_ERROR: </div>
 <div class="line">      # stop execution or do some error handling</div>
 <div class="line">      </div>
-<div class="line">&gt;&gt;&gt; error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 5.0)</div>
+<div class="line">&gt;&gt;&gt; error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 5.0, False)</div>
 <div class="line">&gt;&gt;&gt; # error handling</div>
 <div class="line"> </div>
-<div class="line">&gt;&gt;&gt; error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">&gt;&gt;&gt; error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A, False)</div>
 <div class="line">&gt;&gt;&gt; # error handling</div>
 <div class="line"> </div>
-<div class="line">&gt;&gt;&gt; measure_value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL_CHANNEL_B)</div>
+<div class="line">&gt;&gt;&gt; measure_value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_B, False)</div>
 <div class="line">&gt;&gt;&gt; print(measure_value)</div>
 <div class="line">  3.04</div>
 <div class="line">&gt;&gt;&gt; smu.disconnect()</div>
@@ -396,36 +396,35 @@ Functions</h2>
 <div class="line">error_code = smu.connect()</div>
 <div class="line">error_code = smu.disconnect()</div>
 <div class="line"> </div>
-<div class="line">error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A)</div>
-<div class="line">error_code = smu.turnOff(SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A, False)</div>
+<div class="line">error_code = smu.turnOff(SMU_CHANNEL.CHANNEL_A, False)</div>
 <div class="line"> </div>
-<div class="line">value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)</div>
-<div class="line">value = smu.measure(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)</div>
-<div class="line">value = smu.measure(SMU_UNIT.RESISTANCE, SMU_CHANNEL.CHANNEL_A)</div>
-<div class="line">value = smu.measure(SMU_UNIT.POWER, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, False)</div>
+<div class="line">value = smu.measure(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, False)</div>
+<div class="line">value = smu.measure(SMU_UNIT.RESISTANCE, SMU_CHANNEL.CHANNEL_A, False)</div>
+<div class="line">value = smu.measure(SMU_UNIT.POWER, SMU_CHANNEL.CHANNEL_A, False)</div>
 <div class="line"> </div>
-<div class="line">error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3)</div>
-<div class="line">error_code = smu.setLevel(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, 0.1)</div>
+<div class="line">error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3, False)</div>
+<div class="line">error_code = smu.setLevel(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, 0.1, False)</div>
 <div class="line"> </div>
-<div class="line">error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3)</div>
-<div class="line">error_code = smu.setLimit(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, 0.1)</div>
+<div class="line">error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3, False)</div>
+<div class="line">error_code = smu.setLimit(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, 0.1, False)</div>
 <div class="line"> </div>
-<div class="line">error_code = smu.enableMeasureAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)</div>
-<div class="line">error_code = smu.enableMeasureAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">error_code = smu.enableMeasureAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, False)</div>
+<div class="line">error_code = smu.enableMeasureAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, False)</div>
 <div class="line"> </div>
-<div class="line">error_code = smu.disableMeasureAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)</div>
-<div class="line">error_code = smu.disableMeasureAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">error_code = smu.disableMeasureAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, False)</div>
+<div class="line">error_code = smu.disableMeasureAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, False)</div>
 <div class="line"> </div>
-<div class="line">error_code = smu.enableSourceAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)</div>
-<div class="line">error_code = smu.enableSourceeAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">error_code = smu.enableSourceAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, False)</div>
+<div class="line">error_code = smu.enableSourceeAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, False)</div>
 <div class="line"> </div>
-<div class="line">error_code = smu.disableSourceAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A)</div>
-<div class="line">error_code = smu.disableSourceAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">error_code = smu.disableSourceAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, False)</div>
+<div class="line">error_code = smu.disableSourceAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, False)</div>
 <div class="line"> </div>
-<div class="line">error_code = smu.setRemoteSense(SMU_CHANNEL.CHANNEL_A)</div>
-<div class="line">error_code = smu.setLocalSense(SMU_CHANNEL.CHANNEL_A)</div>
+<div class="line">smu.setSenseMode(SMU_CHANNEL.CHANNEL_A, SMU_SENSE.LOCAL,FALSE)</div>
 <div class="line"> </div>
-<div class="line">error_code = smu.setSourceRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.0)</div>
+<div class="line">error_code = smu.setSourceRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.0, False)</div>
 <div class="line"> </div>
 <div class="line">device_description = smu.getDeviceIdentifier()</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md29"></a>
