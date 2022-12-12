@@ -15,7 +15,7 @@ file(GLOB device_type_files ${CMAKE_CURRENT_SOURCE_DIR}/src/devices/types/*.cpp)
 if(INSTRUMENT_LIB_BUILD_STATIC)
     add_library(instrument_control_lib STATIC ${source_files} ${device_files} ${device_type_files})
 else() # build shared lib
-    add_library(instrument_control_lib SHARED ${source_files} ${device_files} ${device_type_files} python_interface/pybind_wrapper.cpp python_interface/pybind_wrapper.h)
+    add_library(instrument_control_lib SHARED ${source_files} ${device_files} ${device_type_files} python_interface/pybind_wrapper.cpp python_interface/pybind_wrapper.h playground/testSweep.cpp)
 endif()
 
 target_compile_options(instrument_control_lib PRIVATE -Wall -Wextra -Wpedantic -Werror)
@@ -27,6 +27,7 @@ set(BoostRoot "${CMAKE_CURRENT_SOURCE_DIR}/boost")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/boost/include")
 #add_subdirectory(memristor_tester)
 add_subdirectory(common_tools_lib)
+add_subdirectory(playground)
 
 set(ENABLE_PYTHON 1)
 if(ENABLE_PYTHON)

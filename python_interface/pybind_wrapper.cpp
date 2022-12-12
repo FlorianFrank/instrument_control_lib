@@ -79,7 +79,12 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
         .def("displayMeasureFunction", &KEI2600::displayMeasureFunction)
         .def("getLastError", &KEI2600::getLastError)
         .def("clearErrorBuffer", &KEI2600::clearErrorBuffer)
-        .def("getErrorBufferStatus", &KEI2600::getErrorBufferStatus);
+        .def("getErrorBufferStatus", &KEI2600::getErrorBufferStatus)
+
+        .def("sendScript", &KEI2600::sendScript)
+        .def("executeScript", &KEI2600::executeScript)
+        .def("sendAndExecuteScript", &KEI2600::sendAndExecuteScript)
+        .def("performLinearVoltageSweep", &KEI2600::performLinearVoltageSweep);
 
     enum_<SMU::SMU_CHANNEL>(m, "SMU_CHANNEL")
             .value("CHANNEL_A", SMU::CHANNEL_A)

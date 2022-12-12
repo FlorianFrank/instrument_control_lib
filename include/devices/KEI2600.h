@@ -71,6 +71,12 @@ public:
     PIL_ERROR_CODE clearErrorBuffer();
     PIL_ERROR_CODE getErrorBufferStatus();
 
+    PIL_ERROR_CODE performLinearVoltageSweep(SMU_CHANNEL channel, double startVoltage, double stopVoltage,
+                                             int increaseRate, double current, bool checkErrorBuffer);
+    PIL_ERROR_CODE sendScript(std::string script, std::string scriptName, bool checkErrorBuffer);
+    PIL_ERROR_CODE executeScript(std::string scriptName, bool checkErrorBuffer);
+    PIL_ERROR_CODE sendAndExecuteScript(std::string script, std::string scriptName, bool checkErrorBuffer);
+
 private:
     PIL_ERROR_CODE measureI(SMU_CHANNEL channel, double *value);
     PIL_ERROR_CODE measureV(SMU_CHANNEL channel, double *value);
