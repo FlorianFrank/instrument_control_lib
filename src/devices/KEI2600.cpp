@@ -1299,7 +1299,7 @@ PIL_ERROR_CODE KEI2600::linearVoltageSweep(bool checkErrorBuffer) {
                         "end\n"
                         "smua.source.output = smua.OUTPUT_OFF\n";
 
-    return sendExecuteScript(sweep, "sweep", checkErrorBuffer);
+    return sendAndExecuteScript(sweep, "sweep", checkErrorBuffer);
 }
 
 /**
@@ -1357,7 +1357,7 @@ PIL_ERROR_CODE KEI2600::executeScript(std::string scriptName, bool checkErrorBuf
  * @param checkErrorBuffer if true error buffer status is requested and evaluated.
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
-PIL_ERROR_CODE KEI2600::sendExecuteScript(std::string script, std::string scriptName, bool checkErrorBuffer) {
+PIL_ERROR_CODE KEI2600::sendAndExecuteScript(std::string script, std::string scriptName, bool checkErrorBuffer) {
     PIL_ERROR_CODE ret = sendScript(script, scriptName, checkErrorBuffer);
     if (ret == PIL_ERROR_CODE::PIL_NO_ERROR) {
         ret = executeScript(scriptName, checkErrorBuffer);
