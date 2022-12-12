@@ -1271,7 +1271,7 @@ std::string replaceAll(std::string str, const std::string &from, const std::stri
     return str;
 }
 
-PIL_ERROR_CODE KEI2600::linearVoltageSweep() {
+PIL_ERROR_CODE KEI2600::linearVoltageSweep(bool checkErrorBuffer) {
     std::string sweep = "reset()\n"
                         "start_voltage = 0\n"
                         "stop_voltage = 550\n"
@@ -1287,20 +1287,7 @@ PIL_ERROR_CODE KEI2600::linearVoltageSweep() {
                         "end\n"
                         "smua.source.output = smua.OUTPUT_OFF\n";
 
-    std::cout << sweep << "\n";
-
-    sweep = replaceAll(sweep, "\n", " ");
-
-    sweep = "sweepScript = script.new(\"" + sweep + "\", \"sweepScript\")";
-
-    std::cout << sweep << "\n";
-
-    Exec(sweep, nullptr);
-
-    std::cout << "sweepScript()" << std::endl;
-    Exec("sweepScript()");
-
-    return PIL_ERROR_CODE::PIL_NO_ERROR;
+    return sendExecuteScript(sweep, "sweep", checkErrorBuffer);
 }
 
 PIL_ERROR_CODE KEI2600::sendScript(std::string script, std::string scriptName, bool checkErrorBuffer) {

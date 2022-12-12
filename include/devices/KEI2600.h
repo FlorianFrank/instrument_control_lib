@@ -71,7 +71,7 @@ public:
     PIL_ERROR_CODE clearErrorBuffer();
     PIL_ERROR_CODE getErrorBufferStatus();
 
-    PIL_ERROR_CODE linearVoltageSweep();
+    PIL_ERROR_CODE linearVoltageSweep(bool checkErrorBuffer);
     PIL_ERROR_CODE sendScript(std::string script, std::string scriptName, bool checkErrorBuffer);
     PIL_ERROR_CODE executeScript(std::string scriptName, bool checkErrorBuffer);
     PIL_ERROR_CODE sendExecuteScript(std::string script, std::string scriptName, bool checkErrorBuffer);
