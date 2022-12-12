@@ -1301,8 +1301,6 @@ PIL_ERROR_CODE KEI2600::linearVoltageSweep(double startVoltage, double stopVolta
                         "end\n"
                         "smua.source.output = smua.OUTPUT_OFF\n";
 
-    std::cout << sweep << std::endl;
-
     return sendAndExecuteScript(sweep, "sweep", checkErrorBuffer);
 }
 
