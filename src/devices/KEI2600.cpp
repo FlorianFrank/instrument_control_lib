@@ -1303,3 +1303,50 @@ PIL_ERROR_CODE KEI2600::linearVoltageSweep() {
     return PIL_ERROR_CODE::PIL_NO_ERROR;
 }
 
+PIL_ERROR_CODE KEI2600::sendScript(std::string script, std::string scriptName, bool checkErrorBuffer) {
+    std::string prefix = scriptName + " = script.new(\"";
+    std::string suffix = "\", \"" + scriptName + "\")";
+
+    std::string scriptOneLine = replaceAll(script, "\n", " ");
+
+    std::string processedScript = prefix + scriptOneLine + suffix;
+
+    PIL_ERROR_CODE ret = Exec(processedScript, nullptr);
+
+    if (ret != PIL_NO_ERROR && m_Logger) {
+        m_Logger->LogMessage(PIL::WARNING, __FILENAME__, __LINE__,
+                             "Error while sending script: %s", PIL_ErrorCodeToString(ret));
+    }
+
+    if(checkErrorBuffer) {
+        return getErrorBufferStatus();
+    }
+
+    return ret;
+}
+
+PIL_ERROR_CODE KEI2600::executeScript(std::string scriptName, bool checkErrorBuffer) {
+    std::string suffix = "()";
+
+    std::string executeCommand = scriptName + suffix;
+    PIL_ERROR_CODE ret = Exec(executeCommand);
+
+    if (ret != PIL_NO_ERROR && m_Logger) {
+        m_Logger->LogMessage(PIL::WARNING, __FILENAME__, __LINE__,
+                             "Error while executing script: %s", PIL_ErrorCodeToString(ret));
+    }
+
+    if(checkErrorBuffer) {
+        return getErrorBufferStatus();
+    }
+
+    return ret;
+}
+
+PIL_ERROR_CODE KEI2600::sendExecuteScript(std::string script, std::string scriptName, bool checkErrorBuffer) {
+    PIL_ERROR_CODE ret = sendScript(script, scriptName, checkErrorBuffer);
+    if (ret == PIL_ERROR_CODE::PIL_NO_ERROR) {
+        ret = executeScript(scriptName, checkErrorBuffer);
+    }
+    return ret;
+}
