@@ -1283,21 +1283,25 @@ std::string replaceAllSubstrings(std::string str, const std::string &from, const
  * @param checkErrorBuffer if true error buffer status is requested and evaluated.
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
-PIL_ERROR_CODE KEI2600::linearVoltageSweep(bool checkErrorBuffer) {
+PIL_ERROR_CODE KEI2600::linearVoltageSweep(double startVoltage, double stopVoltage, int increaseRate, double current,
+                                           bool checkErrorBuffer) {
     std::string sweep = "reset()\n"
-                        "start_voltage = 0\n"
-                        "stop_voltage = 550\n"
-                        "rate = 18\n"
+                        "start_voltage = " + std::to_string(startVoltage) + " * 1000\n"
+                        "stop_voltage = " + std::to_string(stopVoltage) + " * 1000\n"
+                        "rate = " + std::to_string(increaseRate) + "\n"
+                        "current = " + std::to_string(current) + "\n"
                         "smua.source.func = smua.OUTPUT_DCVOLTS\n"
                         "smua.source.output = smua.OUTPUT_ON\n"
                         "smua.source.limitv = (stop_voltage / 1000) + 0.1\n"
-                        "smua.source.limiti = 0.0011\n"
-                        "smua.source.leveli = 0.001\n"
+                        "smua.source.limiti = current + 0.0001\n"
+                        "smua.source.leveli = current\n"
                         "for v = start_voltage, stop_voltage do\n"
                         "    smua.source.levelv = v / 1000\n"
                         "    delay(1 / rate)\n"
                         "end\n"
                         "smua.source.output = smua.OUTPUT_OFF\n";
+
+    std::cout << sweep << std::endl;
 
     return sendAndExecuteScript(sweep, "sweep", checkErrorBuffer);
 }
