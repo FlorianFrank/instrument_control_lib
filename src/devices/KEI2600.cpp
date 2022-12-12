@@ -1260,7 +1260,14 @@ PIL_ERROR_CODE KEI2600::getErrorBufferStatus()
     return PIL_NO_ERROR;
 }
 
-std::string replaceAll(std::string str, const std::string &from, const std::string &to)
+/**
+ * @brief Replaces all substrings in the string with the given replacement string.
+ * @param str String to replace substrings in.
+ * @param from The substring to replace.
+ * @param to The string to replace all matching substrings with.
+ * @return The processed string
+ */
+std::string replaceAllSubstrings(std::string str, const std::string &from, const std::string &to)
 {
     size_t start_pos = 0;
     while ((start_pos = str.find(from, start_pos)) != std::string::npos)
@@ -1271,6 +1278,11 @@ std::string replaceAll(std::string str, const std::string &from, const std::stri
     return str;
 }
 
+/**
+ * Do a linear voltage sweep on the SMU. Increases the voltage at the given rate until the stop voltage is arrived.
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
 PIL_ERROR_CODE KEI2600::linearVoltageSweep(bool checkErrorBuffer) {
     std::string sweep = "reset()\n"
                         "start_voltage = 0\n"
@@ -1290,11 +1302,16 @@ PIL_ERROR_CODE KEI2600::linearVoltageSweep(bool checkErrorBuffer) {
     return sendExecuteScript(sweep, "sweep", checkErrorBuffer);
 }
 
+/**
+ * Sends the given script to the SMU. The scripts does not get ececuted.
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
 PIL_ERROR_CODE KEI2600::sendScript(std::string script, std::string scriptName, bool checkErrorBuffer) {
     std::string prefix = scriptName + " = script.new(\"";
     std::string suffix = "\", \"" + scriptName + "\")";
 
-    std::string scriptOneLine = replaceAll(script, "\n", " ");
+    std::string scriptOneLine = replaceAllSubstrings(script, "\n", " ");
 
     std::string processedScript = prefix + scriptOneLine + suffix;
 
@@ -1312,6 +1329,11 @@ PIL_ERROR_CODE KEI2600::sendScript(std::string script, std::string scriptName, b
     return ret;
 }
 
+/**
+ * Executes the script with the given name on the smu.
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
 PIL_ERROR_CODE KEI2600::executeScript(std::string scriptName, bool checkErrorBuffer) {
     std::string suffix = "()";
 
@@ -1330,6 +1352,11 @@ PIL_ERROR_CODE KEI2600::executeScript(std::string scriptName, bool checkErrorBuf
     return ret;
 }
 
+/**
+ * Sends and executes the given script.
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
 PIL_ERROR_CODE KEI2600::sendExecuteScript(std::string script, std::string scriptName, bool checkErrorBuffer) {
     PIL_ERROR_CODE ret = sendScript(script, scriptName, checkErrorBuffer);
     if (ret == PIL_ERROR_CODE::PIL_NO_ERROR) {
