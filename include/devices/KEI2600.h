@@ -71,6 +71,8 @@ public:
     PIL_ERROR_CODE clearErrorBuffer();
     PIL_ERROR_CODE getErrorBufferStatus();
 
+    PIL_ERROR_CODE linearVoltageSweep();
+
 private:
     PIL_ERROR_CODE measureI(SMU_CHANNEL channel, double *value);
     PIL_ERROR_CODE measureV(SMU_CHANNEL channel, double *value);

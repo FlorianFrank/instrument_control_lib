@@ -3,6 +3,8 @@
  * @copyright University of Passau - Chair of Computer Engineering
  */
 #include <stdexcept>
+#include <iostream>
+#include <regex>
 #include "devices/KEI2600.h"
 #include "ctlib/Logging.hpp"
 
@@ -1257,3 +1259,47 @@ PIL_ERROR_CODE KEI2600::getErrorBufferStatus()
     }
     return PIL_NO_ERROR;
 }
+
+std::string replaceAll(std::string str, const std::string &from, const std::string &to)
+{
+    size_t start_pos = 0;
+    while ((start_pos = str.find(from, start_pos)) != std::string::npos)
+    {
+        str.replace(start_pos, from.length(), to);
+        start_pos += to.length(); // Handles case where 'to' is a substring of 'from'
+    }
+    return str;
+}
+
+PIL_ERROR_CODE KEI2600::linearVoltageSweep() {
+    std::string sweep = "reset()\n"
+                        "start_voltage = 0\n"
+                        "stop_voltage = 550\n"
+                        "rate = 18\n"
+                        "smua.source.func = smua.OUTPUT_DCVOLTS\n"
+                        "smua.source.output = smua.OUTPUT_ON\n"
+                        "smua.source.limitv = (stop_voltage / 1000) + 0.1\n"
+                        "smua.source.limiti = 0.0011\n"
+                        "smua.source.leveli = 0.001\n"
+                        "for v = start_voltage, stop_voltage do\n"
+                        "    smua.source.levelv = v / 1000\n"
+                        "    delay(1 / rate)\n"
+                        "end\n"
+                        "smua.source.output = smua.OUTPUT_OFF\n";
+
+    std::cout << sweep << "\n";
+
+    sweep = replaceAll(sweep, "\n", " ");
+
+    sweep = "sweepScript = script.new(\"" + sweep + "\", \"sweepScript\")";
+
+    std::cout << sweep << "\n";
+
+    Exec(sweep, nullptr);
+
+    std::cout << "sweepScript()" << std::endl;
+    Exec("sweepScript()");
+
+    return PIL_ERROR_CODE::PIL_NO_ERROR;
+}
+
