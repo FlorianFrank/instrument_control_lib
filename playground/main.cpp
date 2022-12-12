@@ -12,7 +12,7 @@ int sweep() {
     std::string id = smu->GetDeviceIdentifier();
     std::cout << "Connected to: " + id << std::endl;
 
-    std::cout << smu->linearVoltageSweep(0.0, 0.55, 18, 0.01, false) << std::endl;
+    std::cout << smu->performLinearVoltageSweep(0.0, 0.55, 18, 0.01, false) << std::endl;
 
     return 0;
 }

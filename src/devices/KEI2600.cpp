@@ -1283,8 +1283,8 @@ std::string replaceAllSubstrings(std::string str, const std::string &from, const
  * @param checkErrorBuffer if true error buffer status is requested and evaluated.
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
-PIL_ERROR_CODE KEI2600::linearVoltageSweep(double startVoltage, double stopVoltage, int increaseRate, double current,
-                                           bool checkErrorBuffer) {
+PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(double startVoltage, double stopVoltage, int increaseRate, double current,
+                                                  bool checkErrorBuffer) {
     std::string sweep = "reset()\n"
                         "start_voltage = " + std::to_string(startVoltage) + " * 1000\n"
                         "stop_voltage = " + std::to_string(stopVoltage) + " * 1000\n"
