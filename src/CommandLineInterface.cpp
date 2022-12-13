@@ -116,7 +116,7 @@ bool CommandLineInterface::Start()
     }
 
     // TODO specifiy certain class of device
-    auto *device = new Device(argumentList[0].c_str(), TIMEOUT_IN_MS, m_Logger);
+    auto *device = new Device(argumentList[0].c_str(), TIMEOUT_IN_MS, m_Logger, Device::DIREKT_SEND);
     std::cout << "    Connect to Device " <<  "IP: " << argumentList[0] << " ID (" << m_DeviceList.size()-1 << ")" << std::endl;
     if(!device->Connect())
     {

@@ -31,13 +31,20 @@ namespace PIL
 class Device {
 
 public:
-    explicit Device(const char *ip, int timeoutInMs);
-    explicit Device(const char *ip, int timeoutInMs, PIL::Logging *logger);
+
+    enum SEND_METHOD {
+        DIREKT_SEND = 0,
+        BUFFER_ENABLED = 1
+    };
+
+    explicit Device(const char *ip, int timeoutInMs, SEND_METHOD mode);
+    explicit Device(const char *ip, int timeoutInMs, PIL::Logging *logger, SEND_METHOD mode);
     ~Device();
 
     PIL_ERROR_CODE Connect();
     PIL_ERROR_CODE Disconnect();
     [[nodiscard]] bool IsOpen() const;
+    [[nodiscard]] bool IsBuffered() const;
 
     std::string GetDeviceIdentifier();
     std::string WhatAmI();
@@ -56,6 +63,8 @@ protected:
     PIL::Logging *m_Logger;
     uint8_t m_recvBuff[2048];
     int m_Port = 5025;
+    SEND_METHOD m_SendMode;
+    std::string m_BufferedScript;
 };
 
 #endif //CE_DEVICE_DEVICE_H

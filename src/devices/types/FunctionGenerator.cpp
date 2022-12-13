@@ -4,7 +4,8 @@
 
 #include "devices/types/FunctionGenerator.h"
 
-FunctionGenerator::FunctionGenerator(const char *ip, int timeoutInMs, PIL::Logging *logger): Device(ip, timeoutInMs, logger)
+FunctionGenerator::FunctionGenerator(const char *ip, int timeoutInMs, PIL::Logging *logger): Device(ip, timeoutInMs, logger,
+                                                                                                    Device::DIREKT_SEND)
 {
 }
 

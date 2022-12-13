@@ -6,15 +6,15 @@
 
 int sweep() {
     std::string ip = "132.231.14.168";
-    auto *smu = new KEI2600(ip.c_str(), 0, nullptr);
-    smu->Connect();
+    auto *smu = new KEI2600(ip.c_str(), 0, nullptr, Device::BUFFER_ENABLED);
+    // smu->Connect();
 
-    std::string id = smu->GetDeviceIdentifier();
-    std::cout << "Connected to: " + id << std::endl;
+    PIL_ERROR_CODE id = smu->setLevel(SMU::CURRENT, SMU::CHANNEL_A, 1, false);
+    std::cout << "Error Code: " + id << std::endl;
 
-    std::cout << smu->performLinearVoltageSweep(SMU::SMU_CHANNEL::CHANNEL_A, 0.0, 0.5, 18, 0.01, false) << std::endl;
-    std::cout << smu->delay(10) << std::endl;
-    std::cout << smu->performLinearVoltageSweep(SMU::SMU_CHANNEL::CHANNEL_A, 0.0, 0.5, 18, 0.01, false) << std::endl;
+    // std::cout << smu->performLinearVoltageSweep(SMU::SMU_CHANNEL::CHANNEL_A, 0.0, 0.5, 18, 0.01, false) << std::endl;
+    // std::cout << smu->delay(10) << std::endl;
+    // std::cout << smu->performLinearVoltageSweep(SMU::SMU_CHANNEL::CHANNEL_A, 0.0, 0.5, 18, 0.01, false) << std::endl;
 
     return 0;
 }

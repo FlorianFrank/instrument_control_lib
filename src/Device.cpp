@@ -22,7 +22,7 @@ extern "C" {
 
 // TODO add further comments and cleanup some code
 
-Device::Device(const char *ip, int timeoutInMs) : Device(ip, timeoutInMs, nullptr)
+Device::Device(const char *ip, int timeoutInMs, SEND_METHOD mode) : Device(ip, timeoutInMs, nullptr, mode)
 {
 }
 
@@ -31,11 +31,12 @@ Device::Device(const char *ip, int timeoutInMs) : Device(ip, timeoutInMs, nullpt
  * @brief Constructor of Device
  * @param ip: the m_IPAddr address of the target device
  */
-Device::Device(const char *ip, int timeoutInMs, PIL::Logging *logger) : m_IPAddr(ip), m_ErrorHandle()
+Device::Device(const char *ip, int timeoutInMs, PIL::Logging *logger, SEND_METHOD mode) : m_IPAddr(ip), m_ErrorHandle()
 {
     m_SocketHandle = new PIL::Socket(TCP, IPv4, ip, m_Port, timeoutInMs);
     m_ErrorHandle.m_ErrorCode = PIL_NO_ERROR;
     m_Logger = logger;
+    m_SendMode = mode;
 }
 
 Device::~Device()
@@ -103,6 +104,11 @@ PIL_ERROR_CODE Device::Disconnect()
 bool Device::IsOpen() const
 {
     return m_SocketHandle->IsOpen();
+}
+
+bool Device::IsBuffered() const
+{
+    return m_SendMode == SEND_METHOD::BUFFER_ENABLED;
 }
 
 /**

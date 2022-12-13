@@ -158,7 +158,7 @@ void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *device
         };
 
         ip();
-        Device dev(ipStr.c_str(), SOCKET_TIMEOUT);
+        Device dev(ipStr.c_str(), SOCKET_TIMEOUT, Device::DIREKT_SEND);
         auto ret = dev.Connect();
         if (ret == PIL_NO_ERROR)
         {
@@ -240,8 +240,8 @@ std::vector<uint8_t> DeviceDiscovery::splitIpAddr(const std::string &string)
     if(deviceStr.find("Agilent Technologies,33522B") != std::string::npos)
         return new KST33500(ipAddrStr.c_str(), SOCKET_TIMEOUT);
     if(deviceStr.find("Keithley Instruments Inc., Model 26") != std::string::npos)
-        return new KEI2600(ipAddrStr.c_str(), SOCKET_TIMEOUT);
-    return new Device(nullptr, 0);
+        return new KEI2600(ipAddrStr.c_str(), SOCKET_TIMEOUT, Device::DIREKT_SEND);
+    return new Device(nullptr, 0, Device::DIREKT_SEND);
 }
 
 #endif // __linux
