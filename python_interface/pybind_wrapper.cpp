@@ -45,7 +45,7 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
 
     /** SMU **/
     class_<KEI2600>(m, "KEI2600")
-        .def(pybind11::init<char *, int>())
+        .def(pybind11::init<char *, int, Device::SEND_METHOD>())
         .def("enableBeep", &KEI2600::enableBeep)
         .def("disableBeep", &KEI2600::disableBeep)
         .def("beep", &KEI2600::beep)
