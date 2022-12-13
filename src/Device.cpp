@@ -171,7 +171,7 @@ PIL_ERROR_CODE Device::Exec(std::string command, ExecArgs *args, char *result, b
 
     if (IsBuffered()) {
         m_BufferedScript += message;
-        return PIL_BUFFERED_COMMAND;
+        return PIL_NO_ERROR;  // TODO: replace with PIL_BUFFERED_COMMAND
     }
 
     char *c = const_cast<char *>(message.c_str());
