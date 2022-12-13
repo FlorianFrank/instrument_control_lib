@@ -86,6 +86,10 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
         .def("sendAndExecuteScript", &KEI2600::sendAndExecuteScript)
         .def("performLinearVoltageSweep", &KEI2600::performLinearVoltageSweep);
 
+    enum_<SMU::SEND_METHOD>(m, "SEND_METHOD")
+            .value("DIREKT_SEND", SMU::DIREKT_SEND)
+            .value("BUFFER_ENABLED", SMU::BUFFER_ENABLED);
+
     enum_<SMU::SMU_CHANNEL>(m, "SMU_CHANNEL")
             .value("CHANNEL_A", SMU::CHANNEL_A)
             .value("CHANNEL_B", SMU::CHANNEL_B);
