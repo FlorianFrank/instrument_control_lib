@@ -57,6 +57,8 @@ public:
 
     std::string getBufferedScript();
 
+    bool errorOccured(PIL_ERROR_CODE errorCode);
+
 protected:
     std::string m_IPAddr;
     PIL_ErrorHandle m_ErrorHandle;

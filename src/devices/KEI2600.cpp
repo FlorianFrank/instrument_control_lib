@@ -66,7 +66,7 @@ PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double *value, b
         default:
             return PIL_INVALID_ARGUMENTS;
     }
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -88,7 +88,7 @@ double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
 
     double value;
     auto ret = measure(unit, channel, &value, true);
-    if (ret != PIL_NO_ERROR && m_Logger)
+    if (errorOccured(ret) && m_Logger)
         m_Logger->LogMessage(PIL::WARNING, __FILENAME__, __LINE__,
                              "Error while executing measure: %s", PIL_ErrorCodeToString(ret));
     if(checkErrorBuffer)
@@ -121,7 +121,7 @@ PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel, bool checkErrorBuffer)
     .AddArgument(outputArg, "");
 
     auto ret = Exec("", &execArgs);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -150,7 +150,7 @@ PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel, bool checkErrorBuffer)
             .AddArgument(outputArg, "");
 
     auto ret = Exec("", &execArgs);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -190,7 +190,7 @@ PIL_ERROR_CODE KEI2600::setLevel(UNIT unit, SMU_CHANNEL channel, double level, b
     args.AddArgument(subArg, level, " = ");
 
     auto ret = Exec("", &args);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -233,7 +233,7 @@ PIL_ERROR_CODE KEI2600::setLimit(UNIT unit, SMU_CHANNEL channel, double limit, b
     args.AddArgument(subArg, limit, " = ");
 
     auto ret = Exec("", &args);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -250,7 +250,7 @@ PIL_ERROR_CODE KEI2600::setLimit(UNIT unit, SMU_CHANNEL channel, double limit, b
 PIL_ERROR_CODE KEI2600::enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
 {
     auto ret = measureAutoRangeHelperFunction(channel, unit, true);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -267,7 +267,7 @@ PIL_ERROR_CODE KEI2600::enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel, b
 PIL_ERROR_CODE KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
 {
     auto ret = measureAutoRangeHelperFunction(channel, unit, false);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -311,7 +311,7 @@ PIL_ERROR_CODE KEI2600::enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bo
             .AddArgument(subArg, smuArg, " = ") // TODO refactor
             .AddArgument(subArgAutoRange,"");
     auto ret = Exec("", &args);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -354,7 +354,7 @@ PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, b
             .AddArgument(subArg, smuArg, " = ") // TODO refactor
             .AddArgument(subArgAutoRange,"");
     auto ret = Exec("", &args);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -372,7 +372,7 @@ PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, b
 [[maybe_unused]] PIL_ERROR_CODE KEI2600::enableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer)
 {
     auto ret = analogFilterHelperFunction(channel, true);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -388,7 +388,7 @@ PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, b
 PIL_ERROR_CODE KEI2600::disableMeasureAnalogFilter(SMU_CHANNEL smuChannel, bool checkErrorBuffer)
 {
     auto ret = analogFilterHelperFunction(smuChannel, false);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -424,7 +424,7 @@ PIL_ERROR_CODE KEI2600::setMeasureRange(UNIT unit, SMU_CHANNEL channel, double r
         .AddArgument(subArg, rangeValue, " = ");
 
     auto ret = Exec("", &args);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -460,7 +460,7 @@ PIL_ERROR_CODE KEI2600::setSourceRange(UNIT unit, SMU_CHANNEL channel, double ra
         .AddArgument(subArg, rangeValue, " = ");
 
     auto ret = Exec("", &args);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -489,7 +489,7 @@ PIL_ERROR_CODE KEI2600::setSenseMode(SMU::SMU_CHANNEL channel, SMU::SMU_SENSE se
             .AddArgument(localSenseArg, "");
 
     auto ret = Exec("", &execArgs);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -516,7 +516,7 @@ PIL_ERROR_CODE KEI2600::setMeasurePLC(SMU_CHANNEL channel, double value, bool ch
     args.AddArgument(subArg, value, " = ");
 
     auto ret = Exec("", &args);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -555,7 +555,7 @@ PIL_ERROR_CODE KEI2600::setMeasureLowRange(UNIT unit, SMU_CHANNEL channel, doubl
     execArgs.AddArgument(subArg, value, " = ");
 
     auto ret = Exec("", &execArgs);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -582,7 +582,7 @@ PIL_ERROR_CODE KEI2600::setMeasureAutoZero(SMU_CHANNEL channel, AUTOZERO autoZer
     arg.AddArgument(subArg, "smu"+ getChannelStringFromEnum(channel)+"."+getStringFromAutoZeroEnum(autoZero), " = ");
 
     auto ret = Exec("", &arg);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -607,7 +607,7 @@ PIL_ERROR_CODE KEI2600::setMeasureCount(SMU_CHANNEL channel, int nrOfMeasurement
     execArgs.AddArgument(subArg, nrOfMeasurements, " = ");
 
     auto ret = Exec("", &execArgs);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -633,7 +633,7 @@ PIL_ERROR_CODE KEI2600::setSourceFunction(SMU_CHANNEL channel, SRC_FUNC srcFunc,
     arg.AddArgument(subArg, "smu"+ getChannelStringFromEnum(channel)+"."+getStringFromSrcFuncEnum(srcFunc), " = ");
 
     auto ret = Exec("", &arg);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -659,7 +659,7 @@ PIL_ERROR_CODE KEI2600::setSourceOffMode(SMU_CHANNEL channel, SRC_OFF_MODE offMo
     arg.AddArgument(subArg, "smu" + getChannelStringFromEnum(channel) + "." + getStringFromOffModeEnum(offMode), " = ");
 
     auto ret =  Exec("", &arg);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -686,7 +686,7 @@ PIL_ERROR_CODE KEI2600::setSourceSettling(SMU::SMU_CHANNEL channel, SRC_SETTLING
     arg.AddArgument(subArg, "smu" + getChannelStringFromEnum(channel) + "." + getStringFromSettleEnum(srcSettling), " = ");
 
     auto ret = Exec("", &arg);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -711,7 +711,7 @@ PIL_ERROR_CODE KEI2600::enableSourceSink(SMU_CHANNEL channel, bool checkErrorBuf
     arg.AddArgument(subArg, "1", " = ");
 
     auto ret = Exec("", &arg);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -735,7 +735,7 @@ PIL_ERROR_CODE KEI2600::disableSourceSink(SMU_CHANNEL channel, bool checkErrorBu
     arg.AddArgument(subArg, "0", " = ");
 
     auto ret = Exec("", &arg);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -763,7 +763,7 @@ PIL_ERROR_CODE KEI2600::displayMeasureFunction(SMU::SMU_CHANNEL channel, SMU_DIS
     getStringFromMeasureDisplayFunction(measureFunc), " = ");
 
     auto ret = Exec("", &arg);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -778,7 +778,7 @@ PIL_ERROR_CODE KEI2600::displayMeasureFunction(SMU::SMU_CHANNEL channel, SMU_DIS
 PIL_ERROR_CODE KEI2600::enableBeep(bool checkErrorBuffer)
 {
     auto ret = enableDisableBeepHelperFunction(true);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -793,7 +793,7 @@ PIL_ERROR_CODE KEI2600::enableBeep(bool checkErrorBuffer)
 PIL_ERROR_CODE KEI2600::disableBeep(bool checkErrorBuffer)
 {
     auto ret = enableDisableBeepHelperFunction(false);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -810,7 +810,7 @@ PIL_ERROR_CODE KEI2600::disableBeep(bool checkErrorBuffer)
 PIL_ERROR_CODE KEI2600::beep(float timeInSeconds, int frequency, bool checkErrorBuffer)
 {
     auto ret = Exec("beeper.beep(" + std::to_string(timeInSeconds) + "," + std::to_string(frequency) + ")");
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
     if(checkErrorBuffer)
         return getErrorBufferStatus();
@@ -837,7 +837,7 @@ PIL_ERROR_CODE KEI2600::measureI(SMU_CHANNEL channel, double *value)
     args.AddArgument(subArg, "");
 
     auto ret = Exec("reading = ", &args);
-    if (ret != PIL_NO_ERROR)
+    if (errorOccured(ret))
         return ret;
 
     char buffer[MEASURE_RET_BUFF_SIZE] = {0};
@@ -849,7 +849,7 @@ PIL_ERROR_CODE KEI2600::measureI(SMU_CHANNEL channel, double *value)
     execArgs.AddArgument(subArgPrint, "");
 
     ret = Exec("print", &execArgs, buffer);
-    if (ret != PIL_NO_ERROR)
+    if (errorOccured(ret))
         return ret;
 
     if(m_Logger)
@@ -878,7 +878,7 @@ PIL_ERROR_CODE KEI2600::measureV(SMU_CHANNEL channel, double *value)
     args.AddArgument(subArg, "");
 
     auto ret = Exec("reading = ", &args);
-    if (ret != PIL_NO_ERROR)
+    if (errorOccured(ret))
         return ret;
 
     char buffer[MEASURE_RET_BUFF_SIZE] = {0};
@@ -890,7 +890,7 @@ PIL_ERROR_CODE KEI2600::measureV(SMU_CHANNEL channel, double *value)
     execArgs.AddArgument(subArgPrint, "");
 
     ret = Exec("print", &execArgs, buffer);
-    if (ret != PIL_NO_ERROR)
+    if (errorOccured(ret))
         return ret;
 
     if(m_Logger)
@@ -919,7 +919,7 @@ PIL_ERROR_CODE KEI2600::measureR(SMU_CHANNEL channel, double *value)
     args.AddArgument(subArg, "");
 
     auto ret = Exec("reading = ", &args);
-    if (ret != PIL_NO_ERROR)
+    if (errorOccured(ret))
         return ret;
 
     char buffer[MEASURE_RET_BUFF_SIZE] = {0};
@@ -931,7 +931,7 @@ PIL_ERROR_CODE KEI2600::measureR(SMU_CHANNEL channel, double *value)
     execArgs.AddArgument(subArgPrint, "");
 
     ret = Exec("print", &execArgs, buffer);
-    if (ret != PIL_NO_ERROR)
+    if (errorOccured(ret))
         return ret;
 
     if(m_Logger)
@@ -960,7 +960,7 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
     args.AddArgument(subArg, "");
 
     auto ret = Exec("reading = ", &args);
-    if (ret != PIL_NO_ERROR)
+    if (errorOccured(ret))
         return ret;
 
     char buffer[MEASURE_RET_BUFF_SIZE] = {0};
@@ -972,7 +972,7 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
     execArgs.AddArgument(subArgPrint, "");
 
     ret = Exec("print", &execArgs, buffer);
-    if (ret != PIL_NO_ERROR)
+    if (errorOccured(ret))
         return ret;
 
     if(m_Logger)
@@ -1213,14 +1213,14 @@ std::string KEI2600::getLastError()
     ExecArgs argsErrorQueue;
     argsErrorQueue.AddArgument("errorcode, message = errorqueue.next()", "");
     auto ret = Exec("", &argsErrorQueue);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return "INTERNAL ERROR";
 
     char errorBuffer[2048];
     ExecArgs argsPrintError;
     argsPrintError.AddArgument("print(errorcode, message)", "");
     ret = Exec("", &argsPrintError, errorBuffer, true, 2048);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return "INTERNAL ERROR";
     std::string  retStr = std::string(errorBuffer);
     return retStr.substr(0, retStr.find('\n'));
@@ -1249,14 +1249,14 @@ PIL_ERROR_CODE KEI2600::getErrorBufferStatus()
     ExecArgs argsErrorQueue;
     argsErrorQueue.AddArgument("count = errorqueue.count", "");
     auto ret = Exec("", &argsErrorQueue);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
 
     char errorBuffer[2048];
     ExecArgs argsPrintError;
     argsPrintError.AddArgument("print(count)", "");
     ret = Exec("", &argsPrintError, errorBuffer, true, 2048);
-    if(ret != PIL_NO_ERROR)
+    if(errorOccured(ret))
         return ret;
 
     std::string retStr = std::string(errorBuffer);
@@ -1332,7 +1332,7 @@ PIL_ERROR_CODE KEI2600::sendScript(std::string script, std::string scriptName, b
 
     PIL_ERROR_CODE ret = Exec(processedScript, nullptr);
 
-    if (ret != PIL_NO_ERROR && m_Logger) {
+    if (errorOccured(ret) && m_Logger) {
         m_Logger->LogMessage(PIL::WARNING, __FILENAME__, __LINE__,
                              "Error while sending script: %s", PIL_ErrorCodeToString(ret));
     }
@@ -1355,7 +1355,7 @@ PIL_ERROR_CODE KEI2600::executeScript(std::string scriptName, bool checkErrorBuf
     std::string executeCommand = scriptName + suffix;
     PIL_ERROR_CODE ret = Exec(executeCommand);
 
-    if (ret != PIL_NO_ERROR && m_Logger) {
+    if (errorOccured(ret) && m_Logger) {
         m_Logger->LogMessage(PIL::WARNING, __FILENAME__, __LINE__,
                              "Error while executing script: %s", PIL_ErrorCodeToString(ret));
     }

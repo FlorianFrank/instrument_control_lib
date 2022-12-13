@@ -121,7 +121,7 @@ std::string Device::WhatAmI() {
 
 std::string Device::GetDeviceIdentifier()
 {
-    if(!IsOpen())
+    if(!IsBuffered() && !IsOpen())
     {
         PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_INTERFACE_CLOSED, "Error device is closed");
         return PIL_ReturnErrorMessageAsString(&m_ErrorHandle);
@@ -156,7 +156,6 @@ std::string Device::GetDeviceIdentifier()
  * */
 PIL_ERROR_CODE Device::Exec(std::string command, ExecArgs *args, char *result, bool br, int size)
 {
-
     std::string message = command;
     if(args)
         message += args->GetArgumentsAsString();
@@ -229,7 +228,7 @@ PIL_ERROR_CODE Device::ExecCommands(std::string &commands) {
   std::string command;
   while (std::getline(s_commands, command)) {
       auto execRet = Exec(command);
-    if(execRet != PIL_NO_ERROR)
+    if(errorOccured(execRet))
         return execRet;
   }
     PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
@@ -254,4 +253,8 @@ PIL_ERROR_CODE Device::delay(double delayTime)
 std::string Device::getBufferedScript()
 {
     return m_BufferedScript;
+}
+
+bool Device::errorOccured(PIL_ERROR_CODE errorCode) {
+    return errorCode != PIL_ERROR_CODE::PIL_NO_ERROR;
 }
