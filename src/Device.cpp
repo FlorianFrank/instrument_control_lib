@@ -229,3 +229,11 @@ std::string Device::ReturnErrorMessage()
     return PIL_ReturnErrorMessageAsString(&m_ErrorHandle);
 }
 
+PIL_ERROR_CODE Device::delay(double delayTime) {
+    SubArg arg(std::to_string(delayTime), "delay(", ")");
+
+    ExecArgs args;
+    args.AddArgument(arg, "");
+
+    return Exec("", &args, nullptr);
+}

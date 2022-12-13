@@ -41,6 +41,7 @@ public:
 
     std::string GetDeviceIdentifier();
     std::string WhatAmI();
+    PIL_ERROR_CODE delay(double delayTime);
 
     PIL_ERROR_CODE Exec(std::string command, ExecArgs *args = nullptr, char *result = nullptr, bool br = true, int size = 1024);
     PIL_ERROR_CODE ExecCommands(std::string &commands);
