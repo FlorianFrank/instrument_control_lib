@@ -55,6 +55,8 @@ public:
 
     std::string ReturnErrorMessage();
 
+    std::string getBufferedScript();
+
 protected:
     std::string m_IPAddr;
     PIL_ErrorHandle m_ErrorHandle;

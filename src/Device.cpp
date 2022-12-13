@@ -160,14 +160,20 @@ PIL_ERROR_CODE Device::Exec(std::string command, ExecArgs *args, char *result, b
     std::string message = command;
     if(args)
         message += args->GetArgumentsAsString();
-    if(!m_SocketHandle->IsOpen()){
+    if(!IsBuffered() && !m_SocketHandle->IsOpen()){
         PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_INTERFACE_CLOSED, "Error interface is closed");
         return PIL_INTERFACE_CLOSED;
     }
 
-    if (br) {
+    if (IsBuffered() || br) {
         message += '\n';
     }
+
+    if (IsBuffered()) {
+        m_BufferedScript += message;
+        return PIL_BUFFERED_COMMAND;
+    }
+
     char *c = const_cast<char *>(message.c_str());
 
     // TODO: add timeout
@@ -235,11 +241,17 @@ std::string Device::ReturnErrorMessage()
     return PIL_ReturnErrorMessageAsString(&m_ErrorHandle);
 }
 
-PIL_ERROR_CODE Device::delay(double delayTime) {
+PIL_ERROR_CODE Device::delay(double delayTime)
+{
     SubArg arg(std::to_string(delayTime), "delay(", ")");
 
     ExecArgs args;
     args.AddArgument(arg, "");
 
     return Exec("", &args, nullptr);
+}
+
+std::string Device::getBufferedScript()
+{
+    return m_BufferedScript;
 }
