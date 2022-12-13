@@ -44,6 +44,10 @@ KEI2600::KEI2600(const char *ip, int timeoutInMS, PIL::Logging *logger, SEND_MET
  */
 PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double *value, bool checkErrorBuffer)
 {
+    if (IsBuffered()) {
+        throw new std::logic_error("Buffering when receiving values is currently not supported!");
+    }
+
     auto ret = PIL_NO_ERROR;
     switch (unit)
     {
@@ -78,6 +82,10 @@ PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double *value, b
  */
 double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
 {
+    if (IsBuffered()) {
+        throw new std::logic_error("Buffering when receiving values is currently not supported!");
+    }
+
     double value;
     auto ret = measure(unit, channel, &value, true);
     if (ret != PIL_NO_ERROR && m_Logger)
@@ -1198,6 +1206,10 @@ PIL_ERROR_CODE KEI2600::enableDisableBeepHelperFunction(bool enable)
  */
 std::string KEI2600::getLastError()
 {
+    if (IsBuffered()) {
+        throw new std::logic_error("Buffering when receiving values is currently not supported!");
+    }
+
     ExecArgs argsErrorQueue;
     argsErrorQueue.AddArgument("errorcode, message = errorqueue.next()", "");
     auto ret = Exec("", &argsErrorQueue);
