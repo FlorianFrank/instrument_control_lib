@@ -84,7 +84,8 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
         .def("sendScript", &KEI2600::sendScript)
         .def("executeScript", &KEI2600::executeScript)
         .def("sendAndExecuteScript", &KEI2600::sendAndExecuteScript)
-        .def("performLinearVoltageSweep", &KEI2600::performLinearVoltageSweep);
+        .def("performLinearVoltageSweep", &KEI2600::performLinearVoltageSweep)
+        .def("executeBufferedScript", &KEI2600::executeBufferedScript);
 
     enum_<SMU::SEND_METHOD>(m, "SEND_METHOD")
             .value("DIREKT_SEND", SMU::DIREKT_SEND)
@@ -219,7 +220,9 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
 
     class_<PIL::Logging>(m, "Logging")
             .def(pybind11::init<>())
-            .def("LogMessage", &PIL::Logging::Log);
+            .def(pybind11::init<PIL::Level, std::string*>())
+            .def("LogMessage", &PIL::Logging::Log)
+            .def("SetLogLevel", &PIL::Logging::SetLogLevel);
 
     enum_<PIL::Level>(m, "Log_Level")
             .value("INFO", PIL::INFO)
