@@ -76,6 +76,7 @@ public:
     PIL_ERROR_CODE sendScript(std::string script, std::string scriptName, bool checkErrorBuffer);
     PIL_ERROR_CODE executeScript(std::string scriptName, bool checkErrorBuffer);
     PIL_ERROR_CODE sendAndExecuteScript(std::string script, std::string scriptName, bool checkErrorBuffer);
+    PIL_ERROR_CODE executeBufferedScript(bool checkErrorBuffer);
 
 private:
     PIL_ERROR_CODE measureI(SMU_CHANNEL channel, double *value);

@@ -1297,8 +1297,7 @@ std::string replaceAllSubstrings(std::string str, const std::string &from, const
  */
 PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double startVoltage, double stopVoltage,
                                                   int increaseRate, double current, bool checkErrorBuffer) {
-    std::string sweep = "reset()\n"
-                        "start_voltage = " + std::to_string(startVoltage) + " * 1000\n"
+    std::string sweep = "start_voltage = " + std::to_string(startVoltage) + " * 1000\n"
                         "stop_voltage = " + std::to_string(stopVoltage) + " * 1000\n"
                         "rate = " + std::to_string(increaseRate) + "\n"
                         "current = " + std::to_string(current) + "\n"
@@ -1314,6 +1313,24 @@ PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double st
                         "end\n"
                         "channel.source.output = channel.OUTPUT_OFF\n";
 
+    /* setSourceFunction(channel, DC_VOLTS, checkErrorBuffer);
+
+    turnOn(channel, false);
+    setLimit(VOLTAGE, channel, stopVoltage + 0.1, checkErrorBuffer);
+    setLimit(CURRENT, channel, current + 0.001, checkErrorBuffer);
+    setLevel(CURRENT, channel, current, checkErrorBuffer);
+
+    double currentVoltage = startVoltage;
+    while (currentVoltage < stopVoltage) {
+        setLevel(VOLTAGE, channel, currentVoltage, checkErrorBuffer);
+        delay(1.0 / increaseRate);
+        currentVoltage += 0.001;
+    }
+    setLevel(VOLTAGE, channel, stopVoltage, checkErrorBuffer);
+
+    turnOff(channel, checkErrorBuffer);
+    return PIL_NO_ERROR; */
+
     return sendAndExecuteScript(sweep, "sweep", checkErrorBuffer);
 }
 
@@ -1323,9 +1340,8 @@ PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double st
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::sendScript(std::string script, std::string scriptName, bool checkErrorBuffer) {
-    std::string prefix = scriptName + " = script.new(\"";
-    std::string suffix = "\", \"" + scriptName + "\")";
-
+    std::string prefix = "function " + scriptName + "() ";
+    std::string suffix = " end";
     std::string scriptOneLine = replaceAllSubstrings(script, "\n", " ");
 
     std::string processedScript = prefix + scriptOneLine + suffix;
@@ -1378,4 +1394,15 @@ PIL_ERROR_CODE KEI2600::sendAndExecuteScript(std::string script, std::string scr
         ret = executeScript(scriptName, checkErrorBuffer);
     }
     return ret;
+}
+
+PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
+    if (!m_BufferedScript.empty()) {
+        m_SendMode = SEND_METHOD::DIREKT_SEND;
+        auto ret = sendAndExecuteScript(m_BufferedScript, "bufferedScript", checkErrorBuffer);
+        m_SendMode = SEND_METHOD::BUFFER_ENABLED;
+        return ret;
+    }
+
+    return PIL_NO_ERROR;
 }
