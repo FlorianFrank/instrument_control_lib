@@ -41,30 +41,23 @@ Device::~Device(){
     delete m_SocketHandle;
 }
 
-PIL_ERROR_CODE
-Device::handleErrorsAndLogging(PIL_ERROR_CODE errorCode, bool throwException, PIL::Level logLevel, const char *fileName,
-                               int line, const char* formatStr, ...)
+PIL_ERROR_CODE Device::handleErrorsAndLogging(PIL_ERROR_CODE errorCode, bool throwException,
+                                              PIL::Level logLevel, const char *fileName, int line, const char* formatStr, ...)
 {
     va_list va;
     va_start(va, formatStr);
     PIL_SetLastErrorMsg(&m_ErrorHandle, errorCode, "");
     if(m_Logger)
-        m_Logger->LogMessageVA(logLevel, fileName, line, formatStr, va);
+        m_Logger->LogMessage(logLevel, fileName, line, formatStr, va);
 
-    if (!throwException)
-        throwLocal(errorCode, fileName, line, formatStr, va);
+    if (!throwException){
+        auto exception = PIL::Exception(errorCode, fileName, line, formatStr, va);
+        va_end(va);
+        throw exception;
+    }
     va_end(va);
     return errorCode;
 }
-
-/*static*/ void Device::throwLocal(PIL_ERROR_CODE errorCode, const char *fileName, int line, const char *formatStr, ...){
-    va_list va;
-    va_start(va, formatStr);
-    auto exception = PIL::Exception(errorCode, fileName, line, formatStr);
-    va_end(va);
-    throw exception;
-}
-
 
 /**
  * @brief Establish a connection to the device.
@@ -90,7 +83,7 @@ PIL_ERROR_CODE Device::Disconnect(){
         return Device::handleErrorsAndLogging(errCode, true, PIL::ERROR, __FILENAME__, __LINE__, "");
 
     m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"Socket disconnected");
-        return PIL_NO_ERROR;
+    return PIL_NO_ERROR;
 }
 
 bool Device::IsOpen() const{
@@ -113,10 +106,6 @@ std::string Device::GetDeviceIdentifier()
         return "Error while executing *IDN?";
 
     return std::regex_replace(buffer, std::regex("\n"), "");
-}
-
-std::string createExecLogStr(std::string &message) {
-
 }
 
 /**

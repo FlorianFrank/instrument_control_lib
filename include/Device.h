@@ -40,7 +40,6 @@ public:
     [[nodiscard]] bool IsOpen() const;
 
     std::string GetDeviceIdentifier();
-    std::string WhatAmI();
 
     PIL_ERROR_CODE Exec(std::string command, ExecArgs *args = nullptr, char *result = nullptr, bool br = true, int size = 1024);
     PIL_ERROR_CODE ExecCommands(std::string &commands);
@@ -48,7 +47,6 @@ public:
     std::string ReturnErrorMessage();
 
 protected:
-    static void throwLocal(PIL_ERROR_CODE errorCode, const char *fileName, int line, const char *formatStr, ...);
     PIL_ERROR_CODE
     handleErrorsAndLogging(PIL_ERROR_CODE errorCode, bool throwException, PIL::Level logLevel, const char *fileName,
                            int line, const char* formatStr, ...);
