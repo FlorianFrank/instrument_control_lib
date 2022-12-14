@@ -258,3 +258,7 @@ std::string Device::getBufferedScript()
 bool Device::errorOccured(PIL_ERROR_CODE errorCode) {
     return errorCode != PIL_ERROR_CODE::PIL_NO_ERROR;
 }
+
+void Device::changeSendMode(SEND_METHOD mode) {
+    m_SendMode = mode;
+}

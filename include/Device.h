@@ -58,6 +58,7 @@ public:
     std::string getBufferedScript();
 
     bool errorOccured(PIL_ERROR_CODE errorCode);
+    void changeSendMode(SEND_METHOD mode);
 
 protected:
     std::string m_IPAddr;
