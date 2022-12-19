@@ -1406,3 +1406,19 @@ PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
 
     return PIL_NO_ERROR;
 }
+
+PIL_ERROR_CODE KEI2600::createBuffer(SMU::SMU_CHANNEL channel, std::string bufferName, int capacity, bool checkErrorBuffer) {
+    return PIL_ERRNO;
+}
+
+PIL_ERROR_CODE KEI2600::clearBuffer(std::string bufferName, bool checkErrorBuffer) {
+    return PIL_ERRNO;
+}
+
+PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, double *buffer, bool checkErrorBuffer) {
+    return PIL_ERRNO;
+}
+
+PIL_ERROR_CODE KEI2600::getBufferSize(std::string bufferName, int *value, bool checkErrorBuffer) {
+    return PIL_ERRNO;
+}

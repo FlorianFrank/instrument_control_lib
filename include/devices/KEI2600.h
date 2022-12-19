@@ -77,6 +77,11 @@ public:
     PIL_ERROR_CODE executeScript(std::string scriptName, bool checkErrorBuffer);
     PIL_ERROR_CODE sendAndExecuteScript(std::string script, std::string scriptName, bool checkErrorBuffer);
     PIL_ERROR_CODE executeBufferedScript(bool checkErrorBuffer);
+    
+    PIL_ERROR_CODE createBuffer(SMU_CHANNEL channel, std::string bufferName, int capacity, bool checkErrorBuffer);
+    PIL_ERROR_CODE clearBuffer(std::string bufferName, bool checkErrorBuffer);
+    PIL_ERROR_CODE readBuffer(std::string bufferName, double buffer[], bool checkErrorBuffer);
+    PIL_ERROR_CODE getBufferSize(std::string bufferName, int *value, bool checkErrorBuffer);
 
 private:
     PIL_ERROR_CODE measureI(SMU_CHANNEL channel, double *value);
