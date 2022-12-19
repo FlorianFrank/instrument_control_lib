@@ -154,10 +154,19 @@ int testBufferImplemented() {
 
     std::cout << smu->createBuffer(SMU::CHANNEL_A, "b", 100, false);
     std::cout << smu->clearBuffer("b", false);
+
+    smu->Exec("for i = 1, 100 do smua.measure.v(b) end", nullptr, nullptr, true, 0);
+
     int buffersize;
-    std::cout << smu->getBufferSize("b", &buffersize, false);
-    double buffer[buffersize * 15];
+    std::cout << smu->getBufferSize("b", &buffersize, false) << std::endl;
+    std::cout << "Buffer size: " << buffersize << std::endl;
+
+    double buffer[buffersize];
     std::cout << smu->readBuffer("b", buffer, false);
+
+    for (int i = 0; i < 100; ++i)
+        std::cout << buffer[i] << " ";
+    std::cout << std::endl;
 
     smu->Disconnect();
 
