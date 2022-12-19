@@ -1437,7 +1437,16 @@ PIL_ERROR_CODE KEI2600::createBuffer(SMU::SMU_CHANNEL channel, std::string buffe
 }
 
 PIL_ERROR_CODE KEI2600::clearBuffer(std::string bufferName, bool checkErrorBuffer) {
-    return PIL_ERRNO;
+    SubArg subArg(bufferName);
+    subArg.AddElem("clear", ".")
+          .AddElem("", "(", ")");
+
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, "");
+
+    auto ret = Exec("", &execArgs, nullptr);
+
+    return ret;
 }
 
 PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, double *buffer, bool checkErrorBuffer) {
