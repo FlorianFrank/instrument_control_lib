@@ -146,6 +146,24 @@ int testBuffer() {
     return 0;
 }
 
+int testBufferImplemented() {
+    std::string ip = "132.231.14.168";
+    auto *smu = new KEI2600(ip.c_str(), 0, nullptr, Device::DIREKT_SEND);
+    smu->Connect();
+    std::cout << smu->GetDeviceIdentifier() << std::endl;
+
+    std::cout << smu->createBuffer(SMU::CHANNEL_A, "b", 100, false);
+    std::cout << smu->clearBuffer("b", false);
+    int buffersize;
+    std::cout << smu->getBufferSize("b", &buffersize, false);
+    double buffer[buffersize * 15];
+    std::cout << smu->readBuffer("b", buffer, false);
+
+    smu->Disconnect();
+
+    return 0;
+}
+
 int main(int argc, char* argv[]) {
-    return testBuffer();
+    return testBufferImplemented();
 }
