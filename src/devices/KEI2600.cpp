@@ -1433,6 +1433,8 @@ PIL_ERROR_CODE KEI2600::createBuffer(SMU::SMU_CHANNEL channel, std::string buffe
 
     auto ret = Exec(bufferName + " = ", &execArgs, nullptr);
 
+    ret = Exec(bufferName + ".appendmode = 1", nullptr, nullptr);
+
     return ret;
 }
 
@@ -1449,7 +1451,52 @@ PIL_ERROR_CODE KEI2600::clearBuffer(std::string bufferName, bool checkErrorBuffe
     return ret;
 }
 
+std::string generateBufferPrint(int startIdx, int endIdx, int offset, std::string bufferName) {
+    std::string toPrint = bufferName + "[" + std::to_string(1 + offset) + "]";
+    for (int j = startIdx; j <= endIdx; ++j) {
+        toPrint += ", " + bufferName + "[" + std::to_string(j + offset) + "]";
+    }
+    return toPrint;
+}
+
+PIL_ERROR_CODE KEI2600::fillBuffer(int numberOfPrints, int offset, std::string bufferName, char printBuffer[], double results[]) {
+    SubArg subArg("");
+    subArg.AddElem(generateBufferPrint(1, numberOfPrints, offset, bufferName), "(", ")");
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, "");
+
+    auto ret = Exec("print", &execArgs, printBuffer);
+
+    std::vector<std::string> bufferValues = splitString(std::string(printBuffer), "\t");
+
+    for (int j = 0; j < bufferValues.size(); ++j) {
+        results[offset + j] = std::stod(bufferValues[j]);
+    }
+
+    return PIL_NO_ERROR;
+}
+
 PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, double *buffer, bool checkErrorBuffer) {
+    int n = 0;
+    getBufferSize(bufferName, &n, checkErrorBuffer);
+
+    int doubleSize = 15;
+    int batchSize = 1024 / doubleSize;
+    int batches = n / batchSize;
+    int remaining = n % batchSize;
+
+    char printBuffer[15 * batchSize];
+
+    for (int i = 0; i < batches; ++i) {
+        int offset = i * batchSize;
+        fillBuffer(batchSize, offset, bufferName, printBuffer, buffer);
+    }
+
+    if (remaining > 0) {
+        int offset = batches * batchSize;
+        fillBuffer(remaining, offset, bufferName, printBuffer, buffer);
+    }
+
     return PIL_ERRNO;
 }
 
@@ -1464,7 +1511,7 @@ PIL_ERROR_CODE KEI2600::getBufferSize(std::string bufferName, int *value, bool c
     auto ret = Exec("print", &execArgs, sizeBuffer);
 
     int n = (int) std::stod(sizeBuffer);
-    value = &n;
+    *value = n;
 
     return PIL_ERRNO;
 }

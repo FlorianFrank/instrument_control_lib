@@ -80,7 +80,7 @@ public:
     
     PIL_ERROR_CODE createBuffer(SMU_CHANNEL channel, std::string bufferName, int capacity, bool checkErrorBuffer);
     PIL_ERROR_CODE clearBuffer(std::string bufferName, bool checkErrorBuffer);
-    PIL_ERROR_CODE readBuffer(std::string bufferName, double buffer[], bool checkErrorBuffer);
+    PIL_ERROR_CODE readBuffer(std::string bufferName, double *buffer, bool checkErrorBuffer);
     PIL_ERROR_CODE getBufferSize(std::string bufferName, int *value, bool checkErrorBuffer);
 
 private:
@@ -92,6 +92,8 @@ private:
     PIL_ERROR_CODE analogFilterHelperFunction(SMU_CHANNEL channel, bool enable);
     PIL_ERROR_CODE measureAutoRangeHelperFunction(SMU_CHANNEL channel, UNIT unit, bool enable);
     PIL_ERROR_CODE enableDisableBeepHelperFunction(bool enable);
+
+    PIL_ERROR_CODE fillBuffer(int numberOfPrints, int offset, std::string bufferName, char printBuffer[], double results[]);
 
     static std::string getChannelStringFromEnum(SMU_CHANNEL channel);
     static std::string getStringFromAutoZeroEnum(AUTOZERO autoZero);
