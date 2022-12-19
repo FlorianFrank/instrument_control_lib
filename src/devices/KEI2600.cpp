@@ -1407,6 +1407,21 @@ PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
     return PIL_NO_ERROR;
 }
 
+std::vector<std::string> splitString(std::string toSplit, std::string delimiter) {
+    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+    std::string token;
+    std::vector<std::string> res;
+
+    while ((pos_end = toSplit.find(delimiter, pos_start)) != std::string::npos) {
+        token = toSplit.substr(pos_start, pos_end - pos_start);
+        pos_start = pos_end + delim_len;
+        res.push_back(token);
+    }
+
+    res.push_back (toSplit.substr (pos_start));
+    return res;
+}
+
 PIL_ERROR_CODE KEI2600::createBuffer(SMU::SMU_CHANNEL channel, std::string bufferName, int capacity, bool checkErrorBuffer) {
     return PIL_ERRNO;
 }
