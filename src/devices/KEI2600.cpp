@@ -1454,5 +1454,17 @@ PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, double *buffer, bool 
 }
 
 PIL_ERROR_CODE KEI2600::getBufferSize(std::string bufferName, int *value, bool checkErrorBuffer) {
+    char sizeBuffer[16];
+
+    SubArg subArg("");
+    subArg.AddElem(bufferName + ".n", "(", ")");
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, "");
+
+    auto ret = Exec("print", &execArgs, sizeBuffer);
+
+    int n = (int) std::stod(sizeBuffer);
+    value = &n;
+
     return PIL_ERRNO;
 }
