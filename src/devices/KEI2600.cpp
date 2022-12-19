@@ -1423,7 +1423,17 @@ std::vector<std::string> splitString(std::string toSplit, std::string delimiter)
 }
 
 PIL_ERROR_CODE KEI2600::createBuffer(SMU::SMU_CHANNEL channel, std::string bufferName, int capacity, bool checkErrorBuffer) {
-    return PIL_ERRNO;
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("makebuffer", ".")
+            .AddElem(std::to_string(capacity), "(", ")");
+
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, "");
+
+    auto ret = Exec(bufferName + " = ", &execArgs, nullptr);
+
+    return ret;
 }
 
 PIL_ERROR_CODE KEI2600::clearBuffer(std::string bufferName, bool checkErrorBuffer) {
