@@ -152,10 +152,11 @@ int testBufferImplemented() {
     smu->Connect();
     std::cout << smu->GetDeviceIdentifier() << std::endl;
 
-    std::cout << smu->createBuffer(SMU::CHANNEL_A, "b", 100, false);
-    std::cout << smu->clearBuffer("b", false);
+    std::cout << smu->createBuffer(SMU::CHANNEL_A, "b", 100, false) << std::endl;
+    std::cout << smu->executeScript("bufferedScript", false) << std::endl;
+    // std::cout << smu->clearBuffer("b", false);
 
-    smu->Exec("for i = 1, 100 do smua.measure.v(b) end", nullptr, nullptr, true, 0);
+    // smu->Exec("for i = 1, 100 do smua.measure.v(b) end", nullptr, nullptr, true, 0);
 
     int buffersize;
     std::cout << smu->getBufferSize("b", &buffersize, false) << std::endl;
