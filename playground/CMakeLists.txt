@@ -4,7 +4,7 @@ project(playground)
 set(CMAKE_CXX_STANDARD 14)
 message(STATUS "start building test...")
 
-add_executable(playground main.cpp)
+add_executable(playground main.cpp post.cpp)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
