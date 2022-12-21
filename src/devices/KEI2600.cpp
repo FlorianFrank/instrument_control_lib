@@ -5,8 +5,11 @@
 #include <stdexcept>
 #include <iostream>
 #include <regex>
+#include <chrono>
+#include <thread>
 #include "devices/KEI2600.h"
 #include "ctlib/Logging.hpp"
+#include "HTTPRequest.h"
 
 extern "C" {
 #include "ctlib/ErrorHandler.h"
@@ -1334,30 +1337,88 @@ PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double st
     return sendAndExecuteScript(sweep, "sweep", checkErrorBuffer);
 }
 
+std::vector<std::string> splitString(std::string toSplit, std::string delimiter) {
+    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+    std::string token;
+    std::vector<std::string> res;
+
+    while ((pos_end = toSplit.find(delimiter, pos_start)) != std::string::npos) {
+        token = toSplit.substr(pos_start, pos_end - pos_start);
+        pos_start = pos_end + delim_len;
+        res.push_back(token);
+    }
+
+    res.push_back (toSplit.substr (pos_start));
+    return res;
+}
+
+void fillPayloads(int offset, int numberOfLines, std::vector<std::string> values, std::vector<std::string> *result) {
+    std::string value;
+    for (int i = offset; i < offset + numberOfLines; ++i) {
+        value += values[i] + "\n";
+    }
+
+    std::string payload = R"({"command": "shellInput", "value": ")" + value + "\"}";
+    result->push_back(payload);
+}
+
+void postRequest(const std::string& url, std::string& payload) {
+    try {
+        http::Request request{url};
+        const auto response = request.send("POST", payload, {
+            {"Content-Type", "application/json"}
+        });
+        std::cout << std::string{response.body.begin(), response.body.end()} << '\n';
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Request failed, error: " << e.what() << '\n';
+    }
+}
+
 /**
  * Sends the given script to the SMU. The scripts does not get ececuted.
  * @param checkErrorBuffer if true error buffer status is requested and evaluated.
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::sendScript(std::string script, std::string scriptName, bool checkErrorBuffer) {
-    std::string prefix = "function " + scriptName + "() ";
-    std::string suffix = " end";
-    std::string scriptOneLine = replaceAllSubstrings(script, "\n", " ");
+    std::string url = "http://" + m_IPAddr + "/HttpCommand";
 
-    std::string processedScript = prefix + scriptOneLine + suffix;
+    std::string scriptContent = "loadscript " + scriptName + "\n" + script + "\n" + "endscript";
 
-    PIL_ERROR_CODE ret = Exec(processedScript, nullptr);
+    std::string exitPayload = R"({"command": "keyInput", "value": "K"})";
 
-    if (errorOccured(ret) && m_Logger) {
-        m_Logger->LogMessage(PIL::WARNING, __FILENAME__, __LINE__,
-                             "Error while sending script: %s", PIL_ErrorCodeToString(ret));
+    int batchSize = 32;
+    std::vector<std::string> lines = splitString(scriptContent, "\n");
+    int numberOfLines = lines.size();
+    int numberOfBatches = numberOfLines / batchSize;
+    int remaining = numberOfLines % batchSize;
+
+    std::vector<std::string> payloads;
+
+    for (int i = 0; i < numberOfBatches; ++i) {
+        int offset = i * batchSize;
+        fillPayloads(offset, batchSize, lines, &payloads);
     }
 
-    if(checkErrorBuffer) {
-        return getErrorBufferStatus();
+    if (remaining > 0) {
+        int offset = numberOfBatches * batchSize;
+        fillPayloads(offset, remaining, lines, &payloads);
     }
 
-    return ret;
+    payloads.push_back(R"({"command": "shellInput", "value": ")" + scriptName + ".save()\"}");
+
+    postRequest(url, exitPayload);
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+    for (auto & payload : payloads) {
+        postRequest(url, payload);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    postRequest(url, exitPayload);
+
+    return PIL_NO_ERROR;
 }
 
 /**
@@ -1405,21 +1466,6 @@ PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
     }
 
     return PIL_NO_ERROR;
-}
-
-std::vector<std::string> splitString(std::string toSplit, std::string delimiter) {
-    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
-    std::string token;
-    std::vector<std::string> res;
-
-    while ((pos_end = toSplit.find(delimiter, pos_start)) != std::string::npos) {
-        token = toSplit.substr(pos_start, pos_end - pos_start);
-        pos_start = pos_end + delim_len;
-        res.push_back(token);
-    }
-
-    res.push_back (toSplit.substr (pos_start));
-    return res;
 }
 
 PIL_ERROR_CODE KEI2600::createBuffer(SMU::SMU_CHANNEL channel, std::string bufferName, int capacity, bool checkErrorBuffer) {
