@@ -44,9 +44,6 @@ if remaining > 0:
 payloads.append({"command": "shellInput",
                 "value": f"{script_name}.save()"})
 
-#payloads.append({"command": "shellInput",
-#                "value": "bufferedScript()"})
-
 x = requests.post(url, json=exit_payload)
 print(x.text)
 sleep(1)
