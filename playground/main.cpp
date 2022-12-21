@@ -2,7 +2,7 @@
 #include "Device.h"
 #include "devices/KEI2600.h"
 #include "ctlib/Logging.hpp"
-#include "devices/types/SMU.h"
+#include "HTTPRequest.h"
 
 int sweep() {
     std::string ip = "132.231.14.168";
@@ -174,6 +174,81 @@ int testBufferImplemented() {
     return 0;
 }
 
+void postRequest(const std::string& url, std::string& payload) {
+    try {
+        http::Request request{url};
+        const auto response = request.send("POST", payload, {
+            {"Content-Type", "application/json"}
+        });
+        std::cout << std::string{response.body.begin(), response.body.end()} << '\n';
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Request failed, error: " << e.what() << '\n';
+    }
+}
+
+void fillVector(int offset, int numberOfLines, std::vector<std::string> values, std::vector<std::string> *result) {
+    std::string value;
+    for (int i = offset; i < offset + numberOfLines; ++i) {
+        value += values[i] + "\n";
+    }
+
+    std::string payload = R"({"command": "shellInput", "value": ")" + value + "\"}";
+    result->push_back(payload);
+}
+
+void sendScript(std::string script) {
+    std::string ip = "132.231.14.168";
+    std::string url = "http://" + ip + "/HttpCommand";
+
+    std::string scriptName = "bufferedScriptCPP";
+    std::string scriptContent = "loadscript " + scriptName + "\n" + script + "\n" + "endscript";
+
+    std::string exitPayload = R"({"command": "keyInput", "value": "K"})";
+
+    int batchSize = 32;
+    std::vector<std::string> lines = split(scriptContent, "\n");
+    int numberOfLines = lines.size();
+    int numberOfBatches = numberOfLines / batchSize;
+    int remaining = numberOfLines % batchSize;
+
+    std::vector<std::string> payloads;
+
+    for (int i = 0; i < numberOfBatches; ++i) {
+        int offset = i * batchSize;
+        fillVector(offset, batchSize, lines, &payloads);
+    }
+
+    if (remaining > 0) {
+        int offset = numberOfBatches * batchSize;
+        fillVector(offset, numberOfLines, lines, &payloads);
+    }
+
+    payloads.push_back(R"({"command": "shellInput", "value": ")" + scriptName + ".save()\"}");
+
+    postRequest(url, exitPayload);
+    sleep(1);
+
+    for (auto & payload : payloads) {
+        postRequest(url, payload);
+        usleep(10000);
+    }
+
+    sleep(1);
+    postRequest(url, exitPayload);
+}
+
+int testSendScript() {
+    std::string script = "b.clear()\n"
+                         "for i = 1, 10 do\n"
+                         "smua.measure.i(b)\n"
+                         "end";
+
+    sendScript(script);
+
+    return 0;
+}
+
 int main(int argc, char* argv[]) {
-    return testBufferImplemented();
+    return testSendScript();
 }
