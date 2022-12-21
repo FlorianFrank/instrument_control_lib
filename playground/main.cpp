@@ -3,6 +3,8 @@
 #include "devices/KEI2600.h"
 #include "ctlib/Logging.hpp"
 #include "HTTPRequest.h"
+#include <chrono>
+#include <thread>
 
 int sweep() {
     std::string ip = "132.231.14.168";
@@ -227,14 +229,14 @@ void sendScript(std::string script) {
     payloads.push_back(R"({"command": "shellInput", "value": ")" + scriptName + ".save()\"}");
 
     postRequest(url, exitPayload);
-    sleep(1);
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
     for (auto & payload : payloads) {
         postRequest(url, payload);
-        usleep(10000);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 
-    sleep(1);
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     postRequest(url, exitPayload);
 }
 
