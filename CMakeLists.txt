@@ -24,7 +24,7 @@ target_compile_options(instrument_control_lib PRIVATE -Wall -Wextra -Wpedantic -
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/pugixml")
 
 add_subdirectory(common_tools_lib)
-add_subdirectory(playground)
+#add_subdirectory(playground)
 
 if(ENABLE_PYTHON)
     add_subdirectory(python_interface)
