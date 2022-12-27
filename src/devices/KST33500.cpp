@@ -96,7 +96,7 @@ PIL_ERROR_CODE KST33500::setAmplitude(double value, const char *constrain)
     msg += " " + std::to_string(value);
     auto execRet = Exec(msg);
     if(execRet != PIL_NO_ERROR)
-        return execRet;
+        return execRet;SIN
 
     m_Amplitude = value;
     return PIL_NO_ERROR;
@@ -166,6 +166,8 @@ std::string KST33500::GetFunctionStr(FUNCTION_TYPE functionType)
         case ARBITRARY:
             return "ARB";
         default:
-            return "SIN";
+            if(m_EnableExceptions)
+                throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "Unknown function type");
+            return "";
     }
 }
