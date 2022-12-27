@@ -10,6 +10,8 @@
 
 #include "ExecArgs.h"
 #include "ctlib/Logging.hpp"
+#include "ctlib/Exception.h"
+
 
 #include <string>
 #include <vector>

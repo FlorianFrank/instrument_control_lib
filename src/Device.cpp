@@ -12,7 +12,6 @@
 
 #include "ctlib/Socket.hpp"
 #include "ctlib/Logging.hpp"
-#include "ctlib/Exception.h"
 
 extern "C" {
 #include "ctlib/ErrorHandler.h"
