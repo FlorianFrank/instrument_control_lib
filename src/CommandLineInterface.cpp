@@ -199,7 +199,7 @@ void CommandLineInterface::Disconnect(std::string &args)
             if(!device->Disconnect())
                 std::cout << device->ReturnErrorMessage() << std::endl;
             else
-                std::cout << "Device " + device->WhatAmI() + " closed successfully" << std::endl;
+                std::cout << "Device closed successfully" << std::endl;
         }
     }
     else {
@@ -215,7 +215,7 @@ void CommandLineInterface::Disconnect(std::string &args)
             if(!m_DeviceList[id]->Disconnect())
                 std::cout << m_DeviceList[id]->ReturnErrorMessage() << std::endl;
             else
-                std::cout << "Device " + m_DeviceList[id]->WhatAmI() + " closed successfully" << std::endl;        }
+                std::cout << "Device closed successfully" << std::endl;        }
     }
 
 }
