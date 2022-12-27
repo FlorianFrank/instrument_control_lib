@@ -96,7 +96,7 @@ PIL_ERROR_CODE KST33500::setAmplitude(double value, const char *constrain)
     msg += " " + std::to_string(value);
     auto execRet = Exec(msg);
     if(execRet != PIL_NO_ERROR)
-        return execRet;SIN
+        return execRet;
 
     m_Amplitude = value;
     return PIL_NO_ERROR;
