@@ -12,9 +12,6 @@ namespace PIL
 {
     class Logging;
 }
-
-#define DEVICE_NAME           "Keithley SMU 2600B"
-
 /**
  * @brief This class implements the basic functionality of Keithley 2600 series SMU's.
  */
@@ -70,9 +67,9 @@ public:
 
     PIL_ERROR_CODE performLinearVoltageSweep(SMU_CHANNEL channel, double startVoltage, double stopVoltage,
                                              int increaseRate, double current, bool checkErrorBuffer);
-    PIL_ERROR_CODE sendScript(std::string script, std::string scriptName, bool checkErrorBuffer);
-    PIL_ERROR_CODE executeScript(std::string scriptName, bool checkErrorBuffer);
-    PIL_ERROR_CODE sendAndExecuteScript(std::string script, std::string scriptName, bool checkErrorBuffer);
+    PIL_ERROR_CODE sendScript(std::string script, const std::string& scriptName, bool checkErrorBuffer);
+    PIL_ERROR_CODE executeScript(const std::string& scriptName, bool checkErrorBuffer);
+    PIL_ERROR_CODE sendAndExecuteScript(std::string script, const std::string& scriptName, bool checkErrorBuffer);
 
 private:
     PIL_ERROR_CODE measureI(SMU_CHANNEL channel, double *value);
@@ -84,7 +81,7 @@ private:
     PIL_ERROR_CODE measureAutoRangeHelperFunction(SMU_CHANNEL channel, UNIT unit, bool enable);
     PIL_ERROR_CODE enableDisableBeepHelperFunction(bool enable);
 
-    static std::string getChannelStringFromEnum(SMU_CHANNEL channel);
+    std::string getChannelStringFromEnum(SMU_CHANNEL channel);
     static std::string getStringFromAutoZeroEnum(AUTOZERO autoZero);
     static std::string getStringFromSrcFuncEnum(SRC_FUNC srcFunc);
     static std::string getStringFromOffModeEnum(SRC_OFF_MODE offMode);

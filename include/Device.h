@@ -7,9 +7,6 @@
 #ifndef CE_DEVICE_DEVICE_H
 #define CE_DEVICE_DEVICE_H
 
-extern "C"{
-#include "ctlib/ErrorHandler.h"
-}
 
 #include "ExecArgs.h"
 #include "ctlib/Logging.hpp"
@@ -31,8 +28,8 @@ namespace PIL
 class Device {
 
 public:
-    explicit Device(std::string ipAddress, int timeoutInMs);
-    explicit Device(std::string ipAddress, int timeoutInMs, PIL::Logging *logger);
+    explicit Device(std::string ipAddress, int timeoutInMs, bool throwException = true);
+    explicit Device(std::string ipAddress, int timeoutInMs, PIL::Logging *logger, bool throwException = true);
     ~Device();
 
     PIL_ERROR_CODE Connect();
@@ -59,6 +56,7 @@ protected:
     PIL::Socket *m_SocketHandle;
     PIL::Logging *m_Logger;
     int m_Port = 5025;
+    bool m_EnableExceptions;
 };
 
 #endif //CE_DEVICE_DEVICE_H
