@@ -1252,3 +1252,111 @@ PIL_ERROR_CODE KEI2600::getErrorBufferStatus()
     }
     return PIL_NO_ERROR;
 }
+
+/**
+ * @brief Replaces all substrings in the string with the given replacement string.
+ * @param str String to replace substrings in.
+ * @param from The substring to replace.
+ * @param to The string to replace all matching substrings with.
+ * @return The processed string
+ */
+std::string replaceAllSubstrings(std::string str, const std::string &from, const std::string &to)
+{
+    size_t start_pos = 0;
+    while ((start_pos = str.find(from, start_pos)) != std::string::npos)
+    {
+        str.replace(start_pos, from.length(), to);
+        start_pos += to.length(); // Handles case where 'to' is a substring of 'from'
+    }
+    return str;
+}
+
+/**
+ * Do a linear voltage sweep on the SMU. Increases the voltage at the given rate until the stop voltage is arrived.
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double startVoltage, double stopVoltage,
+                                                  int increaseRate, double current, bool checkErrorBuffer) {
+    std::string sweep = "reset()\n"
+                        "start_voltage = " + std::to_string(startVoltage) + " * 1000\n"
+                        "stop_voltage = " + std::to_string(stopVoltage) + " * 1000\n"
+                        "rate = " + std::to_string(increaseRate) + "\n"
+                        "current = " + std::to_string(current) + "\n"
+                        "channel = smu" + getChannelStringFromEnum(channel) + "\n"
+                        "channel.source.func = channel.OUTPUT_DCVOLTS\n"
+                        "channel.source.output = channel.OUTPUT_ON\n"
+                        "channel.source.limitv = (stop_voltage / 1000) + 0.1\n"
+                        "channel.source.limiti = current + 0.0001\n"
+                        "channel.source.leveli = current\n"
+                        "for v = start_voltage, stop_voltage do\n"
+                        "    channel.source.levelv = v / 1000\n"
+                        "    delay(1 / rate)\n"
+                        "end\n"
+                        "channel.source.output = channel.OUTPUT_OFF\n";
+
+    return sendAndExecuteScript(sweep, "sweep", checkErrorBuffer);
+}
+
+/**
+ * Sends the given script to the SMU. The scripts does not get ececuted.
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::sendScript(std::string script, std::string scriptName, bool checkErrorBuffer) {
+    std::string prefix = scriptName + " = script.new(\"";
+    std::string suffix = "\", \"" + scriptName + "\")";
+
+    std::string scriptOneLine = replaceAllSubstrings(script, "\n", " ");
+
+    std::string processedScript = prefix + scriptOneLine + suffix;
+
+    PIL_ERROR_CODE ret = Exec(processedScript, nullptr);
+
+    if (ret != PIL_NO_ERROR && m_Logger) {
+        m_Logger->LogMessage(PIL::WARNING, __FILENAME__, __LINE__,
+                             "Error while sending script: %s", PIL_ErrorCodeToString(ret));
+    }
+
+    if(checkErrorBuffer) {
+        return getErrorBufferStatus();
+    }
+
+    return ret;
+}
+
+/**
+ * Executes the script with the given name on the smu.
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::executeScript(std::string scriptName, bool checkErrorBuffer) {
+    std::string suffix = "()";
+
+    std::string executeCommand = scriptName + suffix;
+    PIL_ERROR_CODE ret = Exec(executeCommand);
+
+    if (ret != PIL_NO_ERROR && m_Logger) {
+        m_Logger->LogMessage(PIL::WARNING, __FILENAME__, __LINE__,
+                             "Error while executing script: %s", PIL_ErrorCodeToString(ret));
+    }
+
+    if(checkErrorBuffer) {
+        return getErrorBufferStatus();
+    }
+
+    return ret;
+}
+
+/**
+ * Sends and executes the given script.
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::sendAndExecuteScript(std::string script, std::string scriptName, bool checkErrorBuffer) {
+    PIL_ERROR_CODE ret = sendScript(script, scriptName, checkErrorBuffer);
+    if (ret == PIL_ERROR_CODE::PIL_NO_ERROR) {
+        ret = executeScript(scriptName, checkErrorBuffer);
+    }
+    return ret;
+}
