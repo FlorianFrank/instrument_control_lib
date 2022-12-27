@@ -7,6 +7,8 @@
 #include "Device.h"
 
 #include <regex> // std::regex_replace
+#include <iostream> // std::cout
+#include <utility>
 
 #include "ctlib/Socket.hpp"
 #include "ctlib/Logging.hpp"
@@ -60,20 +62,25 @@ Device::~Device(){
  * @return error code.
  */
 PIL_ERROR_CODE Device::handleErrorsAndLogging(PIL_ERROR_CODE errorCode, bool throwException,
-                                              PIL::Level logLevel, const char *fileName, int line, const char* formatStr, ...)
+                                              PIL::Level logLevel, const std::string& fileName, int line, const std::string formatStr, ...)
 {
-    va_list va;
-    va_start(va, formatStr);
+    // Redirect std::cout shortly to a stringstream to get the error message without using fixed buffers.
+    // Later replace with C++20 std::format.
+    va_list args;
+    std::stringstream stringstream;
+    std::streambuf* old = std::cout.rdbuf(stringstream.rdbuf());
+    va_start(args, formatStr);
+    vprintf(formatStr.c_str(), args);
+    va_end(args);
+    std::cout.rdbuf( old );
+
     PIL_SetLastErrorMsg(&m_ErrorHandle, errorCode, "");
     if(m_Logger)
-        m_Logger->LogMessage(logLevel, fileName, line, formatStr, va);
+        m_Logger->LogMessage(logLevel, fileName.c_str(), line, stringstream.str());
 
-    if (!throwException){
-        auto exception = PIL::Exception(errorCode, fileName, line, formatStr, va);
-        va_end(va);
-        throw exception;
-    }
-    va_end(va);
+    if (!throwException)
+        throw PIL::Exception(errorCode, fileName.c_str(), line, stringstream.str());
+
     return errorCode;
 }
 
@@ -127,17 +134,16 @@ std::string Device::GetDeviceIdentifier()
     if(!IsOpen())
         return PIL_ErrorCodeToString(Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, true, PIL::ERROR, __FILENAME__, __LINE__, ""));
 
-    char buffer[512]; // TODO avoid fixed size buffers
-
     SubArg arg("IDN", "*", "?");
     ExecArgs args;
     args.AddArgument(arg, "");
 
-    auto errCode = Exec("", &args, buffer);
+    std::string ss;
+    auto errCode = Exec("", &args, &ss, false);
     if(errCode != PIL_NO_ERROR)
         return PIL_ErrorCodeToString(Device::handleErrorsAndLogging(errCode, true, PIL::ERROR, __FILENAME__, __LINE__, "Error while executing Exec()"));
 
-    return std::regex_replace(buffer, std::regex("\n"), "");
+    return std::regex_replace(ss, std::regex("\n"), "");
 }
 
 /**
@@ -149,52 +155,49 @@ std::string Device::GetDeviceIdentifier()
  *          Some device may require '\\n', some may not. That is why here is a br param.
  *
  * @todo  Deal with execution timeout;
- *        Support for dynamic length of result;
  * @warning Some commands may timeout
  *      @code{.c}
  *      KST3000 k.Exec("RSTater?", buffer);
  *      @endcode
  * */
-PIL_ERROR_CODE Device::Exec(std::string command, ExecArgs *args, char *result, bool br, int size)
+PIL_ERROR_CODE Device::Exec(const std::string& command, ExecArgs *args, char *result, bool br, int size)
 {
+    std::string *res = nullptr;
+    if(result)
+        res = new std::string(result, size);
+    auto ret = Exec(command, args, res, br);
 
-    std::string message = command;
+    if(result && res->c_str())
+        strcpy(result, res->c_str());
+    return ret;
+}
+
+PIL_ERROR_CODE Device::Exec(const std::string &command, ExecArgs *args, std::string *result, bool br) {
+    std::stringstream message;
+    message << command;
     if(args)
-        message += args->GetArgumentsAsString();
+        message << args->GetArgumentsAsString();
     if(!m_SocketHandle->IsOpen())
         return Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, true, PIL::ERROR, __FILENAME__, __LINE__, "Error interface is closed");
 
-    if (br) {
-    message += '\n';
-  }
-  char *messageString = const_cast<char *>(message.c_str());
+    if (br)
+        message << std::endl;
 
-  // TODO: add timeout
-  int commandLen = static_cast<int>(strlen(messageString));
-  if(m_SocketHandle->Send(reinterpret_cast<uint8_t*>(messageString), &commandLen) != PIL_NO_ERROR)
-      return Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, true, PIL::ERROR, __FILENAME__, __LINE__, "Error while calling send");
+    auto strToSend = message.str();
+    if(m_SocketHandle->Send(strToSend) != PIL_NO_ERROR)
+        return Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, true, PIL::ERROR, __FILENAME__, __LINE__,
+                                              "Error while calling send");
 
-  m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Command %s successfully executed", messageString);
+    m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Command %s successfully executed", strToSend.c_str());
 
-  if (result) { // not all operation need a result
-      uint32_t len = 2048;
-      memset(m_recvBuff, '\0', 2048);
-    if(m_SocketHandle->Receive(m_recvBuff, &len) != PIL_NO_ERROR)
-    {
+    if (result) { // not all operation need a result
+        if(m_SocketHandle->Receive(*result) != PIL_NO_ERROR)
+            return Device::handleErrorsAndLogging(m_SocketHandle->GetLastError(), true, PIL::ERROR, __FILENAME__, __LINE__,
+                                                  "Error while calling read");
+
         if(m_Logger)
-            m_Logger->LogMessage(PIL::ERROR, __FILENAME__, __LINE__,
-                             PIL_ErrorCodeToString(m_SocketHandle->GetLastError()));
-        PIL_SetLastErrorMsg(&m_ErrorHandle, PIL_ERRNO, "Error while calling read");
-        return PIL_ERRNO;
+            m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__,"Receive result: %s", result->c_str());
     }
-    int cpySize = strlen((const char*)m_recvBuff);
-    if(cpySize > size)
-        return PIL_INSUFFICIENT_RESOURCES;
-      snprintf(result, size, "%s", m_recvBuff);
-  }
-    if(m_Logger)
-        m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__,
-                             "Receive result: %s", result);
 
     PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
     return PIL_NO_ERROR;

@@ -41,15 +41,16 @@ public:
 
     std::string GetDeviceIdentifier();
 
-    PIL_ERROR_CODE Exec(std::string command, ExecArgs *args = nullptr, char *result = nullptr, bool br = true, int size = 1024);
+    PIL_ERROR_CODE Exec(const std::string& command, ExecArgs *args = nullptr, char *result = nullptr, bool br = true, int size = 1024);
+    PIL_ERROR_CODE Exec(const std::string &command, ExecArgs *args, std::string *result, bool br);
     PIL_ERROR_CODE ExecCommands(std::string &commands);
 
     std::string ReturnErrorMessage();
 
 protected:
     PIL_ERROR_CODE
-    handleErrorsAndLogging(PIL_ERROR_CODE errorCode, bool throwException, PIL::Level logLevel, const char *fileName,
-                           int line, const char* formatStr, ...);
+    handleErrorsAndLogging(PIL_ERROR_CODE errorCode, bool throwException, PIL::Level logLevel, const std::string& fileName,
+                           int line, const std::string formatStr, ...);
 
 
     std::string m_IPAddr;
@@ -57,7 +58,6 @@ protected:
     std::string m_DeviceName{};
     PIL::Socket *m_SocketHandle;
     PIL::Logging *m_Logger;
-    uint8_t m_recvBuff[2048]{};
     int m_Port = 5025;
 };
 
