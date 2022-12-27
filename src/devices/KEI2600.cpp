@@ -3,6 +3,7 @@
  * @copyright University of Passau - Chair of Computer Engineering
  */
 #include <stdexcept>
+#include <utility> // std::move
 #include "devices/KEI2600.h"
 #include "ctlib/Logging.hpp"
 
@@ -16,7 +17,7 @@ extern "C" {
  * @param timeoutInMS timeout in milliseconds of the socket.
  * @param logger Logger-object to generate logging messages during the execution.
  */
-KEI2600::KEI2600(const char *ip, int timeoutInMS, PIL::Logging *logger) : SMU(ip, timeoutInMS, logger) {
+KEI2600::KEI2600(std::string ipAddress, int timeoutInMS, PIL::Logging *logger) : SMU(std::move(ipAddress), timeoutInMS, logger) {
     this->m_DeviceName = DEVICE_NAME;
 }
 
@@ -25,7 +26,7 @@ KEI2600::KEI2600(const char *ip, int timeoutInMS, PIL::Logging *logger) : SMU(ip
  * @param ip IP-address of the KEI2600-SMU.
  * @param timeoutInMS timeout in milliseconds of the socket.
  */
-[[maybe_unused]] KEI2600::KEI2600(const char *ip, int timeoutInMS) : SMU(ip, timeoutInMS, nullptr) {
+[[maybe_unused]] KEI2600::KEI2600(std::string ipAddress, int timeoutInMS) : SMU(std::move(ipAddress), timeoutInMS, nullptr) {
     this->m_DeviceName = DEVICE_NAME;
     std::string logFile = "instrument_control.log";
     m_Logger = new PIL::Logging(PIL::INFO, &logFile);

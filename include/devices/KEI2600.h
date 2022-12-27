@@ -24,11 +24,11 @@ namespace PIL
 class KEI2600 : public SMU
 {
 public:
-    explicit KEI2600(const char *ip, int timeoutInMs, PIL::Logging *logger);
+    explicit KEI2600(std::string ipAddress, int timeoutInMs, PIL::Logging *logger);
 
-    virtual ~KEI2600(){};
+    virtual ~KEI2600()= default;
 
-    [[maybe_unused]] explicit KEI2600(const char *ip, int timeoutInMs);
+    [[maybe_unused]] explicit KEI2600(std::string ipAddress, int timeoutInMs);
 
     PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double *value, bool checkErrorBuffer) override;
     double measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer);
