@@ -15,9 +15,6 @@ namespace PIL
 
 #define DEVICE_NAME           "Keithley SMU 2600B"
 
-/** Buffer size when returning values from measureI, measureV or measureP*/
-#define MEASURE_RET_BUFF_SIZE 1024
-
 /**
  * @brief This class implements the basic functionality of Keithley 2600 series SMU's.
  */

@@ -831,21 +831,20 @@ PIL_ERROR_CODE KEI2600::measureI(SMU_CHANNEL channel, double *value)
     if (ret != PIL_NO_ERROR)
         return ret;
 
-    char buffer[MEASURE_RET_BUFF_SIZE] = {0};
-
     SubArg subArgPrint("");
     subArgPrint.AddElem("reading", "(", ")");
 
     ExecArgs execArgs;
     execArgs.AddArgument(subArgPrint, "");
 
-    ret = Exec("print", &execArgs, buffer);
+    std::string result;
+    ret = Exec("print", &execArgs, &result, true);
     if (ret != PIL_NO_ERROR)
         return ret;
 
     if(m_Logger)
-        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureI returned: %s", buffer);
-    *value = std::stod(buffer);
+        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureI returned: %s", result.c_str());
+    *value = std::stod(result);
     return PIL_NO_ERROR;
 }
 
@@ -872,21 +871,20 @@ PIL_ERROR_CODE KEI2600::measureV(SMU_CHANNEL channel, double *value)
     if (ret != PIL_NO_ERROR)
         return ret;
 
-    char buffer[MEASURE_RET_BUFF_SIZE] = {0};
-
     SubArg subArgPrint("");
     subArgPrint.AddElem("reading", "(", ")");
 
     ExecArgs execArgs;
     execArgs.AddArgument(subArgPrint, "");
 
-    ret = Exec("print", &execArgs, buffer);
+    std::string result;
+    ret = Exec("print", &execArgs, &result, true);
     if (ret != PIL_NO_ERROR)
         return ret;
 
     if(m_Logger)
-        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureV returned: %s", buffer);
-    *value = std::stod(buffer);
+        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureV returned: %s", result.c_str());
+    *value = std::stod(result);
     return PIL_NO_ERROR;
 }
 
@@ -913,21 +911,20 @@ PIL_ERROR_CODE KEI2600::measureR(SMU_CHANNEL channel, double *value)
     if (ret != PIL_NO_ERROR)
         return ret;
 
-    char buffer[MEASURE_RET_BUFF_SIZE] = {0};
-
     SubArg subArgPrint("");
     subArgPrint.AddElem("reading", "(", ")");
 
     ExecArgs execArgs;
     execArgs.AddArgument(subArgPrint, "");
 
-    ret = Exec("print", &execArgs, buffer);
+    std::string result;
+    ret = Exec("print", &execArgs, &result, true);
     if (ret != PIL_NO_ERROR)
         return ret;
 
     if(m_Logger)
-        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureR returned: %s", buffer);
-    *value = std::stod(buffer);
+        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureR returned: %s", result.c_str());
+    *value = std::stod(result);
     return PIL_NO_ERROR;
 }
 
@@ -954,21 +951,20 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
     if (ret != PIL_NO_ERROR)
         return ret;
 
-    char buffer[MEASURE_RET_BUFF_SIZE] = {0};
-
     SubArg subArgPrint("");
     subArgPrint.AddElem("reading", "(", ")");
 
     ExecArgs execArgs;
     execArgs.AddArgument(subArgPrint, "");
 
-    ret = Exec("print", &execArgs, buffer);
+    std::string result;
+    ret = Exec("print", &execArgs, &result, true);
     if (ret != PIL_NO_ERROR)
         return ret;
 
     if(m_Logger)
-        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureP returned: %s", buffer);
-    *value = std::stod(buffer);
+        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureP returned: %s", result.c_str());
+    *value = std::stod(result);
     return PIL_NO_ERROR;
 }
 
@@ -1203,14 +1199,13 @@ std::string KEI2600::getLastError()
     if(ret != PIL_NO_ERROR)
         return "INTERNAL ERROR";
 
-    char errorBuffer[2048];
+    std::string errorBuffer;
     ExecArgs argsPrintError;
     argsPrintError.AddArgument("print(errorcode, message)", "");
-    ret = Exec("", &argsPrintError, errorBuffer, true, 2048);
+    ret = Exec("", &argsPrintError, &errorBuffer, true);
     if(ret != PIL_NO_ERROR)
         return "INTERNAL ERROR";
-    std::string  retStr = std::string(errorBuffer);
-    return retStr.substr(0, retStr.find('\n'));
+    return errorBuffer.substr(0, errorBuffer.find('\n'));
 }
 
 /**
@@ -1239,18 +1234,17 @@ PIL_ERROR_CODE KEI2600::getErrorBufferStatus()
     if(ret != PIL_NO_ERROR)
         return ret;
 
-    char errorBuffer[2048];
+    std::string errorBufferRet;
     ExecArgs argsPrintError;
     argsPrintError.AddArgument("print(count)", "");
-    ret = Exec("", &argsPrintError, errorBuffer, true, 2048);
+    ret = Exec("", &argsPrintError, &errorBufferRet, true);
     if(ret != PIL_NO_ERROR)
         return ret;
 
-    std::string retStr = std::string(errorBuffer);
-    retStr = retStr.substr(0, retStr.find('\n'));
+    errorBufferRet = errorBufferRet.substr(0,  errorBufferRet.find('\n'));
     try
     {
-    if(std::stoi(retStr) > 0)
+    if(std::stoi( errorBufferRet) > 0)
         return PIL_ITEM_IN_ERROR_QUEUE;
     } catch (const std::invalid_argument & e)
     {
