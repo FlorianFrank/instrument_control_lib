@@ -6,9 +6,7 @@
  */
 #include "Device.h"
 
-#include <cstring>
-#include <regex>
-#include <utility>
+#include <regex> // std::regex_replace
 
 #include "ctlib/Socket.hpp"
 #include "ctlib/Logging.hpp"
@@ -22,13 +20,21 @@ extern "C" {
 #include <sstream>
 #endif // __APPLE__
 
+/**
+ * @brief Constructor for the Device without passing a logging object.
+ * @param ipAddress IP address of the device
+ * @param timeoutInMs
+ */
 Device::Device(std::string ipAddress, int timeoutInMs) : Device(std::move(ipAddress), timeoutInMs, nullptr){
 }
 
 
 /**
- * @brief Constructor of Device
- * @param ip: the m_IPAddr address of the target device
+ * @brief Constructor of Device generates a socket handle without connecting to it.
+ * @param ipAddress: The ip address to connect to the device.
+ * @param timeoutInMs: Timeout of the socket in milliseconds.
+ * @param logger: Pass a logging object to configure what types of messages should be logged.
+ * If nullptr is passed, logging is disabled.
  */
 Device::Device(std::string ipAddress, int timeoutInMs, PIL::Logging *logger) : m_IPAddr(std::move(ipAddress)), m_ErrorHandle(){
     m_SocketHandle = new PIL::Socket(TCP, IPv4, m_IPAddr, m_Port, timeoutInMs);
@@ -41,6 +47,18 @@ Device::~Device(){
     delete m_SocketHandle;
 }
 
+/**
+ * @brief Handle logging messages, logs it based on the previously passed logging object. If exceptions are enabled throw an exception
+ * otherwise return the error code.
+ * @param errorCode error code to identify the error.
+ * @param throwException if true, throw an exception.
+ * @param logLevel log level of the message.
+ * @param fileName name of the file where the error occurred.
+ * @param line line number where the error occurred.
+ * @param formatStr format string for the error message.
+ * @param ...   variable arguments for the format string.
+ * @return error code.
+ */
 PIL_ERROR_CODE Device::handleErrorsAndLogging(PIL_ERROR_CODE errorCode, bool throwException,
                                               PIL::Level logLevel, const char *fileName, int line, const char* formatStr, ...)
 {
@@ -62,6 +80,7 @@ PIL_ERROR_CODE Device::handleErrorsAndLogging(PIL_ERROR_CODE errorCode, bool thr
 /**
  * @brief Establish a connection to the device.
  * @return if the connection is established return PIL_NO_ERROR otherwise return error code.
+ * @throw PIL::Exception if the connection could not established.
  */
 PIL_ERROR_CODE Device::Connect()
 {
@@ -74,6 +93,11 @@ PIL_ERROR_CODE Device::Connect()
     return PIL_NO_ERROR;
 }
 
+/**
+ * @brief Disconnect from the device.
+ * @return if the connection is disconnected return PIL_NO_ERROR otherwise return error code.
+ * @throw PIL::Exception if the connection could not disconnected.
+ */
 PIL_ERROR_CODE Device::Disconnect(){
     if (!m_SocketHandle->IsOpen())
         return Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, true, PIL::ERROR, __FILENAME__, __LINE__, "");
@@ -86,24 +110,32 @@ PIL_ERROR_CODE Device::Disconnect(){
     return PIL_NO_ERROR;
 }
 
+/**
+ * @brief Checks if the connection to the device is established.
+ * @return true if connection is established, otherwise false.
+ */
 bool Device::IsOpen() const{
     return m_SocketHandle->IsOpen();
 }
 
-
+/**
+ * @brief
+ * @return
+ */
 std::string Device::GetDeviceIdentifier()
 {
     if(!IsOpen())
         return PIL_ErrorCodeToString(Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, true, PIL::ERROR, __FILENAME__, __LINE__, ""));
 
-    char buffer[512];
+    char buffer[512]; // TODO avoid fixed size buffers
 
     SubArg arg("IDN", "*", "?");
     ExecArgs args;
     args.AddArgument(arg, "");
 
-    if(Exec("", &args, buffer) != PIL_NO_ERROR)
-        return "Error while executing *IDN?";
+    auto errCode = Exec("", &args, buffer);
+    if(errCode != PIL_NO_ERROR)
+        return PIL_ErrorCodeToString(Device::handleErrorsAndLogging(errCode, true, PIL::ERROR, __FILENAME__, __LINE__, "Error while executing Exec()"));
 
     return std::regex_replace(buffer, std::regex("\n"), "");
 }
@@ -169,17 +201,18 @@ PIL_ERROR_CODE Device::Exec(std::string command, ExecArgs *args, char *result, b
 }
 
 /***
- * @brief
- * @param commands
- * @return
+ * @brief Execute multiple commands seperated by newline (\\n).
+ * @param commands commands seperated by newline (\\n).
+ * @return PIL_NO_ERROR if no error occurs.
+ * @throw PIL::Exception if an error occurs.
  */
 PIL_ERROR_CODE Device::ExecCommands(std::string &commands) {
   std::stringstream s_commands(commands);
-  std::string command;
-  while (std::getline(s_commands, command)) {
-      auto execRet = Exec(command);
-    if(execRet != PIL_NO_ERROR)
-        return execRet;
+    std::string command;
+    while (std::getline(s_commands, command)) {
+        auto execRet = Exec(command);
+        if (execRet != PIL_NO_ERROR)
+        return Device::handleErrorsAndLogging(execRet, true, PIL::ERROR, __FILENAME__, __LINE__, "Error while executing Exec()");
   }
     PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
     return PIL_NO_ERROR;
