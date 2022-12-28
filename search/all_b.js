@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['off_57',['OFF',['../classSMU.html#ad7a601494a929a29e41465309c844d4faf04ed9c31a46fb5f3b5362717a56b1ee',1,'SMU']]],
-  ['once_58',['ONCE',['../classSMU.html#ad7a601494a929a29e41465309c844d4fabbcbf222c66c39a24245db614286fd2f',1,'SMU']]],
-  ['oscilloscope_59',['Oscilloscope',['../classOscilloscope.html',1,'']]],
-  ['output_5fhigh_5fz_60',['OUTPUT_HIGH_Z',['../classSMU.html#a416660abb762fbbd38dba4bae3fe5282a0bd4b9a63a8e6268d08a1f25987a70b8',1,'SMU']]],
-  ['output_5fnormal_61',['OUTPUT_NORMAL',['../classSMU.html#a416660abb762fbbd38dba4bae3fe5282ae6ed0d626e68a8d35a66d18ffc959d93',1,'SMU']]],
-  ['output_5fzero_62',['OUTPUT_ZERO',['../classSMU.html#a416660abb762fbbd38dba4bae3fe5282a3baf93c4121285e0aa7d2d01f784292a',1,'SMU']]]
+  ['measure_55',['measure',['../classKEI2600.html#a5756077c5f8f263c2462e8a1c2417c2a',1,'KEI2600']]],
+  ['measure_5fdc_5famps_56',['MEASURE_DC_AMPS',['../classSMU.html#aa097e08966ba4437ded522f22e50286fa118483455dff86dbf4a3dffbfb1783f7',1,'SMU']]],
+  ['measure_5fdc_5fvolts_57',['MEASURE_DC_VOLTS',['../classSMU.html#aa097e08966ba4437ded522f22e50286fab8666e4dd2ef45da01a45383bc29b937',1,'SMU']]],
+  ['measure_5fohms_58',['MEASURE_OHMS',['../classSMU.html#aa097e08966ba4437ded522f22e50286fa934bcaed138bd9459f00e83f8cde4b6a',1,'SMU']]],
+  ['measure_5fwatts_59',['MEASURE_WATTS',['../classSMU.html#aa097e08966ba4437ded522f22e50286faf9c8a55a61e2ef1d5b05f4becdeffbd8',1,'SMU']]],
+  ['measurepy_60',['measurePy',['../classKEI2600.html#ac7160a44757d3807cc46dfbf5a20dbc8',1,'KEI2600']]]
 ];

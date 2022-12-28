@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['run_170',['run',['../classKST3000.html#a81588e36df7d2ac86e03144f28250348',1,'KST3000']]]
+  ['measure_173',['measure',['../classKEI2600.html#a5756077c5f8f263c2462e8a1c2417c2a',1,'KEI2600']]],
+  ['measurepy_174',['measurePy',['../classKEI2600.html#ac7160a44757d3807cc46dfbf5a20dbc8',1,'KEI2600']]]
 ];

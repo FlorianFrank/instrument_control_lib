@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['instrument_20control_20lib_46',['Instrument Control Lib',['../index.html',1,'']]]
+  ['handleerrorsandlogging_48',['handleErrorsAndLogging',['../classDevice.html#a83533f7409314b683c47083b7dca789c',1,'Device']]]
 ];

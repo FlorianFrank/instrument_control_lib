@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"classSPD1305.html#ab7f6ab9eeb531e59f0b17ddc6867bee7":[9,0,13,4],
 "classSPD1305.html#ab94984c32777ab027f0d316b53e24915":[9,0,13,1],
 "classSPD1305.html#af28d414d1bd330d5c4a003d2e9397f3a":[9,0,13,2],
 "classSubArg.html":[9,0,14],

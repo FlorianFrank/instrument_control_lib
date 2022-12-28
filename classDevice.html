@@ -86,6 +86,7 @@ $(document).ready(function(){initNavTree('classDevice.html',''); initResizable()
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classDevice-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -116,37 +117,41 @@ Inheritance diagram for Device:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4e786d9fc2c0e57b6b55ee262209dc86"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a4e786d9fc2c0e57b6b55ee262209dc86">Device</a> (const char *ip, int timeoutInMs)</td></tr>
-<tr class="memdesc:a4e786d9fc2c0e57b6b55ee262209dc86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class containing the base functionality of all devices. And parameters to store the name connection type, etc.  <a href="classDevice.html#a4e786d9fc2c0e57b6b55ee262209dc86">More...</a><br /></td></tr>
-<tr class="separator:a4e786d9fc2c0e57b6b55ee262209dc86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3255f452ed3cc6a2af3a24e5760d07d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a3255f452ed3cc6a2af3a24e5760d07d4">Device</a> (const char *ip, int timeoutInMs, PIL::Logging *logger)</td></tr>
-<tr class="memdesc:a3255f452ed3cc6a2af3a24e5760d07d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of <a class="el" href="classDevice.html" title="Basic device class This class contains all basic method of all devices, like Connect,...">Device</a>.  <a href="classDevice.html#a3255f452ed3cc6a2af3a24e5760d07d4">More...</a><br /></td></tr>
-<tr class="separator:a3255f452ed3cc6a2af3a24e5760d07d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82b251a1a39514aff53d3c9215d062f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a82b251a1a39514aff53d3c9215d062f5">Device</a> (std::string ipAddress, int timeoutInMs, bool throwException=true)</td></tr>
+<tr class="memdesc:a82b251a1a39514aff53d3c9215d062f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class containing the base functionality of all devices. And parameters to store the name connection type, etc.  <a href="classDevice.html#a82b251a1a39514aff53d3c9215d062f5">More...</a><br /></td></tr>
+<tr class="separator:a82b251a1a39514aff53d3c9215d062f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91f51bbff1f236973de2a5c2b53d0c85"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a91f51bbff1f236973de2a5c2b53d0c85">Device</a> (std::string ipAddress, int timeoutInMs, PIL::Logging *logger, bool throwException=true)</td></tr>
+<tr class="memdesc:a91f51bbff1f236973de2a5c2b53d0c85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of <a class="el" href="classDevice.html" title="Basic device class This class contains all basic method of all devices, like Connect,...">Device</a> generates a socket handle without connecting to it.  <a href="classDevice.html#a91f51bbff1f236973de2a5c2b53d0c85">More...</a><br /></td></tr>
+<tr class="separator:a91f51bbff1f236973de2a5c2b53d0c85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a365ae23fbe0d2ea5290881834e1969f7"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a365ae23fbe0d2ea5290881834e1969f7">Connect</a> ()</td></tr>
-<tr class="memdesc:a365ae23fbe0d2ea5290881834e1969f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect to the device.  <a href="classDevice.html#a365ae23fbe0d2ea5290881834e1969f7">More...</a><br /></td></tr>
+<tr class="memdesc:a365ae23fbe0d2ea5290881834e1969f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establish a connection to the device.  <a href="classDevice.html#a365ae23fbe0d2ea5290881834e1969f7">More...</a><br /></td></tr>
 <tr class="separator:a365ae23fbe0d2ea5290881834e1969f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a289d6f213881b2ab4e278d2b9266968d"><td class="memItemLeft" align="right" valign="top"><a id="a289d6f213881b2ab4e278d2b9266968d"></a>
-PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>Disconnect</b> ()</td></tr>
+<tr class="memitem:a289d6f213881b2ab4e278d2b9266968d"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a289d6f213881b2ab4e278d2b9266968d">Disconnect</a> ()</td></tr>
+<tr class="memdesc:a289d6f213881b2ab4e278d2b9266968d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect from the device.  <a href="classDevice.html#a289d6f213881b2ab4e278d2b9266968d">More...</a><br /></td></tr>
 <tr class="separator:a289d6f213881b2ab4e278d2b9266968d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e56294c733e5709044ee3fe3f4a2df1"><td class="memItemLeft" align="right" valign="top"><a id="a8e56294c733e5709044ee3fe3f4a2df1"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsOpen</b> () const</td></tr>
+<tr class="memitem:a8e56294c733e5709044ee3fe3f4a2df1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a8e56294c733e5709044ee3fe3f4a2df1">IsOpen</a> () const</td></tr>
+<tr class="memdesc:a8e56294c733e5709044ee3fe3f4a2df1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the connection to the device is established.  <a href="classDevice.html#a8e56294c733e5709044ee3fe3f4a2df1">More...</a><br /></td></tr>
 <tr class="separator:a8e56294c733e5709044ee3fe3f4a2df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a897f070cb8258f912da022b39a1a2a3c"><td class="memItemLeft" align="right" valign="top"><a id="a897f070cb8258f912da022b39a1a2a3c"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>GetDeviceIdentifier</b> ()</td></tr>
+<tr class="memitem:a897f070cb8258f912da022b39a1a2a3c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a897f070cb8258f912da022b39a1a2a3c">GetDeviceIdentifier</a> ()</td></tr>
 <tr class="separator:a897f070cb8258f912da022b39a1a2a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bc0b45cbf017c1933e6ddd53cbb81fd"><td class="memItemLeft" align="right" valign="top"><a id="a5bc0b45cbf017c1933e6ddd53cbb81fd"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a5bc0b45cbf017c1933e6ddd53cbb81fd">WhatAmI</a> ()</td></tr>
-<tr class="memdesc:a5bc0b45cbf017c1933e6ddd53cbb81fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print a message containing the device's name. <br /></td></tr>
-<tr class="separator:a5bc0b45cbf017c1933e6ddd53cbb81fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66600851e6843988e2808ea7a0dc32f8"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a66600851e6843988e2808ea7a0dc32f8">Exec</a> (std::string command, <a class="el" href="classExecArgs.html">ExecArgs</a> *args=nullptr, char *result=nullptr, bool br=true, int size=1024)</td></tr>
-<tr class="memdesc:a66600851e6843988e2808ea7a0dc32f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute a (SCPI) command  <a href="classDevice.html#a66600851e6843988e2808ea7a0dc32f8">More...</a><br /></td></tr>
-<tr class="separator:a66600851e6843988e2808ea7a0dc32f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96b33b9121c59a9606829a7c8379e9c2"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">Exec</a> (const std::string &amp;command, <a class="el" href="classExecArgs.html">ExecArgs</a> *args=nullptr, char *result=nullptr, bool br=true, int size=1024)</td></tr>
+<tr class="memdesc:a96b33b9121c59a9606829a7c8379e9c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute a (SCPI) command  <a href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">More...</a><br /></td></tr>
+<tr class="separator:a96b33b9121c59a9606829a7c8379e9c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b405014c32080fb36ba4ed517fcc78d"><td class="memItemLeft" align="right" valign="top"><a id="a5b405014c32080fb36ba4ed517fcc78d"></a>
+PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>Exec</b> (const std::string &amp;command, <a class="el" href="classExecArgs.html">ExecArgs</a> *args, std::string *result, bool br)</td></tr>
+<tr class="separator:a5b405014c32080fb36ba4ed517fcc78d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c4c5ede6698d53b3269b17a2ad37b8b"><td class="memItemLeft" align="right" valign="top"><a id="a7c4c5ede6698d53b3269b17a2ad37b8b"></a>
 PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>ExecCommands</b> (std::string &amp;commands)</td></tr>
 <tr class="separator:a7c4c5ede6698d53b3269b17a2ad37b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88d97c1dad043bf37d5e3d21953bdf49"><td class="memItemLeft" align="right" valign="top"><a id="a88d97c1dad043bf37d5e3d21953bdf49"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>ReturnErrorMessage</b> ()</td></tr>
 <tr class="separator:a88d97c1dad043bf37d5e3d21953bdf49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a83533f7409314b683c47083b7dca789c"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a83533f7409314b683c47083b7dca789c">handleErrorsAndLogging</a> (PIL_ERROR_CODE errorCode, bool throwException, PIL::Level logLevel, const std::string &amp;fileName, int line, const std::string formatStr,...)</td></tr>
+<tr class="memdesc:a83533f7409314b683c47083b7dca789c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle logging messages, logs it based on the previously passed logging object. If exceptions are enabled throw an exception otherwise return the error code.  <a href="classDevice.html#a83533f7409314b683c47083b7dca789c">More...</a><br /></td></tr>
+<tr class="separator:a83533f7409314b683c47083b7dca789c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -165,18 +170,18 @@ PIL::Socket *&#160;</td><td class="memItemRight" valign="bottom"><b>m_SocketHand
 <tr class="memitem:ac36ef2e8b4d52769b738890fd595fd24"><td class="memItemLeft" align="right" valign="top"><a id="ac36ef2e8b4d52769b738890fd595fd24"></a>
 PIL::Logging *&#160;</td><td class="memItemRight" valign="bottom"><b>m_Logger</b></td></tr>
 <tr class="separator:ac36ef2e8b4d52769b738890fd595fd24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ec4c069559bec6d0d30aeb49e4f5c85"><td class="memItemLeft" align="right" valign="top"><a id="a8ec4c069559bec6d0d30aeb49e4f5c85"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_recvBuff</b> [2048]</td></tr>
-<tr class="separator:a8ec4c069559bec6d0d30aeb49e4f5c85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f2a50977c3cd52e4815eee69e101f20"><td class="memItemLeft" align="right" valign="top"><a id="a4f2a50977c3cd52e4815eee69e101f20"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>m_Port</b> = 5025</td></tr>
 <tr class="separator:a4f2a50977c3cd52e4815eee69e101f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e2150ac73235abf0c90e451f69b57b4"><td class="memItemLeft" align="right" valign="top"><a id="a1e2150ac73235abf0c90e451f69b57b4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_EnableExceptions</b></td></tr>
+<tr class="separator:a1e2150ac73235abf0c90e451f69b57b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Basic device class This class contains all basic method of all devices, like Connect, Exec, WhatAmI etc. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a4e786d9fc2c0e57b6b55ee262209dc86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e786d9fc2c0e57b6b55ee262209dc86">&#9670;&nbsp;</a></span>Device() <span class="overload">[1/2]</span></h2>
+<a id="a82b251a1a39514aff53d3c9215d062f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82b251a1a39514aff53d3c9215d062f5">&#9670;&nbsp;</a></span>Device() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -187,14 +192,20 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>m_Port</b> = 5025</td>
         <tr>
           <td class="memname">Device::Device </td>
           <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>ip</em>, </td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>ipAddress</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>timeoutInMs</em>&#160;</td>
+          <td class="paramname"><em>timeoutInMs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>throwException</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -210,13 +221,20 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>m_Port</b> = 5025</td>
 </div><div class="memdoc">
 
 <p>Base class containing the base functionality of all devices. And parameters to store the name connection type, etc. </p>
-<dl class="section author"><dt>Authors</dt><dd>Wuhao Liu, Florian Frank </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>University of Passau </dd></dl>
+<dl class="section author"><dt>Authors</dt><dd>Wuhao Liu, Alexander Braml, Florian Frank </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>University of Passau</dd></dl>
+<p>Constructor for the <a class="el" href="classDevice.html" title="Basic device class This class contains all basic method of all devices, like Connect,...">Device</a> without passing a logging object. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ipAddress</td><td>IP address of the device </td></tr>
+    <tr><td class="paramname">timeoutInMs</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="a3255f452ed3cc6a2af3a24e5760d07d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3255f452ed3cc6a2af3a24e5760d07d4">&#9670;&nbsp;</a></span>Device() <span class="overload">[2/2]</span></h2>
+<a id="a91f51bbff1f236973de2a5c2b53d0c85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91f51bbff1f236973de2a5c2b53d0c85">&#9670;&nbsp;</a></span>Device() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -227,8 +245,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>m_Port</b> = 5025</td>
         <tr>
           <td class="memname">Device::Device </td>
           <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>ip</em>, </td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>ipAddress</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -240,7 +258,13 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>m_Port</b> = 5025</td>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">PIL::Logging *&#160;</td>
-          <td class="paramname"><em>logger</em>&#160;</td>
+          <td class="paramname"><em>logger</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>throwException</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -255,10 +279,12 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>m_Port</b> = 5025</td>
 </table>
 </div><div class="memdoc">
 
-<p>Constructor of <a class="el" href="classDevice.html" title="Basic device class This class contains all basic method of all devices, like Connect,...">Device</a>. </p>
+<p>Constructor of <a class="el" href="classDevice.html" title="Basic device class This class contains all basic method of all devices, like Connect,...">Device</a> generates a socket handle without connecting to it. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ip</td><td>the m_IPAddr address of the target device </td></tr>
+    <tr><td class="paramname">ipAddress</td><td>The ip address to connect to the device. </td></tr>
+    <tr><td class="paramname">timeoutInMs</td><td>Timeout of the socket in milliseconds. </td></tr>
+    <tr><td class="paramname">logger</td><td>Pass a logging object to configure what types of messages should be logged. If nullptr is passed, logging is disabled. </td></tr>
   </table>
   </dd>
 </dl>
@@ -281,15 +307,45 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>m_Port</b> = 5025</td>
       </table>
 </div><div class="memdoc">
 
-<p>Connect to the device. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd><p class="startdd">deal with connection timeout </p>
-<p class="enddd">deal with connection warning(you have not connected or Connect automatically) </p>
-</dd></dl>
+<p>Establish a connection to the device. </p>
+<dl class="section return"><dt>Returns</dt><dd>if the connection is established return PIL_NO_ERROR otherwise return error code. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">PIL::Exception</td><td>if the connection could not established. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="a66600851e6843988e2808ea7a0dc32f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a66600851e6843988e2808ea7a0dc32f8">&#9670;&nbsp;</a></span>Exec()</h2>
+<a id="a289d6f213881b2ab4e278d2b9266968d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a289d6f213881b2ab4e278d2b9266968d">&#9670;&nbsp;</a></span>Disconnect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PIL_ERROR_CODE Device::Disconnect </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disconnect from the device. </p>
+<dl class="section return"><dt>Returns</dt><dd>if the connection is disconnected return PIL_NO_ERROR otherwise return error code. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">PIL::Exception</td><td>if the connection could not disconnected. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a96b33b9121c59a9606829a7c8379e9c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96b33b9121c59a9606829a7c8379e9c2">&#9670;&nbsp;</a></span>Exec()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -297,7 +353,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>m_Port</b> = 5025</td>
         <tr>
           <td class="memname">PIL_ERROR_CODE Device::Exec </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>command</em>, </td>
         </tr>
         <tr>
@@ -342,11 +398,130 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>m_Port</b> = 5025</td>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Different companies, devices may have different levels of support for SCPI. Some device may require '\n', some may not. That is why here is a br param.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Deal with execution timeout; Support for dynamic length of result; </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>Some commands may timeout <div class="fragment"><div class="line"><a class="code" href="classKST3000.html">KST3000</a> k.<a class="code" href="classDevice.html#a66600851e6843988e2808ea7a0dc32f8">Exec</a>(<span class="stringliteral">&quot;RSTater?&quot;</span>, buffer);</div>
-<div class="ttc" id="aclassDevice_html_a66600851e6843988e2808ea7a0dc32f8"><div class="ttname"><a href="classDevice.html#a66600851e6843988e2808ea7a0dc32f8">Device::Exec</a></div><div class="ttdeci">PIL_ERROR_CODE Exec(std::string command, ExecArgs *args=nullptr, char *result=nullptr, bool br=true, int size=1024)</div><div class="ttdoc">execute a (SCPI) command</div><div class="ttdef"><b>Definition:</b> Device.cpp:151</div></div>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Deal with execution timeout; </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Some commands may timeout <div class="fragment"><div class="line"><a class="code" href="classKST3000.html">KST3000</a> k.<a class="code" href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">Exec</a>(<span class="stringliteral">&quot;RSTater?&quot;</span>, buffer);</div>
+<div class="ttc" id="aclassDevice_html_a96b33b9121c59a9606829a7c8379e9c2"><div class="ttname"><a href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">Device::Exec</a></div><div class="ttdeci">PIL_ERROR_CODE Exec(const std::string &amp;command, ExecArgs *args=nullptr, char *result=nullptr, bool br=true, int size=1024)</div><div class="ttdoc">execute a (SCPI) command</div><div class="ttdef"><b>Definition:</b> Device.cpp:163</div></div>
 <div class="ttc" id="aclassKST3000_html"><div class="ttname"><a href="classKST3000.html">KST3000</a></div><div class="ttdoc">Mixed Single Oscilloscope(Oscillator) Commend operations of a single generator are defined....</div><div class="ttdef"><b>Definition:</b> KST3000.h:26</div></div>
 </div><!-- fragment --> </dd></dl>
+
+</div>
+</div>
+<a id="a897f070cb8258f912da022b39a1a2a3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a897f070cb8258f912da022b39a1a2a3c">&#9670;&nbsp;</a></span>GetDeviceIdentifier()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Device::GetDeviceIdentifier </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="a83533f7409314b683c47083b7dca789c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83533f7409314b683c47083b7dca789c">&#9670;&nbsp;</a></span>handleErrorsAndLogging()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">PIL_ERROR_CODE Device::handleErrorsAndLogging </td>
+          <td>(</td>
+          <td class="paramtype">PIL_ERROR_CODE&#160;</td>
+          <td class="paramname"><em>errorCode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>throwException</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PIL::Level&#160;</td>
+          <td class="paramname"><em>logLevel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>fileName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>line</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string&#160;</td>
+          <td class="paramname"><em>formatStr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Handle logging messages, logs it based on the previously passed logging object. If exceptions are enabled throw an exception otherwise return the error code. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">errorCode</td><td>error code to identify the error. </td></tr>
+    <tr><td class="paramname">throwException</td><td>if true, throw an exception. </td></tr>
+    <tr><td class="paramname">logLevel</td><td>log level of the message. </td></tr>
+    <tr><td class="paramname">fileName</td><td>name of the file where the error occurred. </td></tr>
+    <tr><td class="paramname">line</td><td>line number where the error occurred. </td></tr>
+    <tr><td class="paramname">formatStr</td><td>format string for the error message. </td></tr>
+    <tr><td class="paramname">...</td><td>variable arguments for the format string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>error code. </dd></dl>
+
+</div>
+</div>
+<a id="a8e56294c733e5709044ee3fe3f4a2df1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e56294c733e5709044ee3fe3f4a2df1">&#9670;&nbsp;</a></span>IsOpen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Device::IsOpen </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the connection to the device is established. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if connection is established, otherwise false. </dd></dl>
 
 </div>
 </div>
