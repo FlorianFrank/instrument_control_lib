@@ -1,14 +1,13 @@
-//
-// Created by florianfrank on 19.07.22.
-//
 #include "devices/types/SMU.h"
 
-SMU::SMU(const char *ip, int timeoutInMs): Device(ip, timeoutInMs)
+#include <utility> // std::move
+
+SMU::SMU(std::string ipAddress, int timeoutInMs): Device(std::move(ipAddress), timeoutInMs)
 {
 
 }
 
-SMU::SMU(const char *ip, int timeoutInMs, PIL::Logging *logger): Device(ip, timeoutInMs, logger)
+SMU::SMU(std::string ipAddress, int timeoutInMs, PIL::Logging *logger): Device(std::move(ipAddress), timeoutInMs, logger)
 {
 }
 

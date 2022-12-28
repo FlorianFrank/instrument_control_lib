@@ -96,8 +96,8 @@ public:
         CALIBRATION
     };
 
-    explicit SMU(const char *ip, int timeoutInMs);
-    explicit SMU(const char *ip, int timeoutInMs, PIL::Logging *logger);
+    explicit SMU(std::string ipAddress, int timeoutInMs);
+    explicit SMU(std::string ipAddress, int timeoutInMs, PIL::Logging *logger);
 
     virtual PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double *value, bool checkErrorBuffer) = 0;
 

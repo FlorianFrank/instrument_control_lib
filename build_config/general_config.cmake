@@ -30,3 +30,5 @@ set(PUGI_XML_VERSION 1.12)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 option(BUILD_DOCUMENTATION "Build and publish a Doxygen documentation" ON)
+
+set(ENABLE_PYTHON "BUILD Python bindings" ON)

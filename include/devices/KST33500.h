@@ -1,7 +1,7 @@
-//
-// Created by liuwuhao on 27.05.21.
-//
-
+/**
+ * @brief Implementation of the Keighsight KSST33500 function generator.
+ * @authors Wuhao Liu, Florian Frank
+ */
 #ifndef CE_DEVICE_KST33500_H
 #define CE_DEVICE_KST33500_H
 

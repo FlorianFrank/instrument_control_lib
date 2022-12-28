@@ -7,12 +7,11 @@
 #ifndef CE_DEVICE_DEVICE_H
 #define CE_DEVICE_DEVICE_H
 
-extern "C"
-{
-#include "ctlib/ErrorCodeDefines.h"
-}
 
 #include "ExecArgs.h"
+#include "ctlib/Logging.hpp"
+#include "ctlib/Exception.h"
+
 
 #include <string>
 #include <vector>
@@ -31,8 +30,8 @@ namespace PIL
 class Device {
 
 public:
-    explicit Device(const char *ip, int timeoutInMs);
-    explicit Device(const char *ip, int timeoutInMs, PIL::Logging *logger);
+    explicit Device(std::string ipAddress, int timeoutInMs, bool throwException = true);
+    explicit Device(std::string ipAddress, int timeoutInMs, PIL::Logging *logger, bool throwException = true);
     ~Device();
 
     PIL_ERROR_CODE Connect();
@@ -40,21 +39,26 @@ public:
     [[nodiscard]] bool IsOpen() const;
 
     std::string GetDeviceIdentifier();
-    std::string WhatAmI();
 
-    PIL_ERROR_CODE Exec(std::string command, ExecArgs *args = nullptr, char *result = nullptr, bool br = true, int size = 1024);
+    PIL_ERROR_CODE Exec(const std::string& command, ExecArgs *args = nullptr, char *result = nullptr, bool br = true, int size = 1024);
+    PIL_ERROR_CODE Exec(const std::string &command, ExecArgs *args, std::string *result, bool br);
     PIL_ERROR_CODE ExecCommands(std::string &commands);
 
     std::string ReturnErrorMessage();
 
 protected:
+    PIL_ERROR_CODE
+    handleErrorsAndLogging(PIL_ERROR_CODE errorCode, bool throwException, PIL::Level logLevel, const std::string& fileName,
+                           int line, const std::string formatStr, ...);
+
+
     std::string m_IPAddr;
     PIL_ErrorHandle m_ErrorHandle;
     std::string m_DeviceName{};
     PIL::Socket *m_SocketHandle;
     PIL::Logging *m_Logger;
-    uint8_t m_recvBuff[2048];
     int m_Port = 5025;
+    bool m_EnableExceptions;
 };
 
 #endif //CE_DEVICE_DEVICE_H
