@@ -58,7 +58,7 @@ jobs:
 
       - name: Copy Windows DLLs
         working-directory: ${{runner.workspace}}/instrument_control_lib/common_tools_lib
-        run: cp libs/windows/* ${{runner.workspace}}/build/instrument_control_lib
+        run: cp libs/windows/* ${{runner.workspace}}/build/common_tools_lib
 
       - name: Configure CMake Windows
         uses: ashutoshvarma/action-cmake-build@master
