@@ -26,10 +26,6 @@ jobs:
           }
 
     steps:
-      - name: Install Dependencies Linux
-        if: matrix.config.os == 'ubuntu-latest'
-        run: sudo apt-get install libgtest-dev
-
       - name: Googletest installer
         uses: MarkusJx/googletest-installer@v1.1
 
@@ -39,7 +35,6 @@ jobs:
           submodules: recursive
 
       - name: Setup Ninja Windows
-        if: matrix.config.os == 'windows-latest'
         uses: ashutoshvarma/setup-ninja@master
       
       - name: Create Build Environment
@@ -53,8 +48,19 @@ jobs:
         # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
         run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=${{matrix.config.build_type}}
 
+      - name: Install gtest
+        working-directory: ${{runner.workspace}}/instrument_control_lib/common_tools_lib
+        run: ./build_gtest.bat
+
+      - name: Copy GTest
+        working-directory: ${{runner.workspace}}/instrument_control_lib/common_tools_lib
+        run: cp googletest/build/lib/* ${{runner.workspace}}/build
+
+      - name: Copy Windows DLLs
+        working-directory: ${{runner.workspace}}/instrument_control_lib/common_tools_lib
+        run: cp libs/windows/* ${{runner.workspace}}/build
+
       - name: Configure CMake Windows
-        if: matrix.config.os == 'windows-latest'
         uses: ashutoshvarma/action-cmake-build@master
         with:
           build-dir: ${{ runner.workspace }}/build
@@ -81,14 +87,12 @@ jobs:
           path: ${{runner.workspace}}/build/test-results/**/*.xml
 
       - name: Upload python lib Ubuntu & MacOS
-        if: matrix.config.os != 'windows-latest'
         uses: actions/upload-artifact@v2
         with:
           name: py_instrument_control_lib.so
           path: ${{runner.workspace}}/build/python_interface/py_instrument_control_lib*.so
       
       - name: Upload python lib Windows
-        if: matrix.config.os == 'windows-latest'
         uses: actions/upload-artifact@v2
         with:
           name: py_instrument_control_lib.pyd
