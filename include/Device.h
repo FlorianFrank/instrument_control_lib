@@ -32,6 +32,7 @@ class Device {
 public:
     explicit Device(std::string ipAddress, int timeoutInMs, bool throwException = true);
     explicit Device(std::string ipAddress, int timeoutInMs, PIL::Logging *logger, bool throwException = true);
+    explicit Device(std::string ipAddress, uint16_t srcPort, uint16_t destPort, int timeoutInMs, PIL::Logging *logger, bool throwException = true);
     ~Device();
 
     PIL_ERROR_CODE Connect();
@@ -57,7 +58,8 @@ protected:
     std::string m_DeviceName{};
     PIL::Socket *m_SocketHandle;
     PIL::Logging *m_Logger;
-    int m_Port = 5025;
+    int m_destPort = 5025;
+    int m_srcPort = 5025;
     bool m_EnableExceptions;
 };
 
