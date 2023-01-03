@@ -54,7 +54,7 @@ jobs:
 
       - name: Copy GTest
         working-directory: ${{runner.workspace}}/instrument_control_lib/common_tools_lib
-        run: cp googletest/build/lib/* ${{runner.workspace}}/build
+        run: cp googletest/build/lib/* ${{runner.workspace}}/build/common_tools_lib
 
       - name: Copy Windows DLLs
         working-directory: ${{runner.workspace}}/instrument_control_lib/common_tools_lib
