@@ -26,9 +26,6 @@ jobs:
           }
 
     steps:
-      - name: Googletest installer
-        uses: MarkusJx/googletest-installer@v1.1
-
       - name: Checkout repository and submodules
         uses: actions/checkout@v3
         with:
