@@ -140,7 +140,7 @@ void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *device
     std::vector<uint8_t> temporaryIP = ipRange.m_startIPRange;
     std::vector<PIL::Threading*> threadingList;
 
-    auto threading_function = [](void *ipPtr) -> void *
+    std::function<void*(void*)> threadingFunction =  [](void *ipPtr) -> void *
     {
         std::string ipStr;
         auto devTuple = reinterpret_cast<std::tuple<std::vector<uint8_t>, std::string>*>(ipPtr);
@@ -178,7 +178,7 @@ void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *device
     {
         auto t = new std::tuple<std::vector<uint8_t>, std::string>{{temporaryIP.at(0), temporaryIP.at(1), temporaryIP.at(2), temporaryIP.at(3)}, ""};
         temporaryIPList.push_back(t);
-        auto *threading = new PIL::Threading(threading_function, (void *) t);
+        auto *threading = new PIL::Threading(threadingFunction, (void *) t);
         threadingList.push_back(threading);
         if (m_Logging)
             m_Logging->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Start Thread #%d for IP: %d.%d.%d.%d", threadCtr,
