@@ -24,7 +24,8 @@ target_compile_options(instrument_control_lib PRIVATE -Wall -Wextra -Wpedantic -
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/pugixml")
 
 add_subdirectory(common_tools_lib)
-#add_subdirectory(playground)
+add_subdirectory(playground)
+add_subdirectory(tests)
 
 if(ENABLE_PYTHON)
     add_subdirectory(python_interface)
@@ -47,6 +48,7 @@ target_link_libraries(instrument_control_lib PUBLIC ${PUGIXML} ${COMMON_TOOLS_LI
 
 target_include_directories(instrument_control_lib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/pugixml-1.12/src"
+                                                          "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/FileHandling/include"
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/Communication/include"
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/Threading/include"
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/Additional"
@@ -69,3 +71,6 @@ if (BUILD_DOCUMENTATION)
     include("${CMAKE_CURRENT_SOURCE_DIR}/build_config/documentation.cmake")
     build_documentation()
 endif()
+
+set(GTEST_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/googletest/googletest/include")
+set(GTEST_LINK_DIR "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/googletest/build/lib")
