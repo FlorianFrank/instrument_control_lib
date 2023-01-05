@@ -7,7 +7,6 @@ env:
 
 jobs:
   build:
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     strategy:
@@ -30,7 +29,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Checkout repository and submodules
+      - name: Checkout Repository and Submodules
         uses: actions/checkout@v3
         with:
           submodules: recursive
@@ -38,28 +37,14 @@ jobs:
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build
 
-      - name: Install GTest
-        working-directory: ${{runner.workspace}}/instrument_control_lib/common_tools_lib
-        run: ./build_gtest.bat
-
-      - name: Copy GTest
-        working-directory: ${{runner.workspace}}/instrument_control_lib/common_tools_lib
-        run: cp googletest/build/lib/* ${{runner.workspace}}/build/common_tools_lib
-
       - name: Copy Windows DLLs
         working-directory: ${{runner.workspace}}/instrument_control_lib/common_tools_lib
         run: cp libs/windows/* ${{runner.workspace}}/build/common_tools_lib
 
       - name: Configure CMake Windows
         working-directory: ${{runner.workspace}}/build
-        # Note the current convention is to use the -S and -B options here to specify source
-        # and build directories, but this is only available with CMake 3.13 and higher.
-        # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
         shell: pwsh
         run: cmake ../instrument_control_lib -GNinja -DCMAKE_BUILD_TYPE=${{matrix.config.build_type}} -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc
-
-      #- name: Setup Ninja Windows
-      #  uses: ashutoshvarma/setup-ninja@master
 
       - name: Build project
         working-directory: ${{runner.workspace}}/build
@@ -71,13 +56,6 @@ jobs:
         run: .\common_tools_lib\SocketUnitTest.exe GTEST_OUTPUT=xml:test-results/ GTEST_COLOR=1 ctest -V;
              .\common_tools_lib\ExceptionUnitTest.exe GTEST_OUTPUT=xml:test-results/ GTEST_COLOR=1 ctest -V;
              .\common_tools_lib\FileHandlingUnitTest.exe GTEST_OUTPUT=xml:test-results/ GTEST_COLOR=1 ctest -V
-      
-      - name: Upload test results
-        uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: test_results_xml
-          path: ${{runner.workspace}}/build/test-results/**/*.xml
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
@@ -93,3 +71,4 @@ jobs:
             ${{ runner.workspace }}/build/common_tools_lib/*.a
             ${{ runner.workspace }}/build/common_tools_lib/*.lib
             ${{ runner.workspace }}/build/common_tools_lib/*.exe
+            ${{runner.workspace}}/build/common_tools_lib/test-results/**/*.xml
