@@ -42,9 +42,12 @@ jobs:
         shell: bash
         run: cmake --build . --config ${{ matrix.config.build_type }} --target all
       
-      - name: Execute UnitTests
-        if: matrix.config.os != 'windows-latest'
-        working-directory: ${{runner.workspace}}/build
+      - name: Execute UnitTests Common Tools Lib
+        working-directory: ${{runner.workspace}}/build/common_tools_lib
+        run: GTEST_OUTPUT=xml:test-results/ GTEST_COLOR=1 ctest -V
+
+      - name: Execute UnitTests Instrument Control Lib
+        working-directory: ${{runner.workspace}}/build/tests
         run: GTEST_OUTPUT=xml:test-results/ GTEST_COLOR=1 ctest -V
 
       - name: Upload Artifacts

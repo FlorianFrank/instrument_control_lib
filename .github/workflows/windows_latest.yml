@@ -51,11 +51,15 @@ jobs:
         shell: pwsh
         run: cmake --build . --config ${{ matrix.config.build_type }} --target all
 
-      - name: Execute UnitTests
+      - name: Execute UnitTests Common Tools Lib
         working-directory: ${{runner.workspace}}/build
         run: .\common_tools_lib\SocketUnitTest.exe GTEST_OUTPUT=xml:test-results/ GTEST_COLOR=1 ctest -V;
              .\common_tools_lib\ExceptionUnitTest.exe GTEST_OUTPUT=xml:test-results/ GTEST_COLOR=1 ctest -V;
              .\common_tools_lib\FileHandlingUnitTest.exe GTEST_OUTPUT=xml:test-results/ GTEST_COLOR=1 ctest -V
+
+      - name: Execute UnitTests Instrument Control Lib
+        working-directory: ${{runner.workspace}}/build
+        run: .\tests\device_unit_test.exe GTEST_OUTPUT=xml:test-results/ GTEST_COLOR=1 ctest -V;
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
