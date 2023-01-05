@@ -44,7 +44,7 @@ jobs:
 
       - name: Copy Windows DLLs
         working-directory: ${{runner.workspace}}/instrument_control_lib/common_tools_lib
-        run: cp libs/windows/* ${{runner.workspace}}/build/common_tools_lib
+        run: cp libs/windows/* ${{runner.workspace}}/build/common_tools_lib; cp libs/windows/* ${{runner.workspace}}/build/tests
 
       - name: Build project
         working-directory: ${{runner.workspace}}/build
