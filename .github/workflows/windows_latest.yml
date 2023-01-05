@@ -44,7 +44,7 @@ jobs:
       - name: Configure CMake Windows
         working-directory: ${{runner.workspace}}/build
         shell: pwsh
-        run: cmake ../instrument_control_lib -GNinja -DCMAKE_BUILD_TYPE=${{matrix.config.build_type}} -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=${{matrix.config.build_type}}
 
       - name: Build project
         working-directory: ${{runner.workspace}}/build
