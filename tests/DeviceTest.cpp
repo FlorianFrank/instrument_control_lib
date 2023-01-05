@@ -8,7 +8,6 @@ extern "C" {
 #include "ctlib/Socket.h"
 }
 #include <ctlib/Socket.hpp>
-#include <Socket.h>
 
 TEST(DeviceTest, DeviceNotAvailableException)
 {
