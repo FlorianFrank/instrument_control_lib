@@ -71,6 +71,3 @@ if (BUILD_DOCUMENTATION)
     include("${CMAKE_CURRENT_SOURCE_DIR}/build_config/documentation.cmake")
     build_documentation()
 endif()
-
-set(GTEST_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/googletest/googletest/include")
-set(GTEST_LINK_DIR "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/googletest/build/lib")

@@ -35,3 +35,8 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 option(BUILD_DOCUMENTATION "Build and publish a Doxygen documentation" ON)
 
 set(ENABLE_PYTHON "BUILD Python bindings" ON)
+
+if(WIN32)
+    set(GTEST_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/googletest/googletest/include")
+    set(GTEST_LINK_DIR "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/googletest/build/lib")
+endif()
