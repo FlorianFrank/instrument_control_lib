@@ -37,14 +37,14 @@ jobs:
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build
 
-      - name: Copy Windows DLLs
-        working-directory: ${{runner.workspace}}/instrument_control_lib/common_tools_lib
-        run: cp libs/windows/* ${{runner.workspace}}/build/common_tools_lib
-
       - name: Configure CMake Windows
         working-directory: ${{runner.workspace}}/build
         shell: pwsh
-        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=${{matrix.config.build_type}}
+        run: cmake ../instrument_control_lib -DCMAKE_BUILD_TYPE=${{matrix.config.build_type}}
+
+      - name: Copy Windows DLLs
+        working-directory: ${{runner.workspace}}/instrument_control_lib/common_tools_lib
+        run: cp libs/windows/* ${{runner.workspace}}/build/common_tools_lib
 
       - name: Build project
         working-directory: ${{runner.workspace}}/build
