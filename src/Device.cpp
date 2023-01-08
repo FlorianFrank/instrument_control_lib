@@ -96,8 +96,9 @@ PIL_ERROR_CODE Device::Connect()
 {
     m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Device is connecting.");
 
-    if (m_SocketHandle->Connect(m_IPAddr, m_destPort) != PIL_NO_ERROR)
-        return Device::handleErrorsAndLogging(m_SocketHandle->GetLastError(), m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__, "");
+    auto ret = m_SocketHandle->Connect(m_IPAddr, m_destPort);
+    if (ret != PIL_NO_ERROR)
+        return Device::handleErrorsAndLogging(ret, m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__, "");
 
     m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Connection to device %s:%d established!", m_IPAddr.c_str(), m_destPort);
     return PIL_NO_ERROR;
@@ -194,8 +195,9 @@ PIL_ERROR_CODE Device::Exec(const std::string &command, ExecArgs *args, std::str
     m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Command %s successfully executed", strToSend.c_str());
 
     if (result) { // not all operation need a result
-        if(m_SocketHandle->Receive(*result) != PIL_NO_ERROR)
-            return Device::handleErrorsAndLogging(m_SocketHandle->GetLastError(), m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__,
+        auto ret = m_SocketHandle->Receive(*result);
+        if(ret != PIL_NO_ERROR)
+            return Device::handleErrorsAndLogging(ret, m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__,
                                                   "Error while calling read");
         if(m_Logger)
             m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__,"Receive result: %s", result->c_str());
