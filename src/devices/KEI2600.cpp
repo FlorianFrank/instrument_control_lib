@@ -1352,6 +1352,10 @@ std::vector<std::string> splitString(std::string toSplit, std::string delimiter)
     return res;
 }
 
+std::string createPayload(std::string value) {
+    return R"({"command": "shellInput", "value": ")" + value + "\"}";
+}
+
 void fillPayloads(int offset, int numberOfLines, std::vector<std::string> values, std::vector<std::string> *result) {
     std::string value;
     for (int i = offset; i < offset + numberOfLines; ++i) {
@@ -1359,7 +1363,7 @@ void fillPayloads(int offset, int numberOfLines, std::vector<std::string> values
     }
 
     std::string payload = R"({"command": "shellInput", "value": ")" + value + "\"}";
-    result->push_back(payload);
+    result->push_back(createPayload(value));
 }
 
 void postRequest(const std::string& url, std::string& payload) {
@@ -1542,6 +1546,15 @@ PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, double *buffer, bool 
         int offset = batches * batchSize;
         fillBuffer(remaining, offset, bufferName, printBuffer, buffer);
     }
+
+    SubArg subArg("");
+    subArg.AddElem(bufferName + ".clear", "(", ")");
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, "");
+
+    std::cout << execArgs.GetArgumentsAsString() << std::endl;
+
+    // auto ret = Exec("", &execArgs, nullptr);
 
     return PIL_ERRNO;
 }
