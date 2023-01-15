@@ -139,6 +139,7 @@ std::string Device::GetDeviceIdentifier()
         return PIL_ErrorCodeToString(Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__, ""));
 
     SubArg arg("IDN", "*", "?");
+
     ExecArgs args;
     args.AddArgument(arg, "");
 
@@ -159,6 +160,7 @@ std::string Device::GetDeviceIdentifier()
  *          Some device may require '\\n', some may not. That is why here is a br param.
  *
  * @todo  Deal with execution timeout;
+ *        Support for dynamic length of result;
  * @warning Some commands may timeout
  *      @code{.c}
  *      KST3000 k.Exec("RSTater?", buffer);
