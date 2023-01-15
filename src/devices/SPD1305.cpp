@@ -27,12 +27,11 @@ PIL_ERROR_CODE SPD1305::setCurrent(DC_CHANNEL channel, double current)
 
 PIL_ERROR_CODE SPD1305::getCurrent(DC_CHANNEL channel, double *current) {
   std::string msg = "CH" + getStrFromDCChannelEnum(channel) + ":CURRent?";
-  // TODO: 20 ?
-  char result[20] = {0};
-  auto execRet = Exec(msg, nullptr, result);
+  std::string result;
+  auto execRet = Exec(msg, nullptr, &result, false);
   if(execRet != PIL_NO_ERROR)
       return execRet;
-  *current = atof(result);
+  *current = atof(result.c_str());
   return PIL_NO_ERROR;
 }
 

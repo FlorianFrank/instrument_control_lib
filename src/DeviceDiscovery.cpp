@@ -127,6 +127,8 @@ PIL_ERROR_CODE DeviceDiscovery::setInterfaceList()
     return ipRange;
 }
 
+
+typedef std::tuple<std::vector<uint8_t>, std::string> DeviceDiscoveryType;
 /**
  * @brief This function opens a connection for each IP-address in the address range and test if the *IDN? command
  * returns any information. Each socket is executed in a dedicated thread, allowing for a highly parallel execution
@@ -138,52 +140,54 @@ PIL_ERROR_CODE DeviceDiscovery::setInterfaceList()
 void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *deviceList)
 {
     std::vector<uint8_t> temporaryIP = ipRange.m_startIPRange;
-    std::vector<PIL::Threading*> threadingList;
+    std::vector<std::unique_ptr<PIL::Threading<DeviceDiscoveryType>>> threadingList;
 
-    auto threading_function = [](void *ipPtr) -> void *
-    {
-        std::string ipStr;
-        auto devTuple = reinterpret_cast<std::tuple<std::vector<uint8_t>, std::string>*>(ipPtr);
-        auto tip = std::get<0>(*devTuple);
-        auto ip = [&tip, &ipStr]()
-        {
-            for (uint32_t i = 0; i < tip.size(); i++)
+    std::function<void*(std::unique_ptr<DeviceDiscoveryType>&)> threadingFunction =
+            [](std::unique_ptr<DeviceDiscoveryType> &devTuple) -> void *
             {
-                if (i < tip.size() - 1)
-                    ipStr += std::to_string(tip.at(i)) + ".";
-                else
-                    ipStr += std::to_string(tip.at(i));
-            }
-            return ipStr;
-        };
+                std::string ipStr;
+                auto tip = std::get<0>(*devTuple);
+                auto ip = [&tip, &ipStr]()
+                {
+                    for (uint32_t i = 0; i < tip.size(); i++)
+                    {
+                        if (i < tip.size() - 1)
+                            ipStr += std::to_string(tip.at(i)) + ".";
+                        else
+                            ipStr += std::to_string(tip.at(i));
+                    }
+                    return ipStr;
+                };
 
-        ip();
-        Device dev(ipStr.c_str(), SOCKET_TIMEOUT);
-        auto ret = dev.Connect();
-        if (ret == PIL_NO_ERROR)
-        {
-            std::string devIdentifier = dev.GetDeviceIdentifier();
-            std::cout << devIdentifier << std::endl;
-            if (devIdentifier.find("Error") == std::string::npos)
-            {
-                std::get<1>(*devTuple) = devIdentifier;
-            }
-        }
-        dev.Disconnect();
-        return (void *) nullptr;
-    };
-    std::vector<std::tuple<std::vector<uint8_t>, std::string>*> temporaryIPList;
+                ip();
+                Device dev(ipStr, SOCKET_TIMEOUT);
+                auto ret = dev.Connect();
+                if (ret == PIL_NO_ERROR)
+                {
+                    std::string devIdentifier = dev.GetDeviceIdentifier();
+                    std::cout << devIdentifier << std::endl;
+                    if (devIdentifier.find("Error") == std::string::npos)
+                    {
+                        std::get<1>(*devTuple) = devIdentifier;
+                    }
+                }
+                dev.Disconnect();
+                return (void *) nullptr;
+            };
+    std::vector<std::unique_ptr<DeviceDiscoveryType>> temporaryIPList;
     int threadCtr = 0;
     while (temporaryIP[temporaryIP.size() - 1] < ipRange.m_stopIPRange[ipRange.m_stopIPRange.size() - 1])
     {
-        auto t = new std::tuple<std::vector<uint8_t>, std::string>{{temporaryIP.at(0), temporaryIP.at(1), temporaryIP.at(2), temporaryIP.at(3)}, ""};
-        temporaryIPList.push_back(t);
-        auto *threading = new PIL::Threading(threading_function, (void *) t);
-        threadingList.push_back(threading);
+        std::tuple<std::vector<uint8_t>, std::string> ipTuple = {{temporaryIP.at(0), temporaryIP.at(1), temporaryIP.at(2), temporaryIP.at(3)}, ""};
+        auto t = std::make_unique<DeviceDiscoveryType> (ipTuple);
+        temporaryIPList.push_back(std::move(t));
+
+        auto threading = std::make_unique<PIL::Threading<DeviceDiscoveryType>>(threadingFunction, temporaryIPList.back());
+        threadingList.push_back(std::move(threading));
         if (m_Logging)
             m_Logging->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Start Thread #%d for IP: %d.%d.%d.%d", threadCtr,
                                   temporaryIP[0], temporaryIP[1], temporaryIP[2], temporaryIP[3]);
-        threading->Run();
+        threadingList.back()->Run();
 
         temporaryIP[temporaryIP.size() - 1]++;
         threadCtr++;
@@ -194,14 +198,14 @@ void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *device
         if (m_Logging)
             m_Logging->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Join Thread #%d", i);
         threadingList[i]->Join();
-        delete threadingList[i];
+//        delete threadingList[i];
         std::string identifier = std::get<1>(*temporaryIPList[i]);
         if (!identifier.empty())
         {
             auto dev = createDeviceFromDeviceString(std::get<1>(*temporaryIPList[i]), std::get<0>(*temporaryIPList[i]));
             deviceList->push_back(dev);
         }
-        delete temporaryIPList[i];
+        //      delete temporaryIPList[i];
     }
     if (m_Logging)
         m_Logging->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Found 10 devices");
