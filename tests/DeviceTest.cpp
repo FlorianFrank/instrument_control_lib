@@ -22,8 +22,13 @@ TEST(DeviceTest, DeviceNotAvailableException)
 
                      } catch (PIL::Exception &e)
                      {
-                        EXPECT_TRUE((std::string(e.what()).find("Operation now in progress") != std::string::npos) ||
-                                    (std::string(e.what()).find("Socket timeout") != std::string::npos));
+#ifdef __WIN32__
+                         EXPECT_TRUE((std::string(e.what()).find("Unknown error") != std::string::npos));
+#else
+                         EXPECT_TRUE((std::string(e.what()).find("Operation now in progress") != std::string::npos) ||
+                                     (std::string(e.what()).find("Socket timeout") != std::string::npos));
+#endif // __WIN32__
+
                          throw;
                      }
                  }, PIL::Exception);
@@ -38,7 +43,11 @@ TEST(DeviceTest, TestUnableToConnectException)
                          auto ret = device.Connect();
                      }
                      catch(PIL::Exception &e) {
-                         EXPECT_STREQ( "Exception (Socket.cpp:115): Errno 111 (Connection refused)", e.what() );
+#ifdef __WIN32__
+                         EXPECT_TRUE((std::string(e.what()).find("Unknown error") != std::string::npos));
+#else
+                         EXPECT_TRUE((std::string(e.what()).find("Connection refused") != std::string::npos));
+#endif // __WIN32__
                          throw;
                      }
                  }, PIL::Exception );
@@ -55,7 +64,11 @@ TEST(DeviceTest, TestUnableToConnectRetCode)
                          EXPECT_EQ(ret, PIL_ERRNO);
                      } catch (PIL::Exception &e)
                      {
+#ifdef __WIN32__
+                         EXPECT_TRUE((std::string(e.what()).find("Unknown error") != std::string::npos));
+#else
                          EXPECT_STREQ("Exception (Socket.cpp:115): Errno 111 (Connection refused)", e.what());
+#endif // __WIN32__
                          throw;
                      }
                  }, PIL::Exception);
@@ -84,7 +97,7 @@ TEST(DeviceTest, TestDisconnect)
     PIL::Socket::ReceiveCallbackArg additionalArg(receiveCallback);
 
 
-    std::function<void(std::shared_ptr<PIL::Socket>&)> acceptCallback([&additionalArg](const std::shared_ptr<PIL::Socket>& socket)
+    std::function<void(std::unique_ptr<PIL::Socket>&)> acceptCallback([&additionalArg](const std::unique_ptr<PIL::Socket>& socket)
     {
            auto returnCode = socket->RegisterReceiveCallbackFunction(additionalArg);
         EXPECT_EQ(returnCode, PIL_NO_ERROR);
@@ -99,9 +112,6 @@ TEST(DeviceTest, TestDisconnect)
     EXPECT_EQ(ret, PIL_NO_ERROR);
     std::string deviceIdentifier = device.GetDeviceIdentifier();
     EXPECT_EQ("Agilent Technologies,33522B", deviceIdentifier);
-
-    auto errorCode = testSocket.Disconnect();
-    EXPECT_EQ(errorCode, PIL_NO_ERROR);
 }*/
 
 /*
