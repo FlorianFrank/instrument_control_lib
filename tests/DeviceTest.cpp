@@ -22,7 +22,7 @@ TEST(DeviceTest, DeviceNotAvailableException)
 
                      } catch (PIL::Exception &e)
                      {
-                        EXPECT_STREQ("Exception (Device.cpp:97): Socket timeout", e.what());
+                        EXPECT_STREQ("Exception (Socket.cpp:115): Errno 115 (Operation now in progress)", e.what());
                          throw;
                      }
                  }, PIL::Exception);
@@ -37,7 +37,7 @@ TEST(DeviceTest, TestUnableToConnectException)
                          auto ret = device.Connect();
                      }
                      catch(PIL::Exception &e) {
-                         EXPECT_STREQ( "Exception (Device.cpp:126): Errno 111 (Connection refused)", e.what() );
+                         EXPECT_STREQ( "Exception (Socket.cpp:115): Errno 111 (Connection refused)", e.what() );
                          throw;
                      }
                  }, PIL::Exception );
@@ -54,7 +54,7 @@ TEST(DeviceTest, TestUnableToConnectRetCode)
                          EXPECT_EQ(ret, PIL_ERRNO);
                      } catch (PIL::Exception &e)
                      {
-                         EXPECT_STREQ("Exception (Socket.cpp:126): Errno 111 (Connection refused)", e.what());
+                         EXPECT_STREQ("Exception (Socket.cpp:115): Errno 111 (Connection refused)", e.what());
                          throw;
                      }
                  }, PIL::Exception);
