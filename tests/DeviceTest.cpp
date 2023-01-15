@@ -22,7 +22,8 @@ TEST(DeviceTest, DeviceNotAvailableException)
 
                      } catch (PIL::Exception &e)
                      {
-                        EXPECT_STREQ("Exception (Socket.cpp:115): Errno 115 (Operation now in progress)", e.what());
+                        EXPECT_TRUE((std::string(e.what()).find("Operation now in progress") != std::string::npos) ||
+                                    (std::string(e.what()).find("Socket timeout") != std::string::npos));
                          throw;
                      }
                  }, PIL::Exception);

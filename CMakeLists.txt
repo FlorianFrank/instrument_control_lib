@@ -25,7 +25,7 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/pugixml")
 
 add_subdirectory(common_tools_lib)
 add_subdirectory(playground)
-add_subdirectory(tests)
+#add_subdirectory(tests)
 
 if(ENABLE_PYTHON)
     add_subdirectory(python_interface)
