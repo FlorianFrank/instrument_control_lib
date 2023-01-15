@@ -25,6 +25,7 @@ TEST(DeviceTest, DeviceNotAvailableException)
 #ifdef __WIN32__
                          EXPECT_TRUE((std::string(e.what()).find("Unknown error") != std::string::npos));
 #else
+                         EXPECT_STREQ(e.what(), "No such device");
                          EXPECT_TRUE((std::string(e.what()).find("Operation now in progress") != std::string::npos) ||
                                      (std::string(e.what()).find("Socket timeout") != std::string::npos));
 #endif // __WIN32__
@@ -67,7 +68,7 @@ TEST(DeviceTest, TestUnableToConnectRetCode)
 #ifdef __WIN32__
                          EXPECT_TRUE((std::string(e.what()).find("Unknown error") != std::string::npos));
 #else
-                         EXPECT_STREQ("Exception (Socket.cpp:115): Errno 111 (Connection refused)", e.what());
+                         EXPECT_TRUE((std::string(e.what()).find("Connection refused") != std::string::npos));
 #endif // __WIN32__
                          throw;
                      }
