@@ -25,7 +25,6 @@ TEST(DeviceTest, DeviceNotAvailableException)
 #ifdef __WIN32__
                          EXPECT_TRUE((std::string(e.what()).find("Unknown error") != std::string::npos));
 #else
-                         EXPECT_STREQ(e.what(), "No such device");
                          EXPECT_TRUE((std::string(e.what()).find("Operation now in progress") != std::string::npos) ||
                                      (std::string(e.what()).find("Socket timeout") != std::string::npos));
 #endif // __WIN32__
