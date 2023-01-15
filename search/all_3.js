@@ -3,7 +3,7 @@ var searchData=
   ['dc_5famps_12',['DC_AMPS',['../classSMU.html#a50b3c03315fc0abff0586ea5c7a925bda5afe980d3d7f12a9a2a1715aed23bc58',1,'SMU']]],
   ['dc_5fvolts_13',['DC_VOLTS',['../classSMU.html#a50b3c03315fc0abff0586ea5c7a925bdaa5f317abae50eb99d26348f968f30e3d',1,'SMU']]],
   ['dcpowersupply_14',['DCPowerSupply',['../classDCPowerSupply.html',1,'']]],
-  ['device_15',['Device',['../classDevice.html',1,'Device'],['../classDevice.html#a82b251a1a39514aff53d3c9215d062f5',1,'Device::Device(std::string ipAddress, int timeoutInMs, bool throwException=true)'],['../classDevice.html#a91f51bbff1f236973de2a5c2b53d0c85',1,'Device::Device(std::string ipAddress, int timeoutInMs, PIL::Logging *logger, bool throwException=true)']]],
+  ['device_15',['Device',['../classDevice.html',1,'Device'],['../classDevice.html#a82b251a1a39514aff53d3c9215d062f5',1,'Device::Device(std::string ipAddress, int timeoutInMs, bool throwException=true)'],['../classDevice.html#a91f51bbff1f236973de2a5c2b53d0c85',1,'Device::Device(std::string ipAddress, int timeoutInMs, PIL::Logging *logger, bool throwException=true)'],['../classDevice.html#a70553067b93b47c37475274d2e63c374',1,'Device::Device(std::string ipAddress, uint16_t srcPort, uint16_t destPort, int timeoutInMs, PIL::Logging *logger, bool throwException=true)']]],
   ['devicedescription_16',['DeviceDescription',['../structDeviceDescription.html',1,'']]],
   ['digitize_17',['digitize',['../classKST3000.html#a437b6ca320f71c357313367d57294e80',1,'KST3000']]],
   ['direct_5firange_18',['DIRECT_IRANGE',['../classSMU.html#a6ad6bcadaa77f1ae5347d97d5c9ac890aa55c0485c0ff5c1cddc0441099239c86',1,'SMU']]],

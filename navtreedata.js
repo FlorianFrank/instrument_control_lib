@@ -79,7 +79,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "CommandLineInterfaceDefines_8h_source.html",
-"classSPD1305.html#ab7f6ab9eeb531e59f0b17ddc6867bee7"
+"classSPD1305.html#a13351f6d80e937fd111b0119342730b6"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
