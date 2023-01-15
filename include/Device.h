@@ -30,8 +30,9 @@ namespace PIL
 class Device {
 
 public:
-    explicit Device(const char *ip, int timeoutInMs);
-    explicit Device(const char *ip, int timeoutInMs, PIL::Logging *logger);
+    explicit Device(std::string ipAddress, int timeoutInMs, bool throwException = true);
+    explicit Device(std::string ipAddress, int timeoutInMs, PIL::Logging *logger, bool throwException = true);
+    explicit Device(std::string ipAddress, uint16_t srcPort, uint16_t destPort, int timeoutInMs, PIL::Logging *logger, bool throwException = true);
     ~Device();
 
     PIL_ERROR_CODE Connect();
