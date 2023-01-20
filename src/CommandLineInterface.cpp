@@ -116,7 +116,7 @@ bool CommandLineInterface::Start()
     }
 
     // TODO specifiy certain class of device
-    auto *device = new Device(argumentList[0].c_str(), TIMEOUT_IN_MS, m_Logger, Device::DIREKT_SEND);
+    auto *device = new Device(argumentList[0].c_str(), TIMEOUT_IN_MS, m_Logger, Device::DIRECT_SEND);
     std::cout << "    Connect to Device " <<  "IP: " << argumentList[0] << " ID (" << m_DeviceList.size()-1 << ")" << std::endl;
     if(!device->Connect())
     {
@@ -199,7 +199,7 @@ void CommandLineInterface::Disconnect(std::string &args)
             if(!device->Disconnect())
                 std::cout << device->ReturnErrorMessage() << std::endl;
             else
-                std::cout << "Device " + device->WhatAmI() + " closed successfully" << std::endl;
+                std::cout << "Device closed successfully" << std::endl;
         }
     }
     else {
@@ -215,7 +215,7 @@ void CommandLineInterface::Disconnect(std::string &args)
             if(!m_DeviceList[id]->Disconnect())
                 std::cout << m_DeviceList[id]->ReturnErrorMessage() << std::endl;
             else
-                std::cout << "Device " + m_DeviceList[id]->WhatAmI() + " closed successfully" << std::endl;        }
+                std::cout << "Device closed successfully" << std::endl;        }
     }
 
 }

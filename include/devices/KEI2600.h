@@ -12,23 +12,17 @@ namespace PIL
 {
     class Logging;
 }
-
-#define DEVICE_NAME           "Keithley SMU 2600B"
-
-/** Buffer size when returning values from measureI, measureV or measureP*/
-#define MEASURE_RET_BUFF_SIZE 1024
-
 /**
  * @brief This class implements the basic functionality of Keithley 2600 series SMU's.
  */
 class KEI2600 : public SMU
 {
 public:
-    explicit KEI2600(const char *ip, int timeoutInMs, PIL::Logging *logger, SEND_METHOD mode);
+    explicit KEI2600(std::string ipAddress, int timeoutInMs, PIL::Logging *logger, SEND_METHOD mode = DIRECT_SEND);
 
-    virtual ~KEI2600(){};
+    virtual ~KEI2600()= default;
 
-    [[maybe_unused]] explicit KEI2600(const char *ip, int timeoutInMs, SEND_METHOD mode);
+    [[maybe_unused]] explicit KEI2600(std::string ipAddress, int timeoutInMs, SEND_METHOD mode);
 
     PIL_ERROR_CODE measure(UNIT unit, SMU_CHANNEL channel, double *value, bool checkErrorBuffer) override;
     double measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer);
@@ -73,11 +67,12 @@ public:
 
     PIL_ERROR_CODE performLinearVoltageSweep(SMU_CHANNEL channel, double startVoltage, double stopVoltage,
                                              int increaseRate, double current, bool checkErrorBuffer);
+
     PIL_ERROR_CODE sendScript(std::string script, std::string scriptName, bool checkErrorBuffer);
     PIL_ERROR_CODE executeScript(std::string scriptName, bool checkErrorBuffer);
     PIL_ERROR_CODE sendAndExecuteScript(std::string script, std::string scriptName, bool checkErrorBuffer);
     PIL_ERROR_CODE executeBufferedScript(bool checkErrorBuffer);
-    
+
     PIL_ERROR_CODE createBuffer(SMU_CHANNEL channel, std::string bufferName, int capacity, bool checkErrorBuffer);
     PIL_ERROR_CODE clearBuffer(std::string bufferName, bool checkErrorBuffer);
     PIL_ERROR_CODE readBuffer(std::string bufferName, double *buffer, bool checkErrorBuffer);
@@ -94,8 +89,7 @@ private:
     PIL_ERROR_CODE enableDisableBeepHelperFunction(bool enable);
 
     PIL_ERROR_CODE fillBuffer(int numberOfPrints, int offset, std::string bufferName, char printBuffer[], double results[]);
-
-    static std::string getChannelStringFromEnum(SMU_CHANNEL channel);
+    std::string getChannelStringFromEnum(SMU_CHANNEL channel);
     static std::string getStringFromAutoZeroEnum(AUTOZERO autoZero);
     static std::string getStringFromSrcFuncEnum(SRC_FUNC srcFunc);
     static std::string getStringFromOffModeEnum(SRC_OFF_MODE offMode);

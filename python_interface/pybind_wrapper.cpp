@@ -88,7 +88,7 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
         .def("executeBufferedScript", &KEI2600::executeBufferedScript);
 
     enum_<SMU::SEND_METHOD>(m, "SEND_METHOD")
-            .value("DIREKT_SEND", SMU::DIREKT_SEND)
+            .value("DIRECT_SEND", SMU::DIRECT_SEND)
             .value("BUFFER_ENABLED", SMU::BUFFER_ENABLED);
 
     enum_<SMU::SMU_CHANNEL>(m, "SMU_CHANNEL")

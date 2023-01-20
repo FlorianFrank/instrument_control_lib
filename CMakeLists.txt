@@ -22,14 +22,11 @@ target_compile_options(instrument_control_lib PRIVATE -Wall -Wextra -Wpedantic) 
 
 # Build third party libraries and executables
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/pugixml")
-add_subdirectory(instrument_cmd_tool)
-set(BoostRoot "${CMAKE_CURRENT_SOURCE_DIR}/boost")
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/boost/include")
-#add_subdirectory(memristor_tester)
+
 add_subdirectory(common_tools_lib)
 add_subdirectory(playground)
+add_subdirectory(tests)
 
-set(ENABLE_PYTHON 1)
 if(ENABLE_PYTHON)
     add_subdirectory(python_interface)
 endif() # ENABLE_PYTHON
@@ -51,6 +48,7 @@ target_link_libraries(instrument_control_lib PUBLIC ${PUGIXML} ${COMMON_TOOLS_LI
 
 target_include_directories(instrument_control_lib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/pugixml-1.12/src"
+                                                          "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/FileHandling/include"
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/Communication/include"
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/Threading/include"
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/Additional"

@@ -17,7 +17,6 @@
  * @param ip: IP address of kst3000
  * @note Get oscillator's m_IPAddr: Press "Utility" key; Press I/O;
  * */
-// TODO: these two instructor seem not necessary, could coverd by Device
 KST3000::KST3000(const char *ip, int timeoutInMS) : Oscilloscope(ip, timeoutInMS, nullptr)
 {
     //m_DeviceName = DEVICE_NAME;
@@ -287,20 +286,24 @@ PIL_ERROR_CODE KST3000::getWaveformPreamble()
  * */
 PIL_ERROR_CODE KST3000::getWaveformPoints(int *nrWaveformPoints)
 {
-    if (!nrWaveformPoints)
+    if (!nrWaveformPoints) {
+        if(m_EnableExceptions)
+            throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
         return PIL_INVALID_ARGUMENTS;
+    }
 
     SubArg subArg("WAVeform");
     subArg.AddElem("POINts", ":", "?");
     // TODO sovle that
     ExecArgs args;
     args.AddArgument("WAVeform", ":POINts?");
-    char buffer[MEASURE_RET_BUFF_SIZE] = {0};
-    auto ret = Exec("", &args);
+
+    std::string response;
+    auto ret = Exec("", &args, &response, false);
     if (ret != PIL_NO_ERROR)
         return ret;
 
-    *nrWaveformPoints = std::stoi(buffer);
+    *nrWaveformPoints = std::stoi(response);
     return PIL_NO_ERROR;
 }
 
@@ -349,7 +352,7 @@ PIL_ERROR_CODE KST3000::setWaveformFormat(FILE_FORMAT format)
 /**
  * @brief write to file
  * */
-PIL_ERROR_CODE writeToFile(const char *data, const std::string &file_path)
+PIL_ERROR_CODE KST3000::writeToFile(const char *data, const std::string &file_path)
 {
     std::string buffer(data);
     std::ofstream file;
@@ -360,7 +363,8 @@ PIL_ERROR_CODE writeToFile(const char *data, const std::string &file_path)
         return PIL_NO_ERROR;
     }
 
-    std::cout << "File open failed!\n"; // TODO use logger
+    if(m_EnableExceptions)
+        throw PIL::Exception(PIL_INTERFACE_CLOSED, __FILENAME__, __LINE__, "");
     return PIL_INTERFACE_CLOSED;
 }
 
@@ -380,8 +384,11 @@ PIL_ERROR_CODE writeToFile(const char *data, const std::string &file_path)
  * */
 PIL_ERROR_CODE KST3000::getWaveformData(char *data)
 {
-    if(!data)
+    if (!data) {
+        if(m_EnableExceptions)
+            throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
         return PIL_INVALID_ARGUMENTS;
+    }
 
     SubArg subArg("WAVeform");
     subArg.AddElem("DATA", ":", "?");
@@ -413,8 +420,11 @@ PIL_ERROR_CODE KST3000::getWaveformData(char *data)
  * */
 PIL_ERROR_CODE KST3000::getRealData(double **result)
 {
-    if(!result)
+    if (!result) {
+        if(m_EnableExceptions)
+            throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
         return PIL_INVALID_ARGUMENTS;
+    }
 
     int points;
     auto getWaveFormPointsRet = getWaveformPoints(&points);
@@ -589,7 +599,9 @@ PIL_ERROR_CODE KST3000::setWaveformSource(OSC_CHANNEL channel)
         case Oscilloscope::CHANNEL_4:
             return "4";
         default:
-            return "1"; // TODO check
+            if(m_EnableExceptions)
+                throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "Invalid oscilloscope channel");
+            return "0"; // TODO check
     }
 }
 
@@ -605,9 +617,8 @@ std::string KST3000::getDisplayModeFromEnum(Oscilloscope::DISPLAY_MODES displayM
             return "XY";
         case ROLL:
             return "ROLL";
-        default:
-            return "MAIN"; // TODO check
     }
+    return "MAIN";
 }
 
 std::string KST3000::getFileFormatStrFromEnum(Oscilloscope::FILE_FORMAT format)
@@ -620,7 +631,6 @@ std::string KST3000::getFileFormatStrFromEnum(Oscilloscope::FILE_FORMAT format)
             return "WORD";
         case BYTE:
             return "BYTE";
-        default:
-            return "BYTE"; // TODO check
     }
+    return "BYTE";
 }

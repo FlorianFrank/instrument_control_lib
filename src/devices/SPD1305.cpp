@@ -27,12 +27,11 @@ PIL_ERROR_CODE SPD1305::setCurrent(DC_CHANNEL channel, double current)
 
 PIL_ERROR_CODE SPD1305::getCurrent(DC_CHANNEL channel, double *current) {
   std::string msg = "CH" + getStrFromDCChannelEnum(channel) + ":CURRent?";
-  // TODO: 20 ?
-  char result[20] = {0};
-  auto execRet = Exec(msg, nullptr, result);
+  std::string result;
+  auto execRet = Exec(msg, nullptr, &result, false);
   if(execRet != PIL_NO_ERROR)
       return execRet;
-  *current = atof(result);
+  *current = atof(result.c_str());
   return PIL_NO_ERROR;
 }
 
@@ -54,7 +53,7 @@ PIL_ERROR_CODE SPD1305::turnOff(DC_CHANNEL channel) {
     return Exec("OUTPut", &args);
 }
 
-/*static*/ std::string SPD1305::getStrFromDCChannelEnum(DCPowerSupply::DC_CHANNEL channel)
+std::string SPD1305::getStrFromDCChannelEnum(DCPowerSupply::DC_CHANNEL channel)
 {
     switch (channel)
     {
@@ -63,6 +62,8 @@ PIL_ERROR_CODE SPD1305::turnOff(DC_CHANNEL channel) {
         case DCPowerSupply::CHANNEL_2:
             return "2";
         default:
-            return "1"; // TODO
+            if(m_EnableExceptions)
+                throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "Invalid channel");
+            return "";
     }
 }

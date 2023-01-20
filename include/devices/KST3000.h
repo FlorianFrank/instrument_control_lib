@@ -63,7 +63,9 @@ public:
 private:
     // Helper-functions
     static std::string getTriggerEdgeStr(TRIGGER_EDGE edge) ;
-    static std::string getChannelFromEnum(OSC_CHANNEL channel) ;
+    std::string getChannelFromEnum(OSC_CHANNEL channel) ;
     static std::string getDisplayModeFromEnum(DISPLAY_MODES displayMode);
     static std::string getFileFormatStrFromEnum(FILE_FORMAT format);
+    PIL_ERROR_CODE writeToFile(const char *data, const std::string &file_path);
+
 };

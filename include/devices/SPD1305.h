@@ -26,7 +26,7 @@ public:
     PIL_ERROR_CODE getCurrent(DC_CHANNEL channel, double* current) override;
     // TODO add missing functions
 private:
-    static std::string getStrFromDCChannelEnum(DC_CHANNEL channel);
+    std::string getStrFromDCChannelEnum(DC_CHANNEL channel);
 };
 
 #endif //CE_DEVICE_SPD1305_H

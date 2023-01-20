@@ -1,7 +1,7 @@
-//
-// Created by liuwuhao on 27.05.21.
-//
-
+/**
+ * @brief Implementation of the Keighsight KSST33500 function generator.
+ * @authors Wuhao Liu, Alexander Braml, Florian Frank
+ */
 #include "devices/KST33500.h"
 #include <unistd.h>
 #include <cstring>
@@ -166,6 +166,8 @@ std::string KST33500::GetFunctionStr(FUNCTION_TYPE functionType)
         case ARBITRARY:
             return "ARB";
         default:
-            return "SIN";
+            if(m_EnableExceptions)
+                throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "Unknown function type");
+            return "";
     }
 }

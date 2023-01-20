@@ -27,7 +27,7 @@ int sweep() {
 
     std::cout << "Buffered Script: " + smu->getBufferedScript() << std::endl;
 
-    smu->changeSendMode(SMU::DIREKT_SEND);
+    smu->changeSendMode(SMU::DIRECT_SEND);
     std::cout << smu->GetDeviceIdentifier() << std::endl;
     smu->changeSendMode(SMU::BUFFER_ENABLED);
 
@@ -108,7 +108,7 @@ void readBuffer(KEI2600 *smu) {
 
 int testBuffer() {
     std::string ip = "132.231.14.168";
-    auto *smu = new KEI2600(ip.c_str(), 0, nullptr, Device::DIREKT_SEND);
+    auto *smu = new KEI2600(ip.c_str(), 0, nullptr, Device::DIRECT_SEND);
     smu->Connect();
 
     std::cout << smu->GetDeviceIdentifier() << std::endl;
@@ -149,7 +149,7 @@ int testBuffer() {
 
 int testBufferImplemented() {
     std::string ip = "132.231.14.168";
-    auto *smu = new KEI2600(ip.c_str(), 0, nullptr, Device::DIREKT_SEND);
+    auto *smu = new KEI2600(ip.c_str(), 0, nullptr, Device::DIRECT_SEND);
     smu->Connect();
     std::cout << smu->GetDeviceIdentifier() << std::endl;
 
@@ -182,7 +182,7 @@ int testSendScript() {
     }
 
     std::string ip = "132.231.14.168";
-    auto *smu = new KEI2600(ip.c_str(), 0, nullptr, Device::DIREKT_SEND);
+    auto *smu = new KEI2600(ip.c_str(), 0, nullptr, Device::DIRECT_SEND);
 
     smu->Connect();
     std::cout << smu->GetDeviceIdentifier() << std::endl;
