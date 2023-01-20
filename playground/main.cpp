@@ -23,7 +23,7 @@ void generic_test() {
 void bufferingTest() {
     std::string ip = "132.231.14.168";
     PIL::Logging logger(PIL::INFO, nullptr);
-    auto *smu = new KEI2600(ip, 0, &logger, Device::SEND_METHOD::DIRECT_SEND);
+    auto *smu = new KEI2600(ip, 0, &logger, Device::SEND_METHOD::BUFFER_ENABLED);
 
     smu->Connect();
 
@@ -32,13 +32,27 @@ void bufferingTest() {
         smu->delay(i / 5.0);
     }
 
+    std::cout << smu->getBufferedScript();
+
     std::cout << smu->executeBufferedScript(false) << std::endl;
+
+    smu->Disconnect();
+}
+
+void sweepTest() {
+    std::string ip = "132.231.14.168";
+    PIL::Logging logger(PIL::INFO, nullptr);
+    auto *smu = new KEI2600(ip, 0, &logger, Device::SEND_METHOD::DIRECT_SEND);
+
+    smu->Connect();
+
+    smu->performLinearVoltageSweep(SMU::CHANNEL_A, 0, 0.42, 18, 0.001, false);
 
     smu->Disconnect();
 }
 
 
 int main() {
-    bufferingTest();
+    sweepTest();
     return 0;
 }

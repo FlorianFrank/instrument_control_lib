@@ -88,7 +88,7 @@ private:
     PIL_ERROR_CODE measureAutoRangeHelperFunction(SMU_CHANNEL channel, UNIT unit, bool enable);
     PIL_ERROR_CODE enableDisableBeepHelperFunction(bool enable);
 
-    PIL_ERROR_CODE fillBuffer(int numberOfPrints, int offset, std::string bufferName, char printBuffer[], double results[]);
+    PIL_ERROR_CODE readPartOfBuffer(int numberOfPrints, int offset, std::string bufferName, char printBuffer[], double results[]);
     std::string getChannelStringFromEnum(SMU_CHANNEL channel);
     static std::string getStringFromAutoZeroEnum(AUTOZERO autoZero);
     static std::string getStringFromSrcFuncEnum(SRC_FUNC srcFunc);
@@ -97,5 +97,7 @@ private:
     static std::string getStringFromMeasureDisplayFunction(SMU_DISPLAY displayMeasureFunc);
     static std::string getStringFromSenseValue(SMU_SENSE sense);
 
-    bool errorOccured(PIL_ERROR_CODE ret);
+    static bool errorOccured(PIL_ERROR_CODE ret);
+
+    PIL_ERROR_CODE handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErrorBuffer);
 };
