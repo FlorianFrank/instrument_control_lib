@@ -1587,9 +1587,7 @@ PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, double *buffer, bool 
     ExecArgs execArgs;
     execArgs.AddArgument(subArg, "");
 
-    std::cout << execArgs.GetArgumentsAsString() << std::endl;
-
-    // auto ret = Exec("", &execArgs, nullptr);
+    auto ret = Exec("", &execArgs, nullptr);
 
     return PIL_ERRNO;
 }
