@@ -9,6 +9,8 @@
 #include <regex> // std::regex_replace
 #include <iostream> // std::cout
 #include <utility>
+#include <thread>
+#include <chrono>
 
 #include "ctlib/Socket.hpp"
 #include "ctlib/Logging.hpp"
@@ -239,12 +241,17 @@ std::string Device::ReturnErrorMessage()
 
 PIL_ERROR_CODE Device::delay(double delayTime)
 {
-    SubArg arg(std::to_string(delayTime), "delay(", ")");
+    if (IsBuffered()) {
+        SubArg arg(std::to_string(delayTime), "delay(", ")");
 
-    ExecArgs args;
-    args.AddArgument(arg, "");
+        ExecArgs args;
+        args.AddArgument(arg, "");
+        return Exec("", &args, nullptr);
+    } else {
+        std::this_thread::sleep_for(std::chrono::milliseconds((int) delayTime * 1000));
+        return PIL_NO_ERROR;
+    }
 
-    return Exec("", &args, nullptr);
 }
 
 std::string Device::getBufferedScript()
