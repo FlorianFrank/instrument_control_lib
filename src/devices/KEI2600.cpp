@@ -5,6 +5,7 @@
 #include "devices/KEI2600.h"
 #include "ctlib/Logging.hpp"
 #include "ctlib/Exception.h"
+#include "HTTPRequest.h"
 
 #include <utility> // std::move
 #include <stdexcept> // std::invalid_argument
@@ -1607,4 +1608,8 @@ PIL_ERROR_CODE KEI2600::getBufferSize(std::string bufferName, int *value, bool c
     *value = n;
 
     return PIL_ERRNO;
+}
+
+bool KEI2600::errorOccured(PIL_ERROR_CODE ret) {
+    return ret != PIL_NO_ERROR;
 }

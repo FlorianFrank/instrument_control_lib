@@ -96,4 +96,6 @@ private:
     static std::string getStringFromSettleEnum(SRC_SETTLING srcSettling);
     static std::string getStringFromMeasureDisplayFunction(SMU_DISPLAY displayMeasureFunc);
     static std::string getStringFromSenseValue(SMU_SENSE sense);
+
+    bool errorOccured(PIL_ERROR_CODE ret);
 };
