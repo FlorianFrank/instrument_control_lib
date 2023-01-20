@@ -1498,9 +1498,10 @@ PIL_ERROR_CODE KEI2600::sendAndExecuteScript(std::string script, const std::stri
 
 PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
     if (!m_BufferedScript.empty()) {
+        SEND_METHOD prevSendMode = m_SendMode;
         m_SendMode = SEND_METHOD::DIRECT_SEND;
         auto ret = sendAndExecuteScript(m_BufferedScript, "bufferedScript", checkErrorBuffer);
-        m_SendMode = SEND_METHOD::BUFFER_ENABLED;
+        m_SendMode = prevSendMode;
         return ret;
     }
 
