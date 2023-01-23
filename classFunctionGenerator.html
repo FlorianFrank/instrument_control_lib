@@ -93,6 +93,8 @@ $(document).ready(function(){initNavTree('classFunctionGenerator.html',''); init
 <div class="title">FunctionGenerator Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="FunctionGenerator_8h_source.html">FunctionGenerator.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for FunctionGenerator:</div>
 <div class="dyncontent">
@@ -106,58 +108,47 @@ Inheritance diagram for FunctionGenerator:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a4a3e90149d8cf0f0067961886158a4c0"><td class="memItemLeft" align="right" valign="top"><a id="a4a3e90149d8cf0f0067961886158a4c0"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>FUNCTION_TYPE</b> { <br />
-&#160;&#160;<b>SIN</b>
-, <b>SQUARE</b>
-, <b>RAMP</b>
-, <b>NEGATIVE_RAM</b>
+<tr class="memitem:a4a3e90149d8cf0f0067961886158a4c0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0">FUNCTION_TYPE</a> { <br />
+&#160;&#160;<a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0adeb1c7ad4a029a89584cfad2585704db">SIN</a>
+, <a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0ae4753588f10fbe2e3c295b3bd447bacb">SQUARE</a>
+, <a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0a896796090d2dac74c600915ec5697281">RAMP</a>
+, <a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0a6e51293d51646f34f7dd45db55185caf">NEGATIVE_RAM</a>
 , <br />
-&#160;&#160;<b>TRIANGLE</b>
-, <b>NOISE</b>
-, <b>PSEUDO_RANDOM_BIT_STREAM</b>
-, <b>ARBITRARY</b>
+&#160;&#160;<a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0a3e363d323dc99e625fb57148d26ffecf">TRIANGLE</a>
+, <a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0a17fb5f3fb75f0ce6669b061617d9881e">NOISE</a>
+, <a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0ac3f4b239fb9475cab20c1e5549f7e823">PSEUDO_RANDOM_BIT_STREAM</a>
+, <a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0a14a8e065e0ce85e569cf3aa5b23d8b65">ARBITRARY</a>
 <br />
  }</td></tr>
 <tr class="separator:a4a3e90149d8cf0f0067961886158a4c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e60f5a04b6bc74742c182d36dd5a2eb"><td class="memItemLeft" align="right" valign="top"><a id="a4e60f5a04b6bc74742c182d36dd5a2eb"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>FUNC_CHANNEL</b> { <b>CHANNEL_A</b>
-, <b>CHANNEL_B</b>
+<tr class="memitem:a4e60f5a04b6bc74742c182d36dd5a2eb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#a4e60f5a04b6bc74742c182d36dd5a2eb">FUNC_CHANNEL</a> { <a class="el" href="classFunctionGenerator.html#a4e60f5a04b6bc74742c182d36dd5a2eba7eedaf285b8803f7f9e7c0a4d1592831">CHANNEL_A</a>
+, <a class="el" href="classFunctionGenerator.html#a4e60f5a04b6bc74742c182d36dd5a2ebad45bf2bf08df92e2faa3048d79c015a1">CHANNEL_B</a>
  }</td></tr>
 <tr class="separator:a4e60f5a04b6bc74742c182d36dd5a2eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad53704ab29c69e348c972d229f7ac68b"><td class="memItemLeft" align="right" valign="top"><a id="ad53704ab29c69e348c972d229f7ac68b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>FunctionGenerator</b> (const char *ip, int timeoutInMs, PIL::Logging *logger)</td></tr>
+<tr class="memitem:ad53704ab29c69e348c972d229f7ac68b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#ad53704ab29c69e348c972d229f7ac68b">FunctionGenerator</a> (const char *ip, int timeoutInMs, PIL::Logging *logger)</td></tr>
 <tr class="separator:ad53704ab29c69e348c972d229f7ac68b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39c8be1fddba4f8bf154a0443ada5db0"><td class="memItemLeft" align="right" valign="top"><a id="a39c8be1fddba4f8bf154a0443ada5db0"></a>
-virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>turnOn</b> ()=0</td></tr>
+<tr class="memitem:a39c8be1fddba4f8bf154a0443ada5db0"><td class="memItemLeft" align="right" valign="top">virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#a39c8be1fddba4f8bf154a0443ada5db0">turnOn</a> ()=0</td></tr>
 <tr class="separator:a39c8be1fddba4f8bf154a0443ada5db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32a4a61f46b6abba16186d4d156bbe91"><td class="memItemLeft" align="right" valign="top"><a id="a32a4a61f46b6abba16186d4d156bbe91"></a>
-virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>turnOff</b> ()=0</td></tr>
+<tr class="memitem:a32a4a61f46b6abba16186d4d156bbe91"><td class="memItemLeft" align="right" valign="top">virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#a32a4a61f46b6abba16186d4d156bbe91">turnOff</a> ()=0</td></tr>
 <tr class="separator:a32a4a61f46b6abba16186d4d156bbe91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f2350cb9f49a0653955521fa10a02cf"><td class="memItemLeft" align="right" valign="top"><a id="a8f2350cb9f49a0653955521fa10a02cf"></a>
-virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>setFrequency</b> (double value)=0</td></tr>
+<tr class="memitem:a8f2350cb9f49a0653955521fa10a02cf"><td class="memItemLeft" align="right" valign="top">virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#a8f2350cb9f49a0653955521fa10a02cf">setFrequency</a> (double value)=0</td></tr>
 <tr class="separator:a8f2350cb9f49a0653955521fa10a02cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8b1289b6b26539e94ef15c3e8cd08fd"><td class="memItemLeft" align="right" valign="top"><a id="ad8b1289b6b26539e94ef15c3e8cd08fd"></a>
-virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>setAmplitude</b> (double value, const char *constrain)=0</td></tr>
+<tr class="memitem:ad8b1289b6b26539e94ef15c3e8cd08fd"><td class="memItemLeft" align="right" valign="top">virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#ad8b1289b6b26539e94ef15c3e8cd08fd">setAmplitude</a> (double value, const char *constrain)=0</td></tr>
 <tr class="separator:ad8b1289b6b26539e94ef15c3e8cd08fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2ac72a02c2c4b7404fe2343459ea909"><td class="memItemLeft" align="right" valign="top"><a id="ab2ac72a02c2c4b7404fe2343459ea909"></a>
-virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>setPhase</b> (double value)=0</td></tr>
+<tr class="memitem:ab2ac72a02c2c4b7404fe2343459ea909"><td class="memItemLeft" align="right" valign="top">virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#ab2ac72a02c2c4b7404fe2343459ea909">setPhase</a> (double value)=0</td></tr>
 <tr class="separator:ab2ac72a02c2c4b7404fe2343459ea909"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10c31a130e253e4a89bd12f266d6366c"><td class="memItemLeft" align="right" valign="top"><a id="a10c31a130e253e4a89bd12f266d6366c"></a>
-virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>setFunction</b> (FUNCTION_TYPE functionType)=0</td></tr>
+<tr class="memitem:a10c31a130e253e4a89bd12f266d6366c"><td class="memItemLeft" align="right" valign="top">virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#a10c31a130e253e4a89bd12f266d6366c">setFunction</a> (<a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0">FUNCTION_TYPE</a> functionType)=0</td></tr>
 <tr class="separator:a10c31a130e253e4a89bd12f266d6366c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3a551054d8bca3bd5d30db4d56e7b90"><td class="memItemLeft" align="right" valign="top"><a id="ab3a551054d8bca3bd5d30db4d56e7b90"></a>
-virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>setOffset</b> (double offset)=0</td></tr>
+<tr class="memitem:ab3a551054d8bca3bd5d30db4d56e7b90"><td class="memItemLeft" align="right" valign="top">virtual PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#ab3a551054d8bca3bd5d30db4d56e7b90">setOffset</a> (double offset)=0</td></tr>
 <tr class="separator:ab3a551054d8bca3bd5d30db4d56e7b90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7110afecfc1b45aff23cb01ea062058"><td class="memItemLeft" align="right" valign="top"><a id="ae7110afecfc1b45aff23cb01ea062058"></a>
-FUNCTION_TYPE&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputFunction</b> () const</td></tr>
+<tr class="memitem:ae7110afecfc1b45aff23cb01ea062058"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0">FUNCTION_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#ae7110afecfc1b45aff23cb01ea062058">getOutputFunction</a> () const</td></tr>
 <tr class="separator:ae7110afecfc1b45aff23cb01ea062058"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff4baf65253a2bc9536a7c2e22035ac2"><td class="memItemLeft" align="right" valign="top"><a id="aff4baf65253a2bc9536a7c2e22035ac2"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isOutputEnabled</b> () const</td></tr>
+<tr class="memitem:aff4baf65253a2bc9536a7c2e22035ac2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#aff4baf65253a2bc9536a7c2e22035ac2">isOutputEnabled</a> () const</td></tr>
 <tr class="separator:aff4baf65253a2bc9536a7c2e22035ac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc1c96412e6dd3dd364cf1ad02dc187b"><td class="memItemLeft" align="right" valign="top"><a id="abc1c96412e6dd3dd364cf1ad02dc187b"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>getCurrentAmplitude</b> () const</td></tr>
+<tr class="memitem:abc1c96412e6dd3dd364cf1ad02dc187b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#abc1c96412e6dd3dd364cf1ad02dc187b">getCurrentAmplitude</a> () const</td></tr>
 <tr class="separator:abc1c96412e6dd3dd364cf1ad02dc187b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classDevice"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classDevice')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classDevice.html">Device</a></td></tr>
 <tr class="memitem:a82b251a1a39514aff53d3c9215d062f5 inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a82b251a1a39514aff53d3c9215d062f5">Device</a> (std::string ipAddress, int timeoutInMs, bool throwException=true)</td></tr>
@@ -169,6 +160,8 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>getCurrentAmplitude
 <tr class="memitem:a70553067b93b47c37475274d2e63c374 inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a70553067b93b47c37475274d2e63c374">Device</a> (std::string ipAddress, uint16_t srcPort, uint16_t destPort, int timeoutInMs, PIL::Logging *logger, bool throwException=true)</td></tr>
 <tr class="memdesc:a70553067b93b47c37475274d2e63c374 inherit pub_methods_classDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class containing the base functionality of all devices. And parameters to store the name connection type, etc.  <a href="classDevice.html#a70553067b93b47c37475274d2e63c374">More...</a><br /></td></tr>
 <tr class="separator:a70553067b93b47c37475274d2e63c374 inherit pub_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dabc419c8d8df3a686c33ce042bc99a inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a9dabc419c8d8df3a686c33ce042bc99a">~Device</a> ()</td></tr>
+<tr class="separator:a9dabc419c8d8df3a686c33ce042bc99a inherit pub_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a365ae23fbe0d2ea5290881834e1969f7 inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a365ae23fbe0d2ea5290881834e1969f7">Connect</a> ()</td></tr>
 <tr class="memdesc:a365ae23fbe0d2ea5290881834e1969f7 inherit pub_methods_classDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establish a connection to the device.  <a href="classDevice.html#a365ae23fbe0d2ea5290881834e1969f7">More...</a><br /></td></tr>
 <tr class="separator:a365ae23fbe0d2ea5290881834e1969f7 inherit pub_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,51 +176,37 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>getCurrentAmplitude
 <tr class="memitem:a96b33b9121c59a9606829a7c8379e9c2 inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">Exec</a> (const std::string &amp;command, <a class="el" href="classExecArgs.html">ExecArgs</a> *args=nullptr, char *result=nullptr, bool br=true, int size=1024)</td></tr>
 <tr class="memdesc:a96b33b9121c59a9606829a7c8379e9c2 inherit pub_methods_classDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute a (SCPI) command  <a href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">More...</a><br /></td></tr>
 <tr class="separator:a96b33b9121c59a9606829a7c8379e9c2 inherit pub_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b405014c32080fb36ba4ed517fcc78d inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top"><a id="a5b405014c32080fb36ba4ed517fcc78d"></a>
-PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>Exec</b> (const std::string &amp;command, <a class="el" href="classExecArgs.html">ExecArgs</a> *args, std::string *result, bool br)</td></tr>
+<tr class="memitem:a5b405014c32080fb36ba4ed517fcc78d inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a5b405014c32080fb36ba4ed517fcc78d">Exec</a> (const std::string &amp;command, <a class="el" href="classExecArgs.html">ExecArgs</a> *args, std::string *result, bool br)</td></tr>
 <tr class="separator:a5b405014c32080fb36ba4ed517fcc78d inherit pub_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c4c5ede6698d53b3269b17a2ad37b8b inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top"><a id="a7c4c5ede6698d53b3269b17a2ad37b8b"></a>
-PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>ExecCommands</b> (std::string &amp;commands)</td></tr>
+<tr class="memitem:a7c4c5ede6698d53b3269b17a2ad37b8b inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a7c4c5ede6698d53b3269b17a2ad37b8b">ExecCommands</a> (std::string &amp;commands)</td></tr>
 <tr class="separator:a7c4c5ede6698d53b3269b17a2ad37b8b inherit pub_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88d97c1dad043bf37d5e3d21953bdf49 inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top"><a id="a88d97c1dad043bf37d5e3d21953bdf49"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>ReturnErrorMessage</b> ()</td></tr>
+<tr class="memitem:a88d97c1dad043bf37d5e3d21953bdf49 inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a88d97c1dad043bf37d5e3d21953bdf49">ReturnErrorMessage</a> ()</td></tr>
 <tr class="separator:a88d97c1dad043bf37d5e3d21953bdf49 inherit pub_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a14f51fe0cc63732bf824ff159f7c070d"><td class="memItemLeft" align="right" valign="top"><a id="a14f51fe0cc63732bf824ff159f7c070d"></a>
-FUNCTION_TYPE&#160;</td><td class="memItemRight" valign="bottom"><b>m_CurrentFunction</b></td></tr>
+<tr class="memitem:a14f51fe0cc63732bf824ff159f7c070d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0">FUNCTION_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#a14f51fe0cc63732bf824ff159f7c070d">m_CurrentFunction</a></td></tr>
 <tr class="separator:a14f51fe0cc63732bf824ff159f7c070d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b44bca3a943f441e5b22f0664199db0"><td class="memItemLeft" align="right" valign="top"><a id="a7b44bca3a943f441e5b22f0664199db0"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_OutputEnabled</b></td></tr>
+<tr class="memitem:a7b44bca3a943f441e5b22f0664199db0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#a7b44bca3a943f441e5b22f0664199db0">m_OutputEnabled</a></td></tr>
 <tr class="separator:a7b44bca3a943f441e5b22f0664199db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaeef345bdedd3814104dc003c3e8f0d1"><td class="memItemLeft" align="right" valign="top"><a id="aaeef345bdedd3814104dc003c3e8f0d1"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_Amplitude</b></td></tr>
+<tr class="memitem:aaeef345bdedd3814104dc003c3e8f0d1"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFunctionGenerator.html#aaeef345bdedd3814104dc003c3e8f0d1">m_Amplitude</a></td></tr>
 <tr class="separator:aaeef345bdedd3814104dc003c3e8f0d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classDevice"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classDevice')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classDevice.html">Device</a></td></tr>
-<tr class="memitem:a38e0fcc0da5513b38626691bdeb610e2 inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top"><a id="a38e0fcc0da5513b38626691bdeb610e2"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_IPAddr</b></td></tr>
+<tr class="memitem:a38e0fcc0da5513b38626691bdeb610e2 inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a38e0fcc0da5513b38626691bdeb610e2">m_IPAddr</a></td></tr>
 <tr class="separator:a38e0fcc0da5513b38626691bdeb610e2 inherit pro_attribs_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54db2f396aa5b21f61d64fabf4d0971f inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top"><a id="a54db2f396aa5b21f61d64fabf4d0971f"></a>
-PIL_ErrorHandle&#160;</td><td class="memItemRight" valign="bottom"><b>m_ErrorHandle</b></td></tr>
+<tr class="memitem:a54db2f396aa5b21f61d64fabf4d0971f inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top">PIL_ErrorHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a54db2f396aa5b21f61d64fabf4d0971f">m_ErrorHandle</a></td></tr>
 <tr class="separator:a54db2f396aa5b21f61d64fabf4d0971f inherit pro_attribs_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3815d815d663b6159a205ae0fa758e0 inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top"><a id="af3815d815d663b6159a205ae0fa758e0"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_DeviceName</b> {}</td></tr>
+<tr class="memitem:af3815d815d663b6159a205ae0fa758e0 inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#af3815d815d663b6159a205ae0fa758e0">m_DeviceName</a> {}</td></tr>
 <tr class="separator:af3815d815d663b6159a205ae0fa758e0 inherit pro_attribs_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ecf9b0f8e6ba03a17cd6515ca4337c7 inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top"><a id="a8ecf9b0f8e6ba03a17cd6515ca4337c7"></a>
-PIL::Socket *&#160;</td><td class="memItemRight" valign="bottom"><b>m_SocketHandle</b></td></tr>
+<tr class="memitem:a8ecf9b0f8e6ba03a17cd6515ca4337c7 inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top">PIL::Socket *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a8ecf9b0f8e6ba03a17cd6515ca4337c7">m_SocketHandle</a></td></tr>
 <tr class="separator:a8ecf9b0f8e6ba03a17cd6515ca4337c7 inherit pro_attribs_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac36ef2e8b4d52769b738890fd595fd24 inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top"><a id="ac36ef2e8b4d52769b738890fd595fd24"></a>
-PIL::Logging *&#160;</td><td class="memItemRight" valign="bottom"><b>m_Logger</b></td></tr>
+<tr class="memitem:ac36ef2e8b4d52769b738890fd595fd24 inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top">PIL::Logging *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#ac36ef2e8b4d52769b738890fd595fd24">m_Logger</a></td></tr>
 <tr class="separator:ac36ef2e8b4d52769b738890fd595fd24 inherit pro_attribs_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acde61506e4573bfa6144e6d3d800b0c8 inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top"><a id="acde61506e4573bfa6144e6d3d800b0c8"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>m_destPort</b> = 5025</td></tr>
+<tr class="memitem:acde61506e4573bfa6144e6d3d800b0c8 inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#acde61506e4573bfa6144e6d3d800b0c8">m_destPort</a> = 5025</td></tr>
 <tr class="separator:acde61506e4573bfa6144e6d3d800b0c8 inherit pro_attribs_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5efa21ee5155dbeeaa865e8b074d3c4c inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top"><a id="a5efa21ee5155dbeeaa865e8b074d3c4c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>m_srcPort</b> = 5025</td></tr>
+<tr class="memitem:a5efa21ee5155dbeeaa865e8b074d3c4c inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a5efa21ee5155dbeeaa865e8b074d3c4c">m_srcPort</a> = 5025</td></tr>
 <tr class="separator:a5efa21ee5155dbeeaa865e8b074d3c4c inherit pro_attribs_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e2150ac73235abf0c90e451f69b57b4 inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top"><a id="a1e2150ac73235abf0c90e451f69b57b4"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_EnableExceptions</b></td></tr>
+<tr class="memitem:a1e2150ac73235abf0c90e451f69b57b4 inherit pro_attribs_classDevice"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a1e2150ac73235abf0c90e451f69b57b4">m_EnableExceptions</a></td></tr>
 <tr class="separator:a1e2150ac73235abf0c90e451f69b57b4 inherit pro_attribs_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
@@ -237,9 +216,418 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:a83533f7409314b683c47083b7dca789c inherit pro_methods_classDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle logging messages, logs it based on the previously passed logging object. If exceptions are enabled throw an exception otherwise return the error code.  <a href="classDevice.html#a83533f7409314b683c47083b7dca789c">More...</a><br /></td></tr>
 <tr class="separator:a83533f7409314b683c47083b7dca789c inherit pro_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a4e60f5a04b6bc74742c182d36dd5a2eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e60f5a04b6bc74742c182d36dd5a2eb">&#9670;&nbsp;</a></span>FUNC_CHANNEL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classFunctionGenerator.html#a4e60f5a04b6bc74742c182d36dd5a2eb">FunctionGenerator::FUNC_CHANNEL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a4e60f5a04b6bc74742c182d36dd5a2eba7eedaf285b8803f7f9e7c0a4d1592831"></a>CHANNEL_A&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a4e60f5a04b6bc74742c182d36dd5a2ebad45bf2bf08df92e2faa3048d79c015a1"></a>CHANNEL_B&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a4a3e90149d8cf0f0067961886158a4c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a3e90149d8cf0f0067961886158a4c0">&#9670;&nbsp;</a></span>FUNCTION_TYPE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0">FunctionGenerator::FUNCTION_TYPE</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a4a3e90149d8cf0f0067961886158a4c0adeb1c7ad4a029a89584cfad2585704db"></a>SIN&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a4a3e90149d8cf0f0067961886158a4c0ae4753588f10fbe2e3c295b3bd447bacb"></a>SQUARE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a4a3e90149d8cf0f0067961886158a4c0a896796090d2dac74c600915ec5697281"></a>RAMP&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a4a3e90149d8cf0f0067961886158a4c0a6e51293d51646f34f7dd45db55185caf"></a>NEGATIVE_RAM&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a4a3e90149d8cf0f0067961886158a4c0a3e363d323dc99e625fb57148d26ffecf"></a>TRIANGLE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a4a3e90149d8cf0f0067961886158a4c0a17fb5f3fb75f0ce6669b061617d9881e"></a>NOISE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a4a3e90149d8cf0f0067961886158a4c0ac3f4b239fb9475cab20c1e5549f7e823"></a>PSEUDO_RANDOM_BIT_STREAM&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a4a3e90149d8cf0f0067961886158a4c0a14a8e065e0ce85e569cf3aa5b23d8b65"></a>ARBITRARY&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ad53704ab29c69e348c972d229f7ac68b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad53704ab29c69e348c972d229f7ac68b">&#9670;&nbsp;</a></span>FunctionGenerator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">FunctionGenerator::FunctionGenerator </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>ip</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>timeoutInMs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PIL::Logging *&#160;</td>
+          <td class="paramname"><em>logger</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="abc1c96412e6dd3dd364cf1ad02dc187b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc1c96412e6dd3dd364cf1ad02dc187b">&#9670;&nbsp;</a></span>getCurrentAmplitude()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double FunctionGenerator::getCurrentAmplitude </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae7110afecfc1b45aff23cb01ea062058"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7110afecfc1b45aff23cb01ea062058">&#9670;&nbsp;</a></span>getOutputFunction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0">FunctionGenerator::FUNCTION_TYPE</a> FunctionGenerator::getOutputFunction </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aff4baf65253a2bc9536a7c2e22035ac2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff4baf65253a2bc9536a7c2e22035ac2">&#9670;&nbsp;</a></span>isOutputEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FunctionGenerator::isOutputEnabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad8b1289b6b26539e94ef15c3e8cd08fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8b1289b6b26539e94ef15c3e8cd08fd">&#9670;&nbsp;</a></span>setAmplitude()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual PIL_ERROR_CODE FunctionGenerator::setAmplitude </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>constrain</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classKST33500.html#aa8d787b0b3659bcf5b897321603102a2">KST33500</a>.</p>
+
+</div>
+</div>
+<a id="a8f2350cb9f49a0653955521fa10a02cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f2350cb9f49a0653955521fa10a02cf">&#9670;&nbsp;</a></span>setFrequency()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual PIL_ERROR_CODE FunctionGenerator::setFrequency </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classKST33500.html#a356175b0c6bc629f074f7444753b51b2">KST33500</a>.</p>
+
+</div>
+</div>
+<a id="a10c31a130e253e4a89bd12f266d6366c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10c31a130e253e4a89bd12f266d6366c">&#9670;&nbsp;</a></span>setFunction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual PIL_ERROR_CODE FunctionGenerator::setFunction </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0">FUNCTION_TYPE</a>&#160;</td>
+          <td class="paramname"><em>functionType</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classKST33500.html#ab29e94d3be6538e69843e7c3105f60dc">KST33500</a>.</p>
+
+</div>
+</div>
+<a id="ab3a551054d8bca3bd5d30db4d56e7b90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3a551054d8bca3bd5d30db4d56e7b90">&#9670;&nbsp;</a></span>setOffset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual PIL_ERROR_CODE FunctionGenerator::setOffset </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>offset</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classKST33500.html#ac30233388d9a50b377df633455b52901">KST33500</a>.</p>
+
+</div>
+</div>
+<a id="ab2ac72a02c2c4b7404fe2343459ea909"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2ac72a02c2c4b7404fe2343459ea909">&#9670;&nbsp;</a></span>setPhase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual PIL_ERROR_CODE FunctionGenerator::setPhase </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classKST33500.html#aac964794c330837fe563caa8055063ba">KST33500</a>.</p>
+
+</div>
+</div>
+<a id="a32a4a61f46b6abba16186d4d156bbe91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32a4a61f46b6abba16186d4d156bbe91">&#9670;&nbsp;</a></span>turnOff()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual PIL_ERROR_CODE FunctionGenerator::turnOff </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classKST33500.html#ab13779da36398af38ebc8df8bc9d2521">KST33500</a>.</p>
+
+</div>
+</div>
+<a id="a39c8be1fddba4f8bf154a0443ada5db0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39c8be1fddba4f8bf154a0443ada5db0">&#9670;&nbsp;</a></span>turnOn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual PIL_ERROR_CODE FunctionGenerator::turnOn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classKST33500.html#a2f21a58281f98334b55a014dc36c8d38">KST33500</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="aaeef345bdedd3814104dc003c3e8f0d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaeef345bdedd3814104dc003c3e8f0d1">&#9670;&nbsp;</a></span>m_Amplitude</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double FunctionGenerator::m_Amplitude</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a14f51fe0cc63732bf824ff159f7c070d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14f51fe0cc63732bf824ff159f7c070d">&#9670;&nbsp;</a></span>m_CurrentFunction</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0">FUNCTION_TYPE</a> FunctionGenerator::m_CurrentFunction</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7b44bca3a943f441e5b22f0664199db0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b44bca3a943f441e5b22f0664199db0">&#9670;&nbsp;</a></span>m_OutputEnabled</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FunctionGenerator::m_OutputEnabled</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/runner/work/instrument_control_lib/instrument_control_lib/include/devices/types/<a class="el" href="FunctionGenerator_8h_source.html">FunctionGenerator.h</a></li>
-<li>/home/runner/work/instrument_control_lib/instrument_control_lib/src/devices/types/FunctionGenerator.cpp</li>
+<li>/home/runner/work/instrument_control_lib/instrument_control_lib/src/devices/types/<a class="el" href="FunctionGenerator_8cpp.html">FunctionGenerator.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

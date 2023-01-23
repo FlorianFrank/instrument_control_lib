@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['isopen_170',['IsOpen',['../classDevice.html#a8e56294c733e5709044ee3fe3f4a2df1',1,'Device']]]
+  ['handleerrorsandlogging_352',['handleErrorsAndLogging',['../classDevice.html#a83533f7409314b683c47083b7dca789c',1,'Device']]]
 ];

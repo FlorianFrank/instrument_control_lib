@@ -88,7 +88,7 @@ $(document).ready(function(){initNavTree('SPD1305_8h_source.html',''); initResiz
 <div class="title">SPD1305.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
+<a href="SPD1305_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// Created by liuwuhao on 20.05.21.</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
@@ -96,7 +96,7 @@ $(document).ready(function(){initNavTree('SPD1305_8h_source.html',''); initResiz
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define CE_DEVICE_SPD1305_H</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;types/DCPowerSupply.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="DCPowerSupply_8h.html">types/DCPowerSupply.h</a>&quot;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacePIL.html">PIL</a> {</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">class </span>Logging;</div>
@@ -105,30 +105,37 @@ $(document).ready(function(){initNavTree('SPD1305_8h_source.html',''); initResiz
 <div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classSPD1305.html">   15</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSPD1305.html">SPD1305</a> : <span class="keyword">public</span> <a class="code" href="classDCPowerSupply.html">DCPowerSupply</a> {</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classSPD1305.html">SPD1305</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *ip, <span class="keywordtype">int</span> timeoutInMS);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classSPD1305.html#a13351f6d80e937fd111b0119342730b6">SPD1305</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *ip, <span class="keywordtype">int</span> timeoutInMS);</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classSPD1305.html">SPD1305</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *ip, PIL::Logging *logger, <span class="keywordtype">int</span> timeoutInMs);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classSPD1305.html#a13351f6d80e937fd111b0119342730b6">SPD1305</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *ip, PIL::Logging *logger, <span class="keywordtype">int</span> timeoutInMs);</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    PIL_ERROR_CODE turnOn(DC_CHANNEL channel) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    PIL_ERROR_CODE turnOff(DC_CHANNEL channel) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    PIL_ERROR_CODE <a class="code" href="classSPD1305.html#a12d2a2dc9a209540ad9a23204b2c1b2f">turnOn</a>(<a class="code" href="classDCPowerSupply.html#a489874e55b8d848c42ed83e76cef067a">DC_CHANNEL</a> channel) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    PIL_ERROR_CODE <a class="code" href="classSPD1305.html#ab7f6ab9eeb531e59f0b17ddc6867bee7">turnOff</a>(<a class="code" href="classDCPowerSupply.html#a489874e55b8d848c42ed83e76cef067a">DC_CHANNEL</a> channel) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    PIL_ERROR_CODE setCurrent(DC_CHANNEL channel, <span class="keywordtype">double</span> current) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    PIL_ERROR_CODE getCurrent(DC_CHANNEL channel, <span class="keywordtype">double</span>* current) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    PIL_ERROR_CODE <a class="code" href="classSPD1305.html#a840844d4398ea417102ff22d2c70db77">setCurrent</a>(<a class="code" href="classDCPowerSupply.html#a489874e55b8d848c42ed83e76cef067a">DC_CHANNEL</a> channel, <span class="keywordtype">double</span> current) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    PIL_ERROR_CODE <a class="code" href="classSPD1305.html#af28d414d1bd330d5c4a003d2e9397f3a">getCurrent</a>(<a class="code" href="classDCPowerSupply.html#a489874e55b8d848c42ed83e76cef067a">DC_CHANNEL</a> channel, <span class="keywordtype">double</span>* current) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="comment">// TODO add missing functions</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    std::string getStrFromDCChannelEnum(DC_CHANNEL channel);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    std::string getStrFromDCChannelEnum(<a class="code" href="classDCPowerSupply.html#a489874e55b8d848c42ed83e76cef067a">DC_CHANNEL</a> channel);</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;};</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#endif </span><span class="comment">//CE_DEVICE_SPD1305_H</span></div>
+<div class="ttc" id="aDCPowerSupply_8h_html"><div class="ttname"><a href="DCPowerSupply_8h.html">DCPowerSupply.h</a></div></div>
 <div class="ttc" id="aclassDCPowerSupply_html"><div class="ttname"><a href="classDCPowerSupply.html">DCPowerSupply</a></div><div class="ttdef"><b>Definition:</b> DCPowerSupply.h:11</div></div>
+<div class="ttc" id="aclassDCPowerSupply_html_a489874e55b8d848c42ed83e76cef067a"><div class="ttname"><a href="classDCPowerSupply.html#a489874e55b8d848c42ed83e76cef067a">DCPowerSupply::DC_CHANNEL</a></div><div class="ttdeci">DC_CHANNEL</div><div class="ttdef"><b>Definition:</b> DCPowerSupply.h:13</div></div>
 <div class="ttc" id="aclassSPD1305_html"><div class="ttname"><a href="classSPD1305.html">SPD1305</a></div><div class="ttdef"><b>Definition:</b> SPD1305.h:15</div></div>
+<div class="ttc" id="aclassSPD1305_html_a12d2a2dc9a209540ad9a23204b2c1b2f"><div class="ttname"><a href="classSPD1305.html#a12d2a2dc9a209540ad9a23204b2c1b2f">SPD1305::turnOn</a></div><div class="ttdeci">PIL_ERROR_CODE turnOn(DC_CHANNEL channel) override</div><div class="ttdef"><b>Definition:</b> SPD1305.cpp:38</div></div>
+<div class="ttc" id="aclassSPD1305_html_a13351f6d80e937fd111b0119342730b6"><div class="ttname"><a href="classSPD1305.html#a13351f6d80e937fd111b0119342730b6">SPD1305::SPD1305</a></div><div class="ttdeci">SPD1305(const char *ip, int timeoutInMS)</div><div class="ttdef"><b>Definition:</b> SPD1305.cpp:8</div></div>
+<div class="ttc" id="aclassSPD1305_html_a840844d4398ea417102ff22d2c70db77"><div class="ttname"><a href="classSPD1305.html#a840844d4398ea417102ff22d2c70db77">SPD1305::setCurrent</a></div><div class="ttdeci">PIL_ERROR_CODE setCurrent(DC_CHANNEL channel, double current) override</div><div class="ttdef"><b>Definition:</b> SPD1305.cpp:18</div></div>
+<div class="ttc" id="aclassSPD1305_html_ab7f6ab9eeb531e59f0b17ddc6867bee7"><div class="ttname"><a href="classSPD1305.html#ab7f6ab9eeb531e59f0b17ddc6867bee7">SPD1305::turnOff</a></div><div class="ttdeci">PIL_ERROR_CODE turnOff(DC_CHANNEL channel) override</div><div class="ttdef"><b>Definition:</b> SPD1305.cpp:47</div></div>
+<div class="ttc" id="aclassSPD1305_html_af28d414d1bd330d5c4a003d2e9397f3a"><div class="ttname"><a href="classSPD1305.html#af28d414d1bd330d5c4a003d2e9397f3a">SPD1305::getCurrent</a></div><div class="ttdeci">PIL_ERROR_CODE getCurrent(DC_CHANNEL channel, double *current) override</div><div class="ttdef"><b>Definition:</b> SPD1305.cpp:28</div></div>
 <div class="ttc" id="anamespacePIL_html"><div class="ttname"><a href="namespacePIL.html">PIL</a></div><div class="ttdoc">This class contains a implementation of a command line interface. It supports various functions like ...</div><div class="ttdef"><b>Definition:</b> CommandLineInterface.h:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_cb2deb75e92edd1ae6fb5a03c395a06e.html">instrument_control_lib</a></li><li class="navelem"><a class="el" href="dir_3dd97237eab0d9af71ca96e14d012ab8.html">include</a></li><li class="navelem"><a class="el" href="dir_77bc0869664ff9eb65c0650e842afdf6.html">devices</a></li><li class="navelem"><b>SPD1305.h</b></li>
+    <li class="navelem"><a class="el" href="dir_cb2deb75e92edd1ae6fb5a03c395a06e.html">instrument_control_lib</a></li><li class="navelem"><a class="el" href="dir_3dd97237eab0d9af71ca96e14d012ab8.html">include</a></li><li class="navelem"><a class="el" href="dir_77bc0869664ff9eb65c0650e842afdf6.html">devices</a></li><li class="navelem"><a class="el" href="SPD1305_8h.html">SPD1305.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

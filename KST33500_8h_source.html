@@ -88,11 +88,11 @@ $(document).ready(function(){initNavTree('KST33500_8h_source.html',''); initResi
 <div class="title">KST33500.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<a href="KST33500_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef CE_DEVICE_KST33500_H</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define CE_DEVICE_KST33500_H</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;types/FunctionGenerator.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="FunctionGenerator_8h.html">types/FunctionGenerator.h</a>&quot;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacePIL.html">PIL</a> {</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">class </span>Logging;</div>
@@ -101,39 +101,49 @@ $(document).ready(function(){initNavTree('KST33500_8h_source.html',''); initResi
 <div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classKST33500.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="classKST33500.html">KST33500</a> : <span class="keyword">public</span> <a class="code" href="classFunctionGenerator.html">FunctionGenerator</a> {</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classKST33500.html">KST33500</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *ip, <span class="keywordtype">int</span> timeoutInMS);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classKST33500.html">KST33500</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *ip, <span class="keywordtype">int</span> timeoutInMs, PIL::Logging *logger);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classKST33500.html#ad36e6f5e7705667ab7beac54062680a8">KST33500</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *ip, <span class="keywordtype">int</span> timeoutInMS);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classKST33500.html#ad36e6f5e7705667ab7beac54062680a8">KST33500</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *ip, <span class="keywordtype">int</span> timeoutInMs, PIL::Logging *logger);</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    PIL_ERROR_CODE turnOn() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    PIL_ERROR_CODE turnOff() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    PIL_ERROR_CODE <a class="code" href="classKST33500.html#a2f21a58281f98334b55a014dc36c8d38">turnOn</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    PIL_ERROR_CODE <a class="code" href="classKST33500.html#ab13779da36398af38ebc8df8bc9d2521">turnOff</a>() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    PIL_ERROR_CODE setFrequency(<span class="keywordtype">double</span> value) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    PIL_ERROR_CODE setAmplitude(<span class="keywordtype">double</span> value, <span class="keyword">const</span> <span class="keywordtype">char</span> *constrain) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    PIL_ERROR_CODE <a class="code" href="classKST33500.html#a356175b0c6bc629f074f7444753b51b2">setFrequency</a>(<span class="keywordtype">double</span> value) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    PIL_ERROR_CODE <a class="code" href="classKST33500.html#aa8d787b0b3659bcf5b897321603102a2">setAmplitude</a>(<span class="keywordtype">double</span> value, <span class="keyword">const</span> <span class="keywordtype">char</span> *constrain) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    PIL_ERROR_CODE <a class="code" href="classKST33500.html#ac30233388d9a50b377df633455b52901">setOffset</a>(<span class="keywordtype">double</span> offset) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    PIL_ERROR_CODE setPhase(<span class="keywordtype">double</span> value) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    PIL_ERROR_CODE <a class="code" href="classKST33500.html#ab29e94d3be6538e69843e7c3105f60dc">setFunction</a>(FUNCTION_TYPE functionType) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    PIL_ERROR_CODE <a class="code" href="classKST33500.html#aac964794c330837fe563caa8055063ba">setPhase</a>(<span class="keywordtype">double</span> value) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    PIL_ERROR_CODE <a class="code" href="classKST33500.html#ab29e94d3be6538e69843e7c3105f60dc">setFunction</a>(<a class="code" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0">FUNCTION_TYPE</a> functionType) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    PIL_ERROR_CODE display(std::string &amp;text);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    PIL_ERROR_CODE displayConnection();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    PIL_ERROR_CODE <a class="code" href="classKST33500.html#a55f52e6034b10e4fa5927934f0aebd49">display</a>(std::string &amp;text);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    PIL_ERROR_CODE <a class="code" href="classKST33500.html#a7d5dc43567cd7a9c1f02814133f58ccc">displayConnection</a>();</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    PIL_ERROR_CODE output(<span class="keywordtype">bool</span> on);</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    PIL_ERROR_CODE setPulseWidth(<span class="keywordtype">double</span> value);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    std::string GetFunctionStr(FUNCTION_TYPE functionType);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    std::string GetFunctionStr(<a class="code" href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0">FUNCTION_TYPE</a> functionType);</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;};</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#endif </span><span class="comment">//CE_DEVICE_KST33500_H</span></div>
+<div class="ttc" id="aFunctionGenerator_8h_html"><div class="ttname"><a href="FunctionGenerator_8h.html">FunctionGenerator.h</a></div></div>
 <div class="ttc" id="aclassFunctionGenerator_html"><div class="ttname"><a href="classFunctionGenerator.html">FunctionGenerator</a></div><div class="ttdef"><b>Definition:</b> FunctionGenerator.h:11</div></div>
+<div class="ttc" id="aclassFunctionGenerator_html_a4a3e90149d8cf0f0067961886158a4c0"><div class="ttname"><a href="classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0">FunctionGenerator::FUNCTION_TYPE</a></div><div class="ttdeci">FUNCTION_TYPE</div><div class="ttdef"><b>Definition:</b> FunctionGenerator.h:13</div></div>
 <div class="ttc" id="aclassKST33500_html"><div class="ttname"><a href="classKST33500.html">KST33500</a></div><div class="ttdef"><b>Definition:</b> KST33500.h:14</div></div>
+<div class="ttc" id="aclassKST33500_html_a2f21a58281f98334b55a014dc36c8d38"><div class="ttname"><a href="classKST33500.html#a2f21a58281f98334b55a014dc36c8d38">KST33500::turnOn</a></div><div class="ttdeci">PIL_ERROR_CODE turnOn() override</div><div class="ttdef"><b>Definition:</b> KST33500.cpp:72</div></div>
+<div class="ttc" id="aclassKST33500_html_a356175b0c6bc629f074f7444753b51b2"><div class="ttname"><a href="classKST33500.html#a356175b0c6bc629f074f7444753b51b2">KST33500::setFrequency</a></div><div class="ttdeci">PIL_ERROR_CODE setFrequency(double value) override</div><div class="ttdef"><b>Definition:</b> KST33500.cpp:82</div></div>
+<div class="ttc" id="aclassKST33500_html_a55f52e6034b10e4fa5927934f0aebd49"><div class="ttname"><a href="classKST33500.html#a55f52e6034b10e4fa5927934f0aebd49">KST33500::display</a></div><div class="ttdeci">PIL_ERROR_CODE display(std::string &amp;text)</div><div class="ttdef"><b>Definition:</b> KST33500.cpp:21</div></div>
+<div class="ttc" id="aclassKST33500_html_a7d5dc43567cd7a9c1f02814133f58ccc"><div class="ttname"><a href="classKST33500.html#a7d5dc43567cd7a9c1f02814133f58ccc">KST33500::displayConnection</a></div><div class="ttdeci">PIL_ERROR_CODE displayConnection()</div><div class="ttdef"><b>Definition:</b> KST33500.cpp:33</div></div>
+<div class="ttc" id="aclassKST33500_html_aa8d787b0b3659bcf5b897321603102a2"><div class="ttname"><a href="classKST33500.html#aa8d787b0b3659bcf5b897321603102a2">KST33500::setAmplitude</a></div><div class="ttdeci">PIL_ERROR_CODE setAmplitude(double value, const char *constrain) override</div><div class="ttdef"><b>Definition:</b> KST33500.cpp:90</div></div>
+<div class="ttc" id="aclassKST33500_html_aac964794c330837fe563caa8055063ba"><div class="ttname"><a href="classKST33500.html#aac964794c330837fe563caa8055063ba">KST33500::setPhase</a></div><div class="ttdeci">PIL_ERROR_CODE setPhase(double value) override</div><div class="ttdef"><b>Definition:</b> KST33500.cpp:127</div></div>
+<div class="ttc" id="aclassKST33500_html_ab13779da36398af38ebc8df8bc9d2521"><div class="ttname"><a href="classKST33500.html#ab13779da36398af38ebc8df8bc9d2521">KST33500::turnOff</a></div><div class="ttdeci">PIL_ERROR_CODE turnOff() override</div><div class="ttdef"><b>Definition:</b> KST33500.cpp:77</div></div>
 <div class="ttc" id="aclassKST33500_html_ab29e94d3be6538e69843e7c3105f60dc"><div class="ttname"><a href="classKST33500.html#ab29e94d3be6538e69843e7c3105f60dc">KST33500::setFunction</a></div><div class="ttdeci">PIL_ERROR_CODE setFunction(FUNCTION_TYPE functionType) override</div><div class="ttdoc">Set output function of the function generator. E.g. SIN sets a sinus wave.</div><div class="ttdef"><b>Definition:</b> KST33500.cpp:111</div></div>
 <div class="ttc" id="aclassKST33500_html_ac30233388d9a50b377df633455b52901"><div class="ttname"><a href="classKST33500.html#ac30233388d9a50b377df633455b52901">KST33500::setOffset</a></div><div class="ttdeci">PIL_ERROR_CODE setOffset(double offset) override</div><div class="ttdef"><b>Definition:</b> KST33500.cpp:138</div></div>
+<div class="ttc" id="aclassKST33500_html_ad36e6f5e7705667ab7beac54062680a8"><div class="ttname"><a href="classKST33500.html#ad36e6f5e7705667ab7beac54062680a8">KST33500::KST33500</a></div><div class="ttdeci">KST33500(const char *ip, int timeoutInMS)</div><div class="ttdef"><b>Definition:</b> KST33500.cpp:11</div></div>
 <div class="ttc" id="anamespacePIL_html"><div class="ttname"><a href="namespacePIL.html">PIL</a></div><div class="ttdoc">This class contains a implementation of a command line interface. It supports various functions like ...</div><div class="ttdef"><b>Definition:</b> CommandLineInterface.h:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_cb2deb75e92edd1ae6fb5a03c395a06e.html">instrument_control_lib</a></li><li class="navelem"><a class="el" href="dir_3dd97237eab0d9af71ca96e14d012ab8.html">include</a></li><li class="navelem"><a class="el" href="dir_77bc0869664ff9eb65c0650e842afdf6.html">devices</a></li><li class="navelem"><b>KST33500.h</b></li>
+    <li class="navelem"><a class="el" href="dir_cb2deb75e92edd1ae6fb5a03c395a06e.html">instrument_control_lib</a></li><li class="navelem"><a class="el" href="dir_3dd97237eab0d9af71ca96e14d012ab8.html">include</a></li><li class="navelem"><a class="el" href="dir_77bc0869664ff9eb65c0650e842afdf6.html">devices</a></li><li class="navelem"><a class="el" href="KST33500_8h.html">KST33500.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

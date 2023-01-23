@@ -1,6 +1,22 @@
 var searchData=
 [
-  ['dc_5famps_225',['DC_AMPS',['../classSMU.html#a50b3c03315fc0abff0586ea5c7a925bda5afe980d3d7f12a9a2a1715aed23bc58',1,'SMU']]],
-  ['dc_5fvolts_226',['DC_VOLTS',['../classSMU.html#a50b3c03315fc0abff0586ea5c7a925bdaa5f317abae50eb99d26348f968f30e3d',1,'SMU']]],
-  ['direct_5firange_227',['DIRECT_IRANGE',['../classSMU.html#a6ad6bcadaa77f1ae5347d97d5c9ac890aa55c0485c0ff5c1cddc0441099239c86',1,'SMU']]]
+  ['calibration_455',['CALIBRATION',['../classSMU.html#af83967fc5bbf6c1cfe6457680485c61ea918d3705e203922a004247484be6dfdc',1,'SMU']]],
+  ['channel_5f1_456',['CHANNEL_1',['../classDCPowerSupply.html#a489874e55b8d848c42ed83e76cef067aae5799ab07cce73a479bb7a764b5caa31',1,'DCPowerSupply::CHANNEL_1()'],['../classOscilloscope.html#a5576323a09ec80a1fb56588f4d299d26a03155e1eabc9483ed6fa7128214bee07',1,'Oscilloscope::CHANNEL_1()']]],
+  ['channel_5f2_457',['CHANNEL_2',['../classDCPowerSupply.html#a489874e55b8d848c42ed83e76cef067aad6feb254a715bf168b953d8478e24b45',1,'DCPowerSupply::CHANNEL_2()'],['../classOscilloscope.html#a5576323a09ec80a1fb56588f4d299d26ac78942939f28ce53a0b5b9a660b8f55b',1,'Oscilloscope::CHANNEL_2()']]],
+  ['channel_5f3_458',['CHANNEL_3',['../classOscilloscope.html#a5576323a09ec80a1fb56588f4d299d26ad08995a9ea83f596f9147ece6283929a',1,'Oscilloscope']]],
+  ['channel_5f4_459',['CHANNEL_4',['../classOscilloscope.html#a5576323a09ec80a1fb56588f4d299d26a6adf59ab2bdcb205c1ee53904003f3c7',1,'Oscilloscope']]],
+  ['channel_5fa_460',['CHANNEL_A',['../classFunctionGenerator.html#a4e60f5a04b6bc74742c182d36dd5a2eba7eedaf285b8803f7f9e7c0a4d1592831',1,'FunctionGenerator::CHANNEL_A()'],['../classSMU.html#a987e4da8cebd76020fdd12c1ceea78bca74ff2d24d5a512921bd7ed421f72351a',1,'SMU::CHANNEL_A()']]],
+  ['channel_5fb_461',['CHANNEL_B',['../classFunctionGenerator.html#a4e60f5a04b6bc74742c182d36dd5a2ebad45bf2bf08df92e2faa3048d79c015a1',1,'FunctionGenerator::CHANNEL_B()'],['../classSMU.html#a987e4da8cebd76020fdd12c1ceea78bcaa7aec4a502d522c02a25ee970aa4123b',1,'SMU::CHANNEL_B()']]],
+  ['cli_5factive_5fdevices_462',['CLI_ACTIVE_DEVICES',['../CommandLineInterfaceDefines_8h.html#ae938dc7668941d60e02697de2edc63e5af29032098e26f256e2dca60c819ea702',1,'CommandLineInterfaceDefines.h']]],
+  ['cli_5fcommand_5fnot_5ffound_463',['CLI_COMMAND_NOT_FOUND',['../CommandLineInterfaceDefines_8h.html#ae938dc7668941d60e02697de2edc63e5a40929288eb602768f0419e7b02edd6ff',1,'CommandLineInterfaceDefines.h']]],
+  ['cli_5fconnect_464',['CLI_CONNECT',['../CommandLineInterfaceDefines_8h.html#ae938dc7668941d60e02697de2edc63e5a34a634f1e9d0e8d901fb59b0d0c96248',1,'CommandLineInterfaceDefines.h']]],
+  ['cli_5fdisconnect_465',['CLI_DISCONNECT',['../CommandLineInterfaceDefines_8h.html#ae938dc7668941d60e02697de2edc63e5af1208be9627aa6f800e3d3006fccf10d',1,'CommandLineInterfaceDefines.h']]],
+  ['cli_5fget_5fdevice_5fidentity_466',['CLI_GET_DEVICE_IDENTITY',['../CommandLineInterfaceDefines_8h.html#ae938dc7668941d60e02697de2edc63e5a7542dcb36af5f97a89de4df784adf8b3',1,'CommandLineInterfaceDefines.h']]],
+  ['cli_5fhelp_467',['CLI_HELP',['../CommandLineInterfaceDefines_8h.html#ae938dc7668941d60e02697de2edc63e5abfca1407e69a824a177dedf5c76d49ef',1,'CommandLineInterfaceDefines.h']]],
+  ['cli_5fquit_468',['CLI_QUIT',['../CommandLineInterfaceDefines_8h.html#ae938dc7668941d60e02697de2edc63e5adb4d9c3e0772787cc58fb309044a9c97',1,'CommandLineInterfaceDefines.h']]],
+  ['cli_5fselect_5fdevice_469',['CLI_SELECT_DEVICE',['../CommandLineInterfaceDefines_8h.html#ae938dc7668941d60e02697de2edc63e5ab7cfe70dcbc835718d647e179294290c',1,'CommandLineInterfaceDefines.h']]],
+  ['cli_5fsend_5fcustom_5fcommand_470',['CLI_SEND_CUSTOM_COMMAND',['../CommandLineInterfaceDefines_8h.html#ae938dc7668941d60e02697de2edc63e5a9914012685f6454b510fc2fb1ae0fc77',1,'CommandLineInterfaceDefines.h']]],
+  ['cli_5fsupported_5fdevices_471',['CLI_SUPPORTED_DEVICES',['../CommandLineInterfaceDefines_8h.html#ae938dc7668941d60e02697de2edc63e5aa3531b1c5d4a0ff1e0c7281aef1ce713',1,'CommandLineInterfaceDefines.h']]],
+  ['current_472',['CURRENT',['../classSMU.html#a4c7be94a316d3928411f15ebad515fb7acb9f9acd7aeeb6303cb3ac5f7636024f',1,'SMU']]],
+  ['custom_5fcommand1_473',['CUSTOM_COMMAND1',['../CommandLineInterfaceDefines_8h.html#ae938dc7668941d60e02697de2edc63e5a10de559f5aada0fc6507027b80919ba5',1,'CommandLineInterfaceDefines.h']]]
 ];

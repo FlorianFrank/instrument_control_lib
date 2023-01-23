@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['run_177',['run',['../classKST3000.html#a81588e36df7d2ac86e03144f28250348',1,'KST3000']]]
+  ['oscilloscope_360',['Oscilloscope',['../classOscilloscope.html#a312a8d63275cc4bf18eac67ede3a2c42',1,'Oscilloscope']]]
 ];

@@ -88,11 +88,11 @@ $(document).ready(function(){initNavTree('KEI2600_8h_source.html',''); initResiz
 <div class="title">KEI2600.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<a href="KEI2600_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;Device.h&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;types/SMU.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Device_8h.html">Device.h</a>&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SMU_8h.html">types/SMU.h</a>&quot;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacePIL.html">PIL</a></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('KEI2600_8h_source.html',''); initResiz
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classKEI2600.html#ace9ac6e307d5dea86afd3ab17812dbbc">KEI2600</a>(std::string ipAddress, <span class="keywordtype">int</span> timeoutInMs, PIL::Logging *logger);</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classKEI2600.html">KEI2600</a>()= <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classKEI2600.html#a105474c84e0adf44f4a68ac00f6aa7fa">   23</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classKEI2600.html#a105474c84e0adf44f4a68ac00f6aa7fa">~KEI2600</a>()= <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    [[maybe_unused]] <span class="keyword">explicit</span> <a class="code" href="classKEI2600.html#ace9ac6e307d5dea86afd3ab17812dbbc">KEI2600</a>(std::string ipAddress, <span class="keywordtype">int</span> timeoutInMs);</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
@@ -172,8 +172,11 @@ $(document).ready(function(){initNavTree('KEI2600_8h_source.html',''); initResiz
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">static</span> std::string getStringFromMeasureDisplayFunction(<a class="code" href="classSMU.html#aa097e08966ba4437ded522f22e50286f">SMU_DISPLAY</a> displayMeasureFunc);</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">static</span> std::string getStringFromSenseValue(<a class="code" href="classSMU.html#af83967fc5bbf6c1cfe6457680485c61e">SMU_SENSE</a> sense);</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;};</div>
+<div class="ttc" id="aDevice_8h_html"><div class="ttname"><a href="Device_8h.html">Device.h</a></div></div>
+<div class="ttc" id="aSMU_8h_html"><div class="ttname"><a href="SMU_8h.html">SMU.h</a></div></div>
 <div class="ttc" id="aclassKEI2600_html"><div class="ttname"><a href="classKEI2600.html">KEI2600</a></div><div class="ttdoc">This class implements the basic functionality of Keithley 2600 series SMU's.</div><div class="ttdef"><b>Definition:</b> KEI2600.h:19</div></div>
 <div class="ttc" id="aclassKEI2600_html_a00c91442df6f1ee0aa2a25133814536d"><div class="ttname"><a href="classKEI2600.html#a00c91442df6f1ee0aa2a25133814536d">KEI2600::getErrorBufferStatus</a></div><div class="ttdeci">PIL_ERROR_CODE getErrorBufferStatus()</div><div class="ttdoc">Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return PIL...</div><div class="ttdef"><b>Definition:</b> KEI2600.cpp:1272</div></div>
+<div class="ttc" id="aclassKEI2600_html_a105474c84e0adf44f4a68ac00f6aa7fa"><div class="ttname"><a href="classKEI2600.html#a105474c84e0adf44f4a68ac00f6aa7fa">KEI2600::~KEI2600</a></div><div class="ttdeci">virtual ~KEI2600()=default</div></div>
 <div class="ttc" id="aclassKEI2600_html_a1fa0fabf7e491f37e50b1137f7672b57"><div class="ttname"><a href="classKEI2600.html#a1fa0fabf7e491f37e50b1137f7672b57">KEI2600::setMeasurePLC</a></div><div class="ttdeci">PIL_ERROR_CODE setMeasurePLC(SMU_CHANNEL channel, double value, bool checkErrorBuffer)</div><div class="ttdoc">Sets the integration apeture for measurements.</div><div class="ttdef"><b>Definition:</b> KEI2600.cpp:519</div></div>
 <div class="ttc" id="aclassKEI2600_html_a1fc7d82ae4752fb1b1842e024dd96d4b"><div class="ttname"><a href="classKEI2600.html#a1fc7d82ae4752fb1b1842e024dd96d4b">KEI2600::setMeasureLowRange</a></div><div class="ttdeci">PIL_ERROR_CODE setMeasureLowRange(UNIT unit, SMU_CHANNEL channel, double value, bool checkErrorBuffer)</div><div class="ttdoc">Sets the lowest measurement range that is used when the instrument is autoranging.</div><div class="ttdef"><b>Definition:</b> KEI2600.cpp:551</div></div>
 <div class="ttc" id="aclassKEI2600_html_a26c65ef50d521658e61e6d17b6c8df14"><div class="ttname"><a href="classKEI2600.html#a26c65ef50d521658e61e6d17b6c8df14">KEI2600::enableMeasureAnalogFilter</a></div><div class="ttdeci">PIL_ERROR_CODE enableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer)</div><div class="ttdoc">Enables the analog filter mode for a certain channel. This engages an approximately 1 Hz analog filte...</div><div class="ttdef"><b>Definition:</b> KEI2600.cpp:382</div></div>
@@ -224,7 +227,7 @@ $(document).ready(function(){initNavTree('KEI2600_8h_source.html',''); initResiz
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_cb2deb75e92edd1ae6fb5a03c395a06e.html">instrument_control_lib</a></li><li class="navelem"><a class="el" href="dir_3dd97237eab0d9af71ca96e14d012ab8.html">include</a></li><li class="navelem"><a class="el" href="dir_77bc0869664ff9eb65c0650e842afdf6.html">devices</a></li><li class="navelem"><b>KEI2600.h</b></li>
+    <li class="navelem"><a class="el" href="dir_cb2deb75e92edd1ae6fb5a03c395a06e.html">instrument_control_lib</a></li><li class="navelem"><a class="el" href="dir_3dd97237eab0d9af71ca96e14d012ab8.html">include</a></li><li class="navelem"><a class="el" href="dir_77bc0869664ff9eb65c0650e842afdf6.html">devices</a></li><li class="navelem"><a class="el" href="KEI2600_8h.html">KEI2600.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

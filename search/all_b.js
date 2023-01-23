@@ -1,9 +1,25 @@
 var searchData=
 [
-  ['measure_55',['measure',['../classKEI2600.html#a5756077c5f8f263c2462e8a1c2417c2a',1,'KEI2600']]],
-  ['measure_5fdc_5famps_56',['MEASURE_DC_AMPS',['../classSMU.html#aa097e08966ba4437ded522f22e50286fa118483455dff86dbf4a3dffbfb1783f7',1,'SMU']]],
-  ['measure_5fdc_5fvolts_57',['MEASURE_DC_VOLTS',['../classSMU.html#aa097e08966ba4437ded522f22e50286fab8666e4dd2ef45da01a45383bc29b937',1,'SMU']]],
-  ['measure_5fohms_58',['MEASURE_OHMS',['../classSMU.html#aa097e08966ba4437ded522f22e50286fa934bcaed138bd9459f00e83f8cde4b6a',1,'SMU']]],
-  ['measure_5fwatts_59',['MEASURE_WATTS',['../classSMU.html#aa097e08966ba4437ded522f22e50286faf9c8a55a61e2ef1d5b05f4becdeffbd8',1,'SMU']]],
-  ['measurepy_60',['measurePy',['../classKEI2600.html#ac7160a44757d3807cc46dfbf5a20dbc8',1,'KEI2600']]]
+  ['m_5famplitude_125',['m_Amplitude',['../classFunctionGenerator.html#aaeef345bdedd3814104dc003c3e8f0d1',1,'FunctionGenerator']]],
+  ['m_5fcurrentfunction_126',['m_CurrentFunction',['../classFunctionGenerator.html#a14f51fe0cc63732bf824ff159f7c070d',1,'FunctionGenerator']]],
+  ['m_5fdestport_127',['m_destPort',['../classDevice.html#acde61506e4573bfa6144e6d3d800b0c8',1,'Device']]],
+  ['m_5fdevicedescription_128',['m_DeviceDescription',['../structDeviceDescription.html#a215e6c9026209b6da59c8d4110c1fe6b',1,'DeviceDescription']]],
+  ['m_5fdevicename_129',['m_DeviceName',['../structDeviceDescription.html#a9637b888f4690906351ca28a3bea029a',1,'DeviceDescription::m_DeviceName()'],['../classDevice.html#af3815d815d663b6159a205ae0fa758e0',1,'Device::m_DeviceName()']]],
+  ['m_5fenableexceptions_130',['m_EnableExceptions',['../classDevice.html#a1e2150ac73235abf0c90e451f69b57b4',1,'Device']]],
+  ['m_5ferrorhandle_131',['m_ErrorHandle',['../classDevice.html#a54db2f396aa5b21f61d64fabf4d0971f',1,'Device']]],
+  ['m_5fipaddr_132',['m_IPAddr',['../classDevice.html#a38e0fcc0da5513b38626691bdeb610e2',1,'Device']]],
+  ['m_5flogger_133',['m_Logger',['../classDevice.html#ac36ef2e8b4d52769b738890fd595fd24',1,'Device']]],
+  ['m_5foutputenabled_134',['m_OutputEnabled',['../classFunctionGenerator.html#a7b44bca3a943f441e5b22f0664199db0',1,'FunctionGenerator']]],
+  ['m_5fsockethandle_135',['m_SocketHandle',['../classDevice.html#a8ecf9b0f8e6ba03a17cd6515ca4337c7',1,'Device']]],
+  ['m_5fsrcport_136',['m_srcPort',['../classDevice.html#a5efa21ee5155dbeeaa865e8b074d3c4c',1,'Device']]],
+  ['main_137',['MAIN',['../classOscilloscope.html#ab81391a60cf379d7425bce27783b5d7aa7d10562efacb1f2b8eabe305184d9085',1,'Oscilloscope']]],
+  ['measure_138',['measure',['../classKEI2600.html#a5756077c5f8f263c2462e8a1c2417c2a',1,'KEI2600::measure()'],['../classSMU.html#a34d0094e9535acb3ebf535919418aa8b',1,'SMU::measure(UNIT unit, SMU_CHANNEL channel, double *value, bool checkErrorBuffer)=0']]],
+  ['measure_5fdc_5famps_139',['MEASURE_DC_AMPS',['../classSMU.html#aa097e08966ba4437ded522f22e50286fa118483455dff86dbf4a3dffbfb1783f7',1,'SMU']]],
+  ['measure_5fdc_5fvolts_140',['MEASURE_DC_VOLTS',['../classSMU.html#aa097e08966ba4437ded522f22e50286fab8666e4dd2ef45da01a45383bc29b937',1,'SMU']]],
+  ['measure_5fohms_141',['MEASURE_OHMS',['../classSMU.html#aa097e08966ba4437ded522f22e50286fa934bcaed138bd9459f00e83f8cde4b6a',1,'SMU']]],
+  ['measure_5fret_5fbuff_5fsize_142',['MEASURE_RET_BUFF_SIZE',['../KST3000_8h.html#adcc5b93efdfb32eea8021aa67a544cc9',1,'KST3000.h']]],
+  ['measure_5fwatts_143',['MEASURE_WATTS',['../classSMU.html#aa097e08966ba4437ded522f22e50286faf9c8a55a61e2ef1d5b05f4becdeffbd8',1,'SMU']]],
+  ['measurepy_144',['measurePy',['../classKEI2600.html#ac7160a44757d3807cc46dfbf5a20dbc8',1,'KEI2600']]],
+  ['message_5fexit_5fcli_145',['MESSAGE_EXIT_CLI',['../CommandLineInterfaceDefines_8h.html#a20abf4477e6dd664ea78f37c81a239da',1,'CommandLineInterfaceDefines.h']]],
+  ['milli_5fvolt_146',['MILLI_VOLT',['../classOscilloscope.html#a599bf98ee982587fed9e0565740de2c5a9ba4d540f5ae585ff9c4cbaf77e9126a',1,'Oscilloscope']]]
 ];

@@ -88,11 +88,11 @@ $(document).ready(function(){initNavTree('ExecArgs_8h_source.html',''); initResi
 <div class="title">ExecArgs.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<a href="ExecArgs_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef INSTRUMENT_CONTROL_LIB_EXEC_ARGS_H</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define INSTRUMENT_CONTROL_LIB_EXEC_ARGS_H</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;SubArg.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SubArg_8h.html">SubArg.h</a>&quot;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classExecArgs.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="classExecArgs.html">ExecArgs</a></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
@@ -106,7 +106,7 @@ $(document).ready(function(){initNavTree('ExecArgs_8h_source.html',''); initResi
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">typedef</span> std::tuple&lt;ARGUMENT_TYPE, std::string, std::tuple&lt;std::string,std::string&gt;&gt; ArgTuple;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classExecArgs.html">ExecArgs</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classExecArgs.html#a92f5f6696deda4e2ff067b3a9844220d">   31</a></span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classExecArgs.html#a92f5f6696deda4e2ff067b3a9844220d">ExecArgs</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="classExecArgs.html">ExecArgs</a> &amp; <a class="code" href="classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50">AddArgument</a>(std::string argument, <span class="keywordtype">int</span> value, std::string seperator= <span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="classExecArgs.html">ExecArgs</a> &amp; <a class="code" href="classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50">AddArgument</a>(std::string argument, <span class="keywordtype">double</span> value, std::string seperator= <span class="stringliteral">&quot;&quot;</span>);</div>
@@ -130,16 +130,18 @@ $(document).ready(function(){initNavTree('ExecArgs_8h_source.html',''); initResi
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    std::vector&lt;std::tuple&lt;ARGUMENT_TYPE, std::string, std::tuple&lt;std::string,std::string&gt;&gt;&gt; m_ArgList;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;};</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#endif </span><span class="comment">//INSTRUMENT_CONTROL_LIB_EXEC_ARGS_H</span></div>
+<div class="ttc" id="aSubArg_8h_html"><div class="ttname"><a href="SubArg_8h.html">SubArg.h</a></div></div>
 <div class="ttc" id="aclassExecArgs_html"><div class="ttname"><a href="classExecArgs.html">ExecArgs</a></div><div class="ttdoc">ExecArgs class is used to create execution arguments based on a parameter seperator value scheme....</div><div class="ttdef"><b>Definition:</b> ExecArgs.h:15</div></div>
 <div class="ttc" id="aclassExecArgs_html_a6b4a00d4d081a528fb5178bdd36c1aa0"><div class="ttname"><a href="classExecArgs.html#a6b4a00d4d081a528fb5178bdd36c1aa0">ExecArgs::GetArgumentsAsString</a></div><div class="ttdeci">std::string GetArgumentsAsString()</div><div class="ttdoc">Transforms the list of arguments to a string which can be passed to the Exec function.</div><div class="ttdef"><b>Definition:</b> ExecArgs.cpp:118</div></div>
 <div class="ttc" id="aclassExecArgs_html_a6d1ef4b4a943b7c52df9616f12937e50"><div class="ttname"><a href="classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50">ExecArgs::AddArgument</a></div><div class="ttdeci">ExecArgs &amp; AddArgument(std::string argument, int value, std::string seperator=&quot;&quot;)</div><div class="ttdoc">This file contains the implementation of the execution arguments, which should can be passed to the E...</div><div class="ttdef"><b>Definition:</b> ExecArgs.cpp:18</div></div>
+<div class="ttc" id="aclassExecArgs_html_a92f5f6696deda4e2ff067b3a9844220d"><div class="ttname"><a href="classExecArgs.html#a92f5f6696deda4e2ff067b3a9844220d">ExecArgs::ExecArgs</a></div><div class="ttdeci">ExecArgs()=default</div></div>
 <div class="ttc" id="aclassSubArg_html"><div class="ttname"><a href="classSubArg.html">SubArg</a></div><div class="ttdoc">This class implements sub-arguments which can be added to a ExecArgs object. This is required,...</div><div class="ttdef"><b>Definition:</b> SubArg.h:14</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_cb2deb75e92edd1ae6fb5a03c395a06e.html">instrument_control_lib</a></li><li class="navelem"><a class="el" href="dir_3dd97237eab0d9af71ca96e14d012ab8.html">include</a></li><li class="navelem"><b>ExecArgs.h</b></li>
+    <li class="navelem"><a class="el" href="dir_cb2deb75e92edd1ae6fb5a03c395a06e.html">instrument_control_lib</a></li><li class="navelem"><a class="el" href="dir_3dd97237eab0d9af71ca96e14d012ab8.html">include</a></li><li class="navelem"><a class="el" href="ExecArgs_8h.html">ExecArgs.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

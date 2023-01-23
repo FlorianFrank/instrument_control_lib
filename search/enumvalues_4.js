@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['local_231',['LOCAL',['../classSMU.html#af83967fc5bbf6c1cfe6457680485c61eacfb66f24b71e97e783c48b4b06110c95',1,'SMU']]]
+  ['either_477',['EITHER',['../classOscilloscope.html#a99c4439d3196795d7c27e2a9039e7861a8e775e63f3100dc13657092a23bcbef9',1,'Oscilloscope']]]
 ];

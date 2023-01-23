@@ -126,6 +126,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a70553067b93b47c37475274d2e63c374"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a70553067b93b47c37475274d2e63c374">Device</a> (std::string ipAddress, uint16_t srcPort, uint16_t destPort, int timeoutInMs, PIL::Logging *logger, bool throwException=true)</td></tr>
 <tr class="memdesc:a70553067b93b47c37475274d2e63c374"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class containing the base functionality of all devices. And parameters to store the name connection type, etc.  <a href="classDevice.html#a70553067b93b47c37475274d2e63c374">More...</a><br /></td></tr>
 <tr class="separator:a70553067b93b47c37475274d2e63c374"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dabc419c8d8df3a686c33ce042bc99a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a9dabc419c8d8df3a686c33ce042bc99a">~Device</a> ()</td></tr>
+<tr class="separator:a9dabc419c8d8df3a686c33ce042bc99a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a365ae23fbe0d2ea5290881834e1969f7"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a365ae23fbe0d2ea5290881834e1969f7">Connect</a> ()</td></tr>
 <tr class="memdesc:a365ae23fbe0d2ea5290881834e1969f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establish a connection to the device.  <a href="classDevice.html#a365ae23fbe0d2ea5290881834e1969f7">More...</a><br /></td></tr>
 <tr class="separator:a365ae23fbe0d2ea5290881834e1969f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,14 +142,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a96b33b9121c59a9606829a7c8379e9c2"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">Exec</a> (const std::string &amp;command, <a class="el" href="classExecArgs.html">ExecArgs</a> *args=nullptr, char *result=nullptr, bool br=true, int size=1024)</td></tr>
 <tr class="memdesc:a96b33b9121c59a9606829a7c8379e9c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute a (SCPI) command  <a href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">More...</a><br /></td></tr>
 <tr class="separator:a96b33b9121c59a9606829a7c8379e9c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b405014c32080fb36ba4ed517fcc78d"><td class="memItemLeft" align="right" valign="top"><a id="a5b405014c32080fb36ba4ed517fcc78d"></a>
-PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>Exec</b> (const std::string &amp;command, <a class="el" href="classExecArgs.html">ExecArgs</a> *args, std::string *result, bool br)</td></tr>
+<tr class="memitem:a5b405014c32080fb36ba4ed517fcc78d"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a5b405014c32080fb36ba4ed517fcc78d">Exec</a> (const std::string &amp;command, <a class="el" href="classExecArgs.html">ExecArgs</a> *args, std::string *result, bool br)</td></tr>
 <tr class="separator:a5b405014c32080fb36ba4ed517fcc78d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c4c5ede6698d53b3269b17a2ad37b8b"><td class="memItemLeft" align="right" valign="top"><a id="a7c4c5ede6698d53b3269b17a2ad37b8b"></a>
-PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><b>ExecCommands</b> (std::string &amp;commands)</td></tr>
+<tr class="memitem:a7c4c5ede6698d53b3269b17a2ad37b8b"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a7c4c5ede6698d53b3269b17a2ad37b8b">ExecCommands</a> (std::string &amp;commands)</td></tr>
 <tr class="separator:a7c4c5ede6698d53b3269b17a2ad37b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88d97c1dad043bf37d5e3d21953bdf49"><td class="memItemLeft" align="right" valign="top"><a id="a88d97c1dad043bf37d5e3d21953bdf49"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>ReturnErrorMessage</b> ()</td></tr>
+<tr class="memitem:a88d97c1dad043bf37d5e3d21953bdf49"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a88d97c1dad043bf37d5e3d21953bdf49">ReturnErrorMessage</a> ()</td></tr>
 <tr class="separator:a88d97c1dad043bf37d5e3d21953bdf49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
@@ -158,29 +157,21 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a38e0fcc0da5513b38626691bdeb610e2"><td class="memItemLeft" align="right" valign="top"><a id="a38e0fcc0da5513b38626691bdeb610e2"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_IPAddr</b></td></tr>
+<tr class="memitem:a38e0fcc0da5513b38626691bdeb610e2"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a38e0fcc0da5513b38626691bdeb610e2">m_IPAddr</a></td></tr>
 <tr class="separator:a38e0fcc0da5513b38626691bdeb610e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54db2f396aa5b21f61d64fabf4d0971f"><td class="memItemLeft" align="right" valign="top"><a id="a54db2f396aa5b21f61d64fabf4d0971f"></a>
-PIL_ErrorHandle&#160;</td><td class="memItemRight" valign="bottom"><b>m_ErrorHandle</b></td></tr>
+<tr class="memitem:a54db2f396aa5b21f61d64fabf4d0971f"><td class="memItemLeft" align="right" valign="top">PIL_ErrorHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a54db2f396aa5b21f61d64fabf4d0971f">m_ErrorHandle</a></td></tr>
 <tr class="separator:a54db2f396aa5b21f61d64fabf4d0971f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3815d815d663b6159a205ae0fa758e0"><td class="memItemLeft" align="right" valign="top"><a id="af3815d815d663b6159a205ae0fa758e0"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>m_DeviceName</b> {}</td></tr>
+<tr class="memitem:af3815d815d663b6159a205ae0fa758e0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#af3815d815d663b6159a205ae0fa758e0">m_DeviceName</a> {}</td></tr>
 <tr class="separator:af3815d815d663b6159a205ae0fa758e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ecf9b0f8e6ba03a17cd6515ca4337c7"><td class="memItemLeft" align="right" valign="top"><a id="a8ecf9b0f8e6ba03a17cd6515ca4337c7"></a>
-PIL::Socket *&#160;</td><td class="memItemRight" valign="bottom"><b>m_SocketHandle</b></td></tr>
+<tr class="memitem:a8ecf9b0f8e6ba03a17cd6515ca4337c7"><td class="memItemLeft" align="right" valign="top">PIL::Socket *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a8ecf9b0f8e6ba03a17cd6515ca4337c7">m_SocketHandle</a></td></tr>
 <tr class="separator:a8ecf9b0f8e6ba03a17cd6515ca4337c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac36ef2e8b4d52769b738890fd595fd24"><td class="memItemLeft" align="right" valign="top"><a id="ac36ef2e8b4d52769b738890fd595fd24"></a>
-PIL::Logging *&#160;</td><td class="memItemRight" valign="bottom"><b>m_Logger</b></td></tr>
+<tr class="memitem:ac36ef2e8b4d52769b738890fd595fd24"><td class="memItemLeft" align="right" valign="top">PIL::Logging *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#ac36ef2e8b4d52769b738890fd595fd24">m_Logger</a></td></tr>
 <tr class="separator:ac36ef2e8b4d52769b738890fd595fd24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acde61506e4573bfa6144e6d3d800b0c8"><td class="memItemLeft" align="right" valign="top"><a id="acde61506e4573bfa6144e6d3d800b0c8"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>m_destPort</b> = 5025</td></tr>
+<tr class="memitem:acde61506e4573bfa6144e6d3d800b0c8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#acde61506e4573bfa6144e6d3d800b0c8">m_destPort</a> = 5025</td></tr>
 <tr class="separator:acde61506e4573bfa6144e6d3d800b0c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5efa21ee5155dbeeaa865e8b074d3c4c"><td class="memItemLeft" align="right" valign="top"><a id="a5efa21ee5155dbeeaa865e8b074d3c4c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>m_srcPort</b> = 5025</td></tr>
+<tr class="memitem:a5efa21ee5155dbeeaa865e8b074d3c4c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a5efa21ee5155dbeeaa865e8b074d3c4c">m_srcPort</a> = 5025</td></tr>
 <tr class="separator:a5efa21ee5155dbeeaa865e8b074d3c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e2150ac73235abf0c90e451f69b57b4"><td class="memItemLeft" align="right" valign="top"><a id="a1e2150ac73235abf0c90e451f69b57b4"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_EnableExceptions</b></td></tr>
+<tr class="memitem:a1e2150ac73235abf0c90e451f69b57b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a1e2150ac73235abf0c90e451f69b57b4">m_EnableExceptions</a></td></tr>
 <tr class="separator:a1e2150ac73235abf0c90e451f69b57b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -359,6 +350,23 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_EnableExceptions</b
 
 </div>
 </div>
+<a id="a9dabc419c8d8df3a686c33ce042bc99a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dabc419c8d8df3a686c33ce042bc99a">&#9670;&nbsp;</a></span>~Device()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Device::~Device </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a365ae23fbe0d2ea5290881834e1969f7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a365ae23fbe0d2ea5290881834e1969f7">&#9670;&nbsp;</a></span>Connect()</h2>
@@ -412,8 +420,48 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_EnableExceptions</b
 
 </div>
 </div>
+<a id="a5b405014c32080fb36ba4ed517fcc78d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b405014c32080fb36ba4ed517fcc78d">&#9670;&nbsp;</a></span>Exec() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PIL_ERROR_CODE Device::Exec </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>command</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classExecArgs.html">ExecArgs</a> *&#160;</td>
+          <td class="paramname"><em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string *&#160;</td>
+          <td class="paramname"><em>result</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>br</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a96b33b9121c59a9606829a7c8379e9c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96b33b9121c59a9606829a7c8379e9c2">&#9670;&nbsp;</a></span>Exec()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a96b33b9121c59a9606829a7c8379e9c2">&#9670;&nbsp;</a></span>Exec() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -471,6 +519,24 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_EnableExceptions</b
 <div class="ttc" id="aclassDevice_html_a96b33b9121c59a9606829a7c8379e9c2"><div class="ttname"><a href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">Device::Exec</a></div><div class="ttdeci">PIL_ERROR_CODE Exec(const std::string &amp;command, ExecArgs *args=nullptr, char *result=nullptr, bool br=true, int size=1024)</div><div class="ttdoc">execute a (SCPI) command</div><div class="ttdef"><b>Definition:</b> Device.cpp:167</div></div>
 <div class="ttc" id="aclassKST3000_html"><div class="ttname"><a href="classKST3000.html">KST3000</a></div><div class="ttdoc">Mixed Single Oscilloscope(Oscillator) Commend operations of a single generator are defined....</div><div class="ttdef"><b>Definition:</b> KST3000.h:26</div></div>
 </div><!-- fragment --> </dd></dl>
+
+</div>
+</div>
+<a id="a7c4c5ede6698d53b3269b17a2ad37b8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c4c5ede6698d53b3269b17a2ad37b8b">&#9670;&nbsp;</a></span>ExecCommands()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PIL_ERROR_CODE Device::ExecCommands </td>
+          <td>(</td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>commands</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -593,9 +659,203 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_EnableExceptions</b
 
 </div>
 </div>
+<a id="a88d97c1dad043bf37d5e3d21953bdf49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88d97c1dad043bf37d5e3d21953bdf49">&#9670;&nbsp;</a></span>ReturnErrorMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Device::ReturnErrorMessage </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="acde61506e4573bfa6144e6d3d800b0c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acde61506e4573bfa6144e6d3d800b0c8">&#9670;&nbsp;</a></span>m_destPort</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Device::m_destPort = 5025</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af3815d815d663b6159a205ae0fa758e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3815d815d663b6159a205ae0fa758e0">&#9670;&nbsp;</a></span>m_DeviceName</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Device::m_DeviceName {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1e2150ac73235abf0c90e451f69b57b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e2150ac73235abf0c90e451f69b57b4">&#9670;&nbsp;</a></span>m_EnableExceptions</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Device::m_EnableExceptions</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a54db2f396aa5b21f61d64fabf4d0971f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54db2f396aa5b21f61d64fabf4d0971f">&#9670;&nbsp;</a></span>m_ErrorHandle</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">PIL_ErrorHandle Device::m_ErrorHandle</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a38e0fcc0da5513b38626691bdeb610e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38e0fcc0da5513b38626691bdeb610e2">&#9670;&nbsp;</a></span>m_IPAddr</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Device::m_IPAddr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac36ef2e8b4d52769b738890fd595fd24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac36ef2e8b4d52769b738890fd595fd24">&#9670;&nbsp;</a></span>m_Logger</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">PIL::Logging* Device::m_Logger</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8ecf9b0f8e6ba03a17cd6515ca4337c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ecf9b0f8e6ba03a17cd6515ca4337c7">&#9670;&nbsp;</a></span>m_SocketHandle</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">PIL::Socket* Device::m_SocketHandle</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5efa21ee5155dbeeaa865e8b074d3c4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5efa21ee5155dbeeaa865e8b074d3c4c">&#9670;&nbsp;</a></span>m_srcPort</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Device::m_srcPort = 5025</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/runner/work/instrument_control_lib/instrument_control_lib/include/<a class="el" href="Device_8h_source.html">Device.h</a></li>
-<li>/home/runner/work/instrument_control_lib/instrument_control_lib/src/Device.cpp</li>
+<li>/home/runner/work/instrument_control_lib/instrument_control_lib/src/<a class="el" href="Device_8cpp.html">Device.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
