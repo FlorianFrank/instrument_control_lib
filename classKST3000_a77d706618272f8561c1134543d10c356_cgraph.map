@@ -1,0 +1,4 @@
+<map id="KST3000::stop" name="KST3000::stop">
+<area shape="rect" id="node1" title="Stop to run. Equivalent to press the Run/Stop button when the device is not stopping." alt="" coords="5,5,120,32"/>
+<area shape="rect" id="node2" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="168,5,273,32"/>
+</map>

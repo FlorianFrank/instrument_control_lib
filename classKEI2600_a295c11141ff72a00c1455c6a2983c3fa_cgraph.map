@@ -1,0 +1,6 @@
+<map id="KEI2600::beep" name="KEI2600::beep">
+<area shape="rect" id="node1" title="Send a beeping sound with a specific duration and frequency to the SMU." alt="" coords="5,31,120,57"/>
+<area shape="rect" id="node2" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="467,5,573,32"/>
+<area shape="rect" id="node3" href="$classKEI2600.html#a00c91442df6f1ee0aa2a25133814536d" title="Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return PIL..." alt="" coords="168,56,383,83"/>
+<area shape="rect" id="node4" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="431,56,609,83"/>
+</map>

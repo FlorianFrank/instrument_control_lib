@@ -1,0 +1,4 @@
+<map id="KST3000::autoScale" name="KST3000::autoScale">
+<area shape="rect" id="node1" title="Equivalent to press the &quot;Auto Scale&quot; button." alt="" coords="5,5,156,32"/>
+<area shape="rect" id="node2" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="204,5,309,32"/>
+</map>

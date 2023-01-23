@@ -1,0 +1,4 @@
+<map id="KST3000::single" name="KST3000::single">
+<area shape="rect" id="node1" title="Equivalent to press the Single button." alt="" coords="5,5,132,32"/>
+<area shape="rect" id="node2" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="180,5,285,32"/>
+</map>

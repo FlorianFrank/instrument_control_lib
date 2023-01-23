@@ -1,0 +1,6 @@
+<map id="KST3000::displayConnection" name="KST3000::displayConnection">
+<area shape="rect" id="node1" title="Display a line of text: Connected Successfully. Returning... The message will disappear after 2 secon..." alt="" coords="5,56,212,83"/>
+<area shape="rect" id="node2" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="260,5,439,32"/>
+<area shape="rect" id="node3" href="$classSubArg.html#adc3b8f8ab4e5840ad777638e31fe13c4" title="Add a new string element to the SubArg&#45;object. It is directly concatenated to the previous arguments." alt="" coords="282,56,417,83"/>
+<area shape="rect" id="node4" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="297,107,402,133"/>
+</map>

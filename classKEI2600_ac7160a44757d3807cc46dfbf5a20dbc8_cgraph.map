@@ -1,0 +1,8 @@
+<map id="KEI2600::measurePy" name="KEI2600::measurePy">
+<area shape="rect" id="node1" title="Measurement method identical to KEI2600::measure, but in this method, the value is directly returned ..." alt="" coords="5,56,161,83"/>
+<area shape="rect" id="node2" href="$classKEI2600.html#a00c91442df6f1ee0aa2a25133814536d" title="Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return PIL..." alt="" coords="397,56,612,83"/>
+<area shape="rect" id="node5" href="$classKEI2600.html#a6cb85ed160de36aeda8ef8e7158bcf78" title="Return last error in error&#45;queue." alt="" coords="423,107,586,133"/>
+<area shape="rect" id="node6" href="$classKEI2600.html#a5756077c5f8f263c2462e8a1c2417c2a" title="This function measures a certain unit on a specific channel. This function can be used to measure vol..." alt="" coords="209,5,349,32"/>
+<area shape="rect" id="node3" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="660,56,839,83"/>
+<area shape="rect" id="node4" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="697,107,802,133"/>
+</map>

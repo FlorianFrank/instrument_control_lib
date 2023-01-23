@@ -1,0 +1,5 @@
+<map id="KEI2600::getErrorBufferStatus" name="KEI2600::getErrorBufferStatus">
+<area shape="rect" id="node1" title="Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return PIL..." alt="" coords="5,31,220,57"/>
+<area shape="rect" id="node2" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="268,5,447,32"/>
+<area shape="rect" id="node3" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="305,56,410,83"/>
+</map>

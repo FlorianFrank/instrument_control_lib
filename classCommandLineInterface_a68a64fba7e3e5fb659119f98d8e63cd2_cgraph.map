@@ -1,0 +1,4 @@
+<map id="CommandLineInterface::Start" name="CommandLineInterface::Start">
+<area shape="rect" id="node1" title="Start executing the command line interface. Input a raw SCPI command and execute. To see if a command..." alt="" coords="5,5,180,47"/>
+<area shape="rect" id="node2" href="$classConfigFileParser.html#afa0268450c61240960046f2782586dd4" title=" " alt="" coords="228,5,463,47"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="SubArg::SubArg" name="SubArg::SubArg">
+<area shape="rect" id="node1" title="This file contains the implementation of sub&#45;arguments. E.g. when a command has the structure smua...." alt="" coords="5,5,128,32"/>
+<area shape="rect" id="node2" href="$classSubArg.html#adc3b8f8ab4e5840ad777638e31fe13c4" title="Add a new string element to the SubArg&#45;object. It is directly concatenated to the previous arguments." alt="" coords="176,5,311,32"/>
+</map>

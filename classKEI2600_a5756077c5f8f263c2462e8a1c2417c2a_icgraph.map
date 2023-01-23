@@ -1,0 +1,4 @@
+<map id="KEI2600::measure" name="KEI2600::measure">
+<area shape="rect" id="node1" title="This function measures a certain unit on a specific channel. This function can be used to measure vol..." alt="" coords="209,5,349,32"/>
+<area shape="rect" id="node2" href="$classKEI2600.html#ac7160a44757d3807cc46dfbf5a20dbc8" title="Measurement method identical to KEI2600::measure, but in this method, the value is directly returned ..." alt="" coords="5,5,161,32"/>
+</map>

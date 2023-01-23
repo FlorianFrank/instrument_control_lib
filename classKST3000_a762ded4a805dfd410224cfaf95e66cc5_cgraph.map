@@ -1,0 +1,10 @@
+<map id="KST3000::getRealData" name="KST3000::getRealData">
+<area shape="rect" id="node1" title="convert a measurement data array to a 2d array: time array &amp; voltage array" alt="" coords="5,92,173,119"/>
+<area shape="rect" id="node2" href="$classKST3000.html#a0301a37e69f16e30e9924c3b8e9bea8d" title="get the sampled data points" alt="" coords="221,16,428,43"/>
+<area shape="rect" id="node6" href="$classKST3000.html#a2cb297fe7c1930ecaa12eb182e228dbc" title="Query the number of waveform points to be transferred." alt="" coords="487,67,702,93"/>
+<area shape="rect" id="node7" href="$classKST3000.html#acf9a92ba038ec1de391004fc6597f8fa" title="Query the preamble of waveform data, e.g. WAVeform:PREamble?" alt="" coords="476,117,713,144"/>
+<area shape="rect" id="node8" href="$KST3000_8cpp.html#a5097395c79d7ddb1729a9c70261b6cfb" title=" " alt="" coords="299,168,350,195"/>
+<area shape="rect" id="node3" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="761,16,940,43"/>
+<area shape="rect" id="node4" href="$classSubArg.html#adc3b8f8ab4e5840ad777638e31fe13c4" title="Add a new string element to the SubArg&#45;object. It is directly concatenated to the previous arguments." alt="" coords="783,67,918,93"/>
+<area shape="rect" id="node5" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="798,117,903,144"/>
+</map>

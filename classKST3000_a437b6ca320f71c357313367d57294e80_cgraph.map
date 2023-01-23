@@ -1,0 +1,4 @@
+<map id="KST3000::digitize" name="KST3000::digitize">
+<area shape="rect" id="node1" title="capture data" alt="" coords="5,5,140,32"/>
+<area shape="rect" id="node2" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="188,5,293,32"/>
+</map>

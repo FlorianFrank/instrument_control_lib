@@ -1,0 +1,5 @@
+<map id="KEI2600::getLastError" name="KEI2600::getLastError">
+<area shape="rect" id="node1" title="Return last error in error&#45;queue." alt="" coords="5,31,168,57"/>
+<area shape="rect" id="node2" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="216,5,395,32"/>
+<area shape="rect" id="node3" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="253,56,358,83"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="CommandLineInterface::SendCustomCommand" name="CommandLineInterface::SendCustomCommand">
+<area shape="rect" id="node1" title=" " alt="" coords="5,27,184,69"/>
+<area shape="rect" id="node2" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="267,5,372,32"/>
+<area shape="rect" id="node3" href="$classCommandLineInterface.html#a30203281e889603a0c60ed10cd2e8c5e" title=" " alt="" coords="232,57,407,98"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="KST33500::setFunction" name="KST33500::setFunction">
+<area shape="rect" id="node1" title="Set output function of the function generator. E.g. SIN sets a sinus wave." alt="" coords="5,31,176,57"/>
+<area shape="rect" id="node2" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="224,5,403,32"/>
+<area shape="rect" id="node3" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="261,56,366,83"/>
+</map>

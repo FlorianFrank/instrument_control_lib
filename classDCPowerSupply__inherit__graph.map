@@ -1,0 +1,5 @@
+<map id="DCPowerSupply" name="DCPowerSupply">
+<area shape="rect" id="node1" title=" " alt="" coords="33,409,183,545"/>
+<area shape="rect" id="node3" href="$classSPD1305.html" title=" " alt="" coords="50,593,166,744"/>
+<area shape="rect" id="node2" href="$classDevice.html" title="Basic device class This class contains all basic method of all devices, like Connect,..." alt="" coords="5,5,211,361"/>
+</map>

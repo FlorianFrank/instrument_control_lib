@@ -1,0 +1,35 @@
+<map id="KEI2600::getErrorBufferStatus" name="KEI2600::getErrorBufferStatus">
+<area shape="rect" id="node1" title="Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return PIL..." alt="" coords="841,831,1056,857"/>
+<area shape="rect" id="node2" href="$classKEI2600.html#a295c11141ff72a00c1455c6a2983c3fa" title="Send a beeping sound with a specific duration and frequency to the SMU." alt="" coords="615,5,730,32"/>
+<area shape="rect" id="node3" href="$classKEI2600.html#ac1e13a158dd731f65d0eb6821d8478d0" title="Disable beeper on the SMU. This command is mandatory to play beeping sounds afterwards." alt="" coords="591,56,754,83"/>
+<area shape="rect" id="node4" href="$classKEI2600.html#ac1989d3e6cb6b8819c156259ae02df8c" title="Disables the analog filter mode of a certain channel." alt="" coords="557,107,788,149"/>
+<area shape="rect" id="node5" href="$classKEI2600.html#a91e47354bce36bec500638533496819d" title="Sets the SMU in fixed range measurement mode for a certain unit, e.g. voltage or current." alt="" coords="565,173,781,214"/>
+<area shape="rect" id="node6" href="$classKEI2600.html#a27d2405e6066effdad4bbbc75e5b9a7c" title="Disables source auto&#45;range mode." alt="" coords="571,238,775,279"/>
+<area shape="rect" id="node7" href="$classKEI2600.html#a8e10dd00f981af33cb76312cd3940b51" title="Turns off the source sink mode." alt="" coords="571,304,774,331"/>
+<area shape="rect" id="node8" href="$classKEI2600.html#a5a1806312d14816cd5b49eacd5ac8d8d" title="Specify the type of measurement currently displayed." alt="" coords="552,355,793,381"/>
+<area shape="rect" id="node9" href="$classKEI2600.html#a7ea8b3a3567d92e1337675d63a972ab9" title="Enable beeper on the SMU. This command is mandatory to play beeping sounds afterwards." alt="" coords="593,405,753,432"/>
+<area shape="rect" id="node10" href="$classKEI2600.html#a26c65ef50d521658e61e6d17b6c8df14" title="Enables the analog filter mode for a certain channel. This engages an approximately 1 Hz analog filte..." alt="" coords="559,457,787,498"/>
+<area shape="rect" id="node11" href="$classKEI2600.html#aad2c4cfd05f27289105ba64b3d09acab" title="Sets the SMU in auto&#45;range mode for a certain unit, e.g. voltage or current." alt="" coords="566,522,779,563"/>
+<area shape="rect" id="node12" href="$classKEI2600.html#ad1bf2839a5a8091c5f773e176a110302" title="Enables source auto&#45;range mode. The SMU immediately changes range to the range most appropriate for t..." alt="" coords="572,587,773,629"/>
+<area shape="rect" id="node13" href="$classKEI2600.html#a28639f209107ebd2a2e72d1549675a00" title="Turns on the source sink mode. This reduces the source limit inaccuracy that occurs when operating in..." alt="" coords="573,653,772,680"/>
+<area shape="rect" id="node14" href="$classKEI2600.html#a52f9e7e2269415aaf0e86f229c5edab1" title=" " alt="" coords="587,704,758,731"/>
+<area shape="rect" id="node17" href="$classKEI2600.html#a5756077c5f8f263c2462e8a1c2417c2a" title="This function measures a certain unit on a specific channel. This function can be used to measure vol..." alt="" coords="603,805,743,832"/>
+<area shape="rect" id="node18" href="$classKEI2600.html#ac7160a44757d3807cc46dfbf5a20dbc8" title="Measurement method identical to KEI2600::measure, but in this method, the value is directly returned ..." alt="" coords="313,819,469,845"/>
+<area shape="rect" id="node19" href="$classKEI2600.html#a4fb6c9a8f3150492cd889248a1efb128" title=" " alt="" coords="597,755,748,781"/>
+<area shape="rect" id="node20" href="$classKEI2600.html#aec1764f1207b9bc036b1e91402c8e87f" title="Sets the level of a certain channel and of a certain unit. It can set the voltage or current on Chann..." alt="" coords="603,907,742,933"/>
+<area shape="rect" id="node21" href="$classKEI2600.html#ac1928210aeb6c6aa0788af67f86a6f09" title="Sets the limit of a certain channel of a certain unit. Allowed are power voltage and current...." alt="" coords="605,957,741,984"/>
+<area shape="rect" id="node22" href="$classKEI2600.html#ae2dba0541e8755343e4044b81eedee4c" title="Enables or disableds automatic updates to the internal reference measurements (autozero) of the instr..." alt="" coords="563,1008,782,1035"/>
+<area shape="rect" id="node23" href="$classKEI2600.html#ab315c7d5f0af6969b9f95fc58887cf93" title="Sets the number of measurements made when a measurement is requested." alt="" coords="574,1059,771,1085"/>
+<area shape="rect" id="node24" href="$classKEI2600.html#a1fc7d82ae4752fb1b1842e024dd96d4b" title="Sets the lowest measurement range that is used when the instrument is autoranging." alt="" coords="559,1109,786,1136"/>
+<area shape="rect" id="node25" href="$classKEI2600.html#a1fa0fabf7e491f37e50b1137f7672b57" title="Sets the integration apeture for measurements." alt="" coords="581,1160,764,1187"/>
+<area shape="rect" id="node26" href="$classKEI2600.html#a9dd157b4fa3a260a504d40131a23a9a2" title="Sets the measure range (positive full&#45;scale value of the measurement range of that SMU)...." alt="" coords="573,1211,773,1237"/>
+<area shape="rect" id="node27" href="$classKEI2600.html#a843a676534b9d8529c3e55dbe5ee77d6" title="Sets the sense mode of a specific channel. LOCAL, REMOTE or CALA is supported. When selecting LOCAL,..." alt="" coords="583,1261,762,1288"/>
+<area shape="rect" id="node28" href="$classKEI2600.html#a695932d499fa40e39cda7d99a3c80aac" title="Set the source function which can bei either voltage or current." alt="" coords="571,1312,774,1339"/>
+<area shape="rect" id="node29" href="$classKEI2600.html#a4e277f09cfe4514f7b5ea6f87db885c1" title="Sets the source output&#45;off mode." alt="" coords="571,1363,774,1389"/>
+<area shape="rect" id="node30" href="$classKEI2600.html#a3fa30f537602a306418b1965e7e03b43" title="Assigning a value to this attribute sets the SMU to a fixed range large enough to source the assigned..." alt="" coords="579,1413,767,1440"/>
+<area shape="rect" id="node31" href="$classKEI2600.html#a8d1fa800384584b0ef2765ba021d8ffc" title="Set the source settling mode. (See SRC_SETTLING enum for more information)" alt="" coords="574,1464,771,1491"/>
+<area shape="rect" id="node32" href="$classKEI2600.html#add39a2e5c69a96b552ea0a094fd0f2e8" title="This function turns off a specific channel of the KEI2600&#45;SMU." alt="" coords="609,1515,737,1541"/>
+<area shape="rect" id="node33" href="$classKEI2600.html#a3a2e9bf63f0ff57a611bd201b5662097" title="This function turns on a specific channel of the KEI2600&#45;SMU." alt="" coords="609,1565,736,1592"/>
+<area shape="rect" id="node15" href="$classKEI2600.html#a5557b8437bccf24eecb219efa33549e0" title=" " alt="" coords="277,743,504,769"/>
+<area shape="rect" id="node16" href="$classKEI2600.html#a77da5991bc4dbba6c1e3670e059e3cf8" title=" " alt="" coords="5,735,229,777"/>
+</map>
