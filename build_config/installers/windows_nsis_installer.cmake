@@ -1,10 +1,11 @@
 function(build_nsis_installer)
+
     install(TARGETS instrument_control_lib
-            LIBRARY DESTINATION lib
-            ARCHIVE DESTINATION lib
-            RUNTIME DESTINATION bin
-            PUBLIC_HEADER DESTINATION include
-            )
+            LIBRARY DESTINATION       "lib"
+            ARCHIVE DESTINATION       "lib"
+            RESOURCE DESTINATION      "lib"
+            RUNTIME DESTINATION        "bin"
+            PUBLIC_HEADER DESTINATION "include")
 
 
     set(CPACK_PACKAGE_NAME "instrument_control_lib")
