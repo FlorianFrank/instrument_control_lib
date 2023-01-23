@@ -67,6 +67,11 @@ jobs:
         working-directory: ${{runner.workspace}}/build
         shell: bash
         run: cmake --build . --config ${{ matrix.config.build_type }} --target all
+
+      - name: Generate NSIS installer
+        working-directory: ${{runner.workspace}}/build
+        shell: bash
+        run: cpack -D CPACK_INCLUDE_TOPLEVEL_DIRECTORY=0 -G NSIS
       
       - name: Execute tests
         if: matrix.config.os != 'windows-latest'
