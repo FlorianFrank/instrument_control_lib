@@ -28,7 +28,7 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/boost/include")
 #add_subdirectory(memristor_tester)
 add_subdirectory(common_tools_lib)
 
-set(ENABLE_PYTHON 1)
+#set(ENABLE_PYTHON 1)
 if(ENABLE_PYTHON)
     add_subdirectory(python_interface)
 endif() # ENABLE_PYTHON
@@ -56,17 +56,11 @@ target_include_directories(instrument_control_lib PUBLIC "${CMAKE_CURRENT_SOURCE
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/ErrorHandling/include"
                                                           "${CMAKE_CURRENT_SOURCE_DIR}/common_tools_lib/Logging/include")
 
-install(TARGETS instrument_control_lib
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib
-        RUNTIME DESTINATION bin
-        )
 
-install(DIRECTORY include/
-        DESTINATION include
-        FILES_MATCHING PATTERN "*.h"
-        )
-
+if(PIL_NSIS_BUILD)
+    include(build_config/installers/windows_nsis_installer.cmake)
+    build_nsis_installer()
+endif() # PIL_NSIS_BUILD
 
 if (BUILD_DOCUMENTATION)
     include("${CMAKE_CURRENT_SOURCE_DIR}/build_config/documentation.cmake")
