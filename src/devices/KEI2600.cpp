@@ -81,7 +81,7 @@ PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double *value, b
 double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
 {
     double value;
-    auto ret = measure(unit, channel, &value, true);
+    auto ret = measure(unit, channel, &value, checkErrorBuffer);
 
     if (IsBuffered()) {
         return 0;
@@ -884,7 +884,7 @@ PIL_ERROR_CODE KEI2600::measureR(SMU_CHANNEL channel, double *value)
  */
 PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
 {
-    if(!value) {
+    if(!IsBuffered() && !value) {
         if(m_EnableExceptions)
             throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
         return PIL_INVALID_ARGUMENTS;
@@ -1579,6 +1579,20 @@ PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, double *buffer, bool 
     return handleErrorCode(ret, checkErrorBuffer);
 }
 
+std::vector<double> KEI2600::getBuffer(std::string bufferName, bool checkErroBuffer) {
+    int bufferSize;
+    getBufferSize(bufferName, &bufferSize, false);
+    double buffer[bufferSize];
+    readBuffer(bufferName, buffer, false);
+
+    std::vector<double> output;
+    for (double item : buffer) {
+        output.push_back(item);
+    }
+
+    return output;
+}
+
 /**
  * @brief Retrieves the size of the buffer with the given name.
  * 
@@ -1598,6 +1612,12 @@ PIL_ERROR_CODE KEI2600::getBufferSize(std::string bufferName, int *value, bool c
     *value = n;
 
     return handleErrorCode(ret, checkErrorBuffer);
+}
+
+int KEI2600::getBufferSizePy(std::string bufferName, bool checkErrorBuffer) {
+    int size;
+    getBufferSize(bufferName, &size, checkErrorBuffer);
+    return size;
 }
 
 /**
@@ -1620,7 +1640,7 @@ bool KEI2600::errorOccured(PIL_ERROR_CODE errorCode) {
 PIL_ERROR_CODE KEI2600::handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErrorBuffer) {
     if(errorOccured(errorCode))
         return errorCode;
-    if(checkErrorBuffer)
+    if(!IsBuffered() && checkErrorBuffer)
         return getErrorBufferStatus();
     return PIL_NO_ERROR;
 }

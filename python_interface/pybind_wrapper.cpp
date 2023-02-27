@@ -1,4 +1,5 @@
 #include "pybind11/pybind11.h"
+#include "pybind11/stl.h"
 #include "Device.h"
 #include "devices/types/DCPowerSupply.h"
 #include "devices/SPD1305.h"
@@ -85,7 +86,12 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
         .def("executeScript", &KEI2600::executeScript)
         .def("sendAndExecuteScript", &KEI2600::sendAndExecuteScript)
         .def("performLinearVoltageSweep", &KEI2600::performLinearVoltageSweep)
-        .def("executeBufferedScript", &KEI2600::executeBufferedScript);
+        .def("executeBufferedScript", &KEI2600::executeBufferedScript)
+        .def("getBuffer", &KEI2600::getBuffer)
+        .def("changeSendMode", &KEI2600::changeSendMode)
+        .def("delay", &KEI2600::delay)
+        .def_readonly("CHANNEL_A_BUFFER", &KEI2600::CHANNEL_A_BUFFER)
+        .def_readonly("CHANNEL_B_BUFFER", &KEI2600::CHANNEL_B_BUFFER);
 
     enum_<SMU::SEND_METHOD>(m, "SEND_METHOD")
             .value("DIRECT_SEND", SMU::DIRECT_SEND)
