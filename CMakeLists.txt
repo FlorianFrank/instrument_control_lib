@@ -15,7 +15,7 @@ file(GLOB device_type_files ${CMAKE_CURRENT_SOURCE_DIR}/src/devices/types/*.cpp)
 if(INSTRUMENT_LIB_BUILD_STATIC)
     add_library(instrument_control_lib STATIC ${source_files} ${device_files} ${device_type_files})
 else() # build shared lib
-    add_library(instrument_control_lib SHARED ${source_files} ${device_files} ${device_type_files} python_interface/pybind_wrapper.cpp python_interface/pybind_wrapper.h playground/testSweep.cpp)
+    add_library(instrument_control_lib SHARED ${source_files} ${device_files} ${device_type_files} python_interface/pybind_wrapper.cpp python_interface/pybind_wrapper.h)
 endif()
 
 target_compile_options(instrument_control_lib PRIVATE -Wall -Wextra -Wpedantic)  # TODO: readd -Werror flag!
@@ -26,6 +26,7 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/pugixml")
 add_subdirectory(common_tools_lib)
 add_subdirectory(playground)
 add_subdirectory(tests)
+add_subdirectory(examples)
 
 if(ENABLE_PYTHON)
     add_subdirectory(python_interface)

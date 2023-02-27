@@ -80,12 +80,12 @@ PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double *value, b
  */
 double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
 {
-    if (IsBuffered()) {
-        throw new std::logic_error("Buffering when receiving values is currently not supported!");
-    }
-
     double value;
     auto ret = measure(unit, channel, &value, true);
+
+    if (IsBuffered()) {
+        return 0;
+    }
 
     if (errorOccured(ret) && m_Logger) {
         if(m_EnableExceptions)
@@ -750,20 +750,10 @@ PIL_ERROR_CODE KEI2600::measureI(SMU_CHANNEL channel, double *value)
         return PIL_INVALID_ARGUMENTS;
     }
 
-    std::string placeToSave;
-    if (IsBuffered()) {
-        placeToSave = getMeasurementBufferName(channel);
-        if (channel == CHANNEL_A) {
-            m_bufferEntriesA++;
-        } else {
-            m_bufferEntriesB++;
-        }
-    }
-
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
             .AddElem("measure", ".")
-            .AddElem("i(" + placeToSave + ")", ".");
+            .AddElem("i(" + maybePutInBuffer(channel) + ")", ".");
 
     ExecArgs args;
     args.AddArgument(subArg, "");
@@ -787,9 +777,12 @@ PIL_ERROR_CODE KEI2600::measureI(SMU_CHANNEL channel, double *value)
         if(m_Logger)
             m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureI returned: %s", result.c_str());
         *value = std::stod(result);
-        return PIL_NO_ERROR;
     }
+
+    return PIL_NO_ERROR;
 }
+
+
 
 /**
  * @brief Helper function to measure the voltage of a specific channel.
@@ -799,7 +792,7 @@ PIL_ERROR_CODE KEI2600::measureI(SMU_CHANNEL channel, double *value)
  */
 PIL_ERROR_CODE KEI2600::measureV(SMU_CHANNEL channel, double *value)
 {
-    if(!value) {
+    if(!IsBuffered() && !value) {
         if(m_EnableExceptions)
             throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
         return PIL_INVALID_ARGUMENTS;
@@ -808,7 +801,7 @@ PIL_ERROR_CODE KEI2600::measureV(SMU_CHANNEL channel, double *value)
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
             .AddElem("measure", ".")
-            .AddElem("v()", ".");
+            .AddElem("v(" + maybePutInBuffer(channel) + ")", ".");
 
     ExecArgs args;
     args.AddArgument(subArg, "");
@@ -817,20 +810,23 @@ PIL_ERROR_CODE KEI2600::measureV(SMU_CHANNEL channel, double *value)
     if (errorOccured(ret))
         return ret;
 
-    SubArg subArgPrint("");
-    subArgPrint.AddElem("reading", "(", ")");
+    if (!IsBuffered()) {
+        SubArg subArgPrint("");
+        subArgPrint.AddElem("reading", "(", ")");
 
-    ExecArgs execArgs;
-    execArgs.AddArgument(subArgPrint, "");
+        ExecArgs execArgs;
+        execArgs.AddArgument(subArgPrint, "");
 
-    std::string result;
-    ret = Exec("print", &execArgs, &result, true);
-    if (errorOccured(ret))
-        return ret;
+        std::string result;
+        ret = Exec("print", &execArgs, &result, true);
+        if (errorOccured(ret))
+            return ret;
 
-    if(m_Logger)
-        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureV returned: %s", result.c_str());
-    *value = std::stod(result);
+        if(m_Logger)
+            m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureV returned: %s", result.c_str());
+        *value = std::stod(result);
+    }
+
     return PIL_NO_ERROR;
 }
 
@@ -842,7 +838,7 @@ PIL_ERROR_CODE KEI2600::measureV(SMU_CHANNEL channel, double *value)
  */
 PIL_ERROR_CODE KEI2600::measureR(SMU_CHANNEL channel, double *value)
 {
-    if(!value) {
+    if(!IsBuffered() && !value) {
         if(m_EnableExceptions)
             throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
         return PIL_INVALID_ARGUMENTS;
@@ -851,7 +847,7 @@ PIL_ERROR_CODE KEI2600::measureR(SMU_CHANNEL channel, double *value)
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
             .AddElem("measure", ".")
-            .AddElem("r()", ".");
+            .AddElem("r(" + maybePutInBuffer(channel) + ")", ".");
 
     ExecArgs args;
     args.AddArgument(subArg, "");
@@ -860,20 +856,23 @@ PIL_ERROR_CODE KEI2600::measureR(SMU_CHANNEL channel, double *value)
     if (errorOccured(ret))
         return ret;
 
-    SubArg subArgPrint("");
-    subArgPrint.AddElem("reading", "(", ")");
+    if (!IsBuffered()) {
+        SubArg subArgPrint("");
+        subArgPrint.AddElem("reading", "(", ")");
 
-    ExecArgs execArgs;
-    execArgs.AddArgument(subArgPrint, "");
+        ExecArgs execArgs;
+        execArgs.AddArgument(subArgPrint, "");
 
-    std::string result;
-    ret = Exec("print", &execArgs, &result, true);
-    if (errorOccured(ret))
-        return ret;
+        std::string result;
+        ret = Exec("print", &execArgs, &result, true);
+        if (errorOccured(ret))
+            return ret;
 
-    if(m_Logger)
-        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureR returned: %s", result.c_str());
-    *value = std::stod(result);
+        if(m_Logger)
+            m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureR returned: %s", result.c_str());
+        *value = std::stod(result);
+    }
+    
     return PIL_NO_ERROR;
 }
 
@@ -894,7 +893,7 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
             .AddElem("measure", ".")
-            .AddElem("p()", ".");
+            .AddElem("p(" + maybePutInBuffer(channel) + ")", ".");
 
     ExecArgs args;
     args.AddArgument(subArg, "");
@@ -903,20 +902,23 @@ PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
     if (errorOccured(ret))
         return ret;
 
-    SubArg subArgPrint("");
-    subArgPrint.AddElem("reading", "(", ")");
+    if (!IsBuffered()) {
+        SubArg subArgPrint("");
+        subArgPrint.AddElem("reading", "(", ")");
 
-    ExecArgs execArgs;
-    execArgs.AddArgument(subArgPrint, "");
+        ExecArgs execArgs;
+        execArgs.AddArgument(subArgPrint, "");
 
-    std::string result;
-    ret = Exec("print", &execArgs, &result, true);
-    if (errorOccured(ret))
-        return ret;
+        std::string result;
+        ret = Exec("print", &execArgs, &result, true);
+        if (errorOccured(ret))
+            return ret;
 
-    if(m_Logger)
-        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureP returned: %s", result.c_str());
-    *value = std::stod(result);
+        if(m_Logger)
+            m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureP returned: %s", result.c_str());
+        *value = std::stod(result);
+    }
+
     return PIL_NO_ERROR;
 }
 
@@ -1632,4 +1634,18 @@ void KEI2600::clearBufferedScript() {
 std::string KEI2600::getMeasurementBufferName(SMU_CHANNEL channel) {
     std::string prefix = channel == CHANNEL_A ? "A" : "B";
     return prefix + "_M_BUFFER";
+}
+
+std::string KEI2600::maybePutInBuffer(SMU_CHANNEL channel) {
+    std::string placeToSave;
+    if (IsBuffered()) {
+        placeToSave = getMeasurementBufferName(channel);
+        if (channel == CHANNEL_A) {
+            m_bufferEntriesA++;
+        } else {
+            m_bufferEntriesB++;
+        }
+    }
+
+    return placeToSave;
 }

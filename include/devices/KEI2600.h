@@ -103,8 +103,9 @@ private:
     static std::string getStringFromSenseValue(SMU_SENSE sense);
 
     static bool errorOccured(PIL_ERROR_CODE ret);
-
     PIL_ERROR_CODE handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErrorBuffer);
+
+    std::string maybePutInBuffer(SMU_CHANNEL channel);
 
     int m_bufferEntriesA = 1;
     int m_bufferEntriesB = 1;

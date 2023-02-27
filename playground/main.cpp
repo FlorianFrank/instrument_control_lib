@@ -57,11 +57,12 @@ void measurementBufferingTest() {
     auto *smu = new KEI2600(ip, 0, &logger, Device::SEND_METHOD::DIRECT_SEND);
 
     smu->Connect();
+    smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_A, 0.42, false);
     smu->changeSendMode(Device::SEND_METHOD::BUFFER_ENABLED);
 
     for (int i = 0; i < 10; ++i) {
-        smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_A, (0.42 + (i / 100.0)), false);
-        smu->measure(SMU::CURRENT, SMU::CHANNEL_A, nullptr, false);
+        smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_A, i / 100.0, false);
+        smu->measure(SMU::VOLTAGE, SMU::CHANNEL_A, nullptr, false);
     }
 
     smu->executeBufferedScript(false);
@@ -71,12 +72,10 @@ void measurementBufferingTest() {
     std::cout << smu->getBufferedScript() << std::endl;
 
     int bufferSize;
-    smu->getBufferSize("A_M_BUFFER", &bufferSize, false);
-
-    std::cout << "Buffer size: " << bufferSize << std::endl;
+    smu->getBufferSize(smu->CHANNEL_A_BUFFER, &bufferSize, false);
     double buffer[bufferSize];
 
-    smu->readBuffer("A_M_BUFFER", buffer, false);
+    smu->readBuffer(smu->CHANNEL_A_BUFFER, buffer, false);
 
     for (const auto &item: buffer) {
         std::cout << item << std::endl;
