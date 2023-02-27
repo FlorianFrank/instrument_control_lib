@@ -28,6 +28,7 @@ add_subdirectory(playground)
 add_subdirectory(tests)
 add_subdirectory(examples)
 
+set(ENABLE_PYTHON 1)
 if(ENABLE_PYTHON)
     add_subdirectory(python_interface)
 endif() # ENABLE_PYTHON
