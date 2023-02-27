@@ -23,6 +23,7 @@ extern "C" {
  * @param logger Logger-object to generate logging messages during the execution.
  */
 KEI2600::KEI2600(std::string ipAddress, int timeoutInMS, PIL::Logging *logger, SEND_METHOD mode) : SMU(std::move(ipAddress), timeoutInMS, logger, mode) {
+    m_BufferedScript = defaultBufferScript;
 }
 
 /**
@@ -31,6 +32,7 @@ KEI2600::KEI2600(std::string ipAddress, int timeoutInMS, PIL::Logging *logger, S
  * @param timeoutInMS timeout in milliseconds of the socket.
  */
 [[maybe_unused]] KEI2600::KEI2600(std::string ipAddress, int timeoutInMS, SEND_METHOD mode) : SMU(std::move(ipAddress), timeoutInMS, nullptr, mode) {
+    m_BufferedScript = defaultBufferScript;
     std::string logFile = "instrument_control.log";
     m_Logger = new PIL::Logging(PIL::INFO, &logFile);
 }
@@ -46,10 +48,6 @@ KEI2600::KEI2600(std::string ipAddress, int timeoutInMS, PIL::Logging *logger, S
  */
 PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double *value, bool checkErrorBuffer)
 {
-    if (IsBuffered()) {
-        throw new std::logic_error("Buffering when receiving values is currently not supported!");
-    }
-
     auto ret = PIL_NO_ERROR;
     switch (unit)
     {
@@ -746,16 +744,26 @@ PIL_ERROR_CODE KEI2600::beep(float timeInSeconds, int frequency, bool checkError
  */
 PIL_ERROR_CODE KEI2600::measureI(SMU_CHANNEL channel, double *value)
 {
-    if(!value) {
+    if(!IsBuffered() && !value) {
         if(m_EnableExceptions)
             throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
         return PIL_INVALID_ARGUMENTS;
     }
 
+    std::string placeToSave;
+    if (IsBuffered()) {
+        placeToSave = getMeasurementBufferName(channel);
+        if (channel == CHANNEL_A) {
+            m_bufferEntriesA++;
+        } else {
+            m_bufferEntriesB++;
+        }
+    }
+
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
             .AddElem("measure", ".")
-            .AddElem("i()", ".");
+            .AddElem("i(" + placeToSave + ")", ".");
 
     ExecArgs args;
     args.AddArgument(subArg, "");
@@ -764,21 +772,23 @@ PIL_ERROR_CODE KEI2600::measureI(SMU_CHANNEL channel, double *value)
     if (errorOccured(ret))
         return ret;
 
-    SubArg subArgPrint("");
-    subArgPrint.AddElem("reading", "(", ")");
+    if (!IsBuffered()) {
+        SubArg subArgPrint("");
+        subArgPrint.AddElem("reading", "(", ")");
 
-    ExecArgs execArgs;
-    execArgs.AddArgument(subArgPrint, "");
+        ExecArgs execArgs;
+        execArgs.AddArgument(subArgPrint, "");
 
-    std::string result;
-    ret = Exec("print", &execArgs, &result, true);
-    if (errorOccured(ret))
-        return ret;
+        std::string result;
+        ret = Exec("print", &execArgs, &result, true);
+        if (errorOccured(ret))
+            return ret;
 
-    if(m_Logger)
-        m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureI returned: %s", result.c_str());
-    *value = std::stod(result);
-    return PIL_NO_ERROR;
+        if(m_Logger)
+            m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureI returned: %s", result.c_str());
+        *value = std::stod(result);
+        return PIL_NO_ERROR;
+    }
 }
 
 /**
@@ -1269,7 +1279,7 @@ PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double st
 
     auto ret = executeBufferedScript(checkErrorBuffer);
 
-    changeSendMode(prevSendMethod);
+    m_SendMode = prevSendMethod;
     m_BufferedScript = oldBuffer;
 
     return handleErrorCode(ret, checkErrorBuffer);
@@ -1337,8 +1347,7 @@ void postRequest(const std::string& url, std::string& payload) {
         const auto response = request.send("POST", payload, {
             {"Content-Type", "application/json"}
         });
-    }
-    catch (const std::exception& e) {
+    } catch (const std::exception& e) {
         // TODO: handle error
     }
 }
@@ -1436,6 +1445,10 @@ PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
     if (!m_BufferedScript.empty()) {
         SEND_METHOD prevSendMode = m_SendMode;
         m_SendMode = SEND_METHOD::DIRECT_SEND;
+
+        m_BufferedScript = replaceAllSubstrings(m_BufferedScript, "%A_M_BUFFER_SIZE%", std::to_string(m_bufferEntriesA));
+        m_BufferedScript = replaceAllSubstrings(m_BufferedScript, "%B_M_BUFFER_SIZE%", "" + std::to_string(m_bufferEntriesB));
+
         auto ret = sendAndExecuteScript(m_BufferedScript, "bufferedScript", checkErrorBuffer);
         m_SendMode = prevSendMode;
         return handleErrorCode(ret, checkErrorBuffer);
@@ -1608,4 +1621,15 @@ PIL_ERROR_CODE KEI2600::handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErro
     if(checkErrorBuffer)
         return getErrorBufferStatus();
     return PIL_NO_ERROR;
+}
+
+void KEI2600::clearBufferedScript() {
+    m_BufferedScript = defaultBufferScript;
+    m_bufferEntriesA = 1;
+    m_bufferEntriesB = 1;
+}
+
+std::string KEI2600::getMeasurementBufferName(SMU_CHANNEL channel) {
+    std::string prefix = channel == CHANNEL_A ? "A" : "B";
+    return prefix + "_M_BUFFER";
 }

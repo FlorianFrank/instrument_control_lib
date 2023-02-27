@@ -77,6 +77,11 @@ public:
     PIL_ERROR_CODE clearBuffer(std::string bufferName, bool checkErrorBuffer);
     PIL_ERROR_CODE readBuffer(std::string bufferName, double *buffer, bool checkErrorBuffer);
     PIL_ERROR_CODE getBufferSize(std::string bufferName, int *value, bool checkErrorBuffer);
+    void clearBufferedScript();
+    std::string getMeasurementBufferName(SMU_CHANNEL channel);
+
+    std::string CHANNEL_A_BUFFER = "A_M_BUFFER";
+    std::string CHANNEL_B_BUFFER = "B_M_BUFFER";
 
 private:
     PIL_ERROR_CODE measureI(SMU_CHANNEL channel, double *value);
@@ -100,4 +105,12 @@ private:
     static bool errorOccured(PIL_ERROR_CODE ret);
 
     PIL_ERROR_CODE handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErrorBuffer);
+
+    int m_bufferEntriesA = 1;
+    int m_bufferEntriesB = 1;
+
+    std::string defaultBufferScript = CHANNEL_A_BUFFER + " = smua.makebuffer(%A_M_BUFFER_SIZE%)\n"
+                                      + CHANNEL_B_BUFFER + " = smub.makebuffer(%B_M_BUFFER_SIZE%)\n"
+                                      + CHANNEL_A_BUFFER + ".appendmode = 1\n"
+                                      + CHANNEL_B_BUFFER + ".appendmode = 1\n";
 };
