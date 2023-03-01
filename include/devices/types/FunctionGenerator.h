@@ -26,7 +26,9 @@ public:
         /* Pseudo random bit stream signal */
         PSEUDO_RANDOM_BIT_STREAM,
         /* Arbitrary signal */
-        ARBITRARY
+        ARBITRARY,
+        /* Constant dc voltage */
+        DC_VOLTAGE
     };
 
     enum FUNC_CHANNEL {

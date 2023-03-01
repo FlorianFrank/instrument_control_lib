@@ -166,6 +166,8 @@ std::string KST33500::GetFunctionStr(FUNCTION_TYPE functionType)
             return "PRBS";
         case ARBITRARY:
             return "ARB";
+        case DC_VOLTAGE:
+            return "DC";
         default:
             if(m_EnableExceptions)
                 throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "Unknown function type");

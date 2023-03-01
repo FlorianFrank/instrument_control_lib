@@ -88,6 +88,7 @@ void measurementBufferingTest() {
 void kstTest() {
     auto *kst = new KST33500("132.231.14.174", 2000);
     kst->Connect();
+    kst->setFunction(KST33500::FUNCTION_TYPE::DC_VOLTAGE);
     kst->setOffset(0.5);
     kst->turnOn();
     kst->Disconnect();
