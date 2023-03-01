@@ -8,19 +8,17 @@
 
 using namespace std;
 
-KST33500::KST33500(const char *ip, int timeoutInMS) : FunctionGenerator(ip, timeoutInMS, nullptr){
+KST33500::KST33500(const char *ip, int timeoutInMS) : FunctionGenerator(ip, timeoutInMS, nullptr) {
     this->m_DeviceName = "Keysight 33500B Waveform Generator";
     m_Logger = new PIL::Logging(PIL::INFO, nullptr);
 }
 
-KST33500::KST33500(const char *ip, int timeoutInMs, PIL::Logging *logger) : FunctionGenerator(ip, timeoutInMs, logger)
-{
+KST33500::KST33500(const char *ip, int timeoutInMs, PIL::Logging *logger) : FunctionGenerator(ip, timeoutInMs, logger) {
     this->m_DeviceName = "Keysight 33500B Waveform Generator";
 }
 
 
-PIL_ERROR_CODE KST33500::display(std::string &text)
-{
+PIL_ERROR_CODE KST33500::display(std::string &text) {
     SubArg arg("DISP");
     arg.AddElem("TEXT", ":");
 
@@ -33,12 +31,12 @@ PIL_ERROR_CODE KST33500::display(std::string &text)
 // TODO not needed I guess
 PIL_ERROR_CODE KST33500::displayConnection() {
     auto execRet = Exec("DISP:TEXT 'Connected Successfully. Returning...'");
-    if(execRet != PIL_NO_ERROR)
+    if (execRet != PIL_NO_ERROR)
         return execRet;
 
-  sleep(2);
+    sleep(2);
     execRet = Exec("DISP ON");
-    if(execRet != PIL_NO_ERROR)
+    if (execRet != PIL_NO_ERROR)
         return execRet;
 
     return Exec("DISPlay:TEXT:CLEar");
@@ -50,53 +48,49 @@ PIL_ERROR_CODE KST33500::displayConnection() {
  * */
 PIL_ERROR_CODE KST33500::setPulseWidth(double value) {
 
-  SubArg arg("FUNCtion");
-  arg.AddElem("PULSe", ":")
-  .AddElem("WIDTh", ":");
+    SubArg arg("FUNCtion");
+    arg.AddElem("PULSe", ":")
+            .AddElem("WIDTh", ":");
 
-  ExecArgs args;
-  args.AddArgument(arg, std::to_string(value) + " ms", " ");
+    ExecArgs args;
+    args.AddArgument(arg, std::to_string(value) + " ms", " ");
 
-  return Exec("", &args);
+    return Exec("", &args);
 }
 
 PIL_ERROR_CODE KST33500::output(bool on) {
-  ExecArgs args;
-  if (on)
-    args.AddArgument("ON", " ");
-  else
-      args.AddArgument("OFF", " ");
+    ExecArgs args;
+    if (on)
+        args.AddArgument("ON", " ");
+    else
+        args.AddArgument("OFF", " ");
 
     return Exec("OUTPut ", &args);
 }
 
-PIL_ERROR_CODE KST33500::turnOn()
-{
+PIL_ERROR_CODE KST33500::turnOn() {
     return output(true);
 }
 
-PIL_ERROR_CODE KST33500::turnOff()
-{
+PIL_ERROR_CODE KST33500::turnOff() {
     return output(false);
 }
 
-PIL_ERROR_CODE KST33500::setFrequency(double value)
-{
+PIL_ERROR_CODE KST33500::setFrequency(double value) {
     ExecArgs args;
     args.AddArgument("", value);
     return Exec("FREQuency ", &args);
 }
 
 // TODO unclear
-PIL_ERROR_CODE KST33500::setAmplitude(double value, const char *constrain)
-{
+PIL_ERROR_CODE KST33500::setAmplitude(double value, const char *constrain) {
     std::string msg = "VOLTage";
     if (strlen(constrain) > 0) {
         msg += ":" + std::string(constrain) + " ";
     }
     msg += " " + std::to_string(value);
     auto execRet = Exec(msg);
-    if(execRet != PIL_NO_ERROR)
+    if (execRet != PIL_NO_ERROR)
         return execRet;
 
     m_Amplitude = value;
@@ -109,8 +103,7 @@ PIL_ERROR_CODE KST33500::setAmplitude(double value, const char *constrain)
  * @param functionType type of output function to set. E.g. SINUS or SQUARE for sinus and square waves
  * @return true if no error occurs. Otherwise the error could be read by calling return_error_message().
  */
-PIL_ERROR_CODE KST33500::setFunction(FunctionGenerator::FUNCTION_TYPE functionType)
-{
+PIL_ERROR_CODE KST33500::setFunction(FunctionGenerator::FUNCTION_TYPE functionType) {
     auto function = GetFunctionStr(functionType);
 
 
@@ -118,15 +111,14 @@ PIL_ERROR_CODE KST33500::setFunction(FunctionGenerator::FUNCTION_TYPE functionTy
     args.AddArgument("FUNCtion", function, " ");
 
     auto execRet = Exec("", &args);
-    if(execRet != PIL_NO_ERROR)
+    if (execRet != PIL_NO_ERROR)
         return execRet;
 
     m_CurrentFunction = functionType;
     return PIL_NO_ERROR;
 }
 
-PIL_ERROR_CODE KST33500::setPhase(double value)
-{
+PIL_ERROR_CODE KST33500::setPhase(double value) {
     ExecArgs args;
     args.AddArgument("PHASe", value, " ");
     return Exec("", &args);
@@ -136,8 +128,7 @@ PIL_ERROR_CODE KST33500::setPhase(double value)
  * argument unit: V
  * attention: offset would change voltage by double of your argument
  * */
-PIL_ERROR_CODE KST33500::setOffset(double offset)
-{
+PIL_ERROR_CODE KST33500::setOffset(double offset) {
     SubArg voltageOffset("VOLTage");
     voltageOffset.AddElem("OFFSet", ":");
 
@@ -146,10 +137,8 @@ PIL_ERROR_CODE KST33500::setOffset(double offset)
     return Exec("", &args);
 }
 
-std::string KST33500::GetFunctionStr(FUNCTION_TYPE functionType)
-{
-    switch (functionType)
-    {
+std::string KST33500::GetFunctionStr(FUNCTION_TYPE functionType) {
+    switch (functionType) {
         case SIN:
             return "SIN";
         case SQUARE:
@@ -169,7 +158,7 @@ std::string KST33500::GetFunctionStr(FUNCTION_TYPE functionType)
         case DC_VOLTAGE:
             return "DC";
         default:
-            if(m_EnableExceptions)
+            if (m_EnableExceptions)
                 throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "Unknown function type");
             return "";
     }
