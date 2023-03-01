@@ -145,23 +145,8 @@ double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
  * @param checkErrorBuffer if true error buffer status is requested and evaluated.
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
-PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel, bool checkErrorBuffer)
-{
-    SubArg subArg("source",".");
-           subArg.AddElem("output", ".");
-
-    SubArg outputArg("OUTPUT_ON", ".");
-
-    SubArg smuNumber("smu");
-           smuNumber.AddElem(getChannelStringFromEnum(channel));
-
-    ExecArgs execArgs;
-    execArgs.AddArgument("smu", getChannelStringFromEnum(channel))
-    .AddArgument(subArg, smuNumber, " = ")
-    .AddArgument(outputArg, "");
-
-    auto ret = Exec("", &execArgs);
-    return handleErrorCode(ret, checkErrorBuffer);
+PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel, bool checkErrorBuffer) {
+    toggle(channel, false, checkErrorBuffer);
 }
 
 /**
@@ -170,12 +155,17 @@ PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel, bool checkErrorBuffer)
  * @param checkErrorBuffer if true error buffer status is requested and evaluated.
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
-PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel, bool checkErrorBuffer)
-{
+PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel, bool checkErrorBuffer) {
+    toggle(channel, false, checkErrorBuffer);
+}
+
+PIL_ERROR_CODE KEI2600::toggle(SMU_CHANNEL channel, bool switchOn, bool checkErrorBuffer) {
     SubArg subArg("source",".");
     subArg.AddElem("output", ".");
 
-    SubArg outputArg("OUTPUT_OFF", ".");
+    std::string argString = "OUTPUT_";
+    argString += (switchOn ? "ON" : "OFF");
+    SubArg outputArg(argString, ".");
 
     SubArg smuNumber("smu");
     smuNumber.AddElem(getChannelStringFromEnum(channel));

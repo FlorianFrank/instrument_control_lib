@@ -29,6 +29,7 @@ public:
 
     PIL_ERROR_CODE turnOn(SMU_CHANNEL channel, bool checkErrorBuffer) override;
     PIL_ERROR_CODE turnOff(SMU_CHANNEL channel, bool checkErrorBuffer) override;
+    PIL_ERROR_CODE toggle(SMU_CHANNEL channel, bool switchOn, bool checkErrorBuffer);
 
     PIL_ERROR_CODE setLevel(UNIT unit, SMU_CHANNEL channel, double level, bool checkErrorBuffer) override;
     PIL_ERROR_CODE setLimit(UNIT unit, SMU_CHANNEL channel, double limit, bool checkErrorBuffer) override;
