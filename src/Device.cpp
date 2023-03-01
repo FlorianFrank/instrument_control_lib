@@ -23,8 +23,10 @@ extern "C" {
 #include <sstream>
 #endif // __APPLE__
 
-Device::Device(std::string ipAddress, uint16_t srcPort, uint16_t destPort, int timeoutInMs, PIL::Logging *logger, SEND_METHOD mode,
-               bool throwException) : m_IPAddr(std::move(ipAddress)), m_ErrorHandle(), m_destPort(destPort), m_srcPort(srcPort),
+Device::Device(std::string ipAddress, uint16_t srcPort, uint16_t destPort, int timeoutInMs, PIL::Logging *logger,
+               SEND_METHOD mode,
+               bool throwException) : m_IPAddr(std::move(ipAddress)), m_ErrorHandle(), m_destPort(destPort),
+                                      m_srcPort(srcPort),
                                       m_EnableExceptions(throwException) {
     m_SocketHandle = new PIL::Socket(TCP, IPv4, m_IPAddr, m_destPort, timeoutInMs);
     m_ErrorHandle.m_ErrorCode = PIL_NO_ERROR;
@@ -38,8 +40,8 @@ Device::Device(std::string ipAddress, uint16_t srcPort, uint16_t destPort, int t
  * @param ipAddress IP address of the device
  * @param timeoutInMs
  */
-Device::Device(std::string ipAddress, int timeoutInMs, SEND_METHOD mode, bool throwException) : Device(std::move(ipAddress), timeoutInMs, nullptr, mode, throwException) {}
-
+Device::Device(std::string ipAddress, int timeoutInMs, SEND_METHOD mode, bool throwException) : Device(
+        std::move(ipAddress), timeoutInMs, nullptr, mode, throwException) {}
 
 
 /**
@@ -49,10 +51,10 @@ Device::Device(std::string ipAddress, int timeoutInMs, SEND_METHOD mode, bool th
  * @param logger: Pass a logging object to configure what types of messages should be logged.
  * If nullptr is passed, logging is disabled.
  */
-Device::Device(std::string ipAddress, int timeoutInMs, PIL::Logging *logger, SEND_METHOD mode, bool throwException):
-    Device(std::move(ipAddress), 5025, 5025, timeoutInMs, logger, mode, throwException) {}
+Device::Device(std::string ipAddress, int timeoutInMs, PIL::Logging *logger, SEND_METHOD mode, bool throwException) :
+        Device(std::move(ipAddress), 5025, 5025, timeoutInMs, logger, mode, throwException) {}
 
-Device::~Device(){
+Device::~Device() {
     Disconnect();
     delete m_SocketHandle;
 }
@@ -70,16 +72,15 @@ Device::~Device(){
  * @return error code.
  */
 PIL_ERROR_CODE Device::handleErrorsAndLogging(PIL_ERROR_CODE errorCode, bool throwException,
-                                              PIL::Level logLevel, const std::string& fileName, int line,
-                                              const std::string formatStr, ...)
-{
+                                              PIL::Level logLevel, const std::string &fileName, int line,
+                                              const std::string formatStr, ...) {
     // Redirect std::cout shortly to a stringstream to get the error message without using fixed buffers.
     // Later replace with C++20 std::format.
     va_list args;
     va_start(args, formatStr);
     char buffer[1024];
     vsprintf(buffer, formatStr.c_str(), args);
-    if(m_Logger)
+    if (m_Logger)
         m_Logger->LogMessage(logLevel, fileName.c_str(), line, buffer);
     va_end(args);
 
@@ -94,15 +95,15 @@ PIL_ERROR_CODE Device::handleErrorsAndLogging(PIL_ERROR_CODE errorCode, bool thr
  * @return if the connection is established return PIL_NO_ERROR otherwise return error code.
  * @throw PIL::Exception if the connection could not established.
  */
-PIL_ERROR_CODE Device::Connect()
-{
+PIL_ERROR_CODE Device::Connect() {
     m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Device is connecting.");
 
     auto ret = m_SocketHandle->Connect(m_IPAddr, m_destPort);
     if (ret != PIL_NO_ERROR)
         return Device::handleErrorsAndLogging(ret, m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__, "");
 
-    m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Connection to device %s:%d established!", m_IPAddr.c_str(), m_destPort);
+    m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Connection to device %s:%d established!", m_IPAddr.c_str(),
+                         m_destPort);
     return PIL_NO_ERROR;
 }
 
@@ -111,15 +112,16 @@ PIL_ERROR_CODE Device::Connect()
  * @return if the connection is disconnected return PIL_NO_ERROR otherwise return error code.
  * @throw PIL::Exception if the connection could not disconnected.
  */
-PIL_ERROR_CODE Device::Disconnect(){
+PIL_ERROR_CODE Device::Disconnect() {
     if (!m_SocketHandle->IsOpen())
-        return Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__, "");
+        return Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, m_EnableExceptions, PIL::ERROR, __FILENAME__,
+                                              __LINE__, "");
 
     auto errCode = m_SocketHandle->Disconnect();
-    if(errCode != PIL_NO_ERROR)
+    if (errCode != PIL_NO_ERROR)
         return Device::handleErrorsAndLogging(errCode, m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__, "");
 
-    m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"Socket disconnected");
+    m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__, "Socket disconnected");
     return PIL_NO_ERROR;
 }
 
@@ -127,12 +129,11 @@ PIL_ERROR_CODE Device::Disconnect(){
  * @brief Checks if the connection to the device is established.
  * @return true if connection is established, otherwise false.
  */
-bool Device::IsOpen() const{
+bool Device::IsOpen() const {
     return m_SocketHandle->IsOpen();
 }
 
-bool Device::IsBuffered() const
-{
+bool Device::IsBuffered() const {
     return m_SendMode == SEND_METHOD::BUFFER_ENABLED;
 }
 
@@ -140,10 +141,11 @@ bool Device::IsBuffered() const
  * @brief
  * @return
  */
-std::string Device::GetDeviceIdentifier()
-{
-    if(!IsBuffered() && !IsOpen())
-        return PIL_ErrorCodeToString(Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__, ""));
+std::string Device::GetDeviceIdentifier() {
+    if (!IsBuffered() && !IsOpen())
+        return PIL_ErrorCodeToString(
+                Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, m_EnableExceptions, PIL::ERROR, __FILENAME__,
+                                               __LINE__, ""));
 
     SubArg arg("IDN", "*", "?");
     ExecArgs args;
@@ -151,8 +153,10 @@ std::string Device::GetDeviceIdentifier()
 
     std::string ss;
     auto errCode = Exec("", &args, &ss, false);
-    if(errCode != PIL_NO_ERROR)
-        return PIL_ErrorCodeToString(Device::handleErrorsAndLogging(errCode, m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__, "Error while executing Exec()"));
+    if (errCode != PIL_NO_ERROR)
+        return PIL_ErrorCodeToString(
+                Device::handleErrorsAndLogging(errCode, m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__,
+                                               "Error while executing Exec()"));
 
     return std::regex_replace(ss, std::regex("\n"), "");
 }
@@ -171,13 +175,13 @@ std::string Device::GetDeviceIdentifier()
  *      KST3000 k.Exec("RSTater?", buffer);
  *      @endcode
  * */
-PIL_ERROR_CODE Device::Exec(const std::string& command, ExecArgs *args, char *result, bool br, int size) {
+PIL_ERROR_CODE Device::Exec(const std::string &command, ExecArgs *args, char *result, bool br, int size) {
     std::string *res = nullptr;
-    if(result)
+    if (result)
         res = new std::string(result, size);
     auto ret = Exec(command, args, res, br);
 
-    if(result && res->c_str())
+    if (result && res->c_str())
         strcpy(result, res->c_str());
     return ret;
 }
@@ -185,10 +189,11 @@ PIL_ERROR_CODE Device::Exec(const std::string& command, ExecArgs *args, char *re
 PIL_ERROR_CODE Device::Exec(const std::string &command, ExecArgs *args, std::string *result, bool br) {
     std::stringstream message;
     message << command;
-    if(args)
+    if (args)
         message << args->GetArgumentsAsString();
-    if(!IsBuffered() && !m_SocketHandle->IsOpen())
-        return Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__, "Error interface is closed");
+    if (!IsBuffered() && !m_SocketHandle->IsOpen())
+        return Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, m_EnableExceptions, PIL::ERROR, __FILENAME__,
+                                              __LINE__, "Error interface is closed");
 
     if (IsBuffered() || br)
         message << std::endl;
@@ -198,19 +203,20 @@ PIL_ERROR_CODE Device::Exec(const std::string &command, ExecArgs *args, std::str
         m_BufferedScript += strToSend;
         return PIL_NO_ERROR;
     } else {
-        if(m_SocketHandle->Send(strToSend) != PIL_NO_ERROR)
-            return Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__,
+        if (m_SocketHandle->Send(strToSend) != PIL_NO_ERROR)
+            return Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, m_EnableExceptions, PIL::ERROR, __FILENAME__,
+                                                  __LINE__,
                                                   "Error while calling send");
 
         m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Command %s successfully executed", strToSend.c_str());
 
         if (result) { // not all operation need a result
             auto ret = m_SocketHandle->Receive(*result);
-            if(ret != PIL_NO_ERROR)
+            if (ret != PIL_NO_ERROR)
                 return Device::handleErrorsAndLogging(ret, m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__,
                                                       "Error while calling read");
-            if(m_Logger)
-                m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__,"Receive result: %s", result->c_str());
+            if (m_Logger)
+                m_Logger->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Receive result: %s", result->c_str());
         }
         return PIL_NO_ERROR;
     }
@@ -228,19 +234,18 @@ PIL_ERROR_CODE Device::ExecCommands(std::string &commands) {
     while (std::getline(s_commands, command)) {
         auto execRet = Exec(command);
         if (execRet != PIL_NO_ERROR)
-            return Device::handleErrorsAndLogging(execRet, m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__, "Error while executing Exec()");
+            return Device::handleErrorsAndLogging(execRet, m_EnableExceptions, PIL::ERROR, __FILENAME__, __LINE__,
+                                                  "Error while executing Exec()");
     }
     PIL_SetLastError(&m_ErrorHandle, PIL_NO_ERROR);
     return PIL_NO_ERROR;
 }
 
-std::string Device::ReturnErrorMessage()
-{
+std::string Device::ReturnErrorMessage() {
     return PIL_ReturnErrorMessageAsString(&m_ErrorHandle);
 }
 
-PIL_ERROR_CODE Device::delay(double delayTime)
-{
+PIL_ERROR_CODE Device::delay(double delayTime) {
     if (IsBuffered()) {
         SubArg arg(std::to_string(delayTime), "delay(", ")");
 
@@ -254,8 +259,7 @@ PIL_ERROR_CODE Device::delay(double delayTime)
 
 }
 
-std::string Device::getBufferedScript()
-{
+std::string Device::getBufferedScript() {
     return m_BufferedScript;
 }
 
