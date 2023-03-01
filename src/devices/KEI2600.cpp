@@ -1453,6 +1453,8 @@ PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
 
         auto ret = sendAndExecuteScript(m_BufferedScript, "bufferedScript", checkErrorBuffer);
         m_SendMode = prevSendMode;
+        clearBuffer("bufferedScript", checkErrorBuffer);
+
         return handleErrorCode(ret, checkErrorBuffer);
     }
 

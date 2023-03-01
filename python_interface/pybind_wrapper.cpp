@@ -200,6 +200,8 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
     /** Function Generator **/
     class_<KST33500>(m, "KST33500")
             .def(pybind11::init<char *, int>())
+            .def("connect", &KST33500::Connect)
+            .def("disconnect", &KST33500::Disconnect)
             .def("turnOn", &KST33500::turnOn)
             .def("turnOff", &KST33500::turnOff)
             .def("setFrequency", &KST33500::setFrequency)
