@@ -37,6 +37,23 @@ KEI2600::KEI2600(std::string ipAddress, int timeoutInMS, PIL::Logging *logger, S
     m_Logger = new PIL::Logging(PIL::INFO, &logFile);
 }
 
+std::string KEI2600::unitToLetter(UNIT unit) {
+    switch (unit) {
+        case SMU::CURRENT:
+            return "i";
+        case SMU::VOLTAGE:
+            return "v";
+        case SMU::RESISTANCE:
+            return "r";
+        case SMU::POWER:
+            return "p";
+        default:
+            if(m_EnableExceptions)
+                throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
+            return "";
+    }
+}
+
 /**
  * @brief This function measures a certain unit on a specific channel. This function can be used to measure
  * voltage, current, power or resistance. It calls smuX.meausreUNIT().
@@ -48,26 +65,43 @@ KEI2600::KEI2600(std::string ipAddress, int timeoutInMS, PIL::Logging *logger, S
  */
 PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double *value, bool checkErrorBuffer)
 {
-    auto ret = PIL_NO_ERROR;
-    switch (unit)
-    {
-        case SMU::CURRENT:
-            ret = measureI(channel, value);
-            break;
-        case SMU::VOLTAGE:
-            ret = measureV(channel, value);
-            break;
-        case SMU::RESISTANCE:
-            ret = measureR(channel, value);
-            break;
-        case SMU::POWER:
-            ret = measureP(channel, value);
-            break;
-        default:
-            if(m_EnableExceptions)
-                throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
-            return PIL_INVALID_ARGUMENTS;
+    std::string unitLetter = unitToLetter(unit);
+
+    if (unitLetter.empty() || (!IsBuffered() && !value)) {
+        if(m_EnableExceptions) {}
+            throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
+        return PIL_INVALID_ARGUMENTS;
     }
+
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("measure", ".")
+            .AddElem(unitLetter + "(" + maybePutInBuffer(channel) + ")", ".");
+
+    ExecArgs args;
+    args.AddArgument(subArg, "");
+
+    auto ret = Exec("reading = ", &args);
+    if (errorOccured(ret))
+        return ret;
+
+    if (!IsBuffered()) {
+        SubArg subArgPrint("");
+        subArgPrint.AddElem("reading", "(", ")");
+
+        ExecArgs execArgs;
+        execArgs.AddArgument(subArgPrint, "");
+
+        std::string result;
+        ret = Exec("print", &execArgs, &result, true);
+        if (errorOccured(ret))
+            return ret;
+
+        if(m_Logger)
+            m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measure" + unitLetter + "V returned: %s", result.c_str());
+        *value = std::stod(result);
+    }
+
     return handleErrorCode(ret, checkErrorBuffer);
 }
 
@@ -734,192 +768,6 @@ PIL_ERROR_CODE KEI2600::beep(float timeInSeconds, int frequency, bool checkError
 {
     auto ret = Exec("beeper.beep(" + std::to_string(timeInSeconds) + "," + std::to_string(frequency) + ")");
     return handleErrorCode(ret, checkErrorBuffer);
-}
-
-/**
- * @brief Helper function to measure the current of a specific channel.
- * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
- * @param value Value which is returned from the measurement function.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::measureI(SMU_CHANNEL channel, double *value)
-{
-    if(!IsBuffered() && !value) {
-        if(m_EnableExceptions)
-            throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
-        return PIL_INVALID_ARGUMENTS;
-    }
-
-    SubArg subArg("smu");
-    subArg.AddElem(getChannelStringFromEnum(channel))
-            .AddElem("measure", ".")
-            .AddElem("i(" + maybePutInBuffer(channel) + ")", ".");
-
-    ExecArgs args;
-    args.AddArgument(subArg, "");
-
-    auto ret = Exec("reading = ", &args);
-    if (errorOccured(ret))
-        return ret;
-
-    if (!IsBuffered()) {
-        SubArg subArgPrint("");
-        subArgPrint.AddElem("reading", "(", ")");
-
-        ExecArgs execArgs;
-        execArgs.AddArgument(subArgPrint, "");
-
-        std::string result;
-        ret = Exec("print", &execArgs, &result, true);
-        if (errorOccured(ret))
-            return ret;
-
-        if(m_Logger)
-            m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureI returned: %s", result.c_str());
-        *value = std::stod(result);
-    }
-
-    return PIL_NO_ERROR;
-}
-
-
-
-/**
- * @brief Helper function to measure the voltage of a specific channel.
- * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
- * @param value Value which is returned from the measurement function.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::measureV(SMU_CHANNEL channel, double *value)
-{
-    if(!IsBuffered() && !value) {
-        if(m_EnableExceptions)
-            throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
-        return PIL_INVALID_ARGUMENTS;
-    }
-
-    SubArg subArg("smu");
-    subArg.AddElem(getChannelStringFromEnum(channel))
-            .AddElem("measure", ".")
-            .AddElem("v(" + maybePutInBuffer(channel) + ")", ".");
-
-    ExecArgs args;
-    args.AddArgument(subArg, "");
-
-    auto ret = Exec("reading = ", &args);
-    if (errorOccured(ret))
-        return ret;
-
-    if (!IsBuffered()) {
-        SubArg subArgPrint("");
-        subArgPrint.AddElem("reading", "(", ")");
-
-        ExecArgs execArgs;
-        execArgs.AddArgument(subArgPrint, "");
-
-        std::string result;
-        ret = Exec("print", &execArgs, &result, true);
-        if (errorOccured(ret))
-            return ret;
-
-        if(m_Logger)
-            m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureV returned: %s", result.c_str());
-        *value = std::stod(result);
-    }
-
-    return PIL_NO_ERROR;
-}
-
-/**
- * @brief Helper function to measure the resistance of a specific channel.
- * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
- * @param value Value which is returned from the measurement function.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::measureR(SMU_CHANNEL channel, double *value)
-{
-    if(!IsBuffered() && !value) {
-        if(m_EnableExceptions)
-            throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
-        return PIL_INVALID_ARGUMENTS;
-    }
-
-    SubArg subArg("smu");
-    subArg.AddElem(getChannelStringFromEnum(channel))
-            .AddElem("measure", ".")
-            .AddElem("r(" + maybePutInBuffer(channel) + ")", ".");
-
-    ExecArgs args;
-    args.AddArgument(subArg, "");
-
-    auto ret = Exec("reading = ", &args);
-    if (errorOccured(ret))
-        return ret;
-
-    if (!IsBuffered()) {
-        SubArg subArgPrint("");
-        subArgPrint.AddElem("reading", "(", ")");
-
-        ExecArgs execArgs;
-        execArgs.AddArgument(subArgPrint, "");
-
-        std::string result;
-        ret = Exec("print", &execArgs, &result, true);
-        if (errorOccured(ret))
-            return ret;
-
-        if(m_Logger)
-            m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureR returned: %s", result.c_str());
-        *value = std::stod(result);
-    }
-    
-    return PIL_NO_ERROR;
-}
-
-/**
- * @brief Helper function to measure the power in watts of a specific channel.
- * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
- * @param value Value which is returned from the measurement function.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::measureP(SMU_CHANNEL channel, double *value)
-{
-    if(!IsBuffered() && !value) {
-        if(m_EnableExceptions)
-            throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
-        return PIL_INVALID_ARGUMENTS;
-    }
-
-    SubArg subArg("smu");
-    subArg.AddElem(getChannelStringFromEnum(channel))
-            .AddElem("measure", ".")
-            .AddElem("p(" + maybePutInBuffer(channel) + ")", ".");
-
-    ExecArgs args;
-    args.AddArgument(subArg, "");
-
-    auto ret = Exec("reading = ", &args);
-    if (errorOccured(ret))
-        return ret;
-
-    if (!IsBuffered()) {
-        SubArg subArgPrint("");
-        subArgPrint.AddElem("reading", "(", ")");
-
-        ExecArgs execArgs;
-        execArgs.AddArgument(subArgPrint, "");
-
-        std::string result;
-        ret = Exec("print", &execArgs, &result, true);
-        if (errorOccured(ret))
-            return ret;
-
-        if(m_Logger)
-            m_Logger->LogMessage(PIL::DEBUG, __FILENAME__, __LINE__,"measureP returned: %s", result.c_str());
-        *value = std::stod(result);
-    }
-
-    return PIL_NO_ERROR;
 }
 
 /**

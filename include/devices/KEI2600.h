@@ -97,6 +97,7 @@ private:
 
     PIL_ERROR_CODE readPartOfBuffer(int numberOfPrints, int offset, std::string bufferName, char printBuffer[], double results[]);
     std::string getChannelStringFromEnum(SMU_CHANNEL channel);
+    std::string unitToLetter(UNIT unit);
     static std::string getStringFromAutoZeroEnum(AUTOZERO autoZero);
     static std::string getStringFromSrcFuncEnum(SRC_FUNC srcFunc);
     static std::string getStringFromOffModeEnum(SRC_OFF_MODE offMode);
