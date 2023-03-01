@@ -146,7 +146,7 @@ double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel, bool checkErrorBuffer) {
-    toggle(channel, false, checkErrorBuffer);
+    return toggle(channel, false, checkErrorBuffer);
 }
 
 /**
@@ -156,7 +156,7 @@ PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel, bool checkErrorBuffer) {
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel, bool checkErrorBuffer) {
-    toggle(channel, false, checkErrorBuffer);
+    return toggle(channel, false, checkErrorBuffer);
 }
 
 PIL_ERROR_CODE KEI2600::toggle(SMU_CHANNEL channel, bool switchOn, bool checkErrorBuffer) {
