@@ -9,7 +9,8 @@
 using namespace std;
 
 KST33500::KST33500(const char *ip, int timeoutInMS) : FunctionGenerator(ip, timeoutInMS, nullptr){
-  this->m_DeviceName = "Keysight 33500B Waveform Generator";
+    this->m_DeviceName = "Keysight 33500B Waveform Generator";
+    m_Logger = new PIL::Logging(PIL::INFO, nullptr);
 }
 
 KST33500::KST33500(const char *ip, int timeoutInMs, PIL::Logging *logger) : FunctionGenerator(ip, timeoutInMs, logger)
@@ -66,7 +67,7 @@ PIL_ERROR_CODE KST33500::output(bool on) {
   else
       args.AddArgument("OFF", " ");
 
-    return Exec("OUTPut", &args);
+    return Exec("OUTPut ", &args);
 }
 
 PIL_ERROR_CODE KST33500::turnOn()

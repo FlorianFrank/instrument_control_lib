@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Device.h"
 #include "devices/KEI2600.h"
+#include "devices/KST33500.h"
 #include "ctlib/Logging.hpp"
 #include <thread>
 
@@ -84,8 +85,16 @@ void measurementBufferingTest() {
     smu->Disconnect();
 }
 
+void kstTest() {
+    auto *kst = new KST33500("132.231.14.174", 2000);
+    kst->Connect();
+    kst->setOffset(0.5);
+    kst->turnOn();
+    kst->Disconnect();
+}
+
 
 int main() {
-    measurementBufferingTest();
+    kstTest();
     return 0;
 }
