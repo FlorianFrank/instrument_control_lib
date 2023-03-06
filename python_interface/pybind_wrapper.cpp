@@ -220,7 +220,8 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
         .value("TRIANGLE", FunctionGenerator::TRIANGLE)
         .value("NOISE", FunctionGenerator::NOISE)
         .value("PSEUDO_RANDOM_BIT_STREAM", FunctionGenerator::PSEUDO_RANDOM_BIT_STREAM)
-        .value("ARBITRARY", FunctionGenerator::ARBITRARY);
+        .value("ARBITRARY", FunctionGenerator::ARBITRARY)
+        .value("DC_VOLTAGE", FunctionGenerator::DC_VOLTAGE);
 
     enum_<FunctionGenerator::FUNC_CHANNEL>(m, "FUNCTION_CHANNEL")
             .value("CHANNEL_A", FunctionGenerator::CHANNEL_A)
