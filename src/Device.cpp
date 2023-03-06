@@ -113,9 +113,11 @@ PIL_ERROR_CODE Device::Connect() {
  * @throw PIL::Exception if the connection could not disconnected.
  */
 PIL_ERROR_CODE Device::Disconnect() {
-    if (!m_SocketHandle->IsOpen())
-        return Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, m_EnableExceptions, PIL::ERROR, __FILENAME__,
-                                              __LINE__, "");
+    if (!m_SocketHandle->IsOpen()) {
+        Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, false, PIL::ERROR, __FILENAME__,
+                                       __LINE__, "");
+        return PIL_NO_ERROR;
+    }
 
     auto errCode = m_SocketHandle->Disconnect();
     if (errCode != PIL_NO_ERROR)
