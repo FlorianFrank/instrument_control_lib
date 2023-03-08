@@ -7,7 +7,6 @@
 #include "devices/KEI2600.h"
 #include "devices/KST3000.h"
 #include "devices/KST33500.h"
-#include "ctlib/Logging.hpp"
 
 using namespace pybind11;
 
