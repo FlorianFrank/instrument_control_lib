@@ -1050,7 +1050,7 @@ PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double st
     changeSendMode(BUFFER_ENABLED);
 
     setSourceFunction(channel, DC_VOLTS, checkErrorBuffer);
-    turnOn(channel, false);
+    turnOn(channel, checkErrorBuffer);
     setLimit(VOLTAGE, channel, stopVoltage + 0.1, checkErrorBuffer);
     setLimit(CURRENT, channel, current + 0.001, checkErrorBuffer);
     setLevel(CURRENT, channel, current, checkErrorBuffer);
@@ -1328,7 +1328,7 @@ PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, std::vector<double> *
     int batches = n / batchSize;
     int remaining = n % batchSize;
 
-    char printBuffer[15 * batchSize];
+    char printBuffer[1024];
 
     result->reserve(n);
     for (int i = 0; i < batches; ++i) {
@@ -1352,12 +1352,9 @@ void KEI2600::appendToBuffer(int startIdx, int endIdx, std::string bufferName, c
     }
 }
 
-std::vector<double> KEI2600::getBuffer(std::string bufferName, bool checkErroBuffer) {
-    int bufferSize;
-    getBufferSize(bufferName, &bufferSize, false);
+std::vector<double> KEI2600::getBuffer(std::string bufferName, bool checkErrorBuffer) {
     std::vector<double> buffer;
-    readBuffer(bufferName, &buffer, false);
-
+    readBuffer(bufferName, &buffer, checkErrorBuffer);
     return buffer;
 }
 
