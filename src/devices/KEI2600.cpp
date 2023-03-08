@@ -1248,32 +1248,6 @@ PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
 }
 
 /**
- * @brief Creates a buffer within the smu.
- * 
- * @param channel The channel on which to create the buffer.
- * @param bufferName The name of the buffer.
- * @param capacity The capacity of the buffer.
- * @param checkErrorBuffer Whether to check the error buffer after executing.
- * @return The received error code.
- */
-PIL_ERROR_CODE
-KEI2600::createBuffer(SMU::SMU_CHANNEL channel, std::string bufferName, int capacity, bool checkErrorBuffer) {
-    SubArg subArg("smu");
-    subArg.AddElem(getChannelStringFromEnum(channel))
-            .AddElem("makebuffer", ".")
-            .AddElem(std::to_string(capacity), "(", ")");
-
-    ExecArgs execArgs;
-    execArgs.AddArgument(subArg, "");
-
-    auto ret = Exec(bufferName + " = ", &execArgs, nullptr);
-
-    ret = Exec(bufferName + ".appendmode = 1", nullptr, nullptr);
-
-    return handleErrorCode(ret, checkErrorBuffer);
-}
-
-/**
  * @brief Clears the buffer with the given name.
  * 
  * @param bufferName The name of the buffer.
@@ -1423,4 +1397,3 @@ std::string KEI2600::determineStorage(SMU_CHANNEL channel) {
 
     return placeToSave;
 }
-

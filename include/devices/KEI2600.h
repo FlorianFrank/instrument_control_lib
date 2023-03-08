@@ -74,13 +74,11 @@ public:
     PIL_ERROR_CODE sendAndExecuteScript(std::string scriptName, std::string script, bool checkErrorBuffer);
     PIL_ERROR_CODE executeBufferedScript(bool checkErrorBuffer);
 
-    PIL_ERROR_CODE createBuffer(SMU_CHANNEL channel, std::string bufferName, int capacity, bool checkErrorBuffer);
     PIL_ERROR_CODE clearBuffer(std::string bufferName, bool checkErrorBuffer);
     PIL_ERROR_CODE readBuffer(std::string bufferName, std::vector<double> *result, bool checkErrorBuffer);
     PIL_ERROR_CODE getBufferSize(std::string bufferName, int *value, bool checkErrorBuffer);
     void clearBufferedScript();
     std::vector<double> getBuffer(std::string bufferName, bool checkErrorBuffer);
-    static std::string getMeasurementBufferName(SMU_CHANNEL channel);
 
     std::string CHANNEL_A_BUFFER = "A_M_BUFFER";
     std::string CHANNEL_B_BUFFER = "B_M_BUFFER";
@@ -99,6 +97,7 @@ private:
     static std::string getStringFromSettleEnum(SRC_SETTLING srcSettling);
     static std::string getStringFromMeasureDisplayFunction(SMU_DISPLAY displayMeasureFunc);
     static std::string getStringFromSenseValue(SMU_SENSE sense);
+    static std::string getMeasurementBufferName(SMU_CHANNEL channel);
 
     PIL_ERROR_CODE handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErrorBuffer);
 
