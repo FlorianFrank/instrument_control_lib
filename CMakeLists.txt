@@ -10,12 +10,11 @@ file(GLOB device_files ${CMAKE_CURRENT_SOURCE_DIR}/src/devices/*.cpp)
 file(GLOB device_type_files ${CMAKE_CURRENT_SOURCE_DIR}/src/devices/types/*.cpp)
 
 
-
 # BUILD instrument lib as
 if(INSTRUMENT_LIB_BUILD_STATIC)
     add_library(instrument_control_lib STATIC ${source_files} ${device_files} ${device_type_files})
 else() # build shared lib
-    add_library(instrument_control_lib SHARED ${source_files} ${device_files} ${device_type_files} python_interface/pybind_wrapper.cpp python_interface/pybind_wrapper.h)
+    add_library(instrument_control_lib SHARED ${source_files} ${device_files} ${device_type_files} python_interface/pybind_wrapper.cpp)
 endif()
 
 target_compile_options(instrument_control_lib PRIVATE -Wall -Wextra -Wpedantic)  # TODO: readd -Werror flag!
@@ -27,11 +26,6 @@ add_subdirectory(common_tools_lib)
 add_subdirectory(playground)
 add_subdirectory(tests)
 add_subdirectory(examples)
-
-set(ENABLE_PYTHON 1)
-if(ENABLE_PYTHON)
-    add_subdirectory(python_interface)
-endif() # ENABLE_PYTHON
 
 if(BUILD_SHARED_LIBS)
     set(PUGIXML pugixml-shared)
@@ -72,4 +66,28 @@ install(DIRECTORY include/
 if (BUILD_DOCUMENTATION)
     include("${CMAKE_CURRENT_SOURCE_DIR}/build_config/documentation.cmake")
     build_documentation()
+endif()
+
+
+set(PYTHON_PIP_INSTALL 1)
+if (PYTHON_PIP_INSTALL)
+    message("I am in pip install")
+    project(py_instrument_control_lib)
+
+    add_subdirectory(python_interface/pybind11)
+    pybind11_add_module(py_instrument_control_lib python_interface/pybind_wrapper.cpp)
+
+    target_compile_definitions(py_instrument_control_lib
+            PUBLIC VERSION_INFO=${EXAMPLE_VERSION_INFO})
+
+    target_link_libraries(${PROJECT_NAME} PUBLIC pybind11::module)
+    target_link_libraries(${PROJECT_NAME} PUBLIC instrument_control_lib)
+
+    target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../include"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../common_tools_lib/FileHandling/include"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../common_tools_lib/Communication/include"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../common_tools_lib/Threading/include"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../common_tools_lib/Additional"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../common_tools_lib/ErrorHandling/include"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../common_tools_lib/Logging/include")
 endif()
