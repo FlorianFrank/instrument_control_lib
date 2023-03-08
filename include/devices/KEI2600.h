@@ -81,7 +81,7 @@ public:
     int getBufferSizePy(std::string bufferName, bool checkErrorBuffer);
     void clearBufferedScript();
     std::vector<double> getBuffer(std::string bufferName, bool checkErrorBuffer);
-    std::string getMeasurementBufferName(SMU_CHANNEL channel);
+    static std::string getMeasurementBufferName(SMU_CHANNEL channel);
 
     std::string CHANNEL_A_BUFFER = "A_M_BUFFER";
     std::string CHANNEL_B_BUFFER = "B_M_BUFFER";
@@ -104,7 +104,7 @@ private:
     static bool errorOccured(PIL_ERROR_CODE ret);
     PIL_ERROR_CODE handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErrorBuffer);
 
-    std::string maybePutInBuffer(SMU_CHANNEL channel);
+    std::string determineStorage(SMU_CHANNEL channel);
 
     int m_bufferEntriesA = 1;
     int m_bufferEntriesB = 1;

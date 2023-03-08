@@ -75,7 +75,7 @@ PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double *value, b
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
             .AddElem("measure", ".")
-            .AddElem(unitLetter + "(" + maybePutInBuffer(channel) + ")", ".");
+            .AddElem(unitLetter + "(" + determineStorage(channel) + ")", ".");
 
     ExecArgs args;
     args.AddArgument(subArg, "");
@@ -1112,8 +1112,8 @@ std::string createPayload(std::string value) {
  * @param values The values of the payload.
  * @param result The vector to insert the payload to.
  */
-void
-createPayloadBatch(int offset, int numberOfLines, std::vector<std::string> values, std::vector<std::string> *result) {
+void createPayloadBatch(int offset, int numberOfLines, std::vector<std::string> values,
+                        std::vector<std::string> *result) {
     std::string value;
     for (int i = offset; i < offset + numberOfLines; ++i) {
         value += values[i] + "\n";
@@ -1148,7 +1148,6 @@ void postRequest(const std::string &url, std::string &payload) {
 PIL_ERROR_CODE KEI2600::sendScript(std::string scriptName, std::string script, bool checkErrorBuffer) {
     std::string url = "http://" + m_IPAddr + "/HttpCommand";
 
-    // TODO: Endscript without Loadscript Error, but working nonetheless
     std::string scriptContent = "loadscript " + scriptName + "\n" + script + "\n" + "endscript";
 
     std::string exitPayload = R"({"command": "keyInput", "value": "K"})";
@@ -1379,12 +1378,6 @@ PIL_ERROR_CODE KEI2600::getBufferSize(std::string bufferName, int *value, bool c
     return handleErrorCode(ret, checkErrorBuffer);
 }
 
-int KEI2600::getBufferSizePy(std::string bufferName, bool checkErrorBuffer) {
-    int size;
-    getBufferSize(bufferName, &size, checkErrorBuffer);
-    return size;
-}
-
 /**
  * @brief Checks if a error occured given the error code.
  * 
@@ -1397,7 +1390,7 @@ bool KEI2600::errorOccured(PIL_ERROR_CODE errorCode) {
 
 /**
  * @brief Checks the given error code and checks the error buffer if specified.
- * 
+ *
  * @param errorCode The error code to check.
  * @param checkErrorBuffer Whether to check the error buffer.
  * @return The corresponding error code.
@@ -1421,7 +1414,13 @@ std::string KEI2600::getMeasurementBufferName(SMU_CHANNEL channel) {
     return prefix + "_M_BUFFER";
 }
 
-std::string KEI2600::maybePutInBuffer(SMU_CHANNEL channel) {
+/**
+ * @brief Determines whether the value to be measured should be stored in a buffer or not. If it should be saved, the
+ * number of buffer entries is incremented.
+ * @param channel The channel on which to measure.
+ * @return An empty string if the measurement is not buffered, the buffer to save it in otherwise.
+ */
+std::string KEI2600::determineStorage(SMU_CHANNEL channel) {
     std::string placeToSave;
     if (IsBuffered()) {
         placeToSave = getMeasurementBufferName(channel);
