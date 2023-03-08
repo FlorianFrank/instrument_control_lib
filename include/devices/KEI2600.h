@@ -67,15 +67,15 @@ public:
     PIL_ERROR_CODE performLinearVoltageSweep(SMU_CHANNEL channel, double startVoltage, double stopVoltage,
                                              int increaseRate, double current, bool checkErrorBuffer);
 
-    PIL_ERROR_CODE sendScript(std::string scriptName, std::string script, bool checkErrorBuffer);
-    PIL_ERROR_CODE executeScript(std::string scriptName, bool checkErrorBuffer);
-    PIL_ERROR_CODE sendAndExecuteScript(std::string scriptName, std::string script, bool checkErrorBuffer);
+    PIL_ERROR_CODE sendScript(const std::string& scriptName, const std::string& script, bool checkErrorBuffer);
+    PIL_ERROR_CODE executeScript(const std::string& scriptName, bool checkErrorBuffer);
+    PIL_ERROR_CODE sendAndExecuteScript(const std::string& scriptName, const std::string& script, bool checkErrorBuffer);
     PIL_ERROR_CODE executeBufferedScript(bool checkErrorBuffer);
 
-    PIL_ERROR_CODE readBuffer(std::string bufferName, std::vector<double> *result, bool checkErrorBuffer);
-    std::vector<double> readBufferPy(std::string bufferName, bool checkErrorBuffer);
-    PIL_ERROR_CODE getBufferSize(std::string bufferName, int *value, bool checkErrorBuffer);
-    PIL_ERROR_CODE clearBuffer(std::string bufferName, bool checkErrorBuffer);
+    PIL_ERROR_CODE readBuffer(const std::string& bufferName, std::vector<double> *result, bool checkErrorBuffer);
+    std::vector<double> readBufferPy(const std::string& bufferName, bool checkErrorBuffer);
+    PIL_ERROR_CODE getBufferSize(const std::string& bufferName, int *value, bool checkErrorBuffer);
+    PIL_ERROR_CODE clearBuffer(const std::string& bufferName, bool checkErrorBuffer);
     void clearBufferedScript();
 
     std::string CHANNEL_A_BUFFER = "A_M_BUFFER";
@@ -91,9 +91,9 @@ private:
 
     std::string determineStorage(SMU_CHANNEL channel);
 
-    PIL_ERROR_CODE readPartOfBuffer(int startIdx, int endIdx, std::string bufferName, char *printBuffer,
+    PIL_ERROR_CODE readPartOfBuffer(int startIdx, int endIdx, const std::string& bufferName, char *printBuffer,
                                     std::vector<double> *result, bool checkErrorBuffer);
-    PIL_ERROR_CODE appendToBuffer(int startIdx, int endIdx, std::string bufferName, char *printBuffer,
+    PIL_ERROR_CODE appendToBuffer(int startIdx, int endIdx, const std::string& bufferName, char *printBuffer,
                                   std::vector<double> *result, bool checkErrorBuffer);
 
     static std::string getChannelStringFromEnum(SMU_CHANNEL channel);

@@ -6,7 +6,6 @@
 #include "ctlib/Logging.hpp"
 #include "ctlib/Exception.h"
 #include "HTTPRequest.h"
-#include "iostream"
 
 #include <utility> // std::move
 #include <stdexcept> // std::invalid_argument
@@ -939,7 +938,7 @@ PIL_ERROR_CODE KEI2600::toggleBeeper(bool enable) {
  */
 std::string KEI2600::getLastError() {
     if (IsBuffered()) {
-        throw new std::logic_error("Buffering when receiving values is currently not supported!");
+        throw *new std::logic_error("Buffering when receiving values is currently not supported!");
     }
 
     ExecArgs argsErrorQueue;
@@ -1077,7 +1076,7 @@ PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double st
  * @param delimiter The delimter to split the string by.
  * @return A vector of substrings of toSplit.
  */
-std::vector<std::string> splitString(std::string toSplit, std::string delimiter) {
+std::vector<std::string> splitString(const std::string &toSplit, const std::string &delimiter) {
     size_t pos_start = 0, pos_end, delim_len = delimiter.length();
     std::string token;
     std::vector<std::string> res;
@@ -1098,7 +1097,7 @@ std::vector<std::string> splitString(std::string toSplit, std::string delimiter)
  * @param value The value of the payload.
  * @return The constructed payload.
  */
-std::string createPayload(std::string value) {
+std::string createPayload(const std::string &value) {
     return R"({"command": "shellInput", "value": ")" + value + "\"}";
 }
 
@@ -1145,7 +1144,7 @@ PIL_ERROR_CODE postRequest(const std::string &url, std::string &payload) {
  * @param checkErrorBuffer if true error buffer status is requested and evaluated.
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
-PIL_ERROR_CODE KEI2600::sendScript(std::string scriptName, std::string script, bool checkErrorBuffer) {
+PIL_ERROR_CODE KEI2600::sendScript(const std::string &scriptName, const std::string &script, bool checkErrorBuffer) {
     std::string url = "http://" + m_IPAddr + "/HttpCommand";
 
     std::string scriptContent = "loadscript " + scriptName + "\n" + script + "\n" + "endscript";
@@ -1196,7 +1195,7 @@ PIL_ERROR_CODE KEI2600::sendScript(std::string scriptName, std::string script, b
  * @param checkErrorBuffer if true error buffer status is requested and evaluated.
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
-PIL_ERROR_CODE KEI2600::executeScript(const std::string scriptName, bool checkErrorBuffer) {
+PIL_ERROR_CODE KEI2600::executeScript(const std::string &scriptName, bool checkErrorBuffer) {
     std::string suffix = "()";
 
     std::string executeCommand = scriptName + suffix;
@@ -1215,8 +1214,9 @@ PIL_ERROR_CODE KEI2600::executeScript(const std::string scriptName, bool checkEr
  * @param checkErrorBuffer if true error buffer status is requested and evaluated.
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
-PIL_ERROR_CODE KEI2600::sendAndExecuteScript(std::string scriptName, std::string script, bool checkErrorBuffer) {
-    PIL_ERROR_CODE ret = sendScript(scriptName, std::move(script), checkErrorBuffer);
+PIL_ERROR_CODE KEI2600::sendAndExecuteScript(const std::string &scriptName, const std::string &script,
+                                             bool checkErrorBuffer) {
+    PIL_ERROR_CODE ret = sendScript(scriptName, script, checkErrorBuffer);
 
     if (!errorOccured(ret)) {
         ret = executeScript(scriptName, checkErrorBuffer);
@@ -1254,7 +1254,7 @@ PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
  * @param checkErrorBuffer Whether to check the error buffer after executing.
  * @return The received error code.
  */
-PIL_ERROR_CODE KEI2600::clearBuffer(std::string bufferName, bool checkErrorBuffer) {
+PIL_ERROR_CODE KEI2600::clearBuffer(const std::string &bufferName, bool checkErrorBuffer) {
     SubArg subArg(bufferName);
     subArg.AddElem("clear", ".")
             .AddElem("", "(", ")");
@@ -1271,7 +1271,7 @@ PIL_ERROR_CODE KEI2600::clearBuffer(std::string bufferName, bool checkErrorBuffe
  * 
  * @return The received error code.
  */
-PIL_ERROR_CODE KEI2600::readPartOfBuffer(int startIdx, int endIdx, std::string bufferName, char *printBuffer,
+PIL_ERROR_CODE KEI2600::readPartOfBuffer(int startIdx, int endIdx, const std::string &bufferName, char *printBuffer,
                                          std::vector<double> *result, bool checkErrorBuffer) {
     SubArg subArg("");
     subArg.AddElem(std::to_string(startIdx) + ", " + std::to_string(endIdx) + ", " + bufferName, "(", ")");
@@ -1295,7 +1295,7 @@ PIL_ERROR_CODE KEI2600::readPartOfBuffer(int startIdx, int endIdx, std::string b
  * 
  * @return The received error code.
  */
-PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, std::vector<double> *result, bool checkErrorBuffer) {
+PIL_ERROR_CODE KEI2600::readBuffer(const std::string &bufferName, std::vector<double> *result, bool checkErrorBuffer) {
     int n = 0;
     getBufferSize(bufferName, &n, checkErrorBuffer);
 
@@ -1320,10 +1320,10 @@ PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, std::vector<double> *
     return clearBuffer(bufferName, checkErrorBuffer);
 }
 
-PIL_ERROR_CODE KEI2600::appendToBuffer(int startIdx, int endIdx, std::string bufferName, char *printBuffer,
-                             std::vector<double> *result, bool checkErrorBuffer) {
+PIL_ERROR_CODE KEI2600::appendToBuffer(int startIdx, int endIdx, const std::string &bufferName, char *printBuffer,
+                                       std::vector<double> *result, bool checkErrorBuffer) {
     std::vector<double> batchVector;
-    auto ret = readPartOfBuffer(startIdx, endIdx, std::move(bufferName), printBuffer, &batchVector, checkErrorBuffer);
+    auto ret = readPartOfBuffer(startIdx, endIdx, bufferName, printBuffer, &batchVector, checkErrorBuffer);
     if (errorOccured(ret)) {
         return handleErrorCode(ret, checkErrorBuffer);
     }
@@ -1335,7 +1335,7 @@ PIL_ERROR_CODE KEI2600::appendToBuffer(int startIdx, int endIdx, std::string buf
     return PIL_NO_ERROR;
 }
 
-std::vector<double> KEI2600::readBufferPy(std::string bufferName, bool checkErrorBuffer) {
+std::vector<double> KEI2600::readBufferPy(const std::string &bufferName, bool checkErrorBuffer) {
     std::vector<double> buffer;
     readBuffer(bufferName, &buffer, checkErrorBuffer);
     return buffer;
@@ -1346,7 +1346,7 @@ std::vector<double> KEI2600::readBufferPy(std::string bufferName, bool checkErro
  * 
  * @return The received error code.
  */
-PIL_ERROR_CODE KEI2600::getBufferSize(std::string bufferName, int *value, bool checkErrorBuffer) {
+PIL_ERROR_CODE KEI2600::getBufferSize(const std::string &bufferName, int *value, bool checkErrorBuffer) {
     char sizeBuffer[16];
 
     SubArg subArg("");
