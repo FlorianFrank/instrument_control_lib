@@ -1153,7 +1153,7 @@ PIL_ERROR_CODE KEI2600::sendScript(const std::string &scriptName, const std::str
 
     int batchSize = 32;
     std::vector<std::string> lines = splitString(scriptContent, "\n");
-    int numberOfLines = lines.size();
+    int numberOfLines = lines.size(); // NOLINT(cppcoreguidelines-narrowing-conversions)
     int numberOfBatches = numberOfLines / batchSize;
     int remaining = numberOfLines % batchSize;
 
