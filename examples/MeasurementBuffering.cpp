@@ -26,9 +26,9 @@ int main() {
 
     int bufferSize;
     smu->getBufferSize("A_M_BUFFER", &bufferSize, false);
-    double buffer[bufferSize];
+    std::vector<double> buffer;
 
-    smu->readBuffer("A_M_BUFFER", buffer, false);
+    smu->readBuffer("A_M_BUFFER", &buffer, false);
 
     for (double value : buffer) {
         std::cout << value << std::endl;
