@@ -1379,16 +1379,6 @@ PIL_ERROR_CODE KEI2600::getBufferSize(std::string bufferName, int *value, bool c
 }
 
 /**
- * @brief Checks if a error occured given the error code.
- * 
- * @param errorCode The error code to check.
- * @return true if and only if there is an error.
- */
-bool KEI2600::errorOccured(PIL_ERROR_CODE errorCode) {
-    return errorCode != PIL_NO_ERROR;
-}
-
-/**
  * @brief Checks the given error code and checks the error buffer if specified.
  *
  * @param errorCode The error code to check.
@@ -1433,3 +1423,4 @@ std::string KEI2600::determineStorage(SMU_CHANNEL channel) {
 
     return placeToSave;
 }
+

@@ -78,7 +78,6 @@ public:
     PIL_ERROR_CODE clearBuffer(std::string bufferName, bool checkErrorBuffer);
     PIL_ERROR_CODE readBuffer(std::string bufferName, std::vector<double> *result, bool checkErrorBuffer);
     PIL_ERROR_CODE getBufferSize(std::string bufferName, int *value, bool checkErrorBuffer);
-    int getBufferSizePy(std::string bufferName, bool checkErrorBuffer);
     void clearBufferedScript();
     std::vector<double> getBuffer(std::string bufferName, bool checkErrorBuffer);
     static std::string getMeasurementBufferName(SMU_CHANNEL channel);
@@ -101,7 +100,6 @@ private:
     static std::string getStringFromMeasureDisplayFunction(SMU_DISPLAY displayMeasureFunc);
     static std::string getStringFromSenseValue(SMU_SENSE sense);
 
-    static bool errorOccured(PIL_ERROR_CODE ret);
     PIL_ERROR_CODE handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErrorBuffer);
 
     std::string determineStorage(SMU_CHANNEL channel);

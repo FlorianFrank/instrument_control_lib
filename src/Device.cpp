@@ -268,3 +268,13 @@ std::string Device::getBufferedScript() {
 void Device::changeSendMode(SEND_METHOD mode) {
     m_SendMode = mode;
 }
+
+/**
+ * @brief Checks if a error occured given the error code.
+ *
+ * @param errorCode The error code to check.
+ * @return true if and only if there is an error.
+ */
+bool Device::errorOccured(PIL_ERROR_CODE errorCode) {
+    return errorCode != PIL_NO_ERROR;
+}

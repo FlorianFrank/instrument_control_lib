@@ -59,9 +59,9 @@ public:
     PIL_ERROR_CODE delay(double delayTime);
 
 protected:
-    PIL_ERROR_CODE
-    handleErrorsAndLogging(PIL_ERROR_CODE errorCode, bool throwException, PIL::Level logLevel, const std::string& fileName,
-                           int line, const std::string formatStr, ...);
+    PIL_ERROR_CODE handleErrorsAndLogging(PIL_ERROR_CODE errorCode, bool throwException, PIL::Level logLevel,
+                                          const std::string& fileName, int line, const std::string formatStr, ...);
+    static bool errorOccured(PIL_ERROR_CODE errorCode);
 
     std::string m_IPAddr;
     PIL_ErrorHandle m_ErrorHandle;
