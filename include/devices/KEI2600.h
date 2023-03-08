@@ -80,7 +80,7 @@ public:
     PIL_ERROR_CODE getBufferSize(std::string bufferName, int *value, bool checkErrorBuffer);
     int getBufferSizePy(std::string bufferName, bool checkErrorBuffer);
     void clearBufferedScript();
-    std::vector<double> getBuffer(std::string bufferName, bool checkErroBuffer);
+    std::vector<double> getBuffer(std::string bufferName, bool checkErrorBuffer);
     std::string getMeasurementBufferName(SMU_CHANNEL channel);
 
     std::string CHANNEL_A_BUFFER = "A_M_BUFFER";
