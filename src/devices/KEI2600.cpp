@@ -144,7 +144,7 @@ double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel, bool checkErrorBuffer) {
-    return toggle(channel, false, checkErrorBuffer);
+    return toggle(channel, true, checkErrorBuffer);
 }
 
 /**
@@ -1145,7 +1145,7 @@ void postRequest(const std::string &url, std::string &payload) {
  * @param checkErrorBuffer if true error buffer status is requested and evaluated.
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
-PIL_ERROR_CODE KEI2600::sendScript(std::string script, std::string scriptName, bool checkErrorBuffer) {
+PIL_ERROR_CODE KEI2600::sendScript(std::string scriptName, std::string script, bool checkErrorBuffer) {
     std::string url = "http://" + m_IPAddr + "/HttpCommand";
 
     // TODO: Endscript without Loadscript Error, but working nonetheless
@@ -1212,8 +1212,8 @@ PIL_ERROR_CODE KEI2600::executeScript(const std::string scriptName, bool checkEr
  * @param checkErrorBuffer if true error buffer status is requested and evaluated.
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
-PIL_ERROR_CODE KEI2600::sendAndExecuteScript(std::string script, const std::string scriptName, bool checkErrorBuffer) {
-    PIL_ERROR_CODE ret = sendScript(std::move(script), scriptName, checkErrorBuffer);
+PIL_ERROR_CODE KEI2600::sendAndExecuteScript(std::string scriptName, std::string script, bool checkErrorBuffer) {
+    PIL_ERROR_CODE ret = sendScript(scriptName, std::move(script), checkErrorBuffer);
 
     if (!errorOccured(ret)) {
         ret = executeScript(scriptName, checkErrorBuffer);
@@ -1238,7 +1238,7 @@ PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
         m_BufferedScript = replaceAllSubstrings(m_BufferedScript, "%B_M_BUFFER_SIZE%",
                                                 "" + std::to_string(m_bufferEntriesB));
 
-        auto ret = sendAndExecuteScript(m_BufferedScript, "bufferedScript", checkErrorBuffer);
+        auto ret = sendAndExecuteScript("bufferedScript", m_BufferedScript, checkErrorBuffer);
         m_SendMode = prevSendMode;
         clearBuffer("bufferedScript", checkErrorBuffer);
 
@@ -1290,25 +1290,7 @@ PIL_ERROR_CODE KEI2600::clearBuffer(std::string bufferName, bool checkErrorBuffe
     execArgs.AddArgument(subArg, "");
 
     auto ret = Exec("", &execArgs, nullptr);
-
     return handleErrorCode(ret, checkErrorBuffer);
-}
-
-/**
- * @brief Generates a print statement to receive any amount of buffer values in one go.
- * 
- * @param startIdx The start index of the wanted buffer values
- * @param endIdx The end index of the wanted buffer values.
- * @param offset 
- * @param bufferName The name of the buffer.
- * @return The generated print statement.
- */
-std::string generateBufferPrint(int startIdx, int endIdx, int offset, std::string bufferName) {
-    std::string toPrint = bufferName + "[" + std::to_string(1 + offset) + "]";
-    for (int j = startIdx; j <= endIdx; ++j) {
-        toPrint += ", " + bufferName + "[" + std::to_string(j + offset) + "]";
-    }
-    return toPrint;
 }
 
 /**
@@ -1316,22 +1298,25 @@ std::string generateBufferPrint(int startIdx, int endIdx, int offset, std::strin
  * 
  * @return The received error code. 
  */
-PIL_ERROR_CODE KEI2600::readPartOfBuffer(int numberOfPrints, int offset, std::string bufferName, char printBuffer[],
-                                         double results[]) {
+std::vector<double> KEI2600::readPartOfBuffer(int startIdx, int endIdx, std::string bufferName, char printBuffer[]) {
     SubArg subArg("");
-    subArg.AddElem(generateBufferPrint(1, numberOfPrints, offset, bufferName), "(", ")");
+    subArg.AddElem(std::to_string(startIdx) + ", " + std::to_string(endIdx) + ", " + bufferName, "(",
+                   ")");
     ExecArgs execArgs;
     execArgs.AddArgument(subArg, "");
+    auto ret = Exec("printbuffer", &execArgs, printBuffer);
 
-    auto ret = Exec("print", &execArgs, printBuffer);
+    std::vector<std::string> bufferValues = splitString(std::string(printBuffer), ", ");
 
-    std::vector<std::string> bufferValues = splitString(std::string(printBuffer), "\t");
+    std::vector<double> results;
+    results.reserve(bufferValues.size());
 
-    for (int j = 0; j < bufferValues.size(); ++j) {
-        results[offset + j] = std::stod(bufferValues[j]);
+    for (std::string bufferValue : bufferValues) {
+        results.push_back(std::stod(bufferValue));
     }
 
-    return handleErrorCode(ret, false);
+    handleErrorCode(ret, false);
+    return results;
 }
 
 /**
@@ -1339,7 +1324,7 @@ PIL_ERROR_CODE KEI2600::readPartOfBuffer(int numberOfPrints, int offset, std::st
  * 
  * @return The received error code.
  */
-PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, double *buffer, bool checkErrorBuffer) {
+PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, std::vector<double> *result, bool checkErrorBuffer) {
     int n = 0;
     getBufferSize(bufferName, &n, checkErrorBuffer);
 
@@ -1350,38 +1335,33 @@ PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, double *buffer, bool 
 
     char printBuffer[15 * batchSize];
 
+    result->reserve(n);
     for (int i = 0; i < batches; ++i) {
         int offset = i * batchSize;
-        readPartOfBuffer(batchSize, offset, bufferName, printBuffer, buffer);
+        std::vector<double> batchVector = readPartOfBuffer(1 + offset, offset + batchSize, bufferName, printBuffer);
+        for (double value : batchVector) {
+            result->push_back(value);
+        }
     }
 
     if (remaining > 0) {
         int offset = batches * batchSize;
-        readPartOfBuffer(remaining, offset, bufferName, printBuffer, buffer);
+        std::vector<double> batchVector = readPartOfBuffer(1 + offset, offset + remaining, bufferName, printBuffer);
+        for (double value : batchVector) {
+            result->push_back(value);
+        }
     }
 
-    SubArg subArg("");
-    subArg.AddElem(bufferName + ".clear", "(", ")");
-    ExecArgs execArgs;
-    execArgs.AddArgument(subArg, "");
-
-    auto ret = Exec("", &execArgs, nullptr);
-
-    return handleErrorCode(ret, checkErrorBuffer);
+    return clearBuffer(bufferName, checkErrorBuffer);
 }
 
 std::vector<double> KEI2600::getBuffer(std::string bufferName, bool checkErroBuffer) {
     int bufferSize;
     getBufferSize(bufferName, &bufferSize, false);
-    double buffer[bufferSize];
-    readBuffer(bufferName, buffer, false);
+    std::vector<double> buffer;
+    readBuffer(bufferName, &buffer, false);
 
-    std::vector<double> output;
-    for (double item: buffer) {
-        output.push_back(item);
-    }
-
-    return output;
+    return buffer;
 }
 
 /**

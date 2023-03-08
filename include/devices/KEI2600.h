@@ -69,14 +69,14 @@ public:
     PIL_ERROR_CODE performLinearVoltageSweep(SMU_CHANNEL channel, double startVoltage, double stopVoltage,
                                              int increaseRate, double current, bool checkErrorBuffer);
 
-    PIL_ERROR_CODE sendScript(std::string script, std::string scriptName, bool checkErrorBuffer);
+    PIL_ERROR_CODE sendScript(std::string scriptName, std::string script, bool checkErrorBuffer);
     PIL_ERROR_CODE executeScript(std::string scriptName, bool checkErrorBuffer);
-    PIL_ERROR_CODE sendAndExecuteScript(std::string script, std::string scriptName, bool checkErrorBuffer);
+    PIL_ERROR_CODE sendAndExecuteScript(std::string scriptName, std::string script, bool checkErrorBuffer);
     PIL_ERROR_CODE executeBufferedScript(bool checkErrorBuffer);
 
     PIL_ERROR_CODE createBuffer(SMU_CHANNEL channel, std::string bufferName, int capacity, bool checkErrorBuffer);
     PIL_ERROR_CODE clearBuffer(std::string bufferName, bool checkErrorBuffer);
-    PIL_ERROR_CODE readBuffer(std::string bufferName, double *buffer, bool checkErrorBuffer);
+    PIL_ERROR_CODE readBuffer(std::string bufferName, std::vector<double> *result, bool checkErrorBuffer);
     PIL_ERROR_CODE getBufferSize(std::string bufferName, int *value, bool checkErrorBuffer);
     int getBufferSizePy(std::string bufferName, bool checkErrorBuffer);
     void clearBufferedScript();
@@ -87,16 +87,11 @@ public:
     std::string CHANNEL_B_BUFFER = "B_M_BUFFER";
 
 private:
-    PIL_ERROR_CODE measureI(SMU_CHANNEL channel, double *value);
-    PIL_ERROR_CODE measureV(SMU_CHANNEL channel, double *value);
-    PIL_ERROR_CODE measureR(SMU_CHANNEL channel, double *value);
-    PIL_ERROR_CODE measureP(SMU_CHANNEL channel, double *value);
-
     PIL_ERROR_CODE analogFilterHelperFunction(SMU_CHANNEL channel, bool enable);
     PIL_ERROR_CODE measureAutoRangeHelperFunction(SMU_CHANNEL channel, UNIT unit, bool enable);
     PIL_ERROR_CODE enableDisableBeepHelperFunction(bool enable);
 
-    PIL_ERROR_CODE readPartOfBuffer(int numberOfPrints, int offset, std::string bufferName, char printBuffer[], double results[]);
+    std::vector<double> readPartOfBuffer(int startIdx, int endIdx, std::string bufferName, char printBuffer[]);
     std::string getChannelStringFromEnum(SMU_CHANNEL channel);
     std::string unitToLetter(UNIT unit);
     static std::string getStringFromAutoZeroEnum(AUTOZERO autoZero);

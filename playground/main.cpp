@@ -16,8 +16,6 @@ void generic_test() {
 
     smu->disableBeep(false);
 
-    std::cout << smu->GetDeviceIdentifier() << std::endl;
-
     smu->Disconnect();
 }
 
@@ -74,13 +72,10 @@ void measurementBufferingTest() {
 
     int bufferSize;
     smu->getBufferSize(smu->CHANNEL_A_BUFFER, &bufferSize, false);
-    double buffer[bufferSize];
+    std::cout << "Buffer size: " << bufferSize << std::endl;
+    std::vector<double> buffer;
 
-    smu->readBuffer(smu->CHANNEL_A_BUFFER, buffer, false);
-
-    for (const auto &item: buffer) {
-        std::cout << item << std::endl;
-    }
+    smu->readBuffer(smu->CHANNEL_A_BUFFER, &buffer, false);
 
     smu->Disconnect();
 }
@@ -96,6 +91,6 @@ void kstTest() {
 
 
 int main() {
-    kstTest();
+    measurementBufferingTest();
     return 0;
 }
