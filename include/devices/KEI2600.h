@@ -91,7 +91,7 @@ private:
 
     std::string determineStorage(SMU_CHANNEL channel);
 
-    PIL_ERROR_CODE readPartOfBuffer(int startIdx, int endIdx, std::string bufferName, char printBuffer[],
+    PIL_ERROR_CODE readPartOfBuffer(int startIdx, int endIdx, std::string bufferName, char *printBuffer,
                                     std::vector<double> *result, bool checkErrorBuffer);
     PIL_ERROR_CODE appendToBuffer(int startIdx, int endIdx, std::string bufferName, char *printBuffer,
                                   std::vector<double> *result, bool checkErrorBuffer);

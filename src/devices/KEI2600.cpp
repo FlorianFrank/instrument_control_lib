@@ -1271,7 +1271,7 @@ PIL_ERROR_CODE KEI2600::clearBuffer(std::string bufferName, bool checkErrorBuffe
  * 
  * @return The received error code.
  */
-PIL_ERROR_CODE KEI2600::readPartOfBuffer(int startIdx, int endIdx, std::string bufferName, char printBuffer[],
+PIL_ERROR_CODE KEI2600::readPartOfBuffer(int startIdx, int endIdx, std::string bufferName, char *printBuffer,
                                          std::vector<double> *result, bool checkErrorBuffer) {
     SubArg subArg("");
     subArg.AddElem(std::to_string(startIdx) + ", " + std::to_string(endIdx) + ", " + bufferName, "(", ")");
@@ -1320,7 +1320,7 @@ PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, std::vector<double> *
     return clearBuffer(bufferName, checkErrorBuffer);
 }
 
-PIL_ERROR_CODE KEI2600::appendToBuffer(int startIdx, int endIdx, std::string bufferName, char printBuffer[],
+PIL_ERROR_CODE KEI2600::appendToBuffer(int startIdx, int endIdx, std::string bufferName, char *printBuffer,
                              std::vector<double> *result, bool checkErrorBuffer) {
     std::vector<double> batchVector;
     auto ret = readPartOfBuffer(startIdx, endIdx, std::move(bufferName), printBuffer, &batchVector, checkErrorBuffer);
