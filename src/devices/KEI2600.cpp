@@ -1128,14 +1128,15 @@ void createPayloadBatch(int offset, int numberOfLines, std::vector<std::string> 
  * @param url The url to send the post request to.
  * @param payload The payload to send.
  */
-void postRequest(const std::string &url, std::string &payload) {
+PIL_ERROR_CODE postRequest(const std::string &url, std::string &payload) {
     try {
         http::Request request{url};
         const auto response = request.send("POST", payload, {
                 {"Content-Type", "application/json"}
         });
+        return PIL_NO_ERROR;
     } catch (const std::exception &e) {
-        // TODO: handle error
+        return PIL_ERRNO;  // TODO: Add exception for http requests
     }
 }
 
@@ -1170,20 +1171,24 @@ PIL_ERROR_CODE KEI2600::sendScript(std::string scriptName, std::string script, b
         createPayloadBatch(offset, remaining, lines, &payloads);
     }
 
-    payloads.push_back(R"({"command": "shellInput", "value": ")" + scriptName + ".save()\"}");
+    payloads.push_back(createPayload(scriptName + ".save()"));
 
-    postRequest(url, exitPayload);
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    auto ret = postRequest(url, exitPayload);
+    if (errorOccured(ret)) {
+        return handleErrorCode(ret, checkErrorBuffer);
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(300));
 
     for (auto &payload: payloads) {
-        postRequest(url, payload);
+        ret = postRequest(url, payload);
+        if (errorOccured(ret)) {
+            return handleErrorCode(ret, checkErrorBuffer);
+        }
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    postRequest(url, exitPayload);
-
-    return handleErrorCode(PIL_NO_ERROR, checkErrorBuffer);
+    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+    ret = postRequest(url, exitPayload);
+    return handleErrorCode(ret, checkErrorBuffer);
 }
 
 /**
@@ -1240,6 +1245,7 @@ PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
         auto ret = sendAndExecuteScript("bufferedScript", m_BufferedScript, checkErrorBuffer);
         m_SendMode = prevSendMode;
         clearBuffer("bufferedScript", checkErrorBuffer);
+        clearBufferedScript();
 
         return handleErrorCode(ret, checkErrorBuffer);
     }
