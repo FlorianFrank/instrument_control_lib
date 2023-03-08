@@ -113,4 +113,6 @@ private:
                                       + CHANNEL_B_BUFFER + " = smub.makebuffer(%B_M_BUFFER_SIZE%)\n"
                                       + CHANNEL_A_BUFFER + ".appendmode = 1\n"
                                       + CHANNEL_B_BUFFER + ".appendmode = 1\n";
+
+    void appendToBuffer(int startIdx, int endIdx, std::string bufferName, char *printBuffer, std::vector<double> *result);
 };

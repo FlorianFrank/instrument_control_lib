@@ -1338,21 +1338,22 @@ PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, std::vector<double> *
     result->reserve(n);
     for (int i = 0; i < batches; ++i) {
         int offset = i * batchSize;
-        std::vector<double> batchVector = readPartOfBuffer(1 + offset, offset + batchSize, bufferName, printBuffer);
-        for (double value : batchVector) {
-            result->push_back(value);
-        }
+        appendToBuffer(1 + offset, offset + batchSize, bufferName, printBuffer, result);
     }
 
     if (remaining > 0) {
         int offset = batches * batchSize;
-        std::vector<double> batchVector = readPartOfBuffer(1 + offset, offset + remaining, bufferName, printBuffer);
-        for (double value : batchVector) {
-            result->push_back(value);
-        }
+        appendToBuffer(1 + offset, offset + remaining, bufferName, printBuffer, result);
     }
 
     return clearBuffer(bufferName, checkErrorBuffer);
+}
+
+void KEI2600::appendToBuffer(int startIdx, int endIdx, std::string bufferName, char printBuffer[], std::vector<double> *result) {
+    std::vector<double> batchVector = readPartOfBuffer(startIdx, endIdx, std::move(bufferName), printBuffer);
+    for (double value : batchVector) {
+        result->push_back(value);
+    }
 }
 
 std::vector<double> KEI2600::getBuffer(std::string bufferName, bool checkErroBuffer) {

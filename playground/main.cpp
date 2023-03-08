@@ -77,6 +77,10 @@ void measurementBufferingTest() {
 
     smu->readBuffer(smu->CHANNEL_A_BUFFER, &buffer, false);
 
+    for (double val : buffer) {
+        std::cout << val << std::endl;
+    }
+
     smu->Disconnect();
 }
 
