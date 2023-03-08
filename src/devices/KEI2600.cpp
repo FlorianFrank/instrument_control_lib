@@ -1233,25 +1233,21 @@ PIL_ERROR_CODE KEI2600::sendAndExecuteScript(std::string scriptName, std::string
  * @return The received error code.
  */
 PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
-    if (!m_BufferedScript.empty()) {
-        SEND_METHOD prevSendMode = m_SendMode;
-        m_SendMode = SEND_METHOD::DIRECT_SEND;
+    SEND_METHOD prevSendMode = m_SendMode;
+    m_SendMode = SEND_METHOD::DIRECT_SEND;
 
-        m_BufferedScript = replaceAllSubstrings(m_BufferedScript, "%A_M_BUFFER_SIZE%",
-                                                std::to_string(m_bufferEntriesA));
-        m_BufferedScript = replaceAllSubstrings(m_BufferedScript, "%B_M_BUFFER_SIZE%",
-                                                "" + std::to_string(m_bufferEntriesB));
+    m_BufferedScript = replaceAllSubstrings(m_BufferedScript, "%A_M_BUFFER_SIZE%",
+                                            std::to_string(m_bufferEntriesA));
+    m_BufferedScript = replaceAllSubstrings(m_BufferedScript, "%B_M_BUFFER_SIZE%",
+                                            "" + std::to_string(m_bufferEntriesB));
 
-        auto ret = sendAndExecuteScript("bufferedScript", m_BufferedScript, checkErrorBuffer);
-        m_SendMode = prevSendMode;
-        clearBuffer(CHANNEL_A_BUFFER, checkErrorBuffer);
-        clearBuffer(CHANNEL_B_BUFFER, checkErrorBuffer);
-        clearBufferedScript();
+    auto ret = sendAndExecuteScript("bufferedScript", m_BufferedScript, checkErrorBuffer);
+    clearBuffer(CHANNEL_A_BUFFER, checkErrorBuffer);
+    clearBuffer(CHANNEL_B_BUFFER, checkErrorBuffer);
+    m_SendMode = prevSendMode;
+    clearBufferedScript();
 
-        return handleErrorCode(ret, checkErrorBuffer);
-    }
-
-    return PIL_NO_ERROR;
+    return handleErrorCode(ret, checkErrorBuffer);
 }
 
 /**
