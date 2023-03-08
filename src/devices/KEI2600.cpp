@@ -1241,8 +1241,6 @@ PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
                                             "" + std::to_string(m_bufferEntriesB));
 
     auto ret = sendAndExecuteScript("bufferedScript", m_BufferedScript, checkErrorBuffer);
-    clearBuffer(CHANNEL_A_BUFFER, checkErrorBuffer);
-    clearBuffer(CHANNEL_B_BUFFER, checkErrorBuffer);
     m_SendMode = prevSendMode;
     clearBufferedScript();
 
@@ -1273,20 +1271,23 @@ PIL_ERROR_CODE KEI2600::clearBuffer(std::string bufferName, bool checkErrorBuffe
  * 
  * @return The received error code.
  */
-std::vector<double> KEI2600::readPartOfBuffer(int startIdx, int endIdx, std::string bufferName, char printBuffer[]) {
+PIL_ERROR_CODE KEI2600::readPartOfBuffer(int startIdx, int endIdx, std::string bufferName, char printBuffer[],
+                                         std::vector<double> *result, bool checkErrorBuffer) {
     SubArg subArg("");
     subArg.AddElem(std::to_string(startIdx) + ", " + std::to_string(endIdx) + ", " + bufferName, "(", ")");
     ExecArgs execArgs;
     execArgs.AddArgument(subArg, "");
     auto ret = Exec("printbuffer", &execArgs, printBuffer);
 
-    std::vector<double> results;
-    for (const std::string &value: splitString(std::string(printBuffer), ", ")) {
-        results.push_back(std::stod(value));
+    if (errorOccured(ret)) {
+        return handleErrorCode(ret, checkErrorBuffer);
     }
 
-    handleErrorCode(ret, false);
-    return results;
+    for (const std::string &value: splitString(std::string(printBuffer), ", ")) {
+        result->push_back(std::stod(value));
+    }
+
+    return handleErrorCode(ret, checkErrorBuffer);
 }
 
 /**
@@ -1308,26 +1309,33 @@ PIL_ERROR_CODE KEI2600::readBuffer(std::string bufferName, std::vector<double> *
     result->reserve(n);
     for (int i = 0; i < batches; ++i) {
         int offset = i * batchSize;
-        appendToBuffer(1 + offset, offset + batchSize, bufferName, printBuffer, result);
+        appendToBuffer(1 + offset, offset + batchSize, bufferName, printBuffer, result, checkErrorBuffer);
     }
 
     if (remaining > 0) {
         int offset = batches * batchSize;
-        appendToBuffer(1 + offset, offset + remaining, bufferName, printBuffer, result);
+        appendToBuffer(1 + offset, offset + remaining, bufferName, printBuffer, result, checkErrorBuffer);
     }
 
     return clearBuffer(bufferName, checkErrorBuffer);
 }
 
-void KEI2600::appendToBuffer(int startIdx, int endIdx, std::string bufferName, char printBuffer[],
-                             std::vector<double> *result) {
-    std::vector<double> batchVector = readPartOfBuffer(startIdx, endIdx, std::move(bufferName), printBuffer);
+PIL_ERROR_CODE KEI2600::appendToBuffer(int startIdx, int endIdx, std::string bufferName, char printBuffer[],
+                             std::vector<double> *result, bool checkErrorBuffer) {
+    std::vector<double> batchVector;
+    auto ret = readPartOfBuffer(startIdx, endIdx, std::move(bufferName), printBuffer, &batchVector, checkErrorBuffer);
+    if (errorOccured(ret)) {
+        return handleErrorCode(ret, checkErrorBuffer);
+    }
+
     for (double value: batchVector) {
         result->push_back(value);
     }
+
+    return PIL_NO_ERROR;
 }
 
-std::vector<double> KEI2600::getBuffer(std::string bufferName, bool checkErrorBuffer) {
+std::vector<double> KEI2600::readBufferPy(std::string bufferName, bool checkErrorBuffer) {
     std::vector<double> buffer;
     readBuffer(bufferName, &buffer, checkErrorBuffer);
     return buffer;

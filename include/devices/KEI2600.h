@@ -8,15 +8,14 @@
 #include "Device.h"
 #include "types/SMU.h"
 
-namespace PIL
-{
+namespace PIL {
     class Logging;
 }
+
 /**
  * @brief This class implements the basic functionality of Keithley 2600 series SMU's.
  */
-class KEI2600 : public SMU
-{
+class KEI2600 : public SMU {
 public:
     explicit KEI2600(std::string ipAddress, int timeoutInMs, PIL::Logging *logger, SEND_METHOD mode = DIRECT_SEND);
 
@@ -58,8 +57,8 @@ public:
     PIL_ERROR_CODE displayMeasureFunction(SMU_CHANNEL channel, SMU_DISPLAY displayMeasureFunc, bool checkErrorBuffer);
 
     PIL_ERROR_CODE enableBeep(bool checkErrorBuffer = true);
-    PIL_ERROR_CODE beep(float timeInSeconds, int frequency, bool checkErrorBuffer);
     PIL_ERROR_CODE disableBeep(bool checkErrorBuffer);
+    PIL_ERROR_CODE beep(float timeInSeconds, int frequency, bool checkErrorBuffer);
 
     std::string getLastError();
     PIL_ERROR_CODE clearErrorBuffer();
@@ -74,10 +73,13 @@ public:
     PIL_ERROR_CODE executeBufferedScript(bool checkErrorBuffer);
 
     PIL_ERROR_CODE readBuffer(std::string bufferName, std::vector<double> *result, bool checkErrorBuffer);
-    std::vector<double> getBuffer(std::string bufferName, bool checkErrorBuffer);
+    std::vector<double> readBufferPy(std::string bufferName, bool checkErrorBuffer);
     PIL_ERROR_CODE getBufferSize(std::string bufferName, int *value, bool checkErrorBuffer);
     PIL_ERROR_CODE clearBuffer(std::string bufferName, bool checkErrorBuffer);
     void clearBufferedScript();
+
+    std::string CHANNEL_A_BUFFER = "A_M_BUFFER";
+    std::string CHANNEL_B_BUFFER = "B_M_BUFFER";
 
 private:
     PIL_ERROR_CODE handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErrorBuffer);
@@ -88,8 +90,11 @@ private:
     PIL_ERROR_CODE toggleChannel(SMU_CHANNEL channel, bool switchOn, bool checkErrorBuffer);
 
     std::string determineStorage(SMU_CHANNEL channel);
-    std::vector<double> readPartOfBuffer(int startIdx, int endIdx, std::string bufferName, char printBuffer[]);
-    void appendToBuffer(int startIdx, int endIdx, std::string bufferName, char *printBuffer, std::vector<double> *result);
+
+    PIL_ERROR_CODE readPartOfBuffer(int startIdx, int endIdx, std::string bufferName, char printBuffer[],
+                                    std::vector<double> *result, bool checkErrorBuffer);
+    PIL_ERROR_CODE appendToBuffer(int startIdx, int endIdx, std::string bufferName, char *printBuffer,
+                                  std::vector<double> *result, bool checkErrorBuffer);
 
     static std::string getChannelStringFromEnum(SMU_CHANNEL channel);
     static std::string getLetterFromUnit(UNIT unit);
@@ -101,8 +106,6 @@ private:
     static std::string getStringFromSenseValue(SMU_SENSE sense);
     static std::string getMeasurementBufferName(SMU_CHANNEL channel);
 
-    std::string CHANNEL_A_BUFFER = "A_M_BUFFER";
-    std::string CHANNEL_B_BUFFER = "B_M_BUFFER";
     int m_bufferEntriesA = 1;
     int m_bufferEntriesB = 1;
     std::string defaultBufferScript = CHANNEL_A_BUFFER + " = smua.makebuffer(%A_M_BUFFER_SIZE%)\n"
