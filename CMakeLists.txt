@@ -17,7 +17,7 @@ else() # build shared lib
     add_library(instrument_control_lib SHARED ${source_files} ${device_files} ${device_type_files} python_interface/pybind_wrapper.cpp)
 endif()
 
-target_compile_options(instrument_control_lib PRIVATE -Wall -Wextra -Wpedantic)  # TODO: readd -Werror flag!
+target_compile_options(instrument_control_lib PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
 # Build third party libraries and executables
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/pugixml")
@@ -71,7 +71,6 @@ endif()
 
 set(PYTHON_PIP_INSTALL 1)
 if (PYTHON_PIP_INSTALL)
-    message("I am in pip install")
     project(py_instrument_control_lib)
 
     add_subdirectory(python_interface/pybind11)
