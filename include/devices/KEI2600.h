@@ -29,7 +29,6 @@ public:
 
     PIL_ERROR_CODE turnOn(SMU_CHANNEL channel, bool checkErrorBuffer) override;
     PIL_ERROR_CODE turnOff(SMU_CHANNEL channel, bool checkErrorBuffer) override;
-    PIL_ERROR_CODE toggle(SMU_CHANNEL channel, bool switchOn, bool checkErrorBuffer);
 
     PIL_ERROR_CODE setLevel(UNIT unit, SMU_CHANNEL channel, double level, bool checkErrorBuffer) override;
     PIL_ERROR_CODE setLimit(UNIT unit, SMU_CHANNEL channel, double limit, bool checkErrorBuffer) override;
@@ -74,23 +73,26 @@ public:
     PIL_ERROR_CODE sendAndExecuteScript(std::string scriptName, std::string script, bool checkErrorBuffer);
     PIL_ERROR_CODE executeBufferedScript(bool checkErrorBuffer);
 
-    PIL_ERROR_CODE clearBuffer(std::string bufferName, bool checkErrorBuffer);
     PIL_ERROR_CODE readBuffer(std::string bufferName, std::vector<double> *result, bool checkErrorBuffer);
-    PIL_ERROR_CODE getBufferSize(std::string bufferName, int *value, bool checkErrorBuffer);
-    void clearBufferedScript();
     std::vector<double> getBuffer(std::string bufferName, bool checkErrorBuffer);
-
-    std::string CHANNEL_A_BUFFER = "A_M_BUFFER";
-    std::string CHANNEL_B_BUFFER = "B_M_BUFFER";
+    PIL_ERROR_CODE getBufferSize(std::string bufferName, int *value, bool checkErrorBuffer);
+    PIL_ERROR_CODE clearBuffer(std::string bufferName, bool checkErrorBuffer);
+    void clearBufferedScript();
 
 private:
-    PIL_ERROR_CODE analogFilterHelperFunction(SMU_CHANNEL channel, bool enable);
-    PIL_ERROR_CODE measureAutoRangeHelperFunction(SMU_CHANNEL channel, UNIT unit, bool enable);
-    PIL_ERROR_CODE enableDisableBeepHelperFunction(bool enable);
+    PIL_ERROR_CODE handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErrorBuffer);
 
+    PIL_ERROR_CODE toggleAnalogFilterHelper(SMU_CHANNEL channel, bool enable);
+    PIL_ERROR_CODE toggleMeasureAutoRange(SMU_CHANNEL channel, UNIT unit, bool enable);
+    PIL_ERROR_CODE toggleBeeper(bool enable);
+    PIL_ERROR_CODE toggleChannel(SMU_CHANNEL channel, bool switchOn, bool checkErrorBuffer);
+
+    std::string determineStorage(SMU_CHANNEL channel);
     std::vector<double> readPartOfBuffer(int startIdx, int endIdx, std::string bufferName, char printBuffer[]);
-    std::string getChannelStringFromEnum(SMU_CHANNEL channel);
-    std::string unitToLetter(UNIT unit);
+    void appendToBuffer(int startIdx, int endIdx, std::string bufferName, char *printBuffer, std::vector<double> *result);
+
+    static std::string getChannelStringFromEnum(SMU_CHANNEL channel);
+    static std::string getLetterFromUnit(UNIT unit);
     static std::string getStringFromAutoZeroEnum(AUTOZERO autoZero);
     static std::string getStringFromSrcFuncEnum(SRC_FUNC srcFunc);
     static std::string getStringFromOffModeEnum(SRC_OFF_MODE offMode);
@@ -99,17 +101,12 @@ private:
     static std::string getStringFromSenseValue(SMU_SENSE sense);
     static std::string getMeasurementBufferName(SMU_CHANNEL channel);
 
-    PIL_ERROR_CODE handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErrorBuffer);
-
-    std::string determineStorage(SMU_CHANNEL channel);
-
+    std::string CHANNEL_A_BUFFER = "A_M_BUFFER";
+    std::string CHANNEL_B_BUFFER = "B_M_BUFFER";
     int m_bufferEntriesA = 1;
     int m_bufferEntriesB = 1;
-
     std::string defaultBufferScript = CHANNEL_A_BUFFER + " = smua.makebuffer(%A_M_BUFFER_SIZE%)\n"
                                       + CHANNEL_B_BUFFER + " = smub.makebuffer(%B_M_BUFFER_SIZE%)\n"
                                       + CHANNEL_A_BUFFER + ".appendmode = 1\n"
                                       + CHANNEL_B_BUFFER + ".appendmode = 1\n";
-
-    void appendToBuffer(int startIdx, int endIdx, std::string bufferName, char *printBuffer, std::vector<double> *result);
 };

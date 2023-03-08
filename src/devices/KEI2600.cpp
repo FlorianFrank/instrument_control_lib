@@ -39,7 +39,7 @@ KEI2600::KEI2600(std::string ipAddress, int timeoutInMS, PIL::Logging *logger, S
     m_Logger = new PIL::Logging(PIL::INFO, &logFile);
 }
 
-std::string KEI2600::unitToLetter(UNIT unit) {
+std::string KEI2600::getLetterFromUnit(UNIT unit) {
     switch (unit) {
         case SMU::CURRENT:
             return "i";
@@ -64,7 +64,7 @@ std::string KEI2600::unitToLetter(UNIT unit) {
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double *value, bool checkErrorBuffer) {
-    std::string unitLetter = unitToLetter(unit);
+    std::string unitLetter = getLetterFromUnit(unit);
 
     if (unitLetter.empty() || (!IsBuffered() && !value)) {
         if (m_EnableExceptions)
@@ -144,7 +144,7 @@ double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel, bool checkErrorBuffer) {
-    return toggle(channel, true, checkErrorBuffer);
+    return toggleChannel(channel, true, checkErrorBuffer);
 }
 
 /**
@@ -154,10 +154,10 @@ PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel, bool checkErrorBuffer) {
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel, bool checkErrorBuffer) {
-    return toggle(channel, false, checkErrorBuffer);
+    return toggleChannel(channel, false, checkErrorBuffer);
 }
 
-PIL_ERROR_CODE KEI2600::toggle(SMU_CHANNEL channel, bool switchOn, bool checkErrorBuffer) {
+PIL_ERROR_CODE KEI2600::toggleChannel(SMU_CHANNEL channel, bool switchOn, bool checkErrorBuffer) {
     SubArg subArg("source", ".");
     subArg.AddElem("output", ".");
 
@@ -260,7 +260,7 @@ PIL_ERROR_CODE KEI2600::setLimit(UNIT unit, SMU_CHANNEL channel, double limit, b
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer) {
-    auto ret = measureAutoRangeHelperFunction(channel, unit, true);
+    auto ret = toggleMeasureAutoRange(channel, unit, true);
     return handleErrorCode(ret, checkErrorBuffer);
 }
 
@@ -272,7 +272,7 @@ PIL_ERROR_CODE KEI2600::enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel, b
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer) {
-    auto ret = measureAutoRangeHelperFunction(channel, unit, false);
+    auto ret = toggleMeasureAutoRange(channel, unit, false);
     return handleErrorCode(ret, checkErrorBuffer);
 
 }
@@ -364,7 +364,7 @@ PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, b
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 [[maybe_unused]] PIL_ERROR_CODE KEI2600::enableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer) {
-    auto ret = analogFilterHelperFunction(channel, true);
+    auto ret = toggleAnalogFilterHelper(channel, true);
     return handleErrorCode(ret, checkErrorBuffer);
 }
 
@@ -375,7 +375,7 @@ PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, b
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::disableMeasureAnalogFilter(SMU_CHANNEL smuChannel, bool checkErrorBuffer) {
-    auto ret = analogFilterHelperFunction(smuChannel, false);
+    auto ret = toggleAnalogFilterHelper(smuChannel, false);
     return handleErrorCode(ret, checkErrorBuffer);
 }
 
@@ -704,7 +704,7 @@ KEI2600::displayMeasureFunction(SMU::SMU_CHANNEL channel, SMU_DISPLAY measureFun
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::enableBeep(bool checkErrorBuffer) {
-    auto ret = enableDisableBeepHelperFunction(true);
+    auto ret = toggleBeeper(true);
     return handleErrorCode(ret, checkErrorBuffer);
 }
 
@@ -714,7 +714,7 @@ PIL_ERROR_CODE KEI2600::enableBeep(bool checkErrorBuffer) {
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::disableBeep(bool checkErrorBuffer) {
-    auto ret = enableDisableBeepHelperFunction(false);
+    auto ret = toggleBeeper(false);
     return handleErrorCode(ret, checkErrorBuffer);
 }
 
@@ -741,10 +741,9 @@ std::string KEI2600::getChannelStringFromEnum(SMU_CHANNEL channel) {
             return "a";
         case SMU::CHANNEL_B:
             return "b";
+        default:
+            throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
     }
-    if (m_EnableExceptions)
-        throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
-    return "";
 }
 
 /**
@@ -867,7 +866,7 @@ std::string KEI2600::getChannelStringFromEnum(SMU_CHANNEL channel) {
  * @param enable enable or disable the analog filter.
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
-PIL_ERROR_CODE KEI2600::analogFilterHelperFunction(SMU::SMU_CHANNEL channel, bool enable) {
+PIL_ERROR_CODE KEI2600::toggleAnalogFilterHelper(SMU::SMU_CHANNEL channel, bool enable) {
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
             .AddElem("measure", ".")
@@ -889,7 +888,7 @@ PIL_ERROR_CODE KEI2600::analogFilterHelperFunction(SMU::SMU_CHANNEL channel, boo
  * @param enable enable or disable the auto range filter function.
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
-PIL_ERROR_CODE KEI2600::measureAutoRangeHelperFunction(SMU_CHANNEL channel, UNIT unit, bool enable) {
+PIL_ERROR_CODE KEI2600::toggleMeasureAutoRange(SMU_CHANNEL channel, UNIT unit, bool enable) {
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
             .AddElem("measure", ".");
@@ -921,7 +920,7 @@ PIL_ERROR_CODE KEI2600::measureAutoRangeHelperFunction(SMU_CHANNEL channel, UNIT
  * @param enable select if the beep function is enabled or disabled.
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
-PIL_ERROR_CODE KEI2600::enableDisableBeepHelperFunction(bool enable) {
+PIL_ERROR_CODE KEI2600::toggleBeeper(bool enable) {
     SubArg subArg("beeper");
     subArg.AddElem("enable", ".");
 
