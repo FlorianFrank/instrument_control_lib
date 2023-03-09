@@ -303,7 +303,7 @@ void Device::changeSendMode(SEND_METHOD mode) {
 
 /* static */ std::string Device::vectorToStringNL(std::vector<std::string> vector) {
     std::string output = vector[0];
-    for (uint i = 1; i < vector.size(); i++) {
+    for (u_int i = 1; i < vector.size(); i++) {
         output += "\n" + vector[i];
     }
 
