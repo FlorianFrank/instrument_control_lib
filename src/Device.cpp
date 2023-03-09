@@ -132,11 +132,11 @@ PIL_ERROR_CODE Device::Disconnect() {
  * @brief Checks if the connection to the device is established.
  * @return true if connection is established, otherwise false.
  */
-bool Device::IsOpen() const {
+bool Device::isOpen() const {
     return m_SocketHandle->IsOpen();
 }
 
-bool Device::IsBuffered() const {
+bool Device::isBuffered() const {
     return m_SendMode == SEND_METHOD::BUFFER_ENABLED;
 }
 
@@ -145,7 +145,7 @@ bool Device::IsBuffered() const {
  * @return
  */
 std::string Device::GetDeviceIdentifier() {
-    if (!IsBuffered() && !IsOpen())
+    if (!isBuffered() && !isOpen())
         return PIL_ErrorCodeToString(
                 Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, m_EnableExceptions, PIL::ERROR, __FILENAME__,
                                                __LINE__, ""));
@@ -194,15 +194,15 @@ PIL_ERROR_CODE Device::Exec(const std::string &command, ExecArgs *args, std::str
     message << command;
     if (args)
         message << args->GetArgumentsAsString();
-    if (!IsBuffered() && !m_SocketHandle->IsOpen())
+    if (!isBuffered() && !m_SocketHandle->IsOpen())
         return Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, m_EnableExceptions, PIL::ERROR, __FILENAME__,
                                               __LINE__, "Error interface is closed");
 
-    if (!IsBuffered() && br)
+    if (!isBuffered() && br)
         message << std::endl;
 
     auto strToSend = message.str();
-    if (IsBuffered()) {
+    if (isBuffered()) {
         m_BufferedScript.push_back(strToSend);
         return PIL_NO_ERROR;
     } else {
@@ -249,7 +249,7 @@ std::string Device::ReturnErrorMessage() {
 }
 
 PIL_ERROR_CODE Device::delay(double delayTime) {
-    if (IsBuffered()) {
+    if (isBuffered()) {
         SubArg arg(std::to_string(delayTime), "delay(", ")");
 
         ExecArgs args;

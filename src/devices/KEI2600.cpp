@@ -65,7 +65,7 @@ std::string KEI2600::getLetterFromUnit(UNIT unit) {
 PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double *value, bool checkErrorBuffer) {
     std::string unitLetter = getLetterFromUnit(unit);
 
-    if (unitLetter.empty() || (!IsBuffered() && !value)) {
+    if (unitLetter.empty() || (!isBuffered() && !value)) {
         if (m_EnableExceptions)
             throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
         return PIL_INVALID_ARGUMENTS;
@@ -83,7 +83,7 @@ PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double *value, b
     if (errorOccured(ret))
         return ret;
 
-    if (!IsBuffered()) {
+    if (!isBuffered()) {
         SubArg subArgPrint("");
         subArgPrint.AddElem("reading", "(", ")");
 
@@ -115,7 +115,7 @@ double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
     double value;
     auto ret = measure(unit, channel, &value, checkErrorBuffer);
 
-    if (IsBuffered()) {
+    if (isBuffered()) {
         return 0;
     }
 
@@ -920,7 +920,7 @@ PIL_ERROR_CODE KEI2600::toggleBeeper(bool enable) {
  * @return Return last error from error-queue as string.
  */
 std::string KEI2600::getLastError() {
-    if (IsBuffered()) {
+    if (isBuffered()) {
         return "Currently Buffering, currently only accumulating buffered script.";
     } else {
         ExecArgs argsErrorQueue;
@@ -1322,7 +1322,7 @@ PIL_ERROR_CODE KEI2600::getBufferSize(const std::string &bufferName, int *value,
 PIL_ERROR_CODE KEI2600::handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErrorBuffer) {
     if (errorOccured(errorCode))
         return errorCode;
-    if (!IsBuffered() && checkErrorBuffer)
+    if (!isBuffered() && checkErrorBuffer)
         return getErrorBufferStatus();
     return PIL_NO_ERROR;
 }
@@ -1345,7 +1345,7 @@ std::string KEI2600::getMeasurementBufferName(SMU_CHANNEL channel) {
  * @return An empty string if the measurement is not buffered, the buffer to save it in otherwise.
  */
 std::string KEI2600::determineStorage(SMU_CHANNEL channel) {
-    if (IsBuffered()) {
+    if (!isBuffered()) {
         return "";
     } else {
         if (channel == CHANNEL_A)

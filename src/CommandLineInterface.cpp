@@ -273,7 +273,7 @@ void CommandLineInterface::ActiveDevices(std::string&)
     std::cout << "    List active devices: " << std::endl;
     for(unsigned int i = 0; i < m_DeviceList.size(); i++)
     {
-        std::cout << "         ID: " << i << " " << m_DeviceNameList[i] << " IP: " << m_DeviceIPList[i] << " " << (m_DeviceList[i]->IsOpen() ? "Connected" : "Disconnected") << std::endl;
+        std::cout << "         ID: " << i << " " << m_DeviceNameList[i] << " IP: " << m_DeviceIPList[i] << " " << (m_DeviceList[i]->isOpen() ? "Connected" : "Disconnected") << std::endl;
     }
 }
 
