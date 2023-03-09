@@ -143,7 +143,7 @@ double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel, bool checkErrorBuffer) {
-    return toggleChannel(channel, true, checkErrorBuffer);
+    return handleErrorCode(toggleChannel(channel, true), checkErrorBuffer);
 }
 
 /**
@@ -153,10 +153,10 @@ PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel, bool checkErrorBuffer) {
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel, bool checkErrorBuffer) {
-    return toggleChannel(channel, false, checkErrorBuffer);
+    return handleErrorCode(toggleChannel(channel, false), checkErrorBuffer);
 }
 
-PIL_ERROR_CODE KEI2600::toggleChannel(SMU_CHANNEL channel, bool switchOn, bool checkErrorBuffer) {
+PIL_ERROR_CODE KEI2600::toggleChannel(SMU_CHANNEL channel, bool switchOn) {
     SubArg subArg("source", ".");
     subArg.AddElem("output", ".");
 
@@ -172,8 +172,7 @@ PIL_ERROR_CODE KEI2600::toggleChannel(SMU_CHANNEL channel, bool switchOn, bool c
             .AddArgument(subArg, smuNumber, " = ")
             .AddArgument(outputArg, "");
 
-    auto ret = Exec("", &execArgs);
-    return handleErrorCode(ret, checkErrorBuffer);
+    return Exec("", &execArgs);
 }
 
 /**
@@ -259,8 +258,7 @@ PIL_ERROR_CODE KEI2600::setLimit(UNIT unit, SMU_CHANNEL channel, double limit, b
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::enableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer) {
-    auto ret = toggleMeasureAutoRange(channel, unit, true);
-    return handleErrorCode(ret, checkErrorBuffer);
+    return handleErrorCode(toggleMeasureAutoRange(channel, unit, true), checkErrorBuffer);
 }
 
 /**

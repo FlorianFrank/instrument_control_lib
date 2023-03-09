@@ -87,8 +87,7 @@ private:
     PIL_ERROR_CODE toggleAnalogFilterHelper(SMU_CHANNEL channel, bool enable);
     PIL_ERROR_CODE toggleMeasureAutoRange(SMU_CHANNEL channel, UNIT unit, bool enable);
     PIL_ERROR_CODE toggleBeeper(bool enable);
-    PIL_ERROR_CODE toggleChannel(SMU_CHANNEL channel, bool switchOn, bool checkErrorBuffer);
-
+    PIL_ERROR_CODE toggleChannel(SMU_CHANNEL channel, bool switchOn);
     std::string determineStorage(SMU_CHANNEL channel);
 
     PIL_ERROR_CODE readPartOfBuffer(int startIdx, int endIdx, const std::string& bufferName, char *printBuffer,
