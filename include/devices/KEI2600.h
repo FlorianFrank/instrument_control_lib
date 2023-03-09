@@ -115,8 +115,8 @@ private:
     static std::string getLetterFromUnit(UNIT unit);
     static std::string getMeasurementBufferName(SMU_CHANNEL channel);
 
-    int m_bufferEntriesA = 1;
-    int m_bufferEntriesB = 1;
+    int m_BufferEntriesA = 1;
+    int m_BufferEntriesB = 1;
     std::vector<std::string> defaultBufferedScript{CHANNEL_A_BUFFER + " = smua.makebuffer(%A_M_BUFFER_SIZE%)",
                                                    CHANNEL_B_BUFFER + " = smub.makebuffer(%B_M_BUFFER_SIZE%)",
                                                    CHANNEL_A_BUFFER + ".appendmode = 1",

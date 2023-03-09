@@ -839,8 +839,8 @@ PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double st
 
     SEND_METHOD prevSendMethod = m_SendMode;
     std::vector<std::string> oldBuffer = m_BufferedScript;
-    int oldBufferEntriesA = m_bufferEntriesA;
-    int oldBufferEntriesB = m_bufferEntriesB;
+    int oldBufferEntriesA = m_BufferEntriesA;
+    int oldBufferEntriesB = m_BufferEntriesB;
     m_BufferedScript.clear();
     changeSendMode(BUFFER_ENABLED);
 
@@ -871,8 +871,8 @@ PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double st
     }
 
     m_BufferedScript = oldBuffer;
-    m_bufferEntriesA = oldBufferEntriesA;
-    m_bufferEntriesB = oldBufferEntriesB;
+    m_BufferEntriesA = oldBufferEntriesA;
+    m_BufferEntriesB = oldBufferEntriesB;
     m_SendMode = prevSendMethod;
 
     return handleErrorCode(ret, checkErrorBuffer);
@@ -1027,9 +1027,9 @@ PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
     m_SendMode = SEND_METHOD::DIRECT_SEND;
 
     m_BufferedScript[0] = replaceAllSubstrings(m_BufferedScript[0], "%A_M_BUFFER_SIZE%",
-                                               std::to_string(m_bufferEntriesA));
+                                               std::to_string(m_BufferEntriesA));
     m_BufferedScript[1] = replaceAllSubstrings(m_BufferedScript[1], "%B_M_BUFFER_SIZE%",
-                                               "" + std::to_string(m_bufferEntriesB));
+                                               "" + std::to_string(m_BufferEntriesB));
 
     std::string s = vectorToStringNL(m_BufferedScript);
     auto ret = sendAndExecuteVectorScript("bufferedScript", m_BufferedScript, checkErrorBuffer);
@@ -1156,8 +1156,8 @@ PIL_ERROR_CODE KEI2600::getBufferSize(const std::string &bufferName, int *value,
 
 void KEI2600::clearBufferedScript() {
     m_BufferedScript = defaultBufferedScript;
-    m_bufferEntriesA = 1;
-    m_bufferEntriesB = 1;
+    m_BufferEntriesA = 1;
+    m_BufferEntriesB = 1;
 }
 
 /**
@@ -1186,9 +1186,9 @@ std::string KEI2600::getMeasurementStorage(SMU_CHANNEL channel) {
         return "";
     } else {
         if (channel == CHANNEL_A)
-            m_bufferEntriesA++;
+            m_BufferEntriesA++;
         else
-            m_bufferEntriesB++;
+            m_BufferEntriesB++;
         return getMeasurementBufferName(channel);
     }
 }
