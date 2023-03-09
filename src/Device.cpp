@@ -80,7 +80,7 @@ PIL_ERROR_CODE Device::handleErrorsAndLogging(PIL_ERROR_CODE errorCode, bool thr
     va_list args;
     va_start(args, formatStr);
     char buffer[1024];
-    vsprintf(buffer, formatStr.c_str(), args);
+    vsnprintf(buffer, 1024, formatStr.c_str(), args);
     if (m_Logger)
         m_Logger->LogMessage(logLevel, fileName.c_str(), line, buffer);
     va_end(args);
