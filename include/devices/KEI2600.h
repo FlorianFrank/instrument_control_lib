@@ -106,13 +106,13 @@ private:
                                    std::vector<std::string> *result);
 
     static std::string getChannelStringFromEnum(SMU_CHANNEL channel);
-    static std::string getLetterFromUnit(UNIT unit);
     static std::string getStringFromAutoZeroEnum(AUTOZERO autoZero);
     static std::string getStringFromSrcFuncEnum(SRC_FUNC srcFunc);
     static std::string getStringFromOffModeEnum(SRC_OFF_MODE offMode);
     static std::string getStringFromSettleEnum(SRC_SETTLING srcSettling);
     static std::string getStringFromMeasureDisplayFunction(SMU_DISPLAY displayMeasureFunc);
     static std::string getStringFromSenseValue(SMU_SENSE sense);
+    static std::string getLetterFromUnit(UNIT unit);
     static std::string getMeasurementBufferName(SMU_CHANNEL channel);
 
     int m_bufferEntriesA = 1;

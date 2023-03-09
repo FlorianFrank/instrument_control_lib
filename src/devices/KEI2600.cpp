@@ -1162,11 +1162,29 @@ PIL_ERROR_CODE KEI2600::handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErro
 }
 
 /**
+ * @brief Determines whether the value to be measured should be stored in a buffer or not. If it should be saved, the
+ * number of buffer entries is incremented.
+ * @param channel The channel on which to measure.
+ * @return An empty string if the measurement is not buffered, the buffer to save it in otherwise.
+ */
+std::string KEI2600::getMeasurementStorage(SMU_CHANNEL channel) {
+    if (!isBuffered()) {
+        return "";
+    } else {
+        if (channel == CHANNEL_A)
+            m_bufferEntriesA++;
+        else
+            m_bufferEntriesB++;
+        return getMeasurementBufferName(channel);
+    }
+}
+
+/**
  * @brief Helper function returning the channel as string which can be used within the TCP command send to the SMU.
  * @param channel channel enum to convert to a string.
  * @return SMU channel as string. Return empty string if channel is invalid.
  */
-std::string KEI2600::getChannelStringFromEnum(SMU_CHANNEL channel) {
+/* static */ std::string KEI2600::getChannelStringFromEnum(SMU_CHANNEL channel) {
     switch (channel) {
         case SMU::CHANNEL_A:
             return "a";
@@ -1315,22 +1333,4 @@ std::string KEI2600::getLetterFromUnit(UNIT unit) {
 std::string KEI2600::getMeasurementBufferName(SMU_CHANNEL channel) {
     std::string prefix = channel == CHANNEL_A ? "A" : "B";
     return prefix + "_M_BUFFER";
-}
-
-/**
- * @brief Determines whether the value to be measured should be stored in a buffer or not. If it should be saved, the
- * number of buffer entries is incremented.
- * @param channel The channel on which to measure.
- * @return An empty string if the measurement is not buffered, the buffer to save it in otherwise.
- */
-std::string KEI2600::getMeasurementStorage(SMU_CHANNEL channel) {
-    if (!isBuffered()) {
-        return "";
-    } else {
-        if (channel == CHANNEL_A)
-            m_bufferEntriesA++;
-        else
-            m_bufferEntriesB++;
-        return getMeasurementBufferName(channel);
-    }
 }
