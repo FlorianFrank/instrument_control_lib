@@ -64,6 +64,7 @@ protected:
 
     static bool errorOccured(PIL_ERROR_CODE errorCode);
     static PIL_ERROR_CODE postRequest(const std::string &url, std::string &payload);
+    static std::string vectorToStringNL(std::vector<std::string> vector);
     static std::string replaceAllSubstrings(std::string str, const std::string &from, const std::string &to);
     static std::vector<std::string> splitString(const std::string &toSplit, const std::string &delimiter);
 
@@ -76,7 +77,7 @@ protected:
     int m_srcPort = 5025;
     bool m_EnableExceptions;
     SEND_METHOD m_SendMode;
-    std::string m_BufferedScript;
+    std::vector<std::string> m_BufferedScript;
 };
 
 #endif //CE_DEVICE_DEVICE_H

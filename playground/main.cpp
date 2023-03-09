@@ -59,10 +59,12 @@ void measurementBufferingTest() {
     smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_A, 0.42, false);
     smu->changeSendMode(Device::SEND_METHOD::BUFFER_ENABLED);
 
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 20; ++i) {
         smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_A, i / 100.0, false);
         smu->measure(SMU::VOLTAGE, SMU::CHANNEL_A, nullptr, false);
     }
+
+    std::cout << smu->getBufferedScript() << std::endl;
 
     smu->executeBufferedScript(false);
 

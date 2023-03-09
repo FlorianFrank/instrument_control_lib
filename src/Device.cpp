@@ -198,12 +198,12 @@ PIL_ERROR_CODE Device::Exec(const std::string &command, ExecArgs *args, std::str
         return Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, m_EnableExceptions, PIL::ERROR, __FILENAME__,
                                               __LINE__, "Error interface is closed");
 
-    if (IsBuffered() || br)
+    if (!IsBuffered() && br)
         message << std::endl;
 
     auto strToSend = message.str();
     if (IsBuffered()) {
-        m_BufferedScript += strToSend;
+        m_BufferedScript.push_back(strToSend);
         return PIL_NO_ERROR;
     } else {
         if (m_SocketHandle->Send(strToSend) != PIL_NO_ERROR)
@@ -263,7 +263,7 @@ PIL_ERROR_CODE Device::delay(double delayTime) {
 }
 
 std::string Device::getBufferedScript() {
-    return m_BufferedScript;
+    return vectorToStringNL(m_BufferedScript);
 }
 
 void Device::changeSendMode(SEND_METHOD mode) {
@@ -296,6 +296,15 @@ void Device::changeSendMode(SEND_METHOD mode) {
     } catch (const std::exception &e) {
         return PIL_ERRNO;  // TODO: Add exception for http requests
     }
+}
+
+/* static */ std::string Device::vectorToStringNL(std::vector<std::string> vector) {
+    std::string output = vector[0];
+    for (uint i = 1; i < vector.size(); i++) {
+        output += "\n" + vector[i];
+    }
+
+    return output;
 }
 
 /**

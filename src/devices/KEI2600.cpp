@@ -23,7 +23,7 @@ extern "C" {
  */
 KEI2600::KEI2600(std::string ipAddress, int timeoutInMS, PIL::Logging *logger, SEND_METHOD mode)
         : SMU(std::move(ipAddress), timeoutInMS, logger, mode) {
-    m_BufferedScript = defaultBufferScript;
+    m_BufferedScript = defaultBufferedScript;
 }
 
 /**
@@ -33,7 +33,7 @@ KEI2600::KEI2600(std::string ipAddress, int timeoutInMS, PIL::Logging *logger, S
  */
 [[maybe_unused]] KEI2600::KEI2600(std::string ipAddress, int timeoutInMS, SEND_METHOD mode)
         : SMU(std::move(ipAddress), timeoutInMS, nullptr, mode) {
-    m_BufferedScript = defaultBufferScript;
+    m_BufferedScript = defaultBufferedScript;
     std::string logFile = "instrument_control.log";
     m_Logger = new PIL::Logging(PIL::INFO, &logFile);
 }
@@ -1010,8 +1010,8 @@ PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double st
     */
 
     SEND_METHOD prevSendMethod = m_SendMode;
-    std::string oldBuffer = m_BufferedScript;
-    m_BufferedScript = "";
+    std::vector<std::string> oldBuffer = m_BufferedScript;
+    m_BufferedScript.clear();
     changeSendMode(BUFFER_ENABLED);
 
     setSourceFunction(channel, DC_VOLTS, checkErrorBuffer);
@@ -1072,15 +1072,27 @@ void createPayloadBatch(int offset, int numberOfLines, std::vector<std::string> 
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::sendScript(const std::string &scriptName, const std::string &script, bool checkErrorBuffer) {
+    return sendScript(scriptName, splitString(script, "\n"), checkErrorBuffer);
+}
+
+/**
+ * @brief Sends the given script to the SMU. The scripts does not get executed.
+ *
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::sendScript(const std::string &scriptName, const std::vector<std::string> &script,
+                                   bool checkErrorBuffer) {
     std::string url = "http://" + m_IPAddr + "/HttpCommand";
 
-    std::string scriptContent = "loadscript " + scriptName + "\n" + script + "\n" + "endscript";
+    std::vector<std::string> sendableScript = script;
+    sendableScript.insert(sendableScript.begin(), "loadscript " + scriptName);
+    sendableScript.emplace_back("endscript");
 
     std::string exitPayload = R"({"command": "keyInput", "value": "K"})";
 
     int batchSize = 32;
-    std::vector<std::string> lines = splitString(scriptContent, "\n");
-    int numberOfLines = lines.size(); // NOLINT(cppcoreguidelines-narrowing-conversions)
+    int numberOfLines = sendableScript.size(); // NOLINT(cppcoreguidelines-narrowing-conversions)
     int numberOfBatches = numberOfLines / batchSize;
     int remaining = numberOfLines % batchSize;
 
@@ -1088,12 +1100,12 @@ PIL_ERROR_CODE KEI2600::sendScript(const std::string &scriptName, const std::str
 
     for (int i = 0; i < numberOfBatches; ++i) {
         int offset = i * batchSize;
-        createPayloadBatch(offset, batchSize, lines, &payloads);
+        createPayloadBatch(offset, batchSize, sendableScript, &payloads);
     }
 
     if (remaining > 0) {
         int offset = numberOfBatches * batchSize;
-        createPayloadBatch(offset, remaining, lines, &payloads);
+        createPayloadBatch(offset, remaining, sendableScript, &payloads);
     }
 
     payloads.push_back(createPayload(scriptName + ".save()"));
@@ -1143,6 +1155,16 @@ PIL_ERROR_CODE KEI2600::executeScript(const std::string &scriptName, bool checkE
  */
 PIL_ERROR_CODE KEI2600::sendAndExecuteScript(const std::string &scriptName, const std::string &script,
                                              bool checkErrorBuffer) {
+    return sendAndExecuteScript(scriptName, splitString(script, "\n"), checkErrorBuffer);
+}
+
+/**
+ * @brief Sends and executes the given script.
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::sendAndExecuteScript(const std::string &scriptName, std::vector<std::string> script,
+                                             bool checkErrorBuffer) {
     PIL_ERROR_CODE ret = sendScript(scriptName, script, checkErrorBuffer);
 
     if (!errorOccured(ret)) {
@@ -1162,11 +1184,12 @@ PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
     SEND_METHOD prevSendMode = m_SendMode;
     m_SendMode = SEND_METHOD::DIRECT_SEND;
 
-    m_BufferedScript = replaceAllSubstrings(m_BufferedScript, "%A_M_BUFFER_SIZE%",
-                                            std::to_string(m_bufferEntriesA));
-    m_BufferedScript = replaceAllSubstrings(m_BufferedScript, "%B_M_BUFFER_SIZE%",
-                                            "" + std::to_string(m_bufferEntriesB));
+    m_BufferedScript[0] = replaceAllSubstrings(m_BufferedScript[0], "%A_M_BUFFER_SIZE%",
+                                               std::to_string(m_bufferEntriesA));
+    m_BufferedScript[1] = replaceAllSubstrings(m_BufferedScript[1], "%B_M_BUFFER_SIZE%",
+                                               "" + std::to_string(m_bufferEntriesB));
 
+    std::string s = vectorToStringNL(m_BufferedScript);
     auto ret = sendAndExecuteScript("bufferedScript", m_BufferedScript, checkErrorBuffer);
     m_SendMode = prevSendMode;
     clearBufferedScript();
@@ -1305,7 +1328,7 @@ PIL_ERROR_CODE KEI2600::handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErro
 }
 
 void KEI2600::clearBufferedScript() {
-    m_BufferedScript = defaultBufferScript;
+    m_BufferedScript = defaultBufferedScript;
     m_bufferEntriesA = 1;
     m_bufferEntriesB = 1;
 }
