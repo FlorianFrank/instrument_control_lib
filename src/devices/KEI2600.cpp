@@ -818,10 +818,9 @@ PIL_ERROR_CODE KEI2600::getErrorBufferStatus() {
  */
 PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double startVoltage, double stopVoltage,
                                                   int increaseRate_mVpS, double current, bool checkErrorBuffer) {
-    /* A smaller script to directly send to the smu. If we buffer the loop gets unrolled which can get very long.
     std::string sweep = "start_voltage = " + std::to_string(startVoltage) + " * 1000\n"
                         "stop_voltage = " + std::to_string(stopVoltage) + " * 1000\n"
-                        "rate = " + std::to_string(increaseRate_mVpS)) + "\n"
+                        "rate = " + std::to_string(increaseRate_mVpS) + "\n"
                         "current = " + std::to_string(current) + "\n"
                         "channel = smu" + getChannelStringFromEnum(channel) + "\n"
                         "channel.source.func = channel.OUTPUT_DCVOLTS\n"
@@ -833,49 +832,8 @@ PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double st
                         "    channel.source.levelv = v / 1000\n"
                         "    delay(1 / rate)\n"
                         "end\n"
-                        "channel.source.output = channel.OUTPUT_OFF\n";
-    return sendAndExecuteVectorScript(sweep, "sweep", checkErrorBuffer);
-    */
-
-    SEND_METHOD prevSendMethod = m_SendMode;
-    std::vector<std::string> oldBuffer = m_BufferedScript;
-    int oldBufferEntriesA = m_BufferEntriesA;
-    int oldBufferEntriesB = m_BufferEntriesB;
-    m_BufferedScript.clear();
-    changeSendMode(BUFFER_ENABLED);
-
-    setSourceFunction(channel, DC_VOLTS, checkErrorBuffer);
-    turnOn(channel, checkErrorBuffer);
-    setLimit(VOLTAGE, channel, stopVoltage + 0.1, checkErrorBuffer);
-    setLimit(CURRENT, channel, current + 0.001, checkErrorBuffer);
-    setLevel(CURRENT, channel, current, checkErrorBuffer);
-    double currentVoltage = startVoltage;
-    while (currentVoltage < stopVoltage) {
-        setLevel(VOLTAGE, channel, currentVoltage, checkErrorBuffer);
-        delay(1.0 / increaseRate_mVpS);
-        currentVoltage += 0.001;
-    }
-    setLevel(VOLTAGE, channel, stopVoltage, checkErrorBuffer);
-    turnOff(channel, checkErrorBuffer);
-
-    PIL_ERROR_CODE ret;
-    if (prevSendMethod == DIRECT_SEND) {
-        ret = executeBufferedScript(checkErrorBuffer);
-
-    } else {
-        for (std::string line : m_BufferedScript) {
-            oldBuffer.push_back(line);
-        }
-        m_BufferedScript = oldBuffer;
-        ret = PIL_NO_ERROR;
-    }
-
-    m_BufferedScript = oldBuffer;
-    m_BufferEntriesA = oldBufferEntriesA;
-    m_BufferEntriesB = oldBufferEntriesB;
-    m_SendMode = prevSendMethod;
-
-    return handleErrorCode(ret, checkErrorBuffer);
+                        "channel.source.output = channel.OUTPUT_OFF";
+    return sendAndExecuteScript("sweep", sweep, checkErrorBuffer);
 }
 
 /**
