@@ -1345,15 +1345,13 @@ std::string KEI2600::getMeasurementBufferName(SMU_CHANNEL channel) {
  * @return An empty string if the measurement is not buffered, the buffer to save it in otherwise.
  */
 std::string KEI2600::determineStorage(SMU_CHANNEL channel) {
-    std::string placeToSave;
     if (IsBuffered()) {
-        placeToSave = getMeasurementBufferName(channel);
-        if (channel == CHANNEL_A) {
+        return "";
+    } else {
+        if (channel == CHANNEL_A)
             m_bufferEntriesA++;
-        } else {
+        else
             m_bufferEntriesB++;
-        }
+        return getMeasurementBufferName(channel);
     }
-
-    return placeToSave;
 }
