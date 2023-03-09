@@ -60,8 +60,12 @@ public:
 
 protected:
     PIL_ERROR_CODE handleErrorsAndLogging(PIL_ERROR_CODE errorCode, bool throwException, PIL::Level logLevel,
-                                          const std::string& fileName, int line, const std::string formatStr, ...);
+                                          const std::string& fileName, int line, std::string formatStr, ...);
+
     static bool errorOccured(PIL_ERROR_CODE errorCode);
+    static PIL_ERROR_CODE postRequest(const std::string &url, std::string &payload);
+    static std::string replaceAllSubstrings(std::string str, const std::string &from, const std::string &to);
+    static std::vector<std::string> splitString(const std::string &toSplit, const std::string &delimiter);
 
     std::string m_IPAddr;
     PIL_ErrorHandle m_ErrorHandle;

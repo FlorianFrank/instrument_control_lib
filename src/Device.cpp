@@ -5,6 +5,7 @@
  * @copyright University of Passau
  */
 #include "Device.h"
+#include "HTTPRequest.h"
 
 #include <regex> // std::regex_replace
 #include <iostream> // std::cout
@@ -275,6 +276,62 @@ void Device::changeSendMode(SEND_METHOD mode) {
  * @param errorCode The error code to check.
  * @return true if and only if there is an error.
  */
-bool Device::errorOccured(PIL_ERROR_CODE errorCode) {
+/* static */ bool Device::errorOccured(PIL_ERROR_CODE errorCode) {
     return errorCode != PIL_NO_ERROR;
+}
+
+/**
+ * @brief Sends a post request to the given url with the given payload.
+ *
+ * @param url The url to send the post request to.
+ * @param payload The payload to send.
+ */
+/* static */ PIL_ERROR_CODE Device::postRequest(const std::string &url, std::string &payload) {
+    try {
+        http::Request request{url};
+        const auto response = request.send("POST", payload, {
+                {"Content-Type", "application/json"}
+        });
+        return PIL_NO_ERROR;
+    } catch (const std::exception &e) {
+        return PIL_ERRNO;  // TODO: Add exception for http requests
+    }
+}
+
+/**
+ * @brief Replaces all substrings in the string with the given replacement string.
+ * @param str String to replace substrings in.
+ * @param from The substring to replace.
+ * @param to The string to replace all matching substrings with.
+ * @return The processed string
+ */
+/* static */ std::string Device::replaceAllSubstrings(std::string str, const std::string &from, const std::string &to) {
+    size_t start_pos = 0;
+    while ((start_pos = str.find(from, start_pos)) != std::string::npos) {
+        str.replace(start_pos, from.length(), to);
+        start_pos += to.length(); // Handles case where 'to' is a substring of 'from'
+    }
+    return str;
+}
+
+/**
+ * @brief Splits a string by the given delimiter.
+ *
+ * @param toSplit The string to split.
+ * @param delimiter The delimter to split the string by.
+ * @return A vector of substrings of toSplit.
+ */
+/* static */ std::vector<std::string> Device::splitString(const std::string &toSplit, const std::string &delimiter) {
+    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+    std::string token;
+    std::vector<std::string> res;
+
+    while ((pos_end = toSplit.find(delimiter, pos_start)) != std::string::npos) {
+        token = toSplit.substr(pos_start, pos_end - pos_start);
+        pos_start = pos_end + delim_len;
+        res.push_back(token);
+    }
+
+    res.push_back(toSplit.substr(pos_start));
+    return res;
 }
