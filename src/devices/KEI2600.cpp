@@ -839,6 +839,8 @@ PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double st
 
     SEND_METHOD prevSendMethod = m_SendMode;
     std::vector<std::string> oldBuffer = m_BufferedScript;
+    int oldBufferEntriesA = m_bufferEntriesA;
+    int oldBufferEntriesB = m_bufferEntriesB;
     m_BufferedScript.clear();
     changeSendMode(BUFFER_ENABLED);
 
@@ -856,10 +858,22 @@ PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double st
     setLevel(VOLTAGE, channel, stopVoltage, checkErrorBuffer);
     turnOff(channel, checkErrorBuffer);
 
-    auto ret = executeBufferedScript(checkErrorBuffer);
+    PIL_ERROR_CODE ret;
+    if (prevSendMethod == DIRECT_SEND) {
+        ret = executeBufferedScript(checkErrorBuffer);
 
-    m_SendMode = prevSendMethod;
+    } else {
+        for (std::string line : m_BufferedScript) {
+            oldBuffer.push_back(line);
+        }
+        m_BufferedScript = oldBuffer;
+        ret = PIL_NO_ERROR;
+    }
+
     m_BufferedScript = oldBuffer;
+    m_bufferEntriesA = oldBufferEntriesA;
+    m_bufferEntriesB = oldBufferEntriesB;
+    m_SendMode = prevSendMethod;
 
     return handleErrorCode(ret, checkErrorBuffer);
 }
