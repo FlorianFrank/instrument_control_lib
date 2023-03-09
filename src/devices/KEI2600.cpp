@@ -38,21 +38,6 @@ KEI2600::KEI2600(std::string ipAddress, int timeoutInMS, PIL::Logging *logger, S
     m_Logger = new PIL::Logging(PIL::INFO, &logFile);
 }
 
-std::string KEI2600::getLetterFromUnit(UNIT unit) {
-    switch (unit) {
-        case SMU::CURRENT:
-            return "i";
-        case SMU::VOLTAGE:
-            return "v";
-        case SMU::RESISTANCE:
-            return "r";
-        case SMU::POWER:
-            return "p";
-        default:
-            return "";
-    }
-}
-
 /**
  * @brief This function measures a certain unit on a specific channel. This function can be used to measure
  * voltage, current, power or resistance. It calls smuX.meausreUNIT().
@@ -156,12 +141,12 @@ PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel, bool checkErrorBuffer) {
     return handleErrorCode(toggleChannel(channel, false), checkErrorBuffer);
 }
 
-PIL_ERROR_CODE KEI2600::toggleChannel(SMU_CHANNEL channel, bool switchOn) {
+PIL_ERROR_CODE KEI2600::toggleChannel(SMU_CHANNEL channel, bool enable) {
     SubArg subArg("source", ".");
     subArg.AddElem("output", ".");
 
     std::string argString = "OUTPUT_";
-    argString += (switchOn ? "ON" : "OFF");
+    argString += (enable ? "ON" : "OFF");
     SubArg outputArg(argString, ".");
 
     SubArg smuNumber("smu");
@@ -818,6 +803,21 @@ std::string KEI2600::getChannelStringFromEnum(SMU_CHANNEL channel) {
             return "SENSE_CALA";
         default:
             return "SENSE_LOCAL";
+    }
+}
+
+std::string KEI2600::getLetterFromUnit(UNIT unit) {
+    switch (unit) {
+        case SMU::CURRENT:
+            return "i";
+        case SMU::VOLTAGE:
+            return "v";
+        case SMU::RESISTANCE:
+            return "r";
+        case SMU::POWER:
+            return "p";
+        default:
+            return "";
     }
 }
 
