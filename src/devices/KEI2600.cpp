@@ -59,7 +59,7 @@ PIL_ERROR_CODE KEI2600::measure(UNIT unit, SMU_CHANNEL channel, double *value, b
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
             .AddElem("measure", ".")
-            .AddElem(unitLetter + "(" + determineStorage(channel) + ")", ".");
+            .AddElem(unitLetter + "(" + getMeasurementStorage(channel) + ")", ".");
 
     ExecArgs args;
     args.AddArgument(subArg, "");
@@ -256,6 +256,40 @@ PIL_ERROR_CODE KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel, 
 }
 
 /**
+ * @brief Helper function to set the measure auto range, for different units.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param unit Unit to measure. Allowed are voltage, current, power and resistance.
+ * @param enable enable or disable the auto range filter function.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::toggleMeasureAutoRange(SMU_CHANNEL channel, UNIT unit, bool enable) {
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("measure", ".");
+
+    switch (unit) {
+        case CURRENT:
+            subArg.AddElem("autorangei", ".");
+            break;
+        case VOLTAGE:
+            subArg.AddElem("autorangev", ".");
+            break;
+        default:
+            if (m_EnableExceptions)
+                throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
+            return PIL_INVALID_ARGUMENTS;
+    }
+
+    ExecArgs args;
+    if (enable)
+        args.AddArgument(subArg, "1", " = ");
+    else
+        args.AddArgument(subArg, "0", " = ");
+
+    return Exec("", &args);
+}
+
+/**
  * @brief Enables source auto-range mode. The SMU immediately changes range to the range most
  * appropriate for the value being sourced if that range is different than the present SMU range.
  * @param unit allowed are current and voltage.
@@ -322,7 +356,7 @@ PIL_ERROR_CODE KEI2600::toggleSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bo
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::enableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer) {
-    return handleErrorCode(toggleAnalogFilterHelper(channel, true), checkErrorBuffer);
+    return handleErrorCode(toggleMeasureAnalogFilter(channel, true), checkErrorBuffer);
 }
 
 /**
@@ -332,7 +366,64 @@ PIL_ERROR_CODE KEI2600::enableMeasureAnalogFilter(SMU_CHANNEL channel, bool chec
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::disableMeasureAnalogFilter(SMU_CHANNEL smuChannel, bool checkErrorBuffer) {
-    return handleErrorCode(toggleAnalogFilterHelper(smuChannel, false), checkErrorBuffer);
+    return handleErrorCode(toggleMeasureAnalogFilter(smuChannel, false), checkErrorBuffer);
+}
+
+/**
+ * @brief Helper function to enable or disable filter helper functions.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param enable enable or disable the analog filter.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::toggleMeasureAnalogFilter(SMU::SMU_CHANNEL channel, bool enable) {
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("measure", ".")
+            .AddElem("analogfilter", ".");
+
+    ExecArgs arg;
+    if (enable)
+        arg.AddArgument(subArg, "1", " = ");
+    else
+        arg.AddArgument(subArg, "0", " = ");
+
+    return Exec("", &arg);
+}
+
+/**
+ * @brief Turns on the source sink mode.
+ * This reduces the source limit inaccuracy that occurs when operating in quadrants II and IV
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param checkErrorBuffer if true check the error buffer after execution.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::enableSourceSink(SMU_CHANNEL channel, bool checkErrorBuffer) {  // TODO: refactor
+    return handleErrorCode(toggleSourceSink(channel, true), checkErrorBuffer);
+}
+
+/**
+ * @brief Turns off the source sink mode.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param checkErrorBuffer if true check the error buffer after execution.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::disableSourceSink(SMU_CHANNEL channel, bool checkErrorBuffer) {
+    return handleErrorCode(toggleSourceSink(channel, false), checkErrorBuffer);
+}
+
+PIL_ERROR_CODE KEI2600::toggleSourceSink(SMU_CHANNEL channel, bool enable) {
+    SubArg subArg("smu");
+    subArg.AddElem(getChannelStringFromEnum(channel))
+            .AddElem("source", ".")
+            .AddElem("sink", ".");
+
+    ExecArgs arg;
+    if (enable)
+        arg.AddArgument(subArg, "1", " = ");
+    else
+        arg.AddArgument(subArg, "0", " = ");
+
+    return Exec("", &arg);
 }
 
 /**
@@ -582,42 +673,6 @@ PIL_ERROR_CODE KEI2600::setSourceSettling(SMU::SMU_CHANNEL channel, SRC_SETTLING
 }
 
 /**
- * @brief Turns on the source sink mode.
- * This reduces the source limit inaccuracy that occurs when operating in quadrants II and IV
- * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
- * @param checkErrorBuffer if true check the error buffer after execution.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::enableSourceSink(SMU_CHANNEL channel, bool checkErrorBuffer) {  // TODO: refactor
-    return handleErrorCode(toggleSourceSink(channel, true), checkErrorBuffer);
-}
-
-/**
- * @brief Turns off the source sink mode.
- * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
- * @param checkErrorBuffer if true check the error buffer after execution.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::disableSourceSink(SMU_CHANNEL channel, bool checkErrorBuffer) {
-    return handleErrorCode(toggleSourceSink(channel, false), checkErrorBuffer);
-}
-
-PIL_ERROR_CODE KEI2600::toggleSourceSink(SMU_CHANNEL channel, bool enable) {
-    SubArg subArg("smu");
-    subArg.AddElem(getChannelStringFromEnum(channel))
-            .AddElem("source", ".")
-            .AddElem("sink", ".");
-
-    ExecArgs arg;
-    if (enable)
-        arg.AddArgument(subArg, "1", " = ");
-    else
-        arg.AddArgument(subArg, "0", " = ");
-
-    return Exec("", &arg);
-}
-
-/**
  * @brief Specify the type of measurement currently displayed.
  * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
  * @param measureFunc show amps, volts, ohms or watts.
@@ -646,7 +701,7 @@ KEI2600::displayMeasureFunction(SMU::SMU_CHANNEL channel, SMU_DISPLAY measureFun
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::enableBeep(bool checkErrorBuffer) {
-    return handleErrorCode(toggleBeeper(true), checkErrorBuffer);
+    return handleErrorCode(toggleBeep(true), checkErrorBuffer);
 }
 
 /**
@@ -655,7 +710,25 @@ PIL_ERROR_CODE KEI2600::enableBeep(bool checkErrorBuffer) {
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::disableBeep(bool checkErrorBuffer) {
-    return handleErrorCode(toggleBeeper(false), checkErrorBuffer);
+    return handleErrorCode(toggleBeep(false), checkErrorBuffer);
+}
+
+/**
+ * @brief Helper function to enable or disable beep functionality.
+ * @param enable select if the beep function is enabled or disabled.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::toggleBeep(bool enable) {
+    SubArg subArg("beeper");
+    subArg.AddElem("enable", ".");
+
+    ExecArgs execArgs;
+    if (enable)
+        execArgs.AddArgument(subArg, "beeper.ON", " = ");
+    else
+        execArgs.AddArgument(subArg, "beeper.OFF", " = ");
+
+    return Exec("", &execArgs);
 }
 
 /**
@@ -668,6 +741,424 @@ PIL_ERROR_CODE KEI2600::disableBeep(bool checkErrorBuffer) {
 PIL_ERROR_CODE KEI2600::beep(float timeInSeconds, int frequency, bool checkErrorBuffer) {
     return handleErrorCode(Exec("beeper.beep(" + std::to_string(timeInSeconds) + "," + std::to_string(frequency) + ")"),
                            checkErrorBuffer);
+}
+
+/**
+ * @brief Return last error in error-queue.
+ * @return Return last error from error-queue as string.
+ */
+std::string KEI2600::getLastError() {
+    if (isBuffered()) {
+        return "Currently Buffering, currently only accumulating buffered script.";
+    } else {
+        ExecArgs argsErrorQueue;
+        argsErrorQueue.AddArgument("errorcode, message = errorqueue.next()", "");
+        auto ret = Exec("", &argsErrorQueue);
+        if (errorOccured(ret))
+            return "INTERNAL ERROR";
+
+        std::string errorBuffer;
+        ExecArgs argsPrintError;
+        argsPrintError.AddArgument("print(errorcode, message)", "");
+        ret = Exec("", &argsPrintError, &errorBuffer, true);
+        if (errorOccured(ret))
+            return "INTERNAL ERROR";
+        return errorBuffer.substr(0, errorBuffer.find('\n'));
+    }
+}
+
+/**
+ * @brief Clear the error buffer.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::clearErrorBuffer() {
+    ExecArgs args;
+    args.AddArgument("errorqueue", "clear()", ".");
+
+    return Exec("", &args);
+}
+
+/**
+ * @brief Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return
+ * PIL_ITEM_IN_ERROR_QUEUE.
+ * @return PIL_NO_ERROR if there is no item in the error queue. Otherwise return PIL_ITEM_IN_ERROR_QUEUE.
+ * If the queue could not be requested successfully. Return a specific error code.
+ */
+PIL_ERROR_CODE KEI2600::getErrorBufferStatus() {
+    ExecArgs argsErrorQueue;
+    argsErrorQueue.AddArgument("count = errorqueue.count", "");
+    auto ret = Exec("", &argsErrorQueue);
+    if (errorOccured(ret))
+        return ret;
+
+    std::string errorBufferRet;
+    ExecArgs argsPrintError;
+    argsPrintError.AddArgument("print(count)", "");
+    ret = Exec("", &argsPrintError, &errorBufferRet, true);
+    if (errorOccured(ret))
+        return ret;
+
+    errorBufferRet = errorBufferRet.substr(0, errorBufferRet.find('\n'));
+    try {
+        if (std::stoi(errorBufferRet) > 0) {
+            if (m_EnableExceptions)
+                throw PIL::Exception(PIL_ITEM_IN_ERROR_QUEUE, __FILENAME__, __LINE__, "");
+            return PIL_ITEM_IN_ERROR_QUEUE;
+        }
+    } catch (const std::invalid_argument &e) {
+        throw PIL::Exception(PIL_INVALID_ARGUMENTS, e.what());
+    }
+    return PIL_NO_ERROR;
+}
+
+/**
+ * @brief Perform a linear voltage sweep on the SMU. Increases the voltage at the given rate until the stop voltage is arrived.
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double startVoltage, double stopVoltage,
+                                                  int increaseRate_mVpS, double current, bool checkErrorBuffer) {
+    /* A smaller script to directly send to the smu. If we buffer the loop gets unrolled which can get very long.
+    std::string sweep = "start_voltage = " + std::to_string(startVoltage) + " * 1000\n"
+                        "stop_voltage = " + std::to_string(stopVoltage) + " * 1000\n"
+                        "rate = " + std::to_string(increaseRate_mVpS)) + "\n"
+                        "current = " + std::to_string(current) + "\n"
+                        "channel = smu" + getChannelStringFromEnum(channel) + "\n"
+                        "channel.source.func = channel.OUTPUT_DCVOLTS\n"
+                        "channel.source.output = channel.OUTPUT_ON\n"
+                        "channel.source.limitv = (stop_voltage / 1000) + 0.1\n"
+                        "channel.source.limiti = current + 0.0001\n"
+                        "channel.source.leveli = current\n"
+                        "for v = start_voltage, stop_voltage do\n"
+                        "    channel.source.levelv = v / 1000\n"
+                        "    delay(1 / rate)\n"
+                        "end\n"
+                        "channel.source.output = channel.OUTPUT_OFF\n";
+    return sendAndExecuteVectorScript(sweep, "sweep", checkErrorBuffer);
+    */
+
+    SEND_METHOD prevSendMethod = m_SendMode;
+    std::vector<std::string> oldBuffer = m_BufferedScript;
+    m_BufferedScript.clear();
+    changeSendMode(BUFFER_ENABLED);
+
+    setSourceFunction(channel, DC_VOLTS, checkErrorBuffer);
+    turnOn(channel, checkErrorBuffer);
+    setLimit(VOLTAGE, channel, stopVoltage + 0.1, checkErrorBuffer);
+    setLimit(CURRENT, channel, current + 0.001, checkErrorBuffer);
+    setLevel(CURRENT, channel, current, checkErrorBuffer);
+    double currentVoltage = startVoltage;
+    while (currentVoltage < stopVoltage) {
+        setLevel(VOLTAGE, channel, currentVoltage, checkErrorBuffer);
+        delay(1.0 / increaseRate_mVpS);
+        currentVoltage += 0.001;
+    }
+    setLevel(VOLTAGE, channel, stopVoltage, checkErrorBuffer);
+    turnOff(channel, checkErrorBuffer);
+
+    auto ret = executeBufferedScript(checkErrorBuffer);
+
+    m_SendMode = prevSendMethod;
+    m_BufferedScript = oldBuffer;
+
+    return handleErrorCode(ret, checkErrorBuffer);
+}
+
+/**
+ * @brief Creates a payload of a post request for the smu. 
+ * 
+ * @param value The value of the payload.
+ * @return The constructed payload.
+ */
+std::string KEI2600::createPayload(const std::string &value) {
+    return R"({"command": "shellInput", "value": ")" + value + "\"}";
+}
+
+/**
+ * @brief Create a payload provided a vector of values.
+ * Works by splitting the values into batches and constructing a payload.
+ * 
+ * @param offset The value to start collecting values.
+ * @param numberOfLines The total number of lines the batch is going to have at max.
+ * @param values The values of the payload.
+ * @param result The vector to insert the payload to.
+ */
+void KEI2600::createPayloadBatch(int offset, int numberOfLines, std::vector<std::string> values,
+                                 std::vector<std::string> *result) {
+    std::string value;
+    for (int i = offset; i < offset + numberOfLines; ++i) {
+        value += values[i] + "\n";
+    }
+
+    result->push_back(createPayload(value));
+}
+
+/**
+ * @brief Sends the given script to the SMU. The scripts does not get executed.
+ * 
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::sendScript(const std::string &scriptName, const std::string &script, bool checkErrorBuffer) {
+    return sendVectorScript(scriptName, splitString(script, "\n"), checkErrorBuffer);
+}
+
+/**
+ * @brief Sends the given script to the SMU. The scripts does not get executed.
+ *
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::sendVectorScript(const std::string &scriptName, const std::vector<std::string> &script,
+                                         bool checkErrorBuffer) {
+    std::string url = "http://" + m_IPAddr + "/HttpCommand";
+
+    std::vector<std::string> sendableScript = script;
+    sendableScript.insert(sendableScript.begin(), "loadscript " + scriptName);
+    sendableScript.emplace_back("endscript");
+
+    std::string exitPayload = R"({"command": "keyInput", "value": "K"})";
+
+    int batchSize = 32;
+    int numberOfLines = sendableScript.size(); // NOLINT(cppcoreguidelines-narrowing-conversions)
+    int numberOfBatches = numberOfLines / batchSize;
+    int remaining = numberOfLines % batchSize;
+
+    std::vector<std::string> payloads;
+
+    for (int i = 0; i < numberOfBatches; ++i) {
+        int offset = i * batchSize;
+        createPayloadBatch(offset, batchSize, sendableScript, &payloads);
+    }
+
+    if (remaining > 0) {
+        int offset = numberOfBatches * batchSize;
+        createPayloadBatch(offset, remaining, sendableScript, &payloads);
+    }
+
+    payloads.push_back(createPayload(scriptName + ".save()"));
+
+    auto ret = postRequest(url, exitPayload);
+    if (errorOccured(ret)) {
+        return handleErrorCode(ret, checkErrorBuffer);
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+
+    for (auto &payload: payloads) {
+        ret = postRequest(url, payload);
+        if (errorOccured(ret)) {
+            return handleErrorCode(ret, checkErrorBuffer);
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+    ret = postRequest(url, exitPayload);
+    return handleErrorCode(ret, checkErrorBuffer);
+}
+
+/**
+ * @brief Executes the script with the given name on the smu.
+ * 
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::executeScript(const std::string &scriptName, bool checkErrorBuffer) {
+    std::string suffix = "()";
+
+    std::string executeCommand = scriptName + suffix;
+    auto ret = Exec(executeCommand);
+
+    if (errorOccured(ret) && m_Logger) {
+        m_Logger->LogMessage(PIL::WARNING, __FILENAME__, __LINE__,
+                             "Error while executing script: %s", PIL_ErrorCodeToString(ret));
+    }
+
+    return handleErrorCode(ret, checkErrorBuffer);
+}
+
+/**
+ * @brief Sends and executes the given script.
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::sendAndExecuteScript(const std::string &scriptName, const std::string &script,
+                                             bool checkErrorBuffer) {
+    return sendAndExecuteVectorScript(scriptName, splitString(script, "\n"), checkErrorBuffer);
+}
+
+/**
+ * @brief Sends and executes the given script.
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
+PIL_ERROR_CODE KEI2600::sendAndExecuteVectorScript(const std::string &scriptName,
+                                                   const std::vector<std::string> &script, bool checkErrorBuffer) {
+    PIL_ERROR_CODE ret = sendVectorScript(scriptName, script, checkErrorBuffer);
+
+    if (!errorOccured(ret)) {
+        ret = executeScript(scriptName, checkErrorBuffer);
+    }
+
+    return handleErrorCode(ret, checkErrorBuffer);
+}
+
+/**
+ * @brief Executes the buffered script.
+ * 
+ * @param checkErrorBuffer Whether to check the error buffer after executing.
+ * @return The received error code.
+ */
+PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
+    SEND_METHOD prevSendMode = m_SendMode;
+    m_SendMode = SEND_METHOD::DIRECT_SEND;
+
+    m_BufferedScript[0] = replaceAllSubstrings(m_BufferedScript[0], "%A_M_BUFFER_SIZE%",
+                                               std::to_string(m_bufferEntriesA));
+    m_BufferedScript[1] = replaceAllSubstrings(m_BufferedScript[1], "%B_M_BUFFER_SIZE%",
+                                               "" + std::to_string(m_bufferEntriesB));
+
+    std::string s = vectorToStringNL(m_BufferedScript);
+    auto ret = sendAndExecuteVectorScript("bufferedScript", m_BufferedScript, checkErrorBuffer);
+    m_SendMode = prevSendMode;
+    clearBufferedScript();
+
+    return handleErrorCode(ret, checkErrorBuffer);
+}
+
+/**
+ * @brief Clears the buffer with the given name.
+ * 
+ * @param bufferName The name of the buffer.
+ * @param checkErrorBuffer Whether to check the error buffer after executing.
+ * @return The received error code.
+ */
+PIL_ERROR_CODE KEI2600::clearBuffer(const std::string &bufferName, bool checkErrorBuffer) {
+    SubArg subArg(bufferName);
+    subArg.AddElem("clear", ".")
+            .AddElem("", "(", ")");
+
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, "");
+
+    auto ret = Exec("", &execArgs, nullptr);
+    return handleErrorCode(ret, checkErrorBuffer);
+}
+
+/**
+ * @brief Reads part of the buffer with the given name.
+ * 
+ * @return The received error code.
+ */
+PIL_ERROR_CODE KEI2600::readPartOfBuffer(int startIdx, int endIdx, const std::string &bufferName, char *printBuffer,
+                                         std::vector<double> *result, bool checkErrorBuffer) {
+    SubArg subArg("");
+    subArg.AddElem(std::to_string(startIdx) + ", " + std::to_string(endIdx) + ", " + bufferName, "(", ")");
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, "");
+    auto ret = Exec("printbuffer", &execArgs, printBuffer);
+
+    if (errorOccured(ret)) {
+        return handleErrorCode(ret, checkErrorBuffer);
+    }
+
+    for (const std::string &value: splitString(std::string(printBuffer), ", ")) {
+        result->push_back(std::stod(value));
+    }
+
+    return handleErrorCode(ret, checkErrorBuffer);
+}
+
+/**
+ * @brief Reads the complete buffer with the given name.
+ * 
+ * @return The received error code.
+ */
+PIL_ERROR_CODE KEI2600::readBuffer(const std::string &bufferName, std::vector<double> *result, bool checkErrorBuffer) {
+    int n = 0;
+    getBufferSize(bufferName, &n, checkErrorBuffer);
+
+    int doubleSize = 15;
+    int batchSize = 1024 / doubleSize;
+    int batches = n / batchSize;
+    int remaining = n % batchSize;
+
+    char printBuffer[1024];
+
+    result->reserve(n);
+    for (int i = 0; i < batches; ++i) {
+        int offset = i * batchSize;
+        appendToBuffer(1 + offset, offset + batchSize, bufferName, printBuffer, result, checkErrorBuffer);
+    }
+
+    if (remaining > 0) {
+        int offset = batches * batchSize;
+        appendToBuffer(1 + offset, offset + remaining, bufferName, printBuffer, result, checkErrorBuffer);
+    }
+
+    return clearBuffer(bufferName, checkErrorBuffer);
+}
+
+PIL_ERROR_CODE KEI2600::appendToBuffer(int startIdx, int endIdx, const std::string &bufferName, char *printBuffer,
+                                       std::vector<double> *result, bool checkErrorBuffer) {
+    std::vector<double> batchVector;
+    auto ret = readPartOfBuffer(startIdx, endIdx, bufferName, printBuffer, &batchVector, checkErrorBuffer);
+    if (errorOccured(ret)) {
+        return handleErrorCode(ret, checkErrorBuffer);
+    }
+
+    for (double value: batchVector) {
+        result->push_back(value);
+    }
+
+    return PIL_NO_ERROR;
+}
+
+std::vector<double> KEI2600::readBufferPy(const std::string &bufferName, bool checkErrorBuffer) {
+    std::vector<double> buffer;
+    readBuffer(bufferName, &buffer, checkErrorBuffer);
+    return buffer;
+}
+
+/**
+ * @brief Retrieves the size of the buffer with the given name.
+ * 
+ * @return The received error code.
+ */
+PIL_ERROR_CODE KEI2600::getBufferSize(const std::string &bufferName, int *value, bool checkErrorBuffer) {
+    char sizeBuffer[16];
+
+    SubArg subArg("");
+    subArg.AddElem(bufferName + ".n", "(", ")");
+    ExecArgs execArgs;
+    execArgs.AddArgument(subArg, "");
+
+    auto ret = Exec("print", &execArgs, sizeBuffer);
+
+    int n = (int) std::stod(sizeBuffer);
+    *value = n;
+
+    return handleErrorCode(ret, checkErrorBuffer);
+}
+
+void KEI2600::clearBufferedScript() {
+    m_BufferedScript = defaultBufferedScript;
+    m_bufferEntriesA = 1;
+    m_bufferEntriesB = 1;
+}
+
+/**
+ * @brief Checks the given error code and checks the error buffer if specified.
+ *
+ * @param errorCode The error code to check.
+ * @param checkErrorBuffer Whether to check the error buffer.
+ * @return The corresponding error code.
+ */
+PIL_ERROR_CODE KEI2600::handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErrorBuffer) {
+    if (errorOccured(errorCode))
+        return errorCode;
+    if (!isBuffered() && checkErrorBuffer)
+        return getErrorBufferStatus();
+    return PIL_NO_ERROR;
 }
 
 /**
@@ -821,497 +1312,6 @@ std::string KEI2600::getLetterFromUnit(UNIT unit) {
     }
 }
 
-/**
- * @brief Helper function to enable or disable filter helper functions.
- * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
- * @param enable enable or disable the analog filter.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::toggleAnalogFilterHelper(SMU::SMU_CHANNEL channel, bool enable) {
-    SubArg subArg("smu");
-    subArg.AddElem(getChannelStringFromEnum(channel))
-            .AddElem("measure", ".")
-            .AddElem("analogfilter", ".");
-
-    ExecArgs arg;
-    if (enable)
-        arg.AddArgument(subArg, "1", " = ");
-    else
-        arg.AddArgument(subArg, "0", " = ");
-
-    return Exec("", &arg);
-}
-
-/**
- * @brief Helper function to set the measure auto range, for different units.
- * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
- * @param unit Unit to measure. Allowed are voltage, current, power and resistance.
- * @param enable enable or disable the auto range filter function.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::toggleMeasureAutoRange(SMU_CHANNEL channel, UNIT unit, bool enable) {
-    SubArg subArg("smu");
-    subArg.AddElem(getChannelStringFromEnum(channel))
-            .AddElem("measure", ".");
-
-    switch (unit) {
-        case CURRENT:
-            subArg.AddElem("autorangei", ".");
-            break;
-        case VOLTAGE:
-            subArg.AddElem("autorangev", ".");
-            break;
-        default:
-            if (m_EnableExceptions)
-                throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
-            return PIL_INVALID_ARGUMENTS;
-    }
-
-    ExecArgs args;
-    if (enable)
-        args.AddArgument(subArg, "1", " = ");
-    else
-        args.AddArgument(subArg, "0", " = ");
-
-    return Exec("", &args);
-}
-
-/**
- * @brief Helper function to enable or disable beep functionality.
- * @param enable select if the beep function is enabled or disabled.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::toggleBeeper(bool enable) {
-    SubArg subArg("beeper");
-    subArg.AddElem("enable", ".");
-
-    ExecArgs execArgs;
-    if (enable)
-        execArgs.AddArgument(subArg, "beeper.ON", " = ");
-    else
-        execArgs.AddArgument(subArg, "beeper.OFF", " = ");
-
-    return Exec("", &execArgs);
-}
-
-/**
- * @brief Return last error in error-queue.
- * @return Return last error from error-queue as string.
- */
-std::string KEI2600::getLastError() {
-    if (isBuffered()) {
-        return "Currently Buffering, currently only accumulating buffered script.";
-    } else {
-        ExecArgs argsErrorQueue;
-        argsErrorQueue.AddArgument("errorcode, message = errorqueue.next()", "");
-        auto ret = Exec("", &argsErrorQueue);
-        if (errorOccured(ret))
-            return "INTERNAL ERROR";
-
-        std::string errorBuffer;
-        ExecArgs argsPrintError;
-        argsPrintError.AddArgument("print(errorcode, message)", "");
-        ret = Exec("", &argsPrintError, &errorBuffer, true);
-        if (errorOccured(ret))
-            return "INTERNAL ERROR";
-        return errorBuffer.substr(0, errorBuffer.find('\n'));
-    }
-}
-
-/**
- * @brief Clear the error buffer.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::clearErrorBuffer() {
-    ExecArgs args;
-    args.AddArgument("errorqueue", "clear()", ".");
-
-    return Exec("", &args);
-}
-
-/**
- * @brief Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return
- * PIL_ITEM_IN_ERROR_QUEUE.
- * @return PIL_NO_ERROR if there is no item in the error queue. Otherwise return PIL_ITEM_IN_ERROR_QUEUE.
- * If the queue could not be requested successfully. Return a specific error code.
- */
-PIL_ERROR_CODE KEI2600::getErrorBufferStatus() {
-    ExecArgs argsErrorQueue;
-    argsErrorQueue.AddArgument("count = errorqueue.count", "");
-    auto ret = Exec("", &argsErrorQueue);
-    if (errorOccured(ret))
-        return ret;
-
-    std::string errorBufferRet;
-    ExecArgs argsPrintError;
-    argsPrintError.AddArgument("print(count)", "");
-    ret = Exec("", &argsPrintError, &errorBufferRet, true);
-    if (errorOccured(ret))
-        return ret;
-
-    errorBufferRet = errorBufferRet.substr(0, errorBufferRet.find('\n'));
-    try {
-        if (std::stoi(errorBufferRet) > 0) {
-            if (m_EnableExceptions)
-                throw PIL::Exception(PIL_ITEM_IN_ERROR_QUEUE, __FILENAME__, __LINE__, "");
-            return PIL_ITEM_IN_ERROR_QUEUE;
-        }
-    } catch (const std::invalid_argument &e) {
-        throw PIL::Exception(PIL_INVALID_ARGUMENTS, e.what());
-    }
-    return PIL_NO_ERROR;
-}
-
-/**
- * @brief Perform a linear voltage sweep on the SMU. Increases the voltage at the given rate until the stop voltage is arrived.
- * @param checkErrorBuffer if true error buffer status is requested and evaluated.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double startVoltage, double stopVoltage,
-                                                  int increaseRate_mVpS, double current, bool checkErrorBuffer) {
-    /* A smaller script to directly send to the smu. If we buffer the loop gets unrolled which can get very long.
-    std::string sweep = "start_voltage = " + std::to_string(startVoltage) + " * 1000\n"
-                        "stop_voltage = " + std::to_string(stopVoltage) + " * 1000\n"
-                        "rate = " + std::to_string(increaseRate_mVpS)) + "\n"
-                        "current = " + std::to_string(current) + "\n"
-                        "channel = smu" + getChannelStringFromEnum(channel) + "\n"
-                        "channel.source.func = channel.OUTPUT_DCVOLTS\n"
-                        "channel.source.output = channel.OUTPUT_ON\n"
-                        "channel.source.limitv = (stop_voltage / 1000) + 0.1\n"
-                        "channel.source.limiti = current + 0.0001\n"
-                        "channel.source.leveli = current\n"
-                        "for v = start_voltage, stop_voltage do\n"
-                        "    channel.source.levelv = v / 1000\n"
-                        "    delay(1 / rate)\n"
-                        "end\n"
-                        "channel.source.output = channel.OUTPUT_OFF\n";
-    return sendAndExecuteScript(sweep, "sweep", checkErrorBuffer);
-    */
-
-    SEND_METHOD prevSendMethod = m_SendMode;
-    std::vector<std::string> oldBuffer = m_BufferedScript;
-    m_BufferedScript.clear();
-    changeSendMode(BUFFER_ENABLED);
-
-    setSourceFunction(channel, DC_VOLTS, checkErrorBuffer);
-    turnOn(channel, checkErrorBuffer);
-    setLimit(VOLTAGE, channel, stopVoltage + 0.1, checkErrorBuffer);
-    setLimit(CURRENT, channel, current + 0.001, checkErrorBuffer);
-    setLevel(CURRENT, channel, current, checkErrorBuffer);
-    double currentVoltage = startVoltage;
-    while (currentVoltage < stopVoltage) {
-        setLevel(VOLTAGE, channel, currentVoltage, checkErrorBuffer);
-        delay(1.0 / increaseRate_mVpS);
-        currentVoltage += 0.001;
-    }
-    setLevel(VOLTAGE, channel, stopVoltage, checkErrorBuffer);
-    turnOff(channel, checkErrorBuffer);
-
-    auto ret = executeBufferedScript(checkErrorBuffer);
-
-    m_SendMode = prevSendMethod;
-    m_BufferedScript = oldBuffer;
-
-    return handleErrorCode(ret, checkErrorBuffer);
-}
-
-/**
- * @brief Creates a payload of a post request for the smu. 
- * 
- * @param value The value of the payload.
- * @return The constructed payload.
- */
-std::string createPayload(const std::string &value) {
-    return R"({"command": "shellInput", "value": ")" + value + "\"}";
-}
-
-/**
- * @brief Create a payload provided a vector of values.
- * Works by splitting the values into batches and constructing a payload.
- * 
- * @param offset The value to start collecting values.
- * @param numberOfLines The total number of lines the batch is going to have at max.
- * @param values The values of the payload.
- * @param result The vector to insert the payload to.
- */
-void createPayloadBatch(int offset, int numberOfLines, std::vector<std::string> values,
-                        std::vector<std::string> *result) {
-    std::string value;
-    for (int i = offset; i < offset + numberOfLines; ++i) {
-        value += values[i] + "\n";
-    }
-
-    result->push_back(createPayload(value));
-}
-
-/**
- * @brief Sends the given script to the SMU. The scripts does not get executed.
- * 
- * @param checkErrorBuffer if true error buffer status is requested and evaluated.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::sendScript(const std::string &scriptName, const std::string &script, bool checkErrorBuffer) {
-    return sendScript(scriptName, splitString(script, "\n"), checkErrorBuffer);
-}
-
-/**
- * @brief Sends the given script to the SMU. The scripts does not get executed.
- *
- * @param checkErrorBuffer if true error buffer status is requested and evaluated.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::sendScript(const std::string &scriptName, const std::vector<std::string> &script,
-                                   bool checkErrorBuffer) {
-    std::string url = "http://" + m_IPAddr + "/HttpCommand";
-
-    std::vector<std::string> sendableScript = script;
-    sendableScript.insert(sendableScript.begin(), "loadscript " + scriptName);
-    sendableScript.emplace_back("endscript");
-
-    std::string exitPayload = R"({"command": "keyInput", "value": "K"})";
-
-    int batchSize = 32;
-    int numberOfLines = sendableScript.size(); // NOLINT(cppcoreguidelines-narrowing-conversions)
-    int numberOfBatches = numberOfLines / batchSize;
-    int remaining = numberOfLines % batchSize;
-
-    std::vector<std::string> payloads;
-
-    for (int i = 0; i < numberOfBatches; ++i) {
-        int offset = i * batchSize;
-        createPayloadBatch(offset, batchSize, sendableScript, &payloads);
-    }
-
-    if (remaining > 0) {
-        int offset = numberOfBatches * batchSize;
-        createPayloadBatch(offset, remaining, sendableScript, &payloads);
-    }
-
-    payloads.push_back(createPayload(scriptName + ".save()"));
-
-    auto ret = postRequest(url, exitPayload);
-    if (errorOccured(ret)) {
-        return handleErrorCode(ret, checkErrorBuffer);
-    }
-    std::this_thread::sleep_for(std::chrono::milliseconds(300));
-
-    for (auto &payload: payloads) {
-        ret = postRequest(url, payload);
-        if (errorOccured(ret)) {
-            return handleErrorCode(ret, checkErrorBuffer);
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
-    std::this_thread::sleep_for(std::chrono::milliseconds(300));
-    ret = postRequest(url, exitPayload);
-    return handleErrorCode(ret, checkErrorBuffer);
-}
-
-/**
- * @brief Executes the script with the given name on the smu.
- * 
- * @param checkErrorBuffer if true error buffer status is requested and evaluated.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::executeScript(const std::string &scriptName, bool checkErrorBuffer) {
-    std::string suffix = "()";
-
-    std::string executeCommand = scriptName + suffix;
-    auto ret = Exec(executeCommand);
-
-    if (errorOccured(ret) && m_Logger) {
-        m_Logger->LogMessage(PIL::WARNING, __FILENAME__, __LINE__,
-                             "Error while executing script: %s", PIL_ErrorCodeToString(ret));
-    }
-
-    return handleErrorCode(ret, checkErrorBuffer);
-}
-
-/**
- * @brief Sends and executes the given script.
- * @param checkErrorBuffer if true error buffer status is requested and evaluated.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::sendAndExecuteScript(const std::string &scriptName, const std::string &script,
-                                             bool checkErrorBuffer) {
-    return sendAndExecuteScript(scriptName, splitString(script, "\n"), checkErrorBuffer);
-}
-
-/**
- * @brief Sends and executes the given script.
- * @param checkErrorBuffer if true error buffer status is requested and evaluated.
- * @return NO_ERROR if execution was successful otherwise return error code.
- */
-PIL_ERROR_CODE KEI2600::sendAndExecuteScript(const std::string &scriptName, std::vector<std::string> script,
-                                             bool checkErrorBuffer) {
-    PIL_ERROR_CODE ret = sendScript(scriptName, script, checkErrorBuffer);
-
-    if (!errorOccured(ret)) {
-        ret = executeScript(scriptName, checkErrorBuffer);
-    }
-
-    return handleErrorCode(ret, checkErrorBuffer);
-}
-
-/**
- * @brief Executes the buffered script.
- * 
- * @param checkErrorBuffer Whether to check the error buffer after executing.
- * @return The received error code.
- */
-PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
-    SEND_METHOD prevSendMode = m_SendMode;
-    m_SendMode = SEND_METHOD::DIRECT_SEND;
-
-    m_BufferedScript[0] = replaceAllSubstrings(m_BufferedScript[0], "%A_M_BUFFER_SIZE%",
-                                               std::to_string(m_bufferEntriesA));
-    m_BufferedScript[1] = replaceAllSubstrings(m_BufferedScript[1], "%B_M_BUFFER_SIZE%",
-                                               "" + std::to_string(m_bufferEntriesB));
-
-    std::string s = vectorToStringNL(m_BufferedScript);
-    auto ret = sendAndExecuteScript("bufferedScript", m_BufferedScript, checkErrorBuffer);
-    m_SendMode = prevSendMode;
-    clearBufferedScript();
-
-    return handleErrorCode(ret, checkErrorBuffer);
-}
-
-/**
- * @brief Clears the buffer with the given name.
- * 
- * @param bufferName The name of the buffer.
- * @param checkErrorBuffer Whether to check the error buffer after executing.
- * @return The received error code.
- */
-PIL_ERROR_CODE KEI2600::clearBuffer(const std::string &bufferName, bool checkErrorBuffer) {
-    SubArg subArg(bufferName);
-    subArg.AddElem("clear", ".")
-            .AddElem("", "(", ")");
-
-    ExecArgs execArgs;
-    execArgs.AddArgument(subArg, "");
-
-    auto ret = Exec("", &execArgs, nullptr);
-    return handleErrorCode(ret, checkErrorBuffer);
-}
-
-/**
- * @brief Reads part of the buffer with the given name.
- * 
- * @return The received error code.
- */
-PIL_ERROR_CODE KEI2600::readPartOfBuffer(int startIdx, int endIdx, const std::string &bufferName, char *printBuffer,
-                                         std::vector<double> *result, bool checkErrorBuffer) {
-    SubArg subArg("");
-    subArg.AddElem(std::to_string(startIdx) + ", " + std::to_string(endIdx) + ", " + bufferName, "(", ")");
-    ExecArgs execArgs;
-    execArgs.AddArgument(subArg, "");
-    auto ret = Exec("printbuffer", &execArgs, printBuffer);
-
-    if (errorOccured(ret)) {
-        return handleErrorCode(ret, checkErrorBuffer);
-    }
-
-    for (const std::string &value: splitString(std::string(printBuffer), ", ")) {
-        result->push_back(std::stod(value));
-    }
-
-    return handleErrorCode(ret, checkErrorBuffer);
-}
-
-/**
- * @brief Reads the complete buffer with the given name.
- * 
- * @return The received error code.
- */
-PIL_ERROR_CODE KEI2600::readBuffer(const std::string &bufferName, std::vector<double> *result, bool checkErrorBuffer) {
-    int n = 0;
-    getBufferSize(bufferName, &n, checkErrorBuffer);
-
-    int doubleSize = 15;
-    int batchSize = 1024 / doubleSize;
-    int batches = n / batchSize;
-    int remaining = n % batchSize;
-
-    char printBuffer[1024];
-
-    result->reserve(n);
-    for (int i = 0; i < batches; ++i) {
-        int offset = i * batchSize;
-        appendToBuffer(1 + offset, offset + batchSize, bufferName, printBuffer, result, checkErrorBuffer);
-    }
-
-    if (remaining > 0) {
-        int offset = batches * batchSize;
-        appendToBuffer(1 + offset, offset + remaining, bufferName, printBuffer, result, checkErrorBuffer);
-    }
-
-    return clearBuffer(bufferName, checkErrorBuffer);
-}
-
-PIL_ERROR_CODE KEI2600::appendToBuffer(int startIdx, int endIdx, const std::string &bufferName, char *printBuffer,
-                                       std::vector<double> *result, bool checkErrorBuffer) {
-    std::vector<double> batchVector;
-    auto ret = readPartOfBuffer(startIdx, endIdx, bufferName, printBuffer, &batchVector, checkErrorBuffer);
-    if (errorOccured(ret)) {
-        return handleErrorCode(ret, checkErrorBuffer);
-    }
-
-    for (double value: batchVector) {
-        result->push_back(value);
-    }
-
-    return PIL_NO_ERROR;
-}
-
-std::vector<double> KEI2600::readBufferPy(const std::string &bufferName, bool checkErrorBuffer) {
-    std::vector<double> buffer;
-    readBuffer(bufferName, &buffer, checkErrorBuffer);
-    return buffer;
-}
-
-/**
- * @brief Retrieves the size of the buffer with the given name.
- * 
- * @return The received error code.
- */
-PIL_ERROR_CODE KEI2600::getBufferSize(const std::string &bufferName, int *value, bool checkErrorBuffer) {
-    char sizeBuffer[16];
-
-    SubArg subArg("");
-    subArg.AddElem(bufferName + ".n", "(", ")");
-    ExecArgs execArgs;
-    execArgs.AddArgument(subArg, "");
-
-    auto ret = Exec("print", &execArgs, sizeBuffer);
-
-    int n = (int) std::stod(sizeBuffer);
-    *value = n;
-
-    return handleErrorCode(ret, checkErrorBuffer);
-}
-
-/**
- * @brief Checks the given error code and checks the error buffer if specified.
- *
- * @param errorCode The error code to check.
- * @param checkErrorBuffer Whether to check the error buffer.
- * @return The corresponding error code.
- */
-PIL_ERROR_CODE KEI2600::handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErrorBuffer) {
-    if (errorOccured(errorCode))
-        return errorCode;
-    if (!isBuffered() && checkErrorBuffer)
-        return getErrorBufferStatus();
-    return PIL_NO_ERROR;
-}
-
-void KEI2600::clearBufferedScript() {
-    m_BufferedScript = defaultBufferedScript;
-    m_bufferEntriesA = 1;
-    m_bufferEntriesB = 1;
-}
-
 std::string KEI2600::getMeasurementBufferName(SMU_CHANNEL channel) {
     std::string prefix = channel == CHANNEL_A ? "A" : "B";
     return prefix + "_M_BUFFER";
@@ -1323,7 +1323,7 @@ std::string KEI2600::getMeasurementBufferName(SMU_CHANNEL channel) {
  * @param channel The channel on which to measure.
  * @return An empty string if the measurement is not buffered, the buffer to save it in otherwise.
  */
-std::string KEI2600::determineStorage(SMU_CHANNEL channel) {
+std::string KEI2600::getMeasurementStorage(SMU_CHANNEL channel) {
     if (!isBuffered()) {
         return "";
     } else {

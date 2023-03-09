@@ -37,8 +37,8 @@ public:
     PIL_ERROR_CODE enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer);
     PIL_ERROR_CODE disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer);
 
-    [[maybe_unused]] PIL_ERROR_CODE enableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer);
-    [[maybe_unused]] PIL_ERROR_CODE disableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer);
+    PIL_ERROR_CODE enableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer);
+    PIL_ERROR_CODE disableMeasureAnalogFilter(SMU_CHANNEL channel, bool checkErrorBuffer);
 
     PIL_ERROR_CODE setMeasureRange(UNIT unit, SMU_CHANNEL channel, double range, bool checkErrorBuffer);
     PIL_ERROR_CODE setSourceRange(UNIT unit, SMU_CHANNEL channel, double range, bool checkErrorBuffer);
@@ -67,12 +67,13 @@ public:
                                              int increaseRate, double current, bool checkErrorBuffer);
 
     PIL_ERROR_CODE sendScript(const std::string &scriptName, const std::string &script, bool checkErrorBuffer);
-    PIL_ERROR_CODE sendScript(const std::string &scriptName, const std::vector<std::string>& script, bool checkErrorBuffer);
+    PIL_ERROR_CODE sendVectorScript(const std::string &scriptName, const std::vector<std::string>& script,
+                                    bool checkErrorBuffer);
     PIL_ERROR_CODE executeScript(const std::string &scriptName, bool checkErrorBuffer);
     PIL_ERROR_CODE sendAndExecuteScript(const std::string &scriptName, const std::string &script,
                                         bool checkErrorBuffer);
-    PIL_ERROR_CODE sendAndExecuteScript(const std::string &scriptName, std::vector<std::string> script,
-                                        bool checkErrorBuffer);
+    PIL_ERROR_CODE sendAndExecuteVectorScript(const std::string &scriptName, const std::vector<std::string>& script,
+                                              bool checkErrorBuffer);
     PIL_ERROR_CODE executeBufferedScript(bool checkErrorBuffer);
 
     PIL_ERROR_CODE readBuffer(const std::string &bufferName, std::vector<double> *result, bool checkErrorBuffer);
@@ -87,18 +88,22 @@ public:
 private:
     PIL_ERROR_CODE handleErrorCode(PIL_ERROR_CODE errorCode, bool checkErrorBuffer);
 
-    PIL_ERROR_CODE toggleAnalogFilterHelper(SMU_CHANNEL channel, bool enable);
+    PIL_ERROR_CODE toggleMeasureAnalogFilter(SMU_CHANNEL channel, bool enable);
     PIL_ERROR_CODE toggleMeasureAutoRange(SMU_CHANNEL channel, UNIT unit, bool enable);
     PIL_ERROR_CODE toggleSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool enable);
-    PIL_ERROR_CODE toggleBeeper(bool enable);
+    PIL_ERROR_CODE toggleBeep(bool enable);
     PIL_ERROR_CODE toggleChannel(SMU_CHANNEL channel, bool enable);
-    PIL_ERROR_CODE toggleSourceSink(SMU_CHANNEL channel, bool enable)
+    PIL_ERROR_CODE toggleSourceSink(SMU_CHANNEL channel, bool enable);
 
-    std::string determineStorage(SMU_CHANNEL channel);
+    std::string getMeasurementStorage(SMU_CHANNEL channel);
     PIL_ERROR_CODE readPartOfBuffer(int startIdx, int endIdx, const std::string &bufferName, char *printBuffer,
                                     std::vector<double> *result, bool checkErrorBuffer);
     PIL_ERROR_CODE appendToBuffer(int startIdx, int endIdx, const std::string &bufferName, char *printBuffer,
                                   std::vector<double> *result, bool checkErrorBuffer);
+
+    static std::string createPayload(const std::string &value);
+    static void createPayloadBatch(int offset, int numberOfLines, std::vector<std::string> values,
+                                   std::vector<std::string> *result);
 
     static std::string getChannelStringFromEnum(SMU_CHANNEL channel);
     static std::string getLetterFromUnit(UNIT unit);
