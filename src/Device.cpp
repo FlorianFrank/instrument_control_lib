@@ -297,7 +297,7 @@ void Device::changeSendMode(SEND_METHOD mode) {
         });
         return PIL_NO_ERROR;
     } catch (const std::exception &e) {
-        return PIL_ERRNO;  // TODO: Add exception for http requests
+        return PIL_UNKNOWN_ERROR;  // TODO: Add exception for http requests
     }
 }
 
