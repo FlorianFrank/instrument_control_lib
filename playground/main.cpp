@@ -66,6 +66,11 @@ void measurementBufferingTest() {
 
     std::cout << smu->getBufferedScript() << std::endl;
 
+    smu->changeSendMode(Device::DIRECT_SEND);
+    smu->performLinearVoltageSweep(SMU::CHANNEL_A, 0, 0.11, 18, 0.1, false);
+    smu->delay(10);
+    smu->changeSendMode(Device::BUFFER_ENABLED);
+
     smu->executeBufferedScript(false);
 
     smu->changeSendMode(Device::DIRECT_SEND);
