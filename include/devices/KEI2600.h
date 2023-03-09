@@ -89,6 +89,7 @@ private:
 
     PIL_ERROR_CODE toggleAnalogFilterHelper(SMU_CHANNEL channel, bool enable);
     PIL_ERROR_CODE toggleMeasureAutoRange(SMU_CHANNEL channel, UNIT unit, bool enable);
+    PIL_ERROR_CODE toggleSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool enable);
     PIL_ERROR_CODE toggleBeeper(bool enable);
     PIL_ERROR_CODE toggleChannel(SMU_CHANNEL channel, bool switchOn);
 

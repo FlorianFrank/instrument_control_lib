@@ -279,35 +279,7 @@ PIL_ERROR_CODE KEI2600::disableMeasureAutoRange(UNIT unit, SMU_CHANNEL channel, 
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer) {
-    SubArg subArg("");
-    subArg.AddElem("source", ".");
-
-    switch (unit) {
-        case CURRENT:
-            subArg.AddElem("autorangei", ".");
-            break;
-        case VOLTAGE:
-            subArg.AddElem("autorangev", ".");
-            break;
-        default:
-            if (m_EnableExceptions)
-                throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
-            return PIL_INVALID_ARGUMENTS;
-    }
-
-    SubArg subArgAutoRange("");
-    subArgAutoRange.AddElem("AUTORANGE_ON", ".");
-
-    SubArg smuArg("smu");
-    smuArg.AddElem(getChannelStringFromEnum(channel));
-
-    ExecArgs args;
-    args.AddArgument("smu", getChannelStringFromEnum(channel))
-            .AddArgument(subArg, smuArg, " = ") // TODO refactor
-            .AddArgument(subArgAutoRange, "");
-
-    return handleErrorCode(Exec("", &args), checkErrorBuffer);
-
+    return handleErrorCode(toggleSourceAutoRange(unit, channel, true), checkErrorBuffer);
 }
 
 /**
@@ -318,6 +290,10 @@ PIL_ERROR_CODE KEI2600::enableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bo
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer) {
+    return handleErrorCode(toggleSourceAutoRange(unit, channel, false), checkErrorBuffer);
+}
+
+PIL_ERROR_CODE KEI2600::toggleSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool enable) {
     SubArg subArg("");
     subArg.AddElem("source", ".");
 
@@ -335,17 +311,21 @@ PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, b
     }
 
     SubArg subArgAutoRange("");
-    subArgAutoRange.AddElem("AUTORANGE_OFF", ".");
+
+    if (enable)
+        subArgAutoRange.AddElem("AUTORANGE_ON", ".");
+    else
+        subArgAutoRange.AddElem("AUTORANGE_OFF", ".");
 
     SubArg smuArg("smu");
     smuArg.AddElem(getChannelStringFromEnum(channel));
 
     ExecArgs args;
     args.AddArgument("smu", getChannelStringFromEnum(channel))
-            .AddArgument(subArg, smuArg, " = ") // TODO refactor
+            .AddArgument(subArg, smuArg, " = ")
             .AddArgument(subArgAutoRange, "");
 
-    return handleErrorCode(Exec("", &args), checkErrorBuffer);
+    return Exec("", &args);
 }
 
 /**
