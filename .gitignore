@@ -10,3 +10,4 @@ cmake-build-relwithdebinfo
 *.zip
 cmake-build*
 *.egg-info
+*.log
