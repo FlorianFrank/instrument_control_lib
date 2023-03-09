@@ -36,8 +36,10 @@ public:
     };
 
     explicit Device(std::string ipAddress, int timeoutInMs, SEND_METHOD mode = DIRECT_SEND, bool throwException = true);
-    explicit Device(std::string ipAddress, int timeoutInMs, PIL::Logging *logger, SEND_METHOD mode = DIRECT_SEND, bool throwException = true);
-    explicit Device(std::string ipAddress, uint16_t srcPort, uint16_t destPort, int timeoutInMs, PIL::Logging *logger, SEND_METHOD mode = DIRECT_SEND, bool throwException = true);
+    explicit Device(std::string ipAddress, int timeoutInMs, PIL::Logging *logger, SEND_METHOD mode = DIRECT_SEND,
+                    bool throwException = true);
+    explicit Device(std::string ipAddress, uint16_t srcPort, uint16_t destPort, int timeoutInMs, PIL::Logging *logger,
+                    SEND_METHOD mode = DIRECT_SEND, bool throwException = true);
     ~Device();
 
     PIL_ERROR_CODE Connect();
@@ -46,7 +48,8 @@ public:
     [[nodiscard]] bool isBuffered() const;
 
     std::string GetDeviceIdentifier();
-    PIL_ERROR_CODE Exec(const std::string& command, ExecArgs *args = nullptr, char *result = nullptr, bool br = true, int size = 1024);
+    PIL_ERROR_CODE Exec(const std::string& command, ExecArgs *args = nullptr, char *result = nullptr, bool br = true,
+                        int size = 1024);
     PIL_ERROR_CODE Exec(const std::string &command, ExecArgs *args, std::string *result, bool br);
     PIL_ERROR_CODE ExecCommands(std::string &commands);
 
