@@ -92,6 +92,7 @@ private:
     PIL_ERROR_CODE toggleSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool enable);
     PIL_ERROR_CODE toggleBeeper(bool enable);
     PIL_ERROR_CODE toggleChannel(SMU_CHANNEL channel, bool switchOn);
+    PIL_ERROR_CODE toggleSourceSink(SMU_CHANNEL channel, bool enable)
 
     std::string determineStorage(SMU_CHANNEL channel);
     PIL_ERROR_CODE readPartOfBuffer(int startIdx, int endIdx, const std::string &bufferName, char *printBuffer,

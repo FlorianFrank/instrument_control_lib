@@ -603,16 +603,8 @@ PIL_ERROR_CODE KEI2600::setSourceSettling(SMU::SMU_CHANNEL channel, SRC_SETTLING
  * @param checkErrorBuffer if true check the error buffer after execution.
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
-PIL_ERROR_CODE KEI2600::enableSourceSink(SMU_CHANNEL channel, bool checkErrorBuffer) {
-    SubArg subArg("smu");
-    subArg.AddElem(getChannelStringFromEnum(channel))
-            .AddElem("source", ".")
-            .AddElem("sink", ".");
-
-    ExecArgs arg;
-    arg.AddArgument(subArg, "1", " = ");
-
-    return handleErrorCode(Exec("", &arg), checkErrorBuffer);
+PIL_ERROR_CODE KEI2600::enableSourceSink(SMU_CHANNEL channel, bool checkErrorBuffer) {  // TODO: refactor
+    return handleErrorCode(toggleSourceSink(channel, true), checkErrorBuffer);
 }
 
 /**
@@ -622,15 +614,22 @@ PIL_ERROR_CODE KEI2600::enableSourceSink(SMU_CHANNEL channel, bool checkErrorBuf
  * @return NO_ERROR if execution was successful otherwise return error code.
  */
 PIL_ERROR_CODE KEI2600::disableSourceSink(SMU_CHANNEL channel, bool checkErrorBuffer) {
+    return handleErrorCode(toggleSourceSink(channel, false), checkErrorBuffer);
+}
+
+PIL_ERROR_CODE KEI2600::toggleSourceSink(SMU_CHANNEL channel, bool enable) {
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
             .AddElem("source", ".")
             .AddElem("sink", ".");
 
     ExecArgs arg;
-    arg.AddArgument(subArg, "0", " = ");
+    if (enable)
+        arg.AddArgument(subArg, "1", " = ");
+    else
+        arg.AddArgument(subArg, "0", " = ");
 
-    return handleErrorCode(Exec("", &arg), checkErrorBuffer);
+    return Exec("", &arg);
 }
 
 /**
