@@ -148,7 +148,7 @@ void DeviceDiscovery::testIPRange(IPRange &ipRange, std::vector<Device *> *devic
                 Device dev(ipStr, SOCKET_TIMEOUT);
                 auto ret = dev.Connect();
                 if (ret == PIL_NO_ERROR) {
-                    std::string devIdentifier = dev.GetDeviceIdentifier();
+                    std::string devIdentifier = dev.getDeviceIdentifier();
                     std::cout << devIdentifier << std::endl;
                     if (devIdentifier.find("Error") == std::string::npos) {
                         std::get<1>(*devTuple) = devIdentifier;

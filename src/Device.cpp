@@ -144,8 +144,11 @@ bool Device::isBuffered() const {
  * @brief
  * @return
  */
-std::string Device::GetDeviceIdentifier() {
-    if (!isBuffered() && !isOpen())
+std::string Device::getDeviceIdentifier() {
+    if (isBuffered())
+        throw *new std::logic_error("Cannot get device identifier, currently buffering.");
+
+    if (!isOpen())
         return PIL_ErrorCodeToString(
                 Device::handleErrorsAndLogging(PIL_INTERFACE_CLOSED, m_EnableExceptions, PIL::ERROR, __FILENAME__,
                                                __LINE__, ""));

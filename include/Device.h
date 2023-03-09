@@ -47,7 +47,7 @@ public:
     [[nodiscard]] bool isOpen() const;
     [[nodiscard]] bool isBuffered() const;
 
-    std::string GetDeviceIdentifier();
+    std::string getDeviceIdentifier();
     PIL_ERROR_CODE Exec(const std::string& command, ExecArgs *args = nullptr, char *result = nullptr, bool br = true,
                         int size = 1024);
     PIL_ERROR_CODE Exec(const std::string &command, ExecArgs *args, std::string *result, bool br);

@@ -124,7 +124,7 @@ bool CommandLineInterface::Start()
     }
 
     m_DeviceList.push_back(device);
-    std::string deviceName = device->GetDeviceIdentifier();
+    std::string deviceName = device->getDeviceIdentifier();
     m_DeviceNameList.push_back(deviceName);
     m_DeviceIPList.push_back(argumentList[0]);
     std::cout << "    Device identified as " << deviceName << std::endl;
@@ -312,7 +312,7 @@ void CommandLineInterface::GetDeviceIdentifier(std::string &args)
         return;
     }
     std::cout << "              Get Device Identifier:";
-    std::cout << "    " << m_DeviceList[index]->GetDeviceIdentifier();
+    std::cout << "    " << m_DeviceList[index]->getDeviceIdentifier();
 }
 
 

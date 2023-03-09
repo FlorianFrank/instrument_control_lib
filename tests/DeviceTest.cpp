@@ -110,7 +110,7 @@ TEST(DeviceTest, TestDisconnect)
     Device device("127.0.0.1", 5026, 5025, 1000, &logger, Device::DIRECT_SEND, true);
     auto ret = device.Connect();
     EXPECT_EQ(ret, PIL_NO_ERROR);
-    std::string deviceIdentifier = device.GetDeviceIdentifier();
+    std::string deviceIdentifier = device.getDeviceIdentifier();
     EXPECT_EQ("Agilent Technologies,33522B", deviceIdentifier);
 }*/
 

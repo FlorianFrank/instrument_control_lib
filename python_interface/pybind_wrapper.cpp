@@ -65,7 +65,7 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
         .def("disableSourceAutoRange", &KEI2600::disableSourceAutoRange)
         .def("setSourceRange", &KEI2600::setSourceRange)
         .def("setSenseMode", &KEI2600::setSenseMode)
-        .def("getDeviceIdentifier", &KEI2600::GetDeviceIdentifier)
+        .def("getDeviceIdentifier", &KEI2600::getDeviceIdentifier)
 
         .def("setMeasurePLC", &KEI2600::setMeasurePLC)
         .def("setMeasureLowRange", &KEI2600::setMeasureLowRange)
