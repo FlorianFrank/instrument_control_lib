@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['func_419',['func',['../structCLICommandStruct.html#ac6afa21aae76c3b0e4051e7965098487',1,'CLICommandStruct']]]
+  ['description_634',['description',['../structCLICommandStruct.html#a74ac2230f5de35734bfcedd70fe399aa',1,'CLICommandStruct']]]
 ];

@@ -43,8 +43,8 @@ var classSMU =
       [ "RESISTANCE", "classSMU.html#a4c7be94a316d3928411f15ebad515fb7ab5231bfc8b52cdf96056463f7e80e315", null ],
       [ "POWER", "classSMU.html#a4c7be94a316d3928411f15ebad515fb7a0e78f7dabcef8029e1e0985ae6c10d85", null ]
     ] ],
-    [ "SMU", "classSMU.html#a279740f15304d57213c158e338b71b41", null ],
-    [ "SMU", "classSMU.html#a8a9188c74f4dd64c2989cb3ee03b0461", null ],
+    [ "SMU", "classSMU.html#a9776df19b4c693fc4a866acf07e068d1", null ],
+    [ "SMU", "classSMU.html#a0bcf96420ba59209829953206490a344", null ],
     [ "measure", "classSMU.html#a34d0094e9535acb3ebf535919418aa8b", null ],
     [ "setLevel", "classSMU.html#a33d2a4bb0912931c4468805d8b5ba15f", null ],
     [ "setLimit", "classSMU.html#ac6b7d447a9039ca653ca12fd4fd1a7e0", null ],

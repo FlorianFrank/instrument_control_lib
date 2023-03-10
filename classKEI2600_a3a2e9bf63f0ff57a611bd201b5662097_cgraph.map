@@ -1,7 +1,0 @@
-<map id="KEI2600::turnOn" name="KEI2600::turnOn">
-<area shape="rect" id="node1" title="This function turns on a specific channel of the KEI2600&#45;SMU." alt="" coords="5,57,132,84"/>
-<area shape="rect" id="node2" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="443,57,621,84"/>
-<area shape="rect" id="node3" href="$classSubArg.html#adc3b8f8ab4e5840ad777638e31fe13c4" title="Add a new string element to the SubArg&#45;object. It is directly concatenated to the previous arguments." alt="" coords="220,32,355,58"/>
-<area shape="rect" id="node4" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="479,120,585,146"/>
-<area shape="rect" id="node5" href="$classKEI2600.html#a00c91442df6f1ee0aa2a25133814536d" title="Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return PIL..." alt="" coords="180,82,395,109"/>
-</map>

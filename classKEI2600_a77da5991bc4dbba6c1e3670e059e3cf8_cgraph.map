@@ -1,10 +1,12 @@
 <map id="KEI2600::performLinearVoltageSweep" name="KEI2600::performLinearVoltageSweep">
-<area shape="rect" id="node1" title=" " alt="" coords="5,49,229,90"/>
-<area shape="rect" id="node2" href="$classKEI2600.html#a5557b8437bccf24eecb219efa33549e0" title=" " alt="" coords="277,56,504,83"/>
-<area shape="rect" id="node3" href="$classKEI2600.html#a52f9e7e2269415aaf0e86f229c5edab1" title=" " alt="" coords="552,31,723,57"/>
-<area shape="rect" id="node7" href="$classKEI2600.html#a4fb6c9a8f3150492cd889248a1efb128" title=" " alt="" coords="562,81,713,108"/>
-<area shape="rect" id="node4" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="1070,56,1175,83"/>
-<area shape="rect" id="node5" href="$classKEI2600.html#a00c91442df6f1ee0aa2a25133814536d" title="Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return PIL..." alt="" coords="771,31,985,57"/>
-<area shape="rect" id="node6" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="1033,5,1212,32"/>
-<area shape="rect" id="node8" href="$KEI2600_8cpp.html#ab5a7408abee96aa72cf537c421a634e7" title="Replaces all substrings in the string with the given replacement string." alt="" coords="801,132,955,159"/>
+<area shape="rect" id="node1" title="Perform a linear voltage sweep on the SMU. Increases the voltage at the given rate until the stop vol..." alt="" coords="5,78,229,119"/>
+<area shape="rect" id="node2" href="$classKEI2600.html#ac285dc67b82f47247a803920f1a909fd" title="Sends and executes the given script." alt="" coords="277,85,504,112"/>
+<area shape="rect" id="node3" href="$classKEI2600.html#a4da80dbe8adb81815a98e47114e25774" title="Sends and executes the given script." alt="" coords="552,49,783,90"/>
+<area shape="rect" id="node10" href="$classDevice.html#a23854aeaf8384ac054093b9af409a7c2" title="Splits a string by the given delimiter." alt="" coords="597,115,738,141"/>
+<area shape="rect" id="node4" href="$classDevice.html#ad0b48035a3908e644d02733c4448febe" title="Checks if a error occured given the error code." alt="" coords="1071,56,1229,83"/>
+<area shape="rect" id="node5" href="$classKEI2600.html#a52f9e7e2269415aaf0e86f229c5edab1" title="Executes the script with the given name on the smu." alt="" coords="841,5,1012,32"/>
+<area shape="rect" id="node7" href="$classKEI2600.html#a0fc6a7098dd6d10cf222be4dba58a940" title="Sends the given script to the SMU. The scripts does not get executed." alt="" coords="831,107,1023,133"/>
+<area shape="rect" id="node6" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="1097,5,1203,32"/>
+<area shape="rect" id="node8" href="$classDevice.html#a000c7fab344d0ba3f0ad836304376e76" title="Sends a post request to the given url with the given payload." alt="" coords="1072,107,1228,133"/>
+<area shape="rect" id="node9" href="$classhttp_1_1Request.html#ae1af1d5504155ea17c8aa8e4a7a58e54" title=" " alt="" coords="1277,107,1425,133"/>
 </map>

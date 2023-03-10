@@ -1,7 +1,6 @@
 <map id="KEI2600::setSourceSettling" name="KEI2600::setSourceSettling">
-<area shape="rect" id="node1" title="Set the source settling mode. (See SRC_SETTLING enum for more information)" alt="" coords="5,55,203,82"/>
-<area shape="rect" id="node2" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="513,55,692,82"/>
-<area shape="rect" id="node3" href="$classSubArg.html#adc3b8f8ab4e5840ad777638e31fe13c4" title="Add a new string element to the SubArg&#45;object. It is directly concatenated to the previous arguments." alt="" coords="291,30,425,56"/>
-<area shape="rect" id="node4" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="550,118,655,144"/>
-<area shape="rect" id="node5" href="$classKEI2600.html#a00c91442df6f1ee0aa2a25133814536d" title="Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return PIL..." alt="" coords="251,80,465,107"/>
+<area shape="rect" id="node1" title="Set the source settling mode. (See SRC_SETTLING enum for more information)" alt="" coords="5,56,203,83"/>
+<area shape="rect" id="node2" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="251,5,429,32"/>
+<area shape="rect" id="node3" href="$classSubArg.html#adc3b8f8ab4e5840ad777638e31fe13c4" title="Add a new string element to the SubArg&#45;object. It is directly concatenated to the previous arguments." alt="" coords="273,56,407,83"/>
+<area shape="rect" id="node4" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="287,107,393,133"/>
 </map>

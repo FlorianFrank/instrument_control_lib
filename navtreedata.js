@@ -57,7 +57,13 @@ var NAVTREE =
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Namespaces", "namespaces.html", [
-      [ "Namespace List", "namespaces.html", "namespaces_dup" ]
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
+      [ "Namespace Members", "namespacemembers.html", [
+        [ "All", "namespacemembers.html", null ],
+        [ "Functions", "namespacemembers_func.html", null ],
+        [ "Typedefs", "namespacemembers_type.html", null ],
+        [ "Enumerations", "namespacemembers_enum.html", null ]
+      ] ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -67,6 +73,7 @@ var NAVTREE =
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ],
+        [ "Typedefs", "functions_type.html", null ],
         [ "Enumerations", "functions_enum.html", null ],
         [ "Enumerator", "functions_eval.html", null ]
       ] ]
@@ -87,7 +94,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "CommandLineInterfaceDefines_8h.html",
-"classOscilloscope.html#ab55f8949064ac718e84a027977ab605d"
+"classKST3000.html#a77d706618272f8561c1134543d10c356",
+"namespacehttp_1_1detail.html#a61e8a04a6dcc961caef50207c1bf2df5"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

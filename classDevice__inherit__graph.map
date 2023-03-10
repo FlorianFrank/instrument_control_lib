@@ -1,11 +1,11 @@
 <map id="Device" name="Device">
-<area shape="rect" id="node1" title="Basic device class This class contains all basic method of all devices, like Connect,..." alt="" coords="266,5,471,361"/>
-<area shape="rect" id="node2" href="$classDCPowerSupply.html" title=" " alt="" coords="5,468,156,604"/>
-<area shape="rect" id="node4" href="$classFunctionGenerator.html" title=" " alt="" coords="180,409,363,663"/>
-<area shape="rect" id="node6" href="$classOscilloscope.html" title=" " alt="" coords="387,424,548,648"/>
-<area shape="rect" id="node8" href="$classSMU.html" title="Dummy class to allow assignment to SMU class." alt="" coords="617,453,721,619"/>
-<area shape="rect" id="node3" href="$classSPD1305.html" title=" " alt="" coords="23,945,139,1096"/>
-<area shape="rect" id="node5" href="$classKST33500.html" title=" " alt="" coords="171,909,337,1133"/>
-<area shape="rect" id="node7" href="$classKST3000.html" title="Mixed Single Oscilloscope(Oscillator) Commend operations of a single generator are defined...." alt="" coords="362,791,573,1250"/>
-<area shape="rect" id="node9" href="$classKEI2600.html" title="This class implements the basic functionality of Keithley 2600 series SMU&#39;s." alt="" coords="597,711,828,1331"/>
+<area shape="rect" id="node1" title="Basic device class This class contains all basic method of all devices, like Connect,..." alt="" coords="266,5,471,523"/>
+<area shape="rect" id="node2" href="$classDCPowerSupply.html" title=" " alt="" coords="5,629,156,765"/>
+<area shape="rect" id="node4" href="$classFunctionGenerator.html" title=" " alt="" coords="180,571,363,824"/>
+<area shape="rect" id="node6" href="$classOscilloscope.html" title=" " alt="" coords="387,585,548,809"/>
+<area shape="rect" id="node8" href="$classSMU.html" title="Dummy class to allow assignment to SMU class." alt="" coords="617,615,721,780"/>
+<area shape="rect" id="node3" href="$classSPD1305.html" title=" " alt="" coords="23,1173,139,1323"/>
+<area shape="rect" id="node5" href="$classKST33500.html" title=" " alt="" coords="171,1136,337,1360"/>
+<area shape="rect" id="node7" href="$classKST3000.html" title="Mixed Single Oscilloscope(Oscillator) Commend operations of a single generator are defined...." alt="" coords="362,1019,573,1477"/>
+<area shape="rect" id="node9" href="$classKEI2600.html" title="This class implements the basic functionality of Keithley 2600 series SMU&#39;s." alt="" coords="597,872,829,1624"/>
 </map>

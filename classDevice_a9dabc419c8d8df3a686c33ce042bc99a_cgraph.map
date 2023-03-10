@@ -1,5 +1,5 @@
 <map id="Device::~Device" name="Device::~Device">
 <area shape="rect" id="node1" title=" " alt="" coords="5,5,136,32"/>
 <area shape="rect" id="node2" href="$classDevice.html#a289d6f213881b2ab4e278d2b9266968d" title="Disconnect from the device." alt="" coords="184,5,331,32"/>
-<area shape="rect" id="node3" href="$classDevice.html#a83533f7409314b683c47083b7dca789c" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="379,5,612,32"/>
+<area shape="rect" id="node3" href="$classDevice.html#a6efd719941a57c5ce2ecf61a57ac2c75" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="379,5,612,32"/>
 </map>

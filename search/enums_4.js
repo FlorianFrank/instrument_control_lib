@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['osc_5fchannel_440',['OSC_CHANNEL',['../classOscilloscope.html#a5576323a09ec80a1fb56588f4d299d26',1,'Oscilloscope']]]
+  ['internetprotocol_677',['InternetProtocol',['../namespacehttp.html#a672892389a9ddd4ac61297847de529e5',1,'http']]]
 ];

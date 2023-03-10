@@ -1,4 +1,4 @@
 <map id="SMU" name="SMU">
-<area shape="rect" id="node1" title="Dummy class to allow assignment to SMU class." alt="" coords="56,409,160,575"/>
-<area shape="rect" id="node2" href="$classDevice.html" title="Basic device class This class contains all basic method of all devices, like Connect,..." alt="" coords="5,5,211,361"/>
+<area shape="rect" id="node1" title="Dummy class to allow assignment to SMU class." alt="" coords="56,571,160,736"/>
+<area shape="rect" id="node2" href="$classDevice.html" title="Basic device class This class contains all basic method of all devices, like Connect,..." alt="" coords="5,5,211,523"/>
 </map>

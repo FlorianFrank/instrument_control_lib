@@ -84,8 +84,6 @@ $(document).ready(function(){initNavTree('KEI2600_8cpp.html',''); initResizable(
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">KEI2600.cpp File Reference</div>  </div>
 </div><!--header-->
@@ -93,95 +91,55 @@ $(document).ready(function(){initNavTree('KEI2600_8cpp.html',''); initResizable(
 <div class="textblock"><code>#include &quot;<a class="el" href="KEI2600_8h_source.html">devices/KEI2600.h</a>&quot;</code><br />
 <code>#include &quot;ctlib/Logging.hpp&quot;</code><br />
 <code>#include &quot;ctlib/Exception.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="HTTPRequest_8h_source.html">HTTPRequest.h</a>&quot;</code><br />
 <code>#include &lt;utility&gt;</code><br />
 <code>#include &lt;stdexcept&gt;</code><br />
+<code>#include &lt;thread&gt;</code><br />
 <code>#include &quot;ctlib/ErrorHandler.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for KEI2600.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="KEI2600_8cpp__incl.png" border="0" usemap="#a_2home_2runner_2work_2instrument__control__lib_2instrument__control__lib_2src_2devices_2KEI2600_8cpp" alt=""/></div>
 <map name="a_2home_2runner_2work_2instrument__control__lib_2instrument__control__lib_2src_2devices_2KEI2600_8cpp" id="a_2home_2runner_2work_2instrument__control__lib_2instrument__control__lib_2src_2devices_2KEI2600_8cpp">
-<area shape="rect" title=" " alt="" coords="317,5,541,61"/>
-<area shape="rect" href="KEI2600_8h.html" title=" " alt="" coords="167,109,308,136"/>
-<area shape="rect" title=" " alt="" coords="239,333,372,360"/>
-<area shape="rect" title=" " alt="" coords="396,333,527,360"/>
-<area shape="rect" title=" " alt="" coords="434,109,494,136"/>
-<area shape="rect" title=" " alt="" coords="518,109,605,136"/>
-<area shape="rect" title=" " alt="" coords="629,109,776,136"/>
-<area shape="rect" href="Device_8h.html" title=" " alt="" coords="162,259,241,285"/>
-<area shape="rect" href="SMU_8h.html" title=" " alt="" coords="197,184,301,211"/>
-<area shape="rect" href="ExecArgs_8h.html" title=" " alt="" coords="71,333,164,360"/>
-<area shape="rect" title=" " alt="" coords="170,483,233,509"/>
-<area shape="rect" title=" " alt="" coords="5,483,64,509"/>
-<area shape="rect" href="SubArg_8h.html" title=" " alt="" coords="77,408,157,435"/>
-<area shape="rect" title=" " alt="" coords="90,483,145,509"/>
+<area shape="rect" title=" " alt="" coords="2343,5,2567,61"/>
+<area shape="rect" href="KEI2600_8h.html" title=" " alt="" coords="2331,109,2473,136"/>
+<area shape="rect" title=" " alt="" coords="2155,333,2289,360"/>
+<area shape="rect" title=" " alt="" coords="2531,333,2662,360"/>
+<area shape="rect" href="HTTPRequest_8h.html" title=" " alt="" coords="1180,109,1301,136"/>
+<area shape="rect" title=" " alt="" coords="2156,184,2243,211"/>
+<area shape="rect" title=" " alt="" coords="2548,109,2608,136"/>
+<area shape="rect" title=" " alt="" coords="2633,109,2697,136"/>
+<area shape="rect" title=" " alt="" coords="2721,109,2867,136"/>
+<area shape="rect" href="Device_8h.html" title=" " alt="" coords="2371,259,2449,285"/>
+<area shape="rect" href="SMU_8h.html" title=" " alt="" coords="2369,184,2473,211"/>
+<area shape="rect" href="ExecArgs_8h.html" title=" " alt="" coords="2363,333,2457,360"/>
+<area shape="rect" title=" " alt="" coords="2252,483,2315,509"/>
+<area shape="rect" title=" " alt="" coords="2418,483,2477,509"/>
+<area shape="rect" href="SubArg_8h.html" title=" " alt="" coords="2326,408,2406,435"/>
+<area shape="rect" title=" " alt="" coords="2339,483,2393,509"/>
+<area shape="rect" title=" " alt="" coords="987,184,1052,211"/>
+<area shape="rect" title=" " alt="" coords="1076,184,1147,211"/>
+<area shape="rect" title=" " alt="" coords="1171,184,1238,211"/>
+<area shape="rect" title=" " alt="" coords="1313,184,1379,211"/>
+<area shape="rect" title=" " alt="" coords="1403,184,1489,211"/>
+<area shape="rect" title=" " alt="" coords="1513,184,1569,211"/>
+<area shape="rect" title=" " alt="" coords="1593,184,1659,211"/>
+<area shape="rect" title=" " alt="" coords="1684,184,1771,211"/>
+<area shape="rect" title=" " alt="" coords="1795,184,1846,211"/>
+<area shape="rect" title=" " alt="" coords="1870,184,1947,211"/>
+<area shape="rect" title=" " alt="" coords="1972,184,2080,211"/>
+<area shape="rect" title=" " alt="" coords="5,184,97,211"/>
+<area shape="rect" title=" " alt="" coords="121,184,189,211"/>
+<area shape="rect" title=" " alt="" coords="213,184,276,211"/>
+<area shape="rect" title=" " alt="" coords="301,184,397,211"/>
+<area shape="rect" title=" " alt="" coords="421,184,492,211"/>
+<area shape="rect" title=" " alt="" coords="517,184,615,211"/>
+<area shape="rect" title=" " alt="" coords="640,184,743,211"/>
+<area shape="rect" title=" " alt="" coords="767,184,863,211"/>
+<area shape="rect" title=" " alt="" coords="887,184,962,211"/>
 </map>
 </div>
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ab5a7408abee96aa72cf537c421a634e7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="KEI2600_8cpp.html#ab5a7408abee96aa72cf537c421a634e7">replaceAllSubstrings</a> (std::string str, const std::string &amp;from, const std::string &amp;to)</td></tr>
-<tr class="memdesc:ab5a7408abee96aa72cf537c421a634e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces all substrings in the string with the given replacement string.  <a href="KEI2600_8cpp.html#ab5a7408abee96aa72cf537c421a634e7">More...</a><br /></td></tr>
-<tr class="separator:ab5a7408abee96aa72cf537c421a634e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="ab5a7408abee96aa72cf537c421a634e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5a7408abee96aa72cf537c421a634e7">&#9670;&nbsp;</a></span>replaceAllSubstrings()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string replaceAllSubstrings </td>
-          <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>str</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>from</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>to</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Replaces all substrings in the string with the given replacement string. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">str</td><td>String to replace substrings in. </td></tr>
-    <tr><td class="paramname">from</td><td>The substring to replace. </td></tr>
-    <tr><td class="paramname">to</td><td>The string to replace all matching substrings with. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The processed string </dd></dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="KEI2600_8cpp_ab5a7408abee96aa72cf537c421a634e7_icgraph.png" border="0" usemap="#aKEI2600_8cpp_ab5a7408abee96aa72cf537c421a634e7_icgraph" alt=""/></div>
-<map name="aKEI2600_8cpp_ab5a7408abee96aa72cf537c421a634e7_icgraph" id="aKEI2600_8cpp_ab5a7408abee96aa72cf537c421a634e7_icgraph">
-<area shape="rect" title="Replaces all substrings in the string with the given replacement string." alt="" coords="751,13,905,39"/>
-<area shape="rect" href="classKEI2600.html#a4fb6c9a8f3150492cd889248a1efb128" title=" " alt="" coords="552,13,703,39"/>
-<area shape="rect" href="classKEI2600.html#a5557b8437bccf24eecb219efa33549e0" title=" " alt="" coords="277,13,504,39"/>
-<area shape="rect" href="classKEI2600.html#a77da5991bc4dbba6c1e3670e059e3cf8" title=" " alt="" coords="5,5,229,47"/>
-</map>
-</div>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

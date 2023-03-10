@@ -4,5 +4,6 @@ var namespaces_dup =
     [ "Keysight 33500B Waveform Generator", "index.html#autotoc_md21", null ],
     [ "Tektronix 2600B Series SMU", "index.html#autotoc_md22", null ],
     [ "Keysight 33500B Waveform Generator", "index.html#autotoc_md23", null ],
+    [ "http", "namespacehttp.html", "namespacehttp" ],
     [ "PIL", "namespacePIL.html", null ]
 ];

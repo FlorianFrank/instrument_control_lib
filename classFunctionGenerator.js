@@ -12,7 +12,8 @@ var classFunctionGenerator =
       [ "TRIANGLE", "classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0a3e363d323dc99e625fb57148d26ffecf", null ],
       [ "NOISE", "classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0a17fb5f3fb75f0ce6669b061617d9881e", null ],
       [ "PSEUDO_RANDOM_BIT_STREAM", "classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0ac3f4b239fb9475cab20c1e5549f7e823", null ],
-      [ "ARBITRARY", "classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0a14a8e065e0ce85e569cf3aa5b23d8b65", null ]
+      [ "ARBITRARY", "classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0a14a8e065e0ce85e569cf3aa5b23d8b65", null ],
+      [ "DC_VOLTAGE", "classFunctionGenerator.html#a4a3e90149d8cf0f0067961886158a4c0a60b5a194cb2faac550281716896abc8d", null ]
     ] ],
     [ "FunctionGenerator", "classFunctionGenerator.html#ad53704ab29c69e348c972d229f7ac68b", null ],
     [ "getCurrentAmplitude", "classFunctionGenerator.html#abc1c96412e6dd3dd364cf1ad02dc187b", null ],

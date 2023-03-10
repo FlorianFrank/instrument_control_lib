@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['unit_448',['UNIT',['../classSMU.html#a4c7be94a316d3928411f15ebad515fb7',1,'SMU']]]
+  ['trigger_5fedge_686',['TRIGGER_EDGE',['../classOscilloscope.html#a99c4439d3196795d7c27e2a9039e7861',1,'Oscilloscope']]]
 ];

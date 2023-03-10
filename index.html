@@ -92,7 +92,8 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <p>This repository contains the code to configure oscilloscopes, signal generators, DC Power-supplies and other measurement devices. <br  />
 <br  />
  It provides following functionality: <br  />
-</p><ul>
+</p>
+<ul>
 <li>Establishing a network connection and identifying the different types of devices <br  />
 </li>
 <li>Execution of VISA commands on the devices. E.g. setting the voltage on a DC power-supply, Setting voltage limits on SMUs or to gather the current data of an oscilloscope <br  />
@@ -150,12 +151,14 @@ Build</h1>
 <div class="line">set(PUGI_XML_VERSION 1.12)</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md11"></a>
 1.3 Build the library</h3>
-<p>On Linux and MAC OS run: </p><div class="fragment"><div class="line">./build.sh</div>
+<p>On Linux and MAC OS run:</p>
+<div class="fragment"><div class="line">./build.sh</div>
 </div><!-- fragment --><p>On Windows run:</p>
 <div class="fragment"><div class="line">.\build.bat</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md12"></a>
 1.4 Exporting the library</h3>
-<p>You can find the library in the <b>build</b> folder. </p><div class="fragment"><div class="line">out</div>
+<p>You can find the library in the <b>build</b> folder.</p>
+<div class="fragment"><div class="line">out</div>
 <div class="line">├── include          Here you can find the device and include fines for the project</div>
 <div class="line">├── ĺib              Here you can find the libraries to link to your project.</div>
 <div class="line">├── bin              In this folder you can find sample test programs, like a command line interface.</div>
@@ -200,7 +203,7 @@ SPD1305X DC Power Supply</h3>
 </table>
 <p><br  />
 <br  />
- </p>
+</p>
 <h3><a class="anchor" id="autotoc_md21"></a>
 Keysight 33500B Waveform Generator</h3>
 <table class="markdownTable">
@@ -237,7 +240,7 @@ Keysight 33500B Waveform Generator</h3>
 </table>
 <p><br  />
 <br  />
- </p>
+</p>
 <h3><a class="anchor" id="autotoc_md22"></a>
 Tektronix 2600B Series SMU</h3>
 <table class="markdownTable">
@@ -276,7 +279,7 @@ Tektronix 2600B Series SMU</h3>
 </table>
 <p><br  />
 <br  />
- </p>
+</p>
 <h3><a class="anchor" id="autotoc_md23"></a>
 Keysight 33500B Waveform Generator</h3>
 <table class="markdownTable">
@@ -318,38 +321,43 @@ Development</h1>
 <p>In this lab, we use socket to send SCPI commands to devices in order control them remotely. <br  />
  Check the documents in <a href="./docs%20and%20specs">Docs</a> for SCPI commands.</p>
 <p>Basically, you can run any commands using Exec commands. For saving time, we wrapped some frequently used commands. But we cannot wrap all the commands.</p>
-<p>Here is an instruction for wrapping a command. Let's say you want to wrap a command of Keysight waveform generator: </p><div class="fragment"><div class="line"> {c++}</div>
+<p>Here is an instruction for wrapping a command. Let's say you want to wrap a command of Keysight waveform generator:</p>
+<div class="fragment"><div class="line"> {c++}</div>
 <div class="line">FUNCtion &lt;function&gt;</div>
-</div><!-- fragment --><p> which set a &lt;function&gt; waveform. <br  />
- Go to kst33500.h file and add a function signature called "function". </p><div class="fragment"><div class="line"> {c++}</div>
+</div><!-- fragment --><p>which set a &lt;function&gt; waveform. <br  />
+ Go to kst33500.h file and add a function signature called "function".</p>
+<div class="fragment"><div class="line"> {c++}</div>
 <div class="line">int function(string fun);</div>
-</div><!-- fragment --><p> Go to skt33500.cpp file and add the implementation of this function. What you need to do is making an SCPI command and invoke the Exec function. </p><div class="fragment"><div class="line"> {c++}</div>
+</div><!-- fragment --><p>Go to skt33500.cpp file and add the implementation of this function. What you need to do is making an SCPI command and invoke the Exec function.</p>
+<div class="fragment"><div class="line"> {c++}</div>
 <div class="line">int KST33500::function(string fun) {</div>
 <div class="line">    string msg = &quot;FUNCtion &quot; + fun;</div>
 <div class="line">    Exec(msg);</div>
 <div class="line">    return 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><p> That's it. After that, you can use like: </p><div class="fragment"><div class="line"> {c++}</div>
+</div><!-- fragment --><p>That's it. After that, you can use like:</p>
+<div class="fragment"><div class="line"> {c++}</div>
 <div class="line">k.function(&quot;SIN&quot;);</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md27"></a>
 Tutorial Python interface</h1>
 <ol type="1">
-<li>Download the most recent release from the repository<ul>
-<li>Go to releases on the right side and click on the link</li>
-<li>There you see different tags e.g. 1.2.0</li>
-<li>Click on downloads</li>
-<li>Download <b>libpy_instrument_control_lib.pyd</b></li>
-<li><img src="docs_and_specs/figures/screen_shot_release.png" alt="Screenshot release" class="inline"/></li>
+<li>Easy installation with pip.<ul>
+<li>Just execute <code>pip install .</code> in the root directory. This will install the instrument control lib for the current python installation. You can now just import py_instrument_control_lib and use it just like the C++ lib. With the pip installer the lib now supports autocompletion and type hints.</li>
 </ul>
 </li>
-<li>Go to folder where <b>libpy_instrument_control_lib.pyd</b> is stored</li>
 <li>Open the python console<ol type="a">
-<li>Make sure the libpy_instrument_control_lib is in the folder</li>
+<li>Make sure you installed the lib with</li>
 <li>Open the library as module</li>
 <li>Create a <a class="el" href="classSMU.html" title="Dummy class to allow assignment to SMU class.">SMU</a> object with an IP and an timeout for the socket</li>
 <li>Connect to the <a class="el" href="classSMU.html" title="Dummy class to allow assignment to SMU class.">SMU</a></li>
 <li>You can check the error code which should be ERROR_CODE.NO_ERROR<ul>
-<li>All defined error codes are listed below <div class="fragment"><div class="line">$ python3.exe</div>
+<li>All defined error codes are listed below</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<div class="fragment"><div class="line">$ python3.exe</div>
 <div class="line">Python 3.8.13 (default, Mar 28 2022, 11:38:47) </div>
 <div class="line">[GCC 7.5.0] :: Anaconda, Inc. on linux</div>
 <div class="line">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</div>
@@ -381,16 +389,10 @@ Tutorial Python interface</h1>
 <div class="line">&gt;&gt;&gt; print(measure_value)</div>
 <div class="line">  3.04</div>
 <div class="line">&gt;&gt;&gt; smu.disconnect()</div>
-</div><!-- fragment --></li>
-</ul>
-</li>
-</ol>
-</li>
-</ol>
-<h2><a class="anchor" id="autotoc_md28"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md28"></a>
 Functions</h2>
 <p>This list gives an overview of the smu functions and how to call them.</p>
-<div class="fragment"><div class="line"># Establish the ethernet connection to the device</div>
+<div class="fragment"><div class="line">    # Establish the ethernet connection to the device</div>
 <div class="line">error_code = smu.connect()</div>
 <div class="line">error_code = smu.disconnect()</div>
 <div class="line"> </div>
@@ -420,14 +422,15 @@ Functions</h2>
 <div class="line">error_code = smu.disableSourceAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, False)</div>
 <div class="line">error_code = smu.disableSourceAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, False)</div>
 <div class="line"> </div>
-<div class="line">smu.setSenseMode(SMU_CHANNEL.CHANNEL_A, SMU_SENSE.LOCAL,FALSE)</div>
+<div class="line">smu.setSenseMode(SMU_CHANNEL.CHANNEL_A, SMU_SENSE.LOCAL, FALSE)</div>
 <div class="line"> </div>
 <div class="line">error_code = smu.setSourceRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.0, False)</div>
 <div class="line"> </div>
 <div class="line">device_description = smu.getDeviceIdentifier()</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md29"></a>
 Error codes</h2>
-<p>There exists a function which transforms the error codes into Strings. Some error codes are not used in the library because these are derived from the abstraction library. <b>This function will be implemented in python soon!</b> </p><div class="fragment"><div class="line"># No error occurred</div>
+<p>There exists a function which transforms the error codes into Strings. Some error codes are not used in the library because these are derived from the abstraction library. <b>This function will be implemented in python soon!</b></p>
+<div class="fragment"><div class="line">            # No error occurred</div>
 <div class="line">NO_ERROR</div>
 <div class="line"># Invalid arguments passed to a function, e.g. passing a nullptr.</div>
 <div class="line">PIL_INVALID_ARGUMENT</div>

@@ -1,9 +1,0 @@
-<map id="Device::handleErrorsAndLogging" name="Device::handleErrorsAndLogging">
-<area shape="rect" id="node1" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="433,107,667,133"/>
-<area shape="rect" id="node2" href="$classDevice.html#a365ae23fbe0d2ea5290881834e1969f7" title="Establish a connection to the device." alt="" coords="221,5,349,32"/>
-<area shape="rect" id="node3" href="$classDevice.html#a289d6f213881b2ab4e278d2b9266968d" title="Disconnect from the device." alt="" coords="211,56,358,83"/>
-<area shape="rect" id="node5" href="$classDevice.html#a5b405014c32080fb36ba4ed517fcc78d" title=" " alt="" coords="232,107,337,133"/>
-<area shape="rect" id="node6" href="$classDevice.html#a7c4c5ede6698d53b3269b17a2ad37b8b" title=" " alt="" coords="195,157,374,184"/>
-<area shape="rect" id="node7" href="$classDevice.html#a897f070cb8258f912da022b39a1a2a3c" title=" " alt="" coords="184,208,385,235"/>
-<area shape="rect" id="node4" href="$classDevice.html#a9dabc419c8d8df3a686c33ce042bc99a" title=" " alt="" coords="5,56,136,83"/>
-</map>

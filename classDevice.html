@@ -85,8 +85,10 @@ $(document).ready(function(){initNavTree('classDevice.html',''); initResizable()
 
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classDevice-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -103,15 +105,15 @@ Inheritance diagram for Device:</div>
 <div class="dyncontent">
 <div class="center"><img src="classDevice__inherit__graph.png" border="0" usemap="#aDevice_inherit__map" alt="Inheritance graph"/></div>
 <map name="aDevice_inherit__map" id="aDevice_inherit__map">
-<area shape="rect" title="Basic device class This class contains all basic method of all devices, like Connect,..." alt="" coords="266,5,471,361"/>
-<area shape="rect" href="classDCPowerSupply.html" title=" " alt="" coords="5,468,156,604"/>
-<area shape="rect" href="classFunctionGenerator.html" title=" " alt="" coords="180,409,363,663"/>
-<area shape="rect" href="classOscilloscope.html" title=" " alt="" coords="387,424,548,648"/>
-<area shape="rect" href="classSMU.html" title="Dummy class to allow assignment to SMU class." alt="" coords="617,453,721,619"/>
-<area shape="rect" href="classSPD1305.html" title=" " alt="" coords="23,945,139,1096"/>
-<area shape="rect" href="classKST33500.html" title=" " alt="" coords="171,909,337,1133"/>
-<area shape="rect" href="classKST3000.html" title="Mixed Single Oscilloscope(Oscillator) Commend operations of a single generator are defined...." alt="" coords="362,791,573,1250"/>
-<area shape="rect" href="classKEI2600.html" title="This class implements the basic functionality of Keithley 2600 series SMU&#39;s." alt="" coords="597,711,828,1331"/>
+<area shape="rect" title="Basic device class This class contains all basic method of all devices, like Connect,..." alt="" coords="266,5,471,523"/>
+<area shape="rect" href="classDCPowerSupply.html" title=" " alt="" coords="5,629,156,765"/>
+<area shape="rect" href="classFunctionGenerator.html" title=" " alt="" coords="180,571,363,824"/>
+<area shape="rect" href="classOscilloscope.html" title=" " alt="" coords="387,585,548,809"/>
+<area shape="rect" href="classSMU.html" title="Dummy class to allow assignment to SMU class." alt="" coords="617,615,721,780"/>
+<area shape="rect" href="classSPD1305.html" title=" " alt="" coords="23,1173,139,1323"/>
+<area shape="rect" href="classKST33500.html" title=" " alt="" coords="171,1136,337,1360"/>
+<area shape="rect" href="classKST3000.html" title="Mixed Single Oscilloscope(Oscillator) Commend operations of a single generator are defined...." alt="" coords="362,1019,573,1477"/>
+<area shape="rect" href="classKEI2600.html" title="This class implements the basic functionality of Keithley 2600 series SMU&#39;s." alt="" coords="597,872,829,1624"/>
 </map>
 </div>
 <div class="dynheader">
@@ -119,21 +121,28 @@ Collaboration diagram for Device:</div>
 <div class="dyncontent">
 <div class="center"><img src="classDevice__coll__graph.png" border="0" usemap="#aDevice_coll__map" alt="Collaboration graph"/></div>
 <map name="aDevice_coll__map" id="aDevice_coll__map">
-<area shape="rect" title="Basic device class This class contains all basic method of all devices, like Connect,..." alt="" coords="5,5,211,361"/>
+<area shape="rect" title="Basic device class This class contains all basic method of all devices, like Connect,..." alt="" coords="5,5,211,523"/>
 </map>
 </div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:af09cecb2bae857b2de924ecea6f1e3c7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7">SEND_METHOD</a> { <a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7a0fab39d5e50071af82df098a6b9a93eb">DIRECT_SEND</a> = 0
+, <a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7a4e6dc71be68f7b92bd4ea413228c1362">BUFFER_ENABLED</a> = 1
+ }</td></tr>
+<tr class="separator:af09cecb2bae857b2de924ecea6f1e3c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a82b251a1a39514aff53d3c9215d062f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a82b251a1a39514aff53d3c9215d062f5">Device</a> (std::string ipAddress, int timeoutInMs, bool throwException=true)</td></tr>
-<tr class="memdesc:a82b251a1a39514aff53d3c9215d062f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the <a class="el" href="classDevice.html" title="Basic device class This class contains all basic method of all devices, like Connect,...">Device</a> without passing a logging object.  <a href="classDevice.html#a82b251a1a39514aff53d3c9215d062f5">More...</a><br /></td></tr>
-<tr class="separator:a82b251a1a39514aff53d3c9215d062f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91f51bbff1f236973de2a5c2b53d0c85"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a91f51bbff1f236973de2a5c2b53d0c85">Device</a> (std::string ipAddress, int timeoutInMs, PIL::Logging *logger, bool throwException=true)</td></tr>
-<tr class="memdesc:a91f51bbff1f236973de2a5c2b53d0c85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of <a class="el" href="classDevice.html" title="Basic device class This class contains all basic method of all devices, like Connect,...">Device</a> generates a socket handle without connecting to it.  <a href="classDevice.html#a91f51bbff1f236973de2a5c2b53d0c85">More...</a><br /></td></tr>
-<tr class="separator:a91f51bbff1f236973de2a5c2b53d0c85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70553067b93b47c37475274d2e63c374"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a70553067b93b47c37475274d2e63c374">Device</a> (std::string ipAddress, uint16_t srcPort, uint16_t destPort, int timeoutInMs, PIL::Logging *logger, bool throwException=true)</td></tr>
-<tr class="memdesc:a70553067b93b47c37475274d2e63c374"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class containing the base functionality of all devices. And parameters to store the name connection type, etc.  <a href="classDevice.html#a70553067b93b47c37475274d2e63c374">More...</a><br /></td></tr>
-<tr class="separator:a70553067b93b47c37475274d2e63c374"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af71af2c876e03bc73eb11bcaa512fcb8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#af71af2c876e03bc73eb11bcaa512fcb8">Device</a> (std::string ipAddress, int timeoutInMs, <a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7">SEND_METHOD</a> mode=<a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7a0fab39d5e50071af82df098a6b9a93eb">DIRECT_SEND</a>, bool throwException=true)</td></tr>
+<tr class="memdesc:af71af2c876e03bc73eb11bcaa512fcb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the <a class="el" href="classDevice.html" title="Basic device class This class contains all basic method of all devices, like Connect,...">Device</a> without passing a logging object.  <a href="classDevice.html#af71af2c876e03bc73eb11bcaa512fcb8">More...</a><br /></td></tr>
+<tr class="separator:af71af2c876e03bc73eb11bcaa512fcb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8f8a540c2f6f4a2f8e7f09a685c8297"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#af8f8a540c2f6f4a2f8e7f09a685c8297">Device</a> (std::string ipAddress, int timeoutInMs, PIL::Logging *logger, <a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7">SEND_METHOD</a> mode=<a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7a0fab39d5e50071af82df098a6b9a93eb">DIRECT_SEND</a>, bool throwException=true)</td></tr>
+<tr class="memdesc:af8f8a540c2f6f4a2f8e7f09a685c8297"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of <a class="el" href="classDevice.html" title="Basic device class This class contains all basic method of all devices, like Connect,...">Device</a> generates a socket handle without connecting to it.  <a href="classDevice.html#af8f8a540c2f6f4a2f8e7f09a685c8297">More...</a><br /></td></tr>
+<tr class="separator:af8f8a540c2f6f4a2f8e7f09a685c8297"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31f90da04000125626d10b8fb6e26bb0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a31f90da04000125626d10b8fb6e26bb0">Device</a> (std::string ipAddress, uint16_t srcPort, uint16_t destPort, int timeoutInMs, PIL::Logging *logger, <a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7">SEND_METHOD</a> mode=<a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7a0fab39d5e50071af82df098a6b9a93eb">DIRECT_SEND</a>, bool throwException=true)</td></tr>
+<tr class="memdesc:a31f90da04000125626d10b8fb6e26bb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class containing the base functionality of all devices. And parameters to store the name connection type, etc.  <a href="classDevice.html#a31f90da04000125626d10b8fb6e26bb0">More...</a><br /></td></tr>
+<tr class="separator:a31f90da04000125626d10b8fb6e26bb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9dabc419c8d8df3a686c33ce042bc99a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a9dabc419c8d8df3a686c33ce042bc99a">~Device</a> ()</td></tr>
 <tr class="separator:a9dabc419c8d8df3a686c33ce042bc99a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a365ae23fbe0d2ea5290881834e1969f7"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a365ae23fbe0d2ea5290881834e1969f7">Connect</a> ()</td></tr>
@@ -142,11 +151,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a289d6f213881b2ab4e278d2b9266968d"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a289d6f213881b2ab4e278d2b9266968d">Disconnect</a> ()</td></tr>
 <tr class="memdesc:a289d6f213881b2ab4e278d2b9266968d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect from the device.  <a href="classDevice.html#a289d6f213881b2ab4e278d2b9266968d">More...</a><br /></td></tr>
 <tr class="separator:a289d6f213881b2ab4e278d2b9266968d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e56294c733e5709044ee3fe3f4a2df1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a8e56294c733e5709044ee3fe3f4a2df1">IsOpen</a> () const</td></tr>
-<tr class="memdesc:a8e56294c733e5709044ee3fe3f4a2df1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the connection to the device is established.  <a href="classDevice.html#a8e56294c733e5709044ee3fe3f4a2df1">More...</a><br /></td></tr>
-<tr class="separator:a8e56294c733e5709044ee3fe3f4a2df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a897f070cb8258f912da022b39a1a2a3c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a897f070cb8258f912da022b39a1a2a3c">GetDeviceIdentifier</a> ()</td></tr>
-<tr class="separator:a897f070cb8258f912da022b39a1a2a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09d709433db636fd91e5c36ee97669b0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a09d709433db636fd91e5c36ee97669b0">isOpen</a> () const</td></tr>
+<tr class="memdesc:a09d709433db636fd91e5c36ee97669b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the connection to the device is established.  <a href="classDevice.html#a09d709433db636fd91e5c36ee97669b0">More...</a><br /></td></tr>
+<tr class="separator:a09d709433db636fd91e5c36ee97669b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cb269e16ba7f35d45d716ed4f7b2103"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103">isBuffered</a> () const</td></tr>
+<tr class="separator:a6cb269e16ba7f35d45d716ed4f7b2103"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa44c6120859cf5d5ad9edf71c55df2e5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#aa44c6120859cf5d5ad9edf71c55df2e5">getDeviceIdentifier</a> ()</td></tr>
+<tr class="separator:aa44c6120859cf5d5ad9edf71c55df2e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96b33b9121c59a9606829a7c8379e9c2"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">Exec</a> (const std::string &amp;command, <a class="el" href="classExecArgs.html">ExecArgs</a> *args=nullptr, char *result=nullptr, bool br=true, int size=1024)</td></tr>
 <tr class="memdesc:a96b33b9121c59a9606829a7c8379e9c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute a (SCPI) command  <a href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">More...</a><br /></td></tr>
 <tr class="separator:a96b33b9121c59a9606829a7c8379e9c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,12 +167,35 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7c4c5ede6698d53b3269b17a2ad37b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88d97c1dad043bf37d5e3d21953bdf49"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a88d97c1dad043bf37d5e3d21953bdf49">ReturnErrorMessage</a> ()</td></tr>
 <tr class="separator:a88d97c1dad043bf37d5e3d21953bdf49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af458a5c17f67981fd1892aa65cf5ced4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#af458a5c17f67981fd1892aa65cf5ced4">getBufferedScript</a> ()</td></tr>
+<tr class="separator:af458a5c17f67981fd1892aa65cf5ced4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dab42d52a7735f325852e88d5e15091"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a9dab42d52a7735f325852e88d5e15091">changeSendMode</a> (<a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7">SEND_METHOD</a> mode)</td></tr>
+<tr class="separator:a9dab42d52a7735f325852e88d5e15091"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25e4f976e664c5cf63c214f560316907"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a25e4f976e664c5cf63c214f560316907">delay</a> (double delayTime)</td></tr>
+<tr class="separator:a25e4f976e664c5cf63c214f560316907"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a83533f7409314b683c47083b7dca789c"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a83533f7409314b683c47083b7dca789c">handleErrorsAndLogging</a> (PIL_ERROR_CODE errorCode, bool throwException, PIL::Level logLevel, const std::string &amp;fileName, int line, const std::string formatStr,...)</td></tr>
-<tr class="memdesc:a83533f7409314b683c47083b7dca789c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle logging messages, logs it based on the previously passed logging object. If exceptions are enabled throw an exception otherwise return the error code.  <a href="classDevice.html#a83533f7409314b683c47083b7dca789c">More...</a><br /></td></tr>
-<tr class="separator:a83533f7409314b683c47083b7dca789c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6efd719941a57c5ce2ecf61a57ac2c75"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a6efd719941a57c5ce2ecf61a57ac2c75">handleErrorsAndLogging</a> (PIL_ERROR_CODE errorCode, bool throwException, PIL::Level logLevel, const std::string &amp;fileName, int line, std::string formatStr,...)</td></tr>
+<tr class="memdesc:a6efd719941a57c5ce2ecf61a57ac2c75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle logging messages, logs it based on the previously passed logging object. If exceptions are enabled throw an exception otherwise return the error code.  <a href="classDevice.html#a6efd719941a57c5ce2ecf61a57ac2c75">More...</a><br /></td></tr>
+<tr class="separator:a6efd719941a57c5ce2ecf61a57ac2c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
+Static Protected Member Functions</h2></td></tr>
+<tr class="memitem:ad0b48035a3908e644d02733c4448febe"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#ad0b48035a3908e644d02733c4448febe">errorOccured</a> (PIL_ERROR_CODE errorCode)</td></tr>
+<tr class="memdesc:ad0b48035a3908e644d02733c4448febe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a error occured given the error code.  <a href="classDevice.html#ad0b48035a3908e644d02733c4448febe">More...</a><br /></td></tr>
+<tr class="separator:ad0b48035a3908e644d02733c4448febe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a000c7fab344d0ba3f0ad836304376e76"><td class="memItemLeft" align="right" valign="top">static PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a000c7fab344d0ba3f0ad836304376e76">postRequest</a> (const std::string &amp;url, std::string &amp;payload)</td></tr>
+<tr class="memdesc:a000c7fab344d0ba3f0ad836304376e76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a post request to the given url with the given payload.  <a href="classDevice.html#a000c7fab344d0ba3f0ad836304376e76">More...</a><br /></td></tr>
+<tr class="separator:a000c7fab344d0ba3f0ad836304376e76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18d66b6997bda5f93eeb32861f4c2ea6"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a18d66b6997bda5f93eeb32861f4c2ea6">vectorToStringNL</a> (std::vector&lt; std::string &gt; vector)</td></tr>
+<tr class="separator:a18d66b6997bda5f93eeb32861f4c2ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d58f2aa389e000a65e56d980f257c64"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a9d58f2aa389e000a65e56d980f257c64">replaceAllSubstrings</a> (std::string str, const std::string &amp;from, const std::string &amp;to)</td></tr>
+<tr class="memdesc:a9d58f2aa389e000a65e56d980f257c64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces all substrings in the string with the given replacement string.  <a href="classDevice.html#a9d58f2aa389e000a65e56d980f257c64">More...</a><br /></td></tr>
+<tr class="separator:a9d58f2aa389e000a65e56d980f257c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23854aeaf8384ac054093b9af409a7c2"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a23854aeaf8384ac054093b9af409a7c2">splitString</a> (const std::string &amp;toSplit, const std::string &amp;delimiter)</td></tr>
+<tr class="memdesc:a23854aeaf8384ac054093b9af409a7c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Splits a string by the given delimiter.  <a href="classDevice.html#a23854aeaf8384ac054093b9af409a7c2">More...</a><br /></td></tr>
+<tr class="separator:a23854aeaf8384ac054093b9af409a7c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -181,12 +215,35 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a5efa21ee5155dbeeaa865e8b074d3c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e2150ac73235abf0c90e451f69b57b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a1e2150ac73235abf0c90e451f69b57b4">m_EnableExceptions</a></td></tr>
 <tr class="separator:a1e2150ac73235abf0c90e451f69b57b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0511c5364c1ac076f303c039ed5d593c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7">SEND_METHOD</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a0511c5364c1ac076f303c039ed5d593c">m_SendMode</a></td></tr>
+<tr class="separator:a0511c5364c1ac076f303c039ed5d593c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54cd8bcf7de15eef84304664fd3e4e94"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a54cd8bcf7de15eef84304664fd3e4e94">m_BufferedScript</a></td></tr>
+<tr class="separator:a54cd8bcf7de15eef84304664fd3e4e94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Basic device class This class contains all basic method of all devices, like Connect, Exec, WhatAmI etc. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a82b251a1a39514aff53d3c9215d062f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a82b251a1a39514aff53d3c9215d062f5">&#9670;&nbsp;</a></span>Device() <span class="overload">[1/3]</span></h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="af09cecb2bae857b2de924ecea6f1e3c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af09cecb2bae857b2de924ecea6f1e3c7">&#9670;&nbsp;</a></span>SEND_METHOD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7">Device::SEND_METHOD</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="af09cecb2bae857b2de924ecea6f1e3c7a0fab39d5e50071af82df098a6b9a93eb"></a>DIRECT_SEND&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af09cecb2bae857b2de924ecea6f1e3c7a4e6dc71be68f7b92bd4ea413228c1362"></a>BUFFER_ENABLED&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="af71af2c876e03bc73eb11bcaa512fcb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af71af2c876e03bc73eb11bcaa512fcb8">&#9670;&nbsp;</a></span>Device() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -205,6 +262,12 @@ Protected Attributes</h2></td></tr>
           <td></td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>timeoutInMs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7">SEND_METHOD</a>&#160;</td>
+          <td class="paramname"><em>mode</em> = <code><a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7a0fab39d5e50071af82df098a6b9a93eb">DIRECT_SEND</a></code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -236,8 +299,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a91f51bbff1f236973de2a5c2b53d0c85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91f51bbff1f236973de2a5c2b53d0c85">&#9670;&nbsp;</a></span>Device() <span class="overload">[2/3]</span></h2>
+<a id="af8f8a540c2f6f4a2f8e7f09a685c8297"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8f8a540c2f6f4a2f8e7f09a685c8297">&#9670;&nbsp;</a></span>Device() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -262,6 +325,12 @@ Protected Attributes</h2></td></tr>
           <td></td>
           <td class="paramtype">PIL::Logging *&#160;</td>
           <td class="paramname"><em>logger</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7">SEND_METHOD</a>&#160;</td>
+          <td class="paramname"><em>mode</em> = <code><a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7a0fab39d5e50071af82df098a6b9a93eb">DIRECT_SEND</a></code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -294,8 +363,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a70553067b93b47c37475274d2e63c374"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70553067b93b47c37475274d2e63c374">&#9670;&nbsp;</a></span>Device() <span class="overload">[3/3]</span></h2>
+<a id="a31f90da04000125626d10b8fb6e26bb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31f90da04000125626d10b8fb6e26bb0">&#9670;&nbsp;</a></span>Device() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -332,6 +401,12 @@ Protected Attributes</h2></td></tr>
           <td></td>
           <td class="paramtype">PIL::Logging *&#160;</td>
           <td class="paramname"><em>logger</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7">SEND_METHOD</a>&#160;</td>
+          <td class="paramname"><em>mode</em> = <code><a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7a0fab39d5e50071af82df098a6b9a93eb">DIRECT_SEND</a></code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -379,13 +454,31 @@ Here is the call graph for this function:</div>
 <map name="aclassDevice_a9dabc419c8d8df3a686c33ce042bc99a_cgraph" id="aclassDevice_a9dabc419c8d8df3a686c33ce042bc99a_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,136,32"/>
 <area shape="rect" href="classDevice.html#a289d6f213881b2ab4e278d2b9266968d" title="Disconnect from the device." alt="" coords="184,5,331,32"/>
-<area shape="rect" href="classDevice.html#a83533f7409314b683c47083b7dca789c" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="379,5,612,32"/>
+<area shape="rect" href="classDevice.html#a6efd719941a57c5ce2ecf61a57ac2c75" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="379,5,612,32"/>
 </map>
 </div>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9dab42d52a7735f325852e88d5e15091"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dab42d52a7735f325852e88d5e15091">&#9670;&nbsp;</a></span>changeSendMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Device::changeSendMode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7">SEND_METHOD</a>&#160;</td>
+          <td class="paramname"><em>mode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a365ae23fbe0d2ea5290881834e1969f7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a365ae23fbe0d2ea5290881834e1969f7">&#9670;&nbsp;</a></span>Connect()</h2>
 
@@ -415,7 +508,45 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="classDevice_a365ae23fbe0d2ea5290881834e1969f7_cgraph.png" border="0" usemap="#aclassDevice_a365ae23fbe0d2ea5290881834e1969f7_cgraph" alt=""/></div>
 <map name="aclassDevice_a365ae23fbe0d2ea5290881834e1969f7_cgraph" id="aclassDevice_a365ae23fbe0d2ea5290881834e1969f7_cgraph">
 <area shape="rect" title="Establish a connection to the device." alt="" coords="5,5,133,32"/>
-<area shape="rect" href="classDevice.html#a83533f7409314b683c47083b7dca789c" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="181,5,415,32"/>
+<area shape="rect" href="classDevice.html#a6efd719941a57c5ce2ecf61a57ac2c75" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="181,5,415,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a25e4f976e664c5cf63c214f560316907"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25e4f976e664c5cf63c214f560316907">&#9670;&nbsp;</a></span>delay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PIL_ERROR_CODE Device::delay </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>delayTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classDevice_a25e4f976e664c5cf63c214f560316907_cgraph.png" border="0" usemap="#aclassDevice_a25e4f976e664c5cf63c214f560316907_cgraph" alt=""/></div>
+<map name="aclassDevice_a25e4f976e664c5cf63c214f560316907_cgraph" id="aclassDevice_a25e4f976e664c5cf63c214f560316907_cgraph">
+<area shape="rect" title=" " alt="" coords="5,56,116,83"/>
+<area shape="rect" href="classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="164,5,343,32"/>
+<area shape="rect" href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="201,56,306,83"/>
+<area shape="rect" href="classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103" title=" " alt="" coords="183,107,324,133"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classDevice_a25e4f976e664c5cf63c214f560316907_icgraph.png" border="0" usemap="#aclassDevice_a25e4f976e664c5cf63c214f560316907_icgraph" alt=""/></div>
+<map name="aclassDevice_a25e4f976e664c5cf63c214f560316907_icgraph" id="aclassDevice_a25e4f976e664c5cf63c214f560316907_icgraph">
+<area shape="rect" title=" " alt="" coords="232,5,343,32"/>
+<area shape="rect" href="classKST3000.html#ac85102301233e02fc9d55d106e183ed8" title="Set timebase(horizontal) delay; Equivalent to adjust the delay knob in Horizontal controls...." alt="" coords="5,5,184,32"/>
 </map>
 </div>
 
@@ -450,7 +581,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="classDevice_a289d6f213881b2ab4e278d2b9266968d_cgraph.png" border="0" usemap="#aclassDevice_a289d6f213881b2ab4e278d2b9266968d_cgraph" alt=""/></div>
 <map name="aclassDevice_a289d6f213881b2ab4e278d2b9266968d_cgraph" id="aclassDevice_a289d6f213881b2ab4e278d2b9266968d_cgraph">
 <area shape="rect" title="Disconnect from the device." alt="" coords="5,5,152,32"/>
-<area shape="rect" href="classDevice.html#a83533f7409314b683c47083b7dca789c" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="200,5,433,32"/>
+<area shape="rect" href="classDevice.html#a6efd719941a57c5ce2ecf61a57ac2c75" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="200,5,433,32"/>
 </map>
 </div>
 <div class="dynheader">
@@ -460,6 +591,60 @@ Here is the caller graph for this function:</div>
 <map name="aclassDevice_a289d6f213881b2ab4e278d2b9266968d_icgraph" id="aclassDevice_a289d6f213881b2ab4e278d2b9266968d_icgraph">
 <area shape="rect" title="Disconnect from the device." alt="" coords="184,5,331,32"/>
 <area shape="rect" href="classDevice.html#a9dabc419c8d8df3a686c33ce042bc99a" title=" " alt="" coords="5,5,136,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ad0b48035a3908e644d02733c4448febe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0b48035a3908e644d02733c4448febe">&#9670;&nbsp;</a></span>errorOccured()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Device::errorOccured </td>
+          <td>(</td>
+          <td class="paramtype">PIL_ERROR_CODE&#160;</td>
+          <td class="paramname"><em>errorCode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if a error occured given the error code. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">errorCode</td><td>The error code to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if and only if there is an error. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classDevice_ad0b48035a3908e644d02733c4448febe_icgraph.png" border="0" usemap="#aclassDevice_ad0b48035a3908e644d02733c4448febe_icgraph" alt=""/></div>
+<map name="aclassDevice_ad0b48035a3908e644d02733c4448febe_icgraph" id="aclassDevice_ad0b48035a3908e644d02733c4448febe_icgraph">
+<area shape="rect" title="Checks if a error occured given the error code." alt="" coords="1093,147,1252,174"/>
+<area shape="rect" href="classKEI2600.html#a52f9e7e2269415aaf0e86f229c5edab1" title="Executes the script with the given name on the smu." alt="" coords="853,46,1023,73"/>
+<area shape="rect" href="classKEI2600.html#a4da80dbe8adb81815a98e47114e25774" title="Sends and executes the given script." alt="" coords="552,35,783,76"/>
+<area shape="rect" href="classKEI2600.html#a00c91442df6f1ee0aa2a25133814536d" title="Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return PIL..." alt="" coords="831,198,1045,225"/>
+<area shape="rect" href="classKEI2600.html#ac7160a44757d3807cc46dfbf5a20dbc8" title="Measurement method identical to KEI2600::measure, but in this method, the value is directly returned ..." alt="" coords="589,223,745,250"/>
+<area shape="rect" href="classKEI2600.html#a6cb85ed160de36aeda8ef8e7158bcf78" title="Return last error in error&#45;queue." alt="" coords="857,299,1019,326"/>
+<area shape="rect" href="classKEI2600.html#a5756077c5f8f263c2462e8a1c2417c2a" title="This function measures a certain unit on a specific channel. This function can be used to measure vol..." alt="" coords="868,147,1008,174"/>
+<area shape="rect" href="classKEI2600.html#a0fc6a7098dd6d10cf222be4dba58a940" title="Sends the given script to the SMU. The scripts does not get executed." alt="" coords="842,97,1034,123"/>
+<area shape="rect" href="classKEI2600.html#a00050b1900e421a59cf30d59a432b1a5" title="Executes the buffered script." alt="" coords="296,5,485,47"/>
+<area shape="rect" href="classKEI2600.html#ac285dc67b82f47247a803920f1a909fd" title="Sends and executes the given script." alt="" coords="277,71,504,98"/>
+<area shape="rect" href="classKEI2600.html#a77da5991bc4dbba6c1e3670e059e3cf8" title="Perform a linear voltage sweep on the SMU. Increases the voltage at the given rate until the stop vol..." alt="" coords="5,64,229,105"/>
+<area shape="rect" href="classKEI2600.html#ac6f7f82d41f5eff5fd5233d5c6adb641" title="Sends the given script to the SMU. The scripts does not get executed." alt="" coords="592,101,743,127"/>
 </map>
 </div>
 
@@ -507,9 +692,10 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classDevice_a5b405014c32080fb36ba4ed517fcc78d_cgraph.png" border="0" usemap="#aclassDevice_a5b405014c32080fb36ba4ed517fcc78d_cgraph" alt=""/></div>
 <map name="aclassDevice_a5b405014c32080fb36ba4ed517fcc78d_cgraph" id="aclassDevice_a5b405014c32080fb36ba4ed517fcc78d_cgraph">
-<area shape="rect" title=" " alt="" coords="5,42,111,69"/>
+<area shape="rect" title=" " alt="" coords="5,71,111,98"/>
 <area shape="rect" href="classExecArgs.html#a6b4a00d4d081a528fb5178bdd36c1aa0" title="Transforms the list of arguments to a string which can be passed to the Exec function." alt="" coords="176,5,375,47"/>
-<area shape="rect" href="classDevice.html#a83533f7409314b683c47083b7dca789c" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="159,71,392,98"/>
+<area shape="rect" href="classDevice.html#a6efd719941a57c5ce2ecf61a57ac2c75" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="159,71,392,98"/>
+<area shape="rect" href="classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103" title=" " alt="" coords="205,122,346,149"/>
 </map>
 </div>
 
@@ -571,7 +757,7 @@ Here is the call graph for this function:</div>
 <dl class="section note"><dt>Note</dt><dd>Different companies, devices may have different levels of support for SCPI. Some device may require '\n', some may not. That is why here is a br param.</dd></dl>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Deal with execution timeout; </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Some commands may timeout <div class="fragment"><div class="line"><a class="code" href="classKST3000.html">KST3000</a> k.<a class="code" href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">Exec</a>(<span class="stringliteral">&quot;RSTater?&quot;</span>, buffer);</div>
-<div class="ttc" id="aclassDevice_html_a96b33b9121c59a9606829a7c8379e9c2"><div class="ttname"><a href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">Device::Exec</a></div><div class="ttdeci">PIL_ERROR_CODE Exec(const std::string &amp;command, ExecArgs *args=nullptr, char *result=nullptr, bool br=true, int size=1024)</div><div class="ttdoc">execute a (SCPI) command</div><div class="ttdef"><b>Definition:</b> Device.cpp:167</div></div>
+<div class="ttc" id="aclassDevice_html_a96b33b9121c59a9606829a7c8379e9c2"><div class="ttname"><a href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">Device::Exec</a></div><div class="ttdeci">PIL_ERROR_CODE Exec(const std::string &amp;command, ExecArgs *args=nullptr, char *result=nullptr, bool br=true, int size=1024)</div><div class="ttdoc">execute a (SCPI) command</div><div class="ttdef"><b>Definition:</b> Device.cpp:184</div></div>
 <div class="ttc" id="aclassKST3000_html"><div class="ttname"><a href="classKST3000.html">KST3000</a></div><div class="ttdoc">Mixed Single Oscilloscope(Oscillator) Commend operations of a single generator are defined....</div><div class="ttdef"><b>Definition:</b> KST3000.h:26</div></div>
 </div><!-- fragment --> </dd></dl>
 <div class="dynheader">
@@ -579,81 +765,75 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classDevice_a96b33b9121c59a9606829a7c8379e9c2_icgraph.png" border="0" usemap="#aclassDevice_a96b33b9121c59a9606829a7c8379e9c2_icgraph" alt=""/></div>
 <map name="aclassDevice_a96b33b9121c59a9606829a7c8379e9c2_icgraph" id="aclassDevice_a96b33b9121c59a9606829a7c8379e9c2_icgraph">
-<area shape="rect" title="execute a (SCPI) command" alt="" coords="1140,1948,1245,1975"/>
-<area shape="rect" href="classKST3000.html#aade72643e4136c5f43b22110bd5aa075" title="Equivalent to press the &quot;Auto Scale&quot; button." alt="" coords="891,403,1042,429"/>
-<area shape="rect" href="classKEI2600.html#a295c11141ff72a00c1455c6a2983c3fa" title="Send a beeping sound with a specific duration and frequency to the SMU." alt="" coords="615,5,730,32"/>
-<area shape="rect" href="classKEI2600.html#a4a2adacc527dd6cce95977013fb6822b" title="Clear the error buffer." alt="" coords="874,1669,1059,1696"/>
-<area shape="rect" href="classKST3000.html#a437b6ca320f71c357313367d57294e80" title="capture data" alt="" coords="899,1720,1034,1747"/>
-<area shape="rect" href="classKEI2600.html#a27d2405e6066effdad4bbbc75e5b9a7c" title="Disables source auto&#45;range mode." alt="" coords="571,57,775,98"/>
-<area shape="rect" href="classKEI2600.html#a8e10dd00f981af33cb76312cd3940b51" title="Turns off the source sink mode." alt="" coords="571,123,774,149"/>
-<area shape="rect" href="classKST33500.html#a55f52e6034b10e4fa5927934f0aebd49" title=" " alt="" coords="895,1771,1038,1797"/>
-<area shape="rect" href="classKST3000.html#a9c62b747723ece038505106e2addd829" title="Display a line of text: Connected Successfully. Returning... The message will disappear after 2 secon..." alt="" coords="863,1821,1070,1848"/>
-<area shape="rect" href="classKST33500.html#a7d5dc43567cd7a9c1f02814133f58ccc" title=" " alt="" coords="859,1872,1074,1899"/>
-<area shape="rect" href="classKEI2600.html#a5a1806312d14816cd5b49eacd5ac8d8d" title="Specify the type of measurement currently displayed." alt="" coords="552,173,793,200"/>
-<area shape="rect" href="classKEI2600.html#ad1bf2839a5a8091c5f773e176a110302" title="Enables source auto&#45;range mode. The SMU immediately changes range to the range most appropriate for t..." alt="" coords="572,225,773,266"/>
-<area shape="rect" href="classKEI2600.html#a28639f209107ebd2a2e72d1549675a00" title="Turns on the source sink mode. This reduces the source limit inaccuracy that occurs when operating in..." alt="" coords="573,291,772,317"/>
-<area shape="rect" href="classDevice.html#a7c4c5ede6698d53b3269b17a2ad37b8b" title=" " alt="" coords="877,1923,1056,1949"/>
-<area shape="rect" href="classKEI2600.html#a52f9e7e2269415aaf0e86f229c5edab1" title=" " alt="" coords="587,392,758,419"/>
-<area shape="rect" href="classSPD1305.html#af28d414d1bd330d5c4a003d2e9397f3a" title=" " alt="" coords="888,1973,1045,2000"/>
-<area shape="rect" href="classDevice.html#a897f070cb8258f912da022b39a1a2a3c" title=" " alt="" coords="866,2024,1067,2051"/>
-<area shape="rect" href="classKEI2600.html#a00c91442df6f1ee0aa2a25133814536d" title="Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return PIL..." alt="" coords="859,909,1074,936"/>
-<area shape="rect" href="classKEI2600.html#a4fb6c9a8f3150492cd889248a1efb128" title=" " alt="" coords="597,341,748,368"/>
-<area shape="rect" href="classKEI2600.html#aec1764f1207b9bc036b1e91402c8e87f" title="Sets the level of a certain channel and of a certain unit. It can set the voltage or current on Chann..." alt="" coords="603,960,742,987"/>
-<area shape="rect" href="classKEI2600.html#ac1928210aeb6c6aa0788af67f86a6f09" title="Sets the limit of a certain channel of a certain unit. Allowed are power voltage and current...." alt="" coords="605,1011,741,1037"/>
-<area shape="rect" href="classKEI2600.html#ae2dba0541e8755343e4044b81eedee4c" title="Enables or disableds automatic updates to the internal reference measurements (autozero) of the instr..." alt="" coords="563,1061,782,1088"/>
-<area shape="rect" href="classKEI2600.html#ab315c7d5f0af6969b9f95fc58887cf93" title="Sets the number of measurements made when a measurement is requested." alt="" coords="574,1112,771,1139"/>
-<area shape="rect" href="classKEI2600.html#a1fc7d82ae4752fb1b1842e024dd96d4b" title="Sets the lowest measurement range that is used when the instrument is autoranging." alt="" coords="559,1163,786,1189"/>
-<area shape="rect" href="classKEI2600.html#a1fa0fabf7e491f37e50b1137f7672b57" title="Sets the integration apeture for measurements." alt="" coords="581,1213,764,1240"/>
-<area shape="rect" href="classKEI2600.html#a9dd157b4fa3a260a504d40131a23a9a2" title="Sets the measure range (positive full&#45;scale value of the measurement range of that SMU)...." alt="" coords="573,1264,773,1291"/>
-<area shape="rect" href="classKEI2600.html#a843a676534b9d8529c3e55dbe5ee77d6" title="Sets the sense mode of a specific channel. LOCAL, REMOTE or CALA is supported. When selecting LOCAL,..." alt="" coords="583,1315,762,1341"/>
-<area shape="rect" href="classKEI2600.html#a695932d499fa40e39cda7d99a3c80aac" title="Set the source function which can bei either voltage or current." alt="" coords="571,1365,774,1392"/>
-<area shape="rect" href="classKEI2600.html#a4e277f09cfe4514f7b5ea6f87db885c1" title="Sets the source output&#45;off mode." alt="" coords="571,1416,774,1443"/>
-<area shape="rect" href="classKEI2600.html#a3fa30f537602a306418b1965e7e03b43" title="Assigning a value to this attribute sets the SMU to a fixed range large enough to source the assigned..." alt="" coords="579,1467,767,1493"/>
-<area shape="rect" href="classKEI2600.html#a8d1fa800384584b0ef2765ba021d8ffc" title="Set the source settling mode. (See SRC_SETTLING enum for more information)" alt="" coords="574,1517,771,1544"/>
-<area shape="rect" href="classKEI2600.html#add39a2e5c69a96b552ea0a094fd0f2e8" title="This function turns off a specific channel of the KEI2600&#45;SMU." alt="" coords="609,1568,737,1595"/>
-<area shape="rect" href="classKEI2600.html#a3a2e9bf63f0ff57a611bd201b5662097" title="This function turns on a specific channel of the KEI2600&#45;SMU." alt="" coords="609,1619,736,1645"/>
-<area shape="rect" href="classKEI2600.html#a6cb85ed160de36aeda8ef8e7158bcf78" title="Return last error in error&#45;queue." alt="" coords="591,443,754,469"/>
-<area shape="rect" href="classKST3000.html#afa5f5e146ecc81caf11825ff6c541dc8" title="get system setup" alt="" coords="869,2075,1064,2101"/>
-<area shape="rect" href="classKST3000.html#a0301a37e69f16e30e9924c3b8e9bea8d" title="get the sampled data points" alt="" coords="569,2125,776,2152"/>
-<area shape="rect" href="classKST3000.html#a2cb297fe7c1930ecaa12eb182e228dbc" title="Query the number of waveform points to be transferred." alt="" coords="859,2176,1074,2203"/>
-<area shape="rect" href="classKST3000.html#acf9a92ba038ec1de391004fc6597f8fa" title="Query the preamble of waveform data, e.g. WAVeform:PREamble?" alt="" coords="554,2277,791,2304"/>
-<area shape="rect" href="classKST3000.html#a81588e36df7d2ac86e03144f28250348" title="Start to run. Equivalent to press the Run/Stop button when the device is not running." alt="" coords="913,2277,1021,2304"/>
-<area shape="rect" href="classCommandLineInterface.html#a380c9d109efe8d45a44e0c45f21097de" title=" " alt="" coords="877,2329,1056,2370"/>
-<area shape="rect" href="classKST33500.html#aa8d787b0b3659bcf5b897321603102a2" title=" " alt="" coords="875,2395,1058,2421"/>
-<area shape="rect" href="classKST3000.html#a2d1b41ddeb2cbce1ece1ab039104ccda" title="Show or hide channel display. Equivalent to press channel number button." alt="" coords="862,2445,1071,2472"/>
-<area shape="rect" href="classKST3000.html#a283e563b720b61b97077d2a43a276b87" title="Set vertical offset. Equivalent to adjust the knob below channel number button." alt="" coords="867,2496,1066,2523"/>
-<area shape="rect" href="classKST3000.html#a8734d2bdbc2e8cd726e21eb13d739d80" title="Similar to setChannelScale, but set the whole voltage range." alt="" coords="866,2547,1067,2573"/>
-<area shape="rect" href="classKST3000.html#af63c55f2de7384d97be999556e6c7317" title="Equivalent to adjust the knob above channel numbers. e.g. CHANnel3:SCALe 5." alt="" coords="869,2597,1064,2624"/>
-<area shape="rect" href="classSPD1305.html#a840844d4398ea417102ff22d2c70db77" title=" " alt="" coords="889,2648,1045,2675"/>
-<area shape="rect" href="classKST3000.html#aecc19bdbc5fa7571e9a10d74aee93a3f" title="set timebase mode" alt="" coords="871,2699,1063,2725"/>
-<area shape="rect" href="classKST33500.html#a356175b0c6bc629f074f7444753b51b2" title=" " alt="" coords="875,2749,1058,2776"/>
-<area shape="rect" href="classKST33500.html#ab29e94d3be6538e69843e7c3105f60dc" title="Set output function of the function generator. E.g. SIN sets a sinus wave." alt="" coords="881,2800,1052,2827"/>
-<area shape="rect" href="classKST33500.html#ac30233388d9a50b377df633455b52901" title=" " alt="" coords="889,2851,1044,2877"/>
-<area shape="rect" href="classKST33500.html#aac964794c330837fe563caa8055063ba" title=" " alt="" coords="889,2901,1044,2928"/>
-<area shape="rect" href="classKST3000.html#ac85102301233e02fc9d55d106e183ed8" title="Set timebase(horizontal) delay; Equivalent to adjust the delay knob in Horizontal controls...." alt="" coords="877,2952,1056,2979"/>
-<area shape="rect" href="classKST3000.html#af3e7c3f4bf7f7155bf49dac936cb6d6e" title="Set timebase(horizontal) range; Equivalent to adjust the &quot;Horizontal&quot; knob." alt="" coords="876,3003,1057,3029"/>
-<area shape="rect" href="classKST3000.html#a42e9404dff492a9debb8ee6d870cfff6" title="Set trigger slope." alt="" coords="875,3053,1058,3080"/>
-<area shape="rect" href="classKST3000.html#aaf28d64448cf4fdd059d961040b7e149" title="Set trigger channel." alt="" coords="869,3104,1064,3131"/>
-<area shape="rect" href="classKST3000.html#a82660e115efa976bbb142aa3f429926c" title="set format of waveform data(default &quot;BYTE&quot;)" alt="" coords="857,3155,1077,3181"/>
-<area shape="rect" href="classKST3000.html#acfab2022688382c38431854c931b232b" title="set number of waveform points" alt="" coords="859,3205,1074,3232"/>
-<area shape="rect" href="classKST3000.html#a38bc69f14634568ca868bba591723533" title="set waveform points mode" alt="" coords="841,3256,1092,3283"/>
-<area shape="rect" href="classKST3000.html#ae5e640db4b1ce82ba9f66b49a0c2b296" title="set waveform source" alt="" coords="857,3307,1076,3333"/>
-<area shape="rect" href="classKST3000.html#a7bbd1eaa6bbd13fb0d254d3955ba2f98" title="Equivalent to press the Single button." alt="" coords="903,3357,1030,3384"/>
-<area shape="rect" href="classKST3000.html#a77d706618272f8561c1134543d10c356" title="Stop to run. Equivalent to press the Run/Stop button when the device is not stopping." alt="" coords="909,3408,1024,3435"/>
-<area shape="rect" href="classSPD1305.html#ab7f6ab9eeb531e59f0b17ddc6867bee7" title=" " alt="" coords="900,3459,1033,3485"/>
-<area shape="rect" href="classSPD1305.html#a12d2a2dc9a209540ad9a23204b2c1b2f" title=" " alt="" coords="901,3509,1033,3536"/>
-<area shape="rect" href="classKEI2600.html#a5557b8437bccf24eecb219efa33549e0" title=" " alt="" coords="277,367,504,393"/>
-<area shape="rect" href="classKEI2600.html#a77da5991bc4dbba6c1e3670e059e3cf8" title=" " alt="" coords="5,359,229,401"/>
-<area shape="rect" href="classKEI2600.html#ac1e13a158dd731f65d0eb6821d8478d0" title="Disable beeper on the SMU. This command is mandatory to play beeping sounds afterwards." alt="" coords="591,544,754,571"/>
-<area shape="rect" href="classKEI2600.html#ac1989d3e6cb6b8819c156259ae02df8c" title="Disables the analog filter mode of a certain channel." alt="" coords="557,595,788,637"/>
-<area shape="rect" href="classKEI2600.html#a91e47354bce36bec500638533496819d" title="Sets the SMU in fixed range measurement mode for a certain unit, e.g. voltage or current." alt="" coords="565,661,781,702"/>
-<area shape="rect" href="classKEI2600.html#a7ea8b3a3567d92e1337675d63a972ab9" title="Enable beeper on the SMU. This command is mandatory to play beeping sounds afterwards." alt="" coords="593,727,753,753"/>
-<area shape="rect" href="classKEI2600.html#a26c65ef50d521658e61e6d17b6c8df14" title="Enables the analog filter mode for a certain channel. This engages an approximately 1 Hz analog filte..." alt="" coords="559,778,787,819"/>
-<area shape="rect" href="classKEI2600.html#aad2c4cfd05f27289105ba64b3d09acab" title="Sets the SMU in auto&#45;range mode for a certain unit, e.g. voltage or current." alt="" coords="566,843,779,885"/>
-<area shape="rect" href="classKEI2600.html#a5756077c5f8f263c2462e8a1c2417c2a" title="This function measures a certain unit on a specific channel. This function can be used to measure vol..." alt="" coords="603,909,743,936"/>
-<area shape="rect" href="classKEI2600.html#ac7160a44757d3807cc46dfbf5a20dbc8" title="Measurement method identical to KEI2600::measure, but in this method, the value is directly returned ..." alt="" coords="313,493,469,520"/>
-<area shape="rect" href="classKST3000.html#a762ded4a805dfd410224cfaf95e66cc5" title="convert a measurement data array to a 2d array: time array &amp; voltage array" alt="" coords="307,2176,475,2203"/>
-<area shape="rect" href="classKST3000.html#a9ecd39f48a38870473b438d40d166af6" title="save waveform data to the target file" alt="" coords="9,2227,225,2253"/>
+<area shape="rect" title="execute a (SCPI) command" alt="" coords="1136,1491,1241,1517"/>
+<area shape="rect" href="classKST3000.html#aade72643e4136c5f43b22110bd5aa075" title="Equivalent to press the &quot;Auto Scale&quot; button." alt="" coords="887,5,1038,32"/>
+<area shape="rect" href="classKEI2600.html#a295c11141ff72a00c1455c6a2983c3fa" title="Send a beeping sound with a specific duration and frequency to the SMU." alt="" coords="905,56,1020,83"/>
+<area shape="rect" href="classKEI2600.html#a493ff85f52f46135ac6aee50ad3f50b9" title="Clears the buffer with the given name." alt="" coords="885,157,1040,184"/>
+<area shape="rect" href="classKEI2600.html#a4a2adacc527dd6cce95977013fb6822b" title="Clear the error buffer." alt="" coords="870,208,1055,235"/>
+<area shape="rect" href="classDevice.html#a25e4f976e664c5cf63c214f560316907" title=" " alt="" coords="907,259,1018,285"/>
+<area shape="rect" href="classKST3000.html#ac85102301233e02fc9d55d106e183ed8" title="Set timebase(horizontal) delay; Equivalent to adjust the delay knob in Horizontal controls...." alt="" coords="581,284,760,311"/>
+<area shape="rect" href="classKST3000.html#a437b6ca320f71c357313367d57294e80" title="capture data" alt="" coords="895,360,1030,387"/>
+<area shape="rect" href="classKST33500.html#a55f52e6034b10e4fa5927934f0aebd49" title=" " alt="" coords="891,411,1034,437"/>
+<area shape="rect" href="classKST3000.html#a9c62b747723ece038505106e2addd829" title="Display a line of text: Connected Successfully. Returning... The message will disappear after 2 secon..." alt="" coords="859,461,1066,488"/>
+<area shape="rect" href="classKST33500.html#a7d5dc43567cd7a9c1f02814133f58ccc" title=" " alt="" coords="855,512,1070,539"/>
+<area shape="rect" href="classKEI2600.html#a5a1806312d14816cd5b49eacd5ac8d8d" title="Specify the type of measurement currently displayed." alt="" coords="842,563,1083,589"/>
+<area shape="rect" href="classDevice.html#a7c4c5ede6698d53b3269b17a2ad37b8b" title=" " alt="" coords="873,613,1052,640"/>
+<area shape="rect" href="classKEI2600.html#a52f9e7e2269415aaf0e86f229c5edab1" title="Executes the script with the given name on the smu." alt="" coords="877,664,1048,691"/>
+<area shape="rect" href="classKEI2600.html#a54d1a35c1aabbc9b1f360809f5cf77ea" title="Retrieves the size of the buffer with the given name." alt="" coords="877,107,1048,133"/>
+<area shape="rect" href="classSPD1305.html#af28d414d1bd330d5c4a003d2e9397f3a" title=" " alt="" coords="884,715,1041,741"/>
+<area shape="rect" href="classDevice.html#aa44c6120859cf5d5ad9edf71c55df2e5" title=" " alt="" coords="863,765,1062,792"/>
+<area shape="rect" href="classKEI2600.html#a00c91442df6f1ee0aa2a25133814536d" title="Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return PIL..." alt="" coords="855,816,1070,843"/>
+<area shape="rect" href="classKEI2600.html#a6cb85ed160de36aeda8ef8e7158bcf78" title="Return last error in error&#45;queue." alt="" coords="881,867,1044,893"/>
+<area shape="rect" href="classKST3000.html#afa5f5e146ecc81caf11825ff6c541dc8" title="get system setup" alt="" coords="865,968,1060,995"/>
+<area shape="rect" href="classKST3000.html#a0301a37e69f16e30e9924c3b8e9bea8d" title="get the sampled data points" alt="" coords="567,1019,774,1045"/>
+<area shape="rect" href="classKST3000.html#a2cb297fe7c1930ecaa12eb182e228dbc" title="Query the number of waveform points to be transferred." alt="" coords="855,1069,1070,1096"/>
+<area shape="rect" href="classKST3000.html#acf9a92ba038ec1de391004fc6597f8fa" title="Query the preamble of waveform data, e.g. WAVeform:PREamble?" alt="" coords="552,1171,789,1197"/>
+<area shape="rect" href="classKEI2600.html#a5756077c5f8f263c2462e8a1c2417c2a" title="This function measures a certain unit on a specific channel. This function can be used to measure vol..." alt="" coords="893,917,1033,944"/>
+<area shape="rect" href="classKST3000.html#a81588e36df7d2ac86e03144f28250348" title="Start to run. Equivalent to press the Run/Stop button when the device is not running." alt="" coords="909,1171,1017,1197"/>
+<area shape="rect" href="classCommandLineInterface.html#a380c9d109efe8d45a44e0c45f21097de" title=" " alt="" coords="873,1222,1052,1263"/>
+<area shape="rect" href="classKST33500.html#aa8d787b0b3659bcf5b897321603102a2" title=" " alt="" coords="871,1288,1054,1315"/>
+<area shape="rect" href="classKST3000.html#a2d1b41ddeb2cbce1ece1ab039104ccda" title="Show or hide channel display. Equivalent to press channel number button." alt="" coords="858,1339,1067,1365"/>
+<area shape="rect" href="classKST3000.html#a283e563b720b61b97077d2a43a276b87" title="Set vertical offset. Equivalent to adjust the knob below channel number button." alt="" coords="863,1389,1062,1416"/>
+<area shape="rect" href="classKST3000.html#a8734d2bdbc2e8cd726e21eb13d739d80" title="Similar to setChannelScale, but set the whole voltage range." alt="" coords="862,1440,1063,1467"/>
+<area shape="rect" href="classKST3000.html#af63c55f2de7384d97be999556e6c7317" title="Equivalent to adjust the knob above channel numbers. e.g. CHANnel3:SCALe 5." alt="" coords="865,1491,1060,1517"/>
+<area shape="rect" href="classSPD1305.html#a840844d4398ea417102ff22d2c70db77" title=" " alt="" coords="885,1541,1041,1568"/>
+<area shape="rect" href="classKST3000.html#aecc19bdbc5fa7571e9a10d74aee93a3f" title="set timebase mode" alt="" coords="867,1592,1059,1619"/>
+<area shape="rect" href="classKST33500.html#a356175b0c6bc629f074f7444753b51b2" title=" " alt="" coords="871,1643,1054,1669"/>
+<area shape="rect" href="classKST33500.html#ab29e94d3be6538e69843e7c3105f60dc" title="Set output function of the function generator. E.g. SIN sets a sinus wave." alt="" coords="877,1693,1048,1720"/>
+<area shape="rect" href="classKEI2600.html#aec1764f1207b9bc036b1e91402c8e87f" title="Sets the level of a certain channel and of a certain unit. It can set the voltage or current on Chann..." alt="" coords="893,1744,1032,1771"/>
+<area shape="rect" href="classKEI2600.html#ac1928210aeb6c6aa0788af67f86a6f09" title="Sets the limit of a certain channel of a certain unit. Allowed are power voltage and current...." alt="" coords="895,1795,1031,1821"/>
+<area shape="rect" href="classKEI2600.html#ae2dba0541e8755343e4044b81eedee4c" title="Enables or disableds automatic updates to the internal reference measurements (autozero) of the instr..." alt="" coords="853,1845,1072,1872"/>
+<area shape="rect" href="classKEI2600.html#ab315c7d5f0af6969b9f95fc58887cf93" title="Sets the number of measurements made when a measurement is requested." alt="" coords="864,1896,1061,1923"/>
+<area shape="rect" href="classKEI2600.html#a1fc7d82ae4752fb1b1842e024dd96d4b" title="Sets the lowest measurement range that is used when the instrument is autoranging." alt="" coords="849,1947,1076,1973"/>
+<area shape="rect" href="classKEI2600.html#a1fa0fabf7e491f37e50b1137f7672b57" title="Sets the integration apeture for measurements." alt="" coords="871,1997,1054,2024"/>
+<area shape="rect" href="classKEI2600.html#a9dd157b4fa3a260a504d40131a23a9a2" title="Sets the measure range (positive full&#45;scale value of the measurement range of that SMU)...." alt="" coords="863,2048,1063,2075"/>
+<area shape="rect" href="classKST33500.html#ac30233388d9a50b377df633455b52901" title=" " alt="" coords="885,2099,1040,2125"/>
+<area shape="rect" href="classKST33500.html#aac964794c330837fe563caa8055063ba" title=" " alt="" coords="885,2149,1040,2176"/>
+<area shape="rect" href="classKEI2600.html#a843a676534b9d8529c3e55dbe5ee77d6" title="Sets the sense mode of a specific channel. LOCAL, REMOTE or CALA is supported. When selecting LOCAL,..." alt="" coords="873,2200,1052,2227"/>
+<area shape="rect" href="classKEI2600.html#a695932d499fa40e39cda7d99a3c80aac" title="Set the source function which can bei either voltage or current." alt="" coords="861,2251,1064,2277"/>
+<area shape="rect" href="classKEI2600.html#a4e277f09cfe4514f7b5ea6f87db885c1" title="Sets the source output&#45;off mode." alt="" coords="861,2301,1064,2328"/>
+<area shape="rect" href="classKEI2600.html#a3fa30f537602a306418b1965e7e03b43" title="Assigning a value to this attribute sets the SMU to a fixed range large enough to source the assigned..." alt="" coords="869,2352,1057,2379"/>
+<area shape="rect" href="classKEI2600.html#a8d1fa800384584b0ef2765ba021d8ffc" title="Set the source settling mode. (See SRC_SETTLING enum for more information)" alt="" coords="864,2403,1061,2429"/>
+<area shape="rect" href="classKST3000.html#af3e7c3f4bf7f7155bf49dac936cb6d6e" title="Set timebase(horizontal) range; Equivalent to adjust the &quot;Horizontal&quot; knob." alt="" coords="872,2453,1053,2480"/>
+<area shape="rect" href="classKST3000.html#a42e9404dff492a9debb8ee6d870cfff6" title="Set trigger slope." alt="" coords="871,2504,1054,2531"/>
+<area shape="rect" href="classKST3000.html#aaf28d64448cf4fdd059d961040b7e149" title="Set trigger channel." alt="" coords="865,2555,1060,2581"/>
+<area shape="rect" href="classKST3000.html#a82660e115efa976bbb142aa3f429926c" title="set format of waveform data(default &quot;BYTE&quot;)" alt="" coords="853,2605,1073,2632"/>
+<area shape="rect" href="classKST3000.html#acfab2022688382c38431854c931b232b" title="set number of waveform points" alt="" coords="855,2656,1070,2683"/>
+<area shape="rect" href="classKST3000.html#a38bc69f14634568ca868bba591723533" title="set waveform points mode" alt="" coords="837,2707,1088,2733"/>
+<area shape="rect" href="classKST3000.html#ae5e640db4b1ce82ba9f66b49a0c2b296" title="set waveform source" alt="" coords="853,2757,1072,2784"/>
+<area shape="rect" href="classKST3000.html#a7bbd1eaa6bbd13fb0d254d3955ba2f98" title="Equivalent to press the Single button." alt="" coords="899,2808,1026,2835"/>
+<area shape="rect" href="classKST3000.html#a77d706618272f8561c1134543d10c356" title="Stop to run. Equivalent to press the Run/Stop button when the device is not stopping." alt="" coords="905,2859,1020,2885"/>
+<area shape="rect" href="classSPD1305.html#ab7f6ab9eeb531e59f0b17ddc6867bee7" title=" " alt="" coords="896,2909,1029,2936"/>
+<area shape="rect" href="classSPD1305.html#a12d2a2dc9a209540ad9a23204b2c1b2f" title=" " alt="" coords="897,2960,1029,2987"/>
+<area shape="rect" href="classKEI2600.html#a1df40b049d98791f48e671e59cbcfcaa" title="Reads the complete buffer with the given name." alt="" coords="595,132,746,159"/>
+<area shape="rect" href="classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title=" " alt="" coords="307,132,474,159"/>
+<area shape="rect" href="classKEI2600.html#a4da80dbe8adb81815a98e47114e25774" title="Sends and executes the given script." alt="" coords="555,657,786,698"/>
+<area shape="rect" href="classKEI2600.html#a00050b1900e421a59cf30d59a432b1a5" title="Executes the buffered script." alt="" coords="296,627,485,669"/>
+<area shape="rect" href="classKEI2600.html#ac285dc67b82f47247a803920f1a909fd" title="Sends and executes the given script." alt="" coords="277,693,504,720"/>
+<area shape="rect" href="classKEI2600.html#a77da5991bc4dbba6c1e3670e059e3cf8" title="Perform a linear voltage sweep on the SMU. Increases the voltage at the given rate until the stop vol..." alt="" coords="5,686,229,727"/>
+<area shape="rect" href="classKEI2600.html#ac7160a44757d3807cc46dfbf5a20dbc8" title="Measurement method identical to KEI2600::measure, but in this method, the value is directly returned ..." alt="" coords="593,867,749,893"/>
+<area shape="rect" href="classKST3000.html#a762ded4a805dfd410224cfaf95e66cc5" title="convert a measurement data array to a 2d array: time array &amp; voltage array" alt="" coords="307,1069,475,1096"/>
+<area shape="rect" href="classKST3000.html#a9ecd39f48a38870473b438d40d166af6" title="save waveform data to the target file" alt="" coords="9,1120,225,1147"/>
 </map>
 </div>
 
@@ -681,20 +861,46 @@ Here is the call graph for this function:</div>
 <map name="aclassDevice_a7c4c5ede6698d53b3269b17a2ad37b8b_cgraph" id="aclassDevice_a7c4c5ede6698d53b3269b17a2ad37b8b_cgraph">
 <area shape="rect" title=" " alt="" coords="5,31,184,57"/>
 <area shape="rect" href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="296,5,401,32"/>
-<area shape="rect" href="classDevice.html#a83533f7409314b683c47083b7dca789c" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="232,56,465,83"/>
+<area shape="rect" href="classDevice.html#a6efd719941a57c5ce2ecf61a57ac2c75" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="232,56,465,83"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a897f070cb8258f912da022b39a1a2a3c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a897f070cb8258f912da022b39a1a2a3c">&#9670;&nbsp;</a></span>GetDeviceIdentifier()</h2>
+<a id="af458a5c17f67981fd1892aa65cf5ced4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af458a5c17f67981fd1892aa65cf5ced4">&#9670;&nbsp;</a></span>getBufferedScript()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string Device::GetDeviceIdentifier </td>
+          <td class="memname">std::string Device::getBufferedScript </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classDevice_af458a5c17f67981fd1892aa65cf5ced4_cgraph.png" border="0" usemap="#aclassDevice_af458a5c17f67981fd1892aa65cf5ced4_cgraph" alt=""/></div>
+<map name="aclassDevice_af458a5c17f67981fd1892aa65cf5ced4_cgraph" id="aclassDevice_af458a5c17f67981fd1892aa65cf5ced4_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,193,32"/>
+<area shape="rect" href="classDevice.html#a18d66b6997bda5f93eeb32861f4c2ea6" title=" " alt="" coords="241,5,427,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aa44c6120859cf5d5ad9edf71c55df2e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa44c6120859cf5d5ad9edf71c55df2e5">&#9670;&nbsp;</a></span>getDeviceIdentifier()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Device::getDeviceIdentifier </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -705,20 +911,21 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classDevice_a897f070cb8258f912da022b39a1a2a3c_cgraph.png" border="0" usemap="#aclassDevice_a897f070cb8258f912da022b39a1a2a3c_cgraph" alt=""/></div>
-<map name="aclassDevice_a897f070cb8258f912da022b39a1a2a3c_cgraph" id="aclassDevice_a897f070cb8258f912da022b39a1a2a3c_cgraph">
-<area shape="rect" title=" " alt="" coords="5,81,207,108"/>
-<area shape="rect" href="classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="282,5,461,32"/>
-<area shape="rect" href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="319,56,424,83"/>
-<area shape="rect" href="classDevice.html#a83533f7409314b683c47083b7dca789c" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="255,107,488,133"/>
-<area shape="rect" href="classDevice.html#a8e56294c733e5709044ee3fe3f4a2df1" title="Checks if the connection to the device is established." alt="" coords="311,157,431,184"/>
+<div class="center"><img src="classDevice_aa44c6120859cf5d5ad9edf71c55df2e5_cgraph.png" border="0" usemap="#aclassDevice_aa44c6120859cf5d5ad9edf71c55df2e5_cgraph" alt=""/></div>
+<map name="aclassDevice_aa44c6120859cf5d5ad9edf71c55df2e5_cgraph" id="aclassDevice_aa44c6120859cf5d5ad9edf71c55df2e5_cgraph">
+<area shape="rect" title=" " alt="" coords="5,107,204,133"/>
+<area shape="rect" href="classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="279,5,458,32"/>
+<area shape="rect" href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="316,56,421,83"/>
+<area shape="rect" href="classDevice.html#a6efd719941a57c5ce2ecf61a57ac2c75" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="252,107,485,133"/>
+<area shape="rect" href="classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103" title=" " alt="" coords="298,157,439,184"/>
+<area shape="rect" href="classDevice.html#a09d709433db636fd91e5c36ee97669b0" title="Checks if the connection to the device is established." alt="" coords="309,208,429,235"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a83533f7409314b683c47083b7dca789c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83533f7409314b683c47083b7dca789c">&#9670;&nbsp;</a></span>handleErrorsAndLogging()</h2>
+<a id="a6efd719941a57c5ce2ecf61a57ac2c75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6efd719941a57c5ce2ecf61a57ac2c75">&#9670;&nbsp;</a></span>handleErrorsAndLogging()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -759,7 +966,7 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::string&#160;</td>
+          <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>formatStr</em>, </td>
         </tr>
         <tr>
@@ -798,28 +1005,60 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classDevice_a83533f7409314b683c47083b7dca789c_icgraph.png" border="0" usemap="#aclassDevice_a83533f7409314b683c47083b7dca789c_icgraph" alt=""/></div>
-<map name="aclassDevice_a83533f7409314b683c47083b7dca789c_icgraph" id="aclassDevice_a83533f7409314b683c47083b7dca789c_icgraph">
-<area shape="rect" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="433,107,667,133"/>
-<area shape="rect" href="classDevice.html#a365ae23fbe0d2ea5290881834e1969f7" title="Establish a connection to the device." alt="" coords="221,5,349,32"/>
-<area shape="rect" href="classDevice.html#a289d6f213881b2ab4e278d2b9266968d" title="Disconnect from the device." alt="" coords="211,56,358,83"/>
-<area shape="rect" href="classDevice.html#a5b405014c32080fb36ba4ed517fcc78d" title=" " alt="" coords="232,107,337,133"/>
-<area shape="rect" href="classDevice.html#a7c4c5ede6698d53b3269b17a2ad37b8b" title=" " alt="" coords="195,157,374,184"/>
-<area shape="rect" href="classDevice.html#a897f070cb8258f912da022b39a1a2a3c" title=" " alt="" coords="184,208,385,235"/>
+<div class="center"><img src="classDevice_a6efd719941a57c5ce2ecf61a57ac2c75_icgraph.png" border="0" usemap="#aclassDevice_a6efd719941a57c5ce2ecf61a57ac2c75_icgraph" alt=""/></div>
+<map name="aclassDevice_a6efd719941a57c5ce2ecf61a57ac2c75_icgraph" id="aclassDevice_a6efd719941a57c5ce2ecf61a57ac2c75_icgraph">
+<area shape="rect" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="431,107,664,133"/>
+<area shape="rect" href="classDevice.html#a365ae23fbe0d2ea5290881834e1969f7" title="Establish a connection to the device." alt="" coords="219,5,347,32"/>
+<area shape="rect" href="classDevice.html#a289d6f213881b2ab4e278d2b9266968d" title="Disconnect from the device." alt="" coords="210,56,357,83"/>
+<area shape="rect" href="classDevice.html#a5b405014c32080fb36ba4ed517fcc78d" title=" " alt="" coords="231,107,336,133"/>
+<area shape="rect" href="classDevice.html#a7c4c5ede6698d53b3269b17a2ad37b8b" title=" " alt="" coords="194,157,373,184"/>
+<area shape="rect" href="classDevice.html#aa44c6120859cf5d5ad9edf71c55df2e5" title=" " alt="" coords="184,208,383,235"/>
 <area shape="rect" href="classDevice.html#a9dabc419c8d8df3a686c33ce042bc99a" title=" " alt="" coords="5,56,136,83"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a8e56294c733e5709044ee3fe3f4a2df1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e56294c733e5709044ee3fe3f4a2df1">&#9670;&nbsp;</a></span>IsOpen()</h2>
+<a id="a6cb269e16ba7f35d45d716ed4f7b2103"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6cb269e16ba7f35d45d716ed4f7b2103">&#9670;&nbsp;</a></span>isBuffered()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool Device::IsOpen </td>
+          <td class="memname">bool Device::isBuffered </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classDevice_a6cb269e16ba7f35d45d716ed4f7b2103_icgraph.png" border="0" usemap="#aclassDevice_a6cb269e16ba7f35d45d716ed4f7b2103_icgraph" alt=""/></div>
+<map name="aclassDevice_a6cb269e16ba7f35d45d716ed4f7b2103_icgraph" id="aclassDevice_a6cb269e16ba7f35d45d716ed4f7b2103_icgraph">
+<area shape="rect" title=" " alt="" coords="479,132,620,159"/>
+<area shape="rect" href="classDevice.html#a25e4f976e664c5cf63c214f560316907" title=" " alt="" coords="276,5,387,32"/>
+<area shape="rect" href="classDevice.html#a5b405014c32080fb36ba4ed517fcc78d" title=" " alt="" coords="279,56,384,83"/>
+<area shape="rect" href="classDevice.html#aa44c6120859cf5d5ad9edf71c55df2e5" title=" " alt="" coords="232,107,431,133"/>
+<area shape="rect" href="classKEI2600.html#a6cb85ed160de36aeda8ef8e7158bcf78" title="Return last error in error&#45;queue." alt="" coords="250,157,413,184"/>
+<area shape="rect" href="classKEI2600.html#ac7160a44757d3807cc46dfbf5a20dbc8" title="Measurement method identical to KEI2600::measure, but in this method, the value is directly returned ..." alt="" coords="17,208,173,235"/>
+<area shape="rect" href="classKEI2600.html#a5756077c5f8f263c2462e8a1c2417c2a" title="This function measures a certain unit on a specific channel. This function can be used to measure vol..." alt="" coords="261,259,401,285"/>
+<area shape="rect" href="classKST3000.html#ac85102301233e02fc9d55d106e183ed8" title="Set timebase(horizontal) delay; Equivalent to adjust the delay knob in Horizontal controls...." alt="" coords="5,5,184,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a09d709433db636fd91e5c36ee97669b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09d709433db636fd91e5c36ee97669b0">&#9670;&nbsp;</a></span>isOpen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Device::isOpen </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -832,10 +1071,140 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classDevice_a8e56294c733e5709044ee3fe3f4a2df1_icgraph.png" border="0" usemap="#aclassDevice_a8e56294c733e5709044ee3fe3f4a2df1_icgraph" alt=""/></div>
-<map name="aclassDevice_a8e56294c733e5709044ee3fe3f4a2df1_icgraph" id="aclassDevice_a8e56294c733e5709044ee3fe3f4a2df1_icgraph">
-<area shape="rect" title="Checks if the connection to the device is established." alt="" coords="255,5,375,32"/>
-<area shape="rect" href="classDevice.html#a897f070cb8258f912da022b39a1a2a3c" title=" " alt="" coords="5,5,207,32"/>
+<div class="center"><img src="classDevice_a09d709433db636fd91e5c36ee97669b0_icgraph.png" border="0" usemap="#aclassDevice_a09d709433db636fd91e5c36ee97669b0_icgraph" alt=""/></div>
+<map name="aclassDevice_a09d709433db636fd91e5c36ee97669b0_icgraph" id="aclassDevice_a09d709433db636fd91e5c36ee97669b0_icgraph">
+<area shape="rect" title="Checks if the connection to the device is established." alt="" coords="252,5,372,32"/>
+<area shape="rect" href="classDevice.html#aa44c6120859cf5d5ad9edf71c55df2e5" title=" " alt="" coords="5,5,204,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a000c7fab344d0ba3f0ad836304376e76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a000c7fab344d0ba3f0ad836304376e76">&#9670;&nbsp;</a></span>postRequest()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">PIL_ERROR_CODE Device::postRequest </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>payload</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sends a post request to the given url with the given payload. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>The url to send the post request to. </td></tr>
+    <tr><td class="paramname">payload</td><td>The payload to send. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classDevice_a000c7fab344d0ba3f0ad836304376e76_cgraph.png" border="0" usemap="#aclassDevice_a000c7fab344d0ba3f0ad836304376e76_cgraph" alt=""/></div>
+<map name="aclassDevice_a000c7fab344d0ba3f0ad836304376e76_cgraph" id="aclassDevice_a000c7fab344d0ba3f0ad836304376e76_cgraph">
+<area shape="rect" title="Sends a post request to the given url with the given payload." alt="" coords="5,5,161,32"/>
+<area shape="rect" href="classhttp_1_1Request.html#ae1af1d5504155ea17c8aa8e4a7a58e54" title=" " alt="" coords="209,5,357,32"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classDevice_a000c7fab344d0ba3f0ad836304376e76_icgraph.png" border="0" usemap="#aclassDevice_a000c7fab344d0ba3f0ad836304376e76_icgraph" alt=""/></div>
+<map name="aclassDevice_a000c7fab344d0ba3f0ad836304376e76_icgraph" id="aclassDevice_a000c7fab344d0ba3f0ad836304376e76_icgraph">
+<area shape="rect" title="Sends a post request to the given url with the given payload." alt="" coords="1071,71,1227,98"/>
+<area shape="rect" href="classKEI2600.html#a0fc6a7098dd6d10cf222be4dba58a940" title="Sends the given script to the SMU. The scripts does not get executed." alt="" coords="831,71,1023,98"/>
+<area shape="rect" href="classKEI2600.html#a4da80dbe8adb81815a98e47114e25774" title="Sends and executes the given script." alt="" coords="552,35,783,76"/>
+<area shape="rect" href="classKEI2600.html#ac6f7f82d41f5eff5fd5233d5c6adb641" title="Sends the given script to the SMU. The scripts does not get executed." alt="" coords="592,101,743,127"/>
+<area shape="rect" href="classKEI2600.html#a00050b1900e421a59cf30d59a432b1a5" title="Executes the buffered script." alt="" coords="296,5,485,47"/>
+<area shape="rect" href="classKEI2600.html#ac285dc67b82f47247a803920f1a909fd" title="Sends and executes the given script." alt="" coords="277,71,504,98"/>
+<area shape="rect" href="classKEI2600.html#a77da5991bc4dbba6c1e3670e059e3cf8" title="Perform a linear voltage sweep on the SMU. Increases the voltage at the given rate until the stop vol..." alt="" coords="5,64,229,105"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a9d58f2aa389e000a65e56d980f257c64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d58f2aa389e000a65e56d980f257c64">&#9670;&nbsp;</a></span>replaceAllSubstrings()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Device::replaceAllSubstrings </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>from</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>to</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Replaces all substrings in the string with the given replacement string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>String to replace substrings in. </td></tr>
+    <tr><td class="paramname">from</td><td>The substring to replace. </td></tr>
+    <tr><td class="paramname">to</td><td>The string to replace all matching substrings with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The processed string </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classDevice_a9d58f2aa389e000a65e56d980f257c64_icgraph.png" border="0" usemap="#aclassDevice_a9d58f2aa389e000a65e56d980f257c64_icgraph" alt=""/></div>
+<map name="aclassDevice_a9d58f2aa389e000a65e56d980f257c64_icgraph" id="aclassDevice_a9d58f2aa389e000a65e56d980f257c64_icgraph">
+<area shape="rect" title="Replaces all substrings in the string with the given replacement string." alt="" coords="243,13,451,39"/>
+<area shape="rect" href="classKEI2600.html#a00050b1900e421a59cf30d59a432b1a5" title="Executes the buffered script." alt="" coords="5,5,195,47"/>
 </map>
 </div>
 
@@ -858,7 +1227,122 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a23854aeaf8384ac054093b9af409a7c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23854aeaf8384ac054093b9af409a7c2">&#9670;&nbsp;</a></span>splitString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; Device::splitString </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>toSplit</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>delimiter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Splits a string by the given delimiter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">toSplit</td><td>The string to split. </td></tr>
+    <tr><td class="paramname">delimiter</td><td>The delimter to split the string by. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector of substrings of toSplit. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classDevice_a23854aeaf8384ac054093b9af409a7c2_icgraph.png" border="0" usemap="#aclassDevice_a23854aeaf8384ac054093b9af409a7c2_icgraph" alt=""/></div>
+<map name="aclassDevice_a23854aeaf8384ac054093b9af409a7c2_icgraph" id="aclassDevice_a23854aeaf8384ac054093b9af409a7c2_icgraph">
+<area shape="rect" title="Splits a string by the given delimiter." alt="" coords="552,38,693,65"/>
+<area shape="rect" href="classKEI2600.html#ac285dc67b82f47247a803920f1a909fd" title="Sends and executes the given script." alt="" coords="277,13,504,39"/>
+<area shape="rect" href="classKEI2600.html#ac6f7f82d41f5eff5fd5233d5c6adb641" title="Sends the given script to the SMU. The scripts does not get executed." alt="" coords="315,63,466,90"/>
+<area shape="rect" href="classKEI2600.html#a77da5991bc4dbba6c1e3670e059e3cf8" title="Perform a linear voltage sweep on the SMU. Increases the voltage at the given rate until the stop vol..." alt="" coords="5,5,229,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a18d66b6997bda5f93eeb32861f4c2ea6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18d66b6997bda5f93eeb32861f4c2ea6">&#9670;&nbsp;</a></span>vectorToStringNL()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Device::vectorToStringNL </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::string &gt;&#160;</td>
+          <td class="paramname"><em>vector</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classDevice_a18d66b6997bda5f93eeb32861f4c2ea6_icgraph.png" border="0" usemap="#aclassDevice_a18d66b6997bda5f93eeb32861f4c2ea6_icgraph" alt=""/></div>
+<map name="aclassDevice_a18d66b6997bda5f93eeb32861f4c2ea6_icgraph" id="aclassDevice_a18d66b6997bda5f93eeb32861f4c2ea6_icgraph">
+<area shape="rect" title=" " alt="" coords="243,42,428,69"/>
+<area shape="rect" href="classKEI2600.html#a00050b1900e421a59cf30d59a432b1a5" title="Executes the buffered script." alt="" coords="5,5,195,47"/>
+<area shape="rect" href="classDevice.html#af458a5c17f67981fd1892aa65cf5ced4" title=" " alt="" coords="6,71,194,98"/>
+</map>
+</div>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a54cd8bcf7de15eef84304664fd3e4e94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54cd8bcf7de15eef84304664fd3e4e94">&#9670;&nbsp;</a></span>m_BufferedScript</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; Device::m_BufferedScript</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="acde61506e4573bfa6144e6d3d800b0c8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acde61506e4573bfa6144e6d3d800b0c8">&#9670;&nbsp;</a></span>m_destPort</h2>
 
@@ -980,6 +1464,28 @@ Here is the caller graph for this function:</div>
       <table class="memname">
         <tr>
           <td class="memname">PIL::Logging* Device::m_Logger</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0511c5364c1ac076f303c039ed5d593c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0511c5364c1ac076f303c039ed5d593c">&#9670;&nbsp;</a></span>m_SendMode</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7">SEND_METHOD</a> Device::m_SendMode</td>
         </tr>
       </table>
   </td>

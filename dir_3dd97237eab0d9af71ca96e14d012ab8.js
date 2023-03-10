@@ -20,6 +20,7 @@ var dir_3dd97237eab0d9af71ca96e14d012ab8 =
     [ "ExecArgs.h", "ExecArgs_8h.html", [
       [ "ExecArgs", "classExecArgs.html", "classExecArgs" ]
     ] ],
+    [ "HTTPRequest.h", "HTTPRequest_8h.html", "HTTPRequest_8h" ],
     [ "SubArg.h", "SubArg_8h.html", [
       [ "SubArg", "classSubArg.html", "classSubArg" ]
     ] ]

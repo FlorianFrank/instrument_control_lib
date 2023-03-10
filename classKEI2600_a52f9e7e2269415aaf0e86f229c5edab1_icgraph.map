@@ -1,5 +1,7 @@
 <map id="KEI2600::executeScript" name="KEI2600::executeScript">
-<area shape="rect" id="node1" title=" " alt="" coords="552,13,723,39"/>
-<area shape="rect" id="node2" href="$classKEI2600.html#a5557b8437bccf24eecb219efa33549e0" title=" " alt="" coords="277,13,504,39"/>
-<area shape="rect" id="node3" href="$classKEI2600.html#a77da5991bc4dbba6c1e3670e059e3cf8" title=" " alt="" coords="5,5,229,47"/>
+<area shape="rect" id="node1" title="Executes the script with the given name on the smu." alt="" coords="831,42,1001,69"/>
+<area shape="rect" id="node2" href="$classKEI2600.html#a4da80dbe8adb81815a98e47114e25774" title="Sends and executes the given script." alt="" coords="552,35,783,76"/>
+<area shape="rect" id="node3" href="$classKEI2600.html#a00050b1900e421a59cf30d59a432b1a5" title="Executes the buffered script." alt="" coords="296,5,485,47"/>
+<area shape="rect" id="node4" href="$classKEI2600.html#ac285dc67b82f47247a803920f1a909fd" title="Sends and executes the given script." alt="" coords="277,71,504,98"/>
+<area shape="rect" id="node5" href="$classKEI2600.html#a77da5991bc4dbba6c1e3670e059e3cf8" title="Perform a linear voltage sweep on the SMU. Increases the voltage at the given rate until the stop vol..." alt="" coords="5,64,229,105"/>
 </map>

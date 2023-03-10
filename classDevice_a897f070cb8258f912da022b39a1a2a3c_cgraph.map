@@ -1,7 +1,0 @@
-<map id="Device::GetDeviceIdentifier" name="Device::GetDeviceIdentifier">
-<area shape="rect" id="node1" title=" " alt="" coords="5,81,207,108"/>
-<area shape="rect" id="node2" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="282,5,461,32"/>
-<area shape="rect" id="node3" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="319,56,424,83"/>
-<area shape="rect" id="node4" href="$classDevice.html#a83533f7409314b683c47083b7dca789c" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="255,107,488,133"/>
-<area shape="rect" id="node5" href="$classDevice.html#a8e56294c733e5709044ee3fe3f4a2df1" title="Checks if the connection to the device is established." alt="" coords="311,157,431,184"/>
-</map>

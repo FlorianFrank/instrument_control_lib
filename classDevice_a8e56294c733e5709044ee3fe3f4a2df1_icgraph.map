@@ -1,4 +1,0 @@
-<map id="Device::IsOpen" name="Device::IsOpen">
-<area shape="rect" id="node1" title="Checks if the connection to the device is established." alt="" coords="255,5,375,32"/>
-<area shape="rect" id="node2" href="$classDevice.html#a897f070cb8258f912da022b39a1a2a3c" title=" " alt="" coords="5,5,207,32"/>
-</map>
