@@ -16,7 +16,7 @@ TEST(DeviceTest, DeviceNotAvailableException)
                      try
                      {
                          PIL::Logging logger(PIL::INFO, nullptr);
-                         Device device("invalid", 1000, &logger, true);
+                         Device device("invalid", 1000, &logger, Device::DIRECT_SEND, true);
                          auto ret = device.Connect();
                          EXPECT_EQ(ret, PIL_ERRNO);
 
@@ -39,7 +39,7 @@ TEST(DeviceTest, TestUnableToConnectException)
     EXPECT_THROW({
                      try {
                          PIL::Logging logger(PIL::INFO, nullptr);
-                         Device device("127.0.0.1", 0, &logger, true);
+                         Device device("127.0.0.1", 0, &logger, Device::DIRECT_SEND, true);
                          auto ret = device.Connect();
                      }
                      catch(PIL::Exception &e) {
@@ -59,7 +59,7 @@ TEST(DeviceTest, TestUnableToConnectRetCode)
                      try
                      {
                          PIL::Logging logger(PIL::INFO, nullptr);
-                         Device device("127.0.0.1", 0, &logger, false);
+                         Device device("127.0.0.1", 0, &logger, Device::DIRECT_SEND, false);
                          auto ret = device.Connect();
                          EXPECT_EQ(ret, PIL_ERRNO);
                      } catch (PIL::Exception &e)
@@ -77,7 +77,7 @@ TEST(DeviceTest, TestUnableToConnectRetCode)
 TEST(DeviceTest, TestDisconnect)
 {
     PIL::Logging logger(PIL::INFO, nullptr);
-    Device device("127.0.0.1", 0, &logger, false);
+    Device device("127.0.0.1", 0, &logger, Device::DIRECT_SEND, false);
     auto ret = device.Disconnect();
     EXPECT_EQ(ret, PIL_NO_ERROR);
 }
@@ -107,10 +107,10 @@ TEST(DeviceTest, TestDisconnect)
 
 
     PIL::Logging logger(PIL::INFO, nullptr);
-    Device device("127.0.0.1", 5026, 5025, 1000, &logger, true);
+    Device device("127.0.0.1", 5026, 5025, 1000, &logger, Device::DIRECT_SEND, true);
     auto ret = device.Connect();
     EXPECT_EQ(ret, PIL_NO_ERROR);
-    std::string deviceIdentifier = device.GetDeviceIdentifier();
+    std::string deviceIdentifier = device.getDeviceIdentifier();
     EXPECT_EQ("Agilent Technologies,33522B", deviceIdentifier);
 }*/
 
@@ -139,7 +139,7 @@ TEST(DeviceTest, TestSimpleExecution)
 
 
     PIL::Logging logger(PIL::INFO, nullptr);
-    Device device("127.0.0.1", 5024, 5025, 1000, &logger, true);
+    Device device("127.0.0.1", 5024, 5025, 1000, &logger, Device::DIRECT_SEND, true);
     auto ret = device.Connect();
     EXPECT_EQ(ret, PIL_NO_ERROR);
     std::string command = "TestCommand";

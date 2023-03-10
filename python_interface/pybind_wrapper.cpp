@@ -1,4 +1,5 @@
 #include "pybind11/pybind11.h"
+#include "pybind11/stl.h"
 #include "Device.h"
 #include "devices/types/DCPowerSupply.h"
 #include "devices/SPD1305.h"
@@ -6,7 +7,6 @@
 #include "devices/KEI2600.h"
 #include "devices/KST3000.h"
 #include "devices/KST33500.h"
-#include "ctlib/Logging.hpp"
 
 using namespace pybind11;
 
@@ -45,7 +45,7 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
 
     /** SMU **/
     class_<KEI2600>(m, "KEI2600")
-        .def(pybind11::init<char *, int>())
+        .def(pybind11::init<char *, int, Device::SEND_METHOD>())
         .def("enableBeep", &KEI2600::enableBeep)
         .def("disableBeep", &KEI2600::disableBeep)
         .def("beep", &KEI2600::beep)
@@ -65,7 +65,7 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
         .def("disableSourceAutoRange", &KEI2600::disableSourceAutoRange)
         .def("setSourceRange", &KEI2600::setSourceRange)
         .def("setSenseMode", &KEI2600::setSenseMode)
-        .def("getDeviceIdentifier", &KEI2600::GetDeviceIdentifier)
+        .def("getDeviceIdentifier", &KEI2600::getDeviceIdentifier)
 
         .def("setMeasurePLC", &KEI2600::setMeasurePLC)
         .def("setMeasureLowRange", &KEI2600::setMeasureLowRange)
@@ -84,7 +84,17 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
         .def("sendScript", &KEI2600::sendScript)
         .def("executeScript", &KEI2600::executeScript)
         .def("sendAndExecuteScript", &KEI2600::sendAndExecuteScript)
-        .def("performLinearVoltageSweep", &KEI2600::performLinearVoltageSweep);
+        .def("performLinearVoltageSweep", &KEI2600::performLinearVoltageSweep)
+        .def("executeBufferedScript", &KEI2600::executeBufferedScript)
+        .def("readBufferPy", &KEI2600::readBufferPy)
+        .def("changeSendMode", &KEI2600::changeSendMode)
+        .def("delay", &KEI2600::delay)
+        .def_readonly("CHANNEL_A_BUFFER", &KEI2600::CHANNEL_A_BUFFER)
+        .def_readonly("CHANNEL_B_BUFFER", &KEI2600::CHANNEL_B_BUFFER);
+
+    enum_<SMU::SEND_METHOD>(m, "SEND_METHOD")
+            .value("DIRECT_SEND", SMU::DIRECT_SEND)
+            .value("BUFFER_ENABLED", SMU::BUFFER_ENABLED);
 
     enum_<SMU::SMU_CHANNEL>(m, "SMU_CHANNEL")
             .value("CHANNEL_A", SMU::CHANNEL_A)
@@ -189,6 +199,8 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
     /** Function Generator **/
     class_<KST33500>(m, "KST33500")
             .def(pybind11::init<char *, int>())
+            .def("connect", &KST33500::Connect)
+            .def("disconnect", &KST33500::Disconnect)
             .def("turnOn", &KST33500::turnOn)
             .def("turnOff", &KST33500::turnOff)
             .def("setFrequency", &KST33500::setFrequency)
@@ -207,7 +219,8 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
         .value("TRIANGLE", FunctionGenerator::TRIANGLE)
         .value("NOISE", FunctionGenerator::NOISE)
         .value("PSEUDO_RANDOM_BIT_STREAM", FunctionGenerator::PSEUDO_RANDOM_BIT_STREAM)
-        .value("ARBITRARY", FunctionGenerator::ARBITRARY);
+        .value("ARBITRARY", FunctionGenerator::ARBITRARY)
+        .value("DC_VOLTAGE", FunctionGenerator::DC_VOLTAGE);
 
     enum_<FunctionGenerator::FUNC_CHANNEL>(m, "FUNCTION_CHANNEL")
             .value("CHANNEL_A", FunctionGenerator::CHANNEL_A)
@@ -215,7 +228,9 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
 
     class_<PIL::Logging>(m, "Logging")
             .def(pybind11::init<>())
-            .def("LogMessage", &PIL::Logging::Log);
+            .def(pybind11::init<PIL::Level, std::string*>())
+            .def("LogMessage", &PIL::Logging::Log)
+            .def("SetLogLevel", &PIL::Logging::SetLogLevel);
 
     enum_<PIL::Level>(m, "Log_Level")
             .value("INFO", PIL::INFO)

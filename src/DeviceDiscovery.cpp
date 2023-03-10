@@ -1,4 +1,5 @@
 #if __linux__
+
 #include <iostream>
 
 #include "ctlib/Socket.hpp"
@@ -18,15 +19,13 @@
 #define TEST_PORT      65535
 
 DeviceDiscovery::DeviceDiscovery(std::string &interface, PIL::Logging *logging) : m_InterfaceName(interface),
-                                                                                  m_Logging(logging)
-{
+                                                                                  m_Logging(logging) {
 }
 
 DeviceDiscovery::~DeviceDiscovery() = default;
 
 // TODO remove this function about SIGPIPE
-void handler(int)
-{
+void handler(int) {
     //std::cout << "HANDLER " << std::endl;
 }
 
@@ -35,27 +34,23 @@ void handler(int)
  * from each network interface. If interfaceName = 'all' search in range of each interface.
  * @return List of found devices.
  */
-std::vector<Device*> DeviceDiscovery::startDiscovery()
-{
+std::vector<Device *> DeviceDiscovery::startDiscovery() {
     // TODO avoid SIGPIPE
     signal(SIGPIPE, handler);
 
-    std::vector<Device*> deviceList;
+    std::vector<Device *> deviceList;
 
     auto errCode = setInterfaceList();
     if (errCode != PIL_NO_ERROR)
         return {};
 
-    for (uint32_t i = 0; i < m_InterfaceList.availableInterfaces; i++)
-    {
+    for (uint32_t i = 0; i < m_InterfaceList.availableInterfaces; i++) {
         if ((m_InterfaceName == "all" || m_InterfaceList.interfaces[i].m_InterfaceName == m_InterfaceName) &&
-            m_InterfaceName != "lo")
-        {
+            m_InterfaceName != "lo") {
             std::string ip = m_InterfaceList.interfaces[i].m_IPAddr;
             std::string mask = m_InterfaceList.interfaces[i].m_NetMask;
             auto ipRange = getAddressRange(ip, mask);
-            if (m_Logging)
-            {
+            if (m_Logging) {
                 m_Logging->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "If: %s, Start: %u.%u.%u.%u End: %u.%u.%u.%u",
                                       m_InterfaceList.interfaces[i].m_InterfaceName, ipRange.m_startIPRange[0],
                                       ipRange.m_startIPRange[1], ipRange.m_startIPRange[2], ipRange.m_startIPRange[3],
@@ -73,18 +68,15 @@ std::vector<Device*> DeviceDiscovery::startDiscovery()
  * the information in m_InterfaceList.
  * @return PIL_NO_ERROR if no error occurred. Otherwise return and error code.
  */
-PIL_ERROR_CODE DeviceDiscovery::setInterfaceList()
-{
+PIL_ERROR_CODE DeviceDiscovery::setInterfaceList() {
     std::string addr = "localhost";
     PIL::Socket socket(UDP, IPv4, addr, TEST_PORT, SOCKET_TIMEOUT);
     auto errCode = socket.GetInterfaceInfos(&m_InterfaceList);
     if (errCode != PIL_NO_ERROR)
         return errCode;
 
-    if (m_Logging)
-    {
-        for (uint32_t i = 0; i < m_InterfaceList.availableInterfaces; i++)
-        {
+    if (m_Logging) {
+        for (uint32_t i = 0; i < m_InterfaceList.availableInterfaces; i++) {
             m_Logging->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Interface: %s, IP: %s, Mask: %s",
                                   m_InterfaceList.interfaces[i].m_InterfaceName, m_InterfaceList.interfaces[i].m_IPAddr,
                                   m_InterfaceList.interfaces[i].m_NetMask);
@@ -100,23 +92,19 @@ PIL_ERROR_CODE DeviceDiscovery::setInterfaceList()
  * @param mask Mask used to to retrieve the ip-range.
  * @return IPRange struct containing the start and end address of the range.
  */
-/*static*/ IPRange DeviceDiscovery::getAddressRange(std::string &ip, std::string &mask)
-{
+/*static*/ IPRange DeviceDiscovery::getAddressRange(std::string &ip, std::string &mask) {
     auto ipAddrList = splitIpAddr(ip);
     auto maskList = splitIpAddr(mask);
 
     std::vector<uint8_t> startRange;
     std::vector<uint8_t> endRange;
 
-    for (uint32_t i = 0; i < maskList.size(); i++)
-    {
-        if ((maskList[i] ^ 255) == 0)
-        {
+    for (uint32_t i = 0; i < maskList.size(); i++) {
+        if ((maskList[i] ^ 255) == 0) {
             startRange.push_back(ipAddrList[i]);
             endRange.push_back(ipAddrList[i]);
 
-        } else
-        {
+        } else {
             startRange.push_back((ipAddrList[i] & maskList[i]) + 1 /* do not include net address*/);
             endRange.push_back(((ipAddrList[i] & maskList[i]) | ~maskList[i]) - 1 /* do not include broadcast*/);
         }
@@ -129,6 +117,7 @@ PIL_ERROR_CODE DeviceDiscovery::setInterfaceList()
 
 
 typedef std::tuple<std::vector<uint8_t>, std::string> DeviceDiscoveryType;
+
 /**
  * @brief This function opens a connection for each IP-address in the address range and test if the *IDN? command
  * returns any information. Each socket is executed in a dedicated thread, allowing for a highly parallel execution
@@ -137,20 +126,16 @@ typedef std::tuple<std::vector<uint8_t>, std::string> DeviceDiscoveryType;
  * @param ipRange IP range containing the start and end address.
  * @param deviceList List of devices which are returned by this function.
  */
-void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *deviceList)
-{
+void DeviceDiscovery::testIPRange(IPRange &ipRange, std::vector<Device *> *deviceList) {
     std::vector<uint8_t> temporaryIP = ipRange.m_startIPRange;
     std::vector<std::unique_ptr<PIL::Threading<DeviceDiscoveryType>>> threadingList;
 
-    std::function<void*(std::unique_ptr<DeviceDiscoveryType>&)> threadingFunction =
-            [](std::unique_ptr<DeviceDiscoveryType> &devTuple) -> void *
-            {
+    std::function<void *(std::unique_ptr<DeviceDiscoveryType> &)> threadingFunction =
+            [](std::unique_ptr<DeviceDiscoveryType> &devTuple) -> void * {
                 std::string ipStr;
                 auto tip = std::get<0>(*devTuple);
-                auto ip = [&tip, &ipStr]()
-                {
-                    for (uint32_t i = 0; i < tip.size(); i++)
-                    {
+                auto ip = [&tip, &ipStr]() {
+                    for (uint32_t i = 0; i < tip.size(); i++) {
                         if (i < tip.size() - 1)
                             ipStr += std::to_string(tip.at(i)) + ".";
                         else
@@ -162,12 +147,10 @@ void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *device
                 ip();
                 Device dev(ipStr, SOCKET_TIMEOUT);
                 auto ret = dev.Connect();
-                if (ret == PIL_NO_ERROR)
-                {
-                    std::string devIdentifier = dev.GetDeviceIdentifier();
+                if (ret == PIL_NO_ERROR) {
+                    std::string devIdentifier = dev.getDeviceIdentifier();
                     std::cout << devIdentifier << std::endl;
-                    if (devIdentifier.find("Error") == std::string::npos)
-                    {
+                    if (devIdentifier.find("Error") == std::string::npos) {
                         std::get<1>(*devTuple) = devIdentifier;
                     }
                 }
@@ -176,13 +159,14 @@ void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *device
             };
     std::vector<std::unique_ptr<DeviceDiscoveryType>> temporaryIPList;
     int threadCtr = 0;
-    while (temporaryIP[temporaryIP.size() - 1] < ipRange.m_stopIPRange[ipRange.m_stopIPRange.size() - 1])
-    {
-        std::tuple<std::vector<uint8_t>, std::string> ipTuple = {{temporaryIP.at(0), temporaryIP.at(1), temporaryIP.at(2), temporaryIP.at(3)}, ""};
-        auto t = std::make_unique<DeviceDiscoveryType> (ipTuple);
+    while (temporaryIP[temporaryIP.size() - 1] < ipRange.m_stopIPRange[ipRange.m_stopIPRange.size() - 1]) {
+        std::tuple<std::vector<uint8_t>, std::string> ipTuple = {
+                {temporaryIP.at(0), temporaryIP.at(1), temporaryIP.at(2), temporaryIP.at(3)}, ""};
+        auto t = std::make_unique<DeviceDiscoveryType>(ipTuple);
         temporaryIPList.push_back(std::move(t));
 
-        auto threading = std::make_unique<PIL::Threading<DeviceDiscoveryType>>(threadingFunction, temporaryIPList.back());
+        auto threading = std::make_unique<PIL::Threading<DeviceDiscoveryType>>(threadingFunction,
+                                                                               temporaryIPList.back());
         threadingList.push_back(std::move(threading));
         if (m_Logging)
             m_Logging->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Start Thread #%d for IP: %d.%d.%d.%d", threadCtr,
@@ -193,15 +177,13 @@ void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *device
         threadCtr++;
     }
 
-    for (uint32_t i = 0; i < temporaryIPList.size(); i++)
-    {
+    for (uint32_t i = 0; i < temporaryIPList.size(); i++) {
         if (m_Logging)
             m_Logging->LogMessage(PIL::INFO, __FILENAME__, __LINE__, "Join Thread #%d", i);
         threadingList[i]->Join();
 //        delete threadingList[i];
         std::string identifier = std::get<1>(*temporaryIPList[i]);
-        if (!identifier.empty())
-        {
+        if (!identifier.empty()) {
             auto dev = createDeviceFromDeviceString(std::get<1>(*temporaryIPList[i]), std::get<0>(*temporaryIPList[i]));
             deviceList->push_back(dev);
         }
@@ -216,14 +198,12 @@ void DeviceDiscovery::testIPRange(IPRange& ipRange, std::vector<Device*> *device
  * @param string ip address e.g. "192.168.0.2" to parse. Currently only IPv4 addresses are supported.
  * @return
  */
-std::vector<uint8_t> DeviceDiscovery::splitIpAddr(const std::string &string)
-{
+std::vector<uint8_t> DeviceDiscovery::splitIpAddr(const std::string &string) {
     std::vector<uint8_t> result;
     std::stringstream stringStream(string);
     std::string element;
 
-    while (getline(stringStream, element, '.'))
-    {
+    while (getline(stringStream, element, '.')) {
         result.push_back(atoi(element.c_str()));
     }
 
@@ -236,16 +216,15 @@ std::vector<uint8_t> DeviceDiscovery::splitIpAddr(const std::string &string)
  * @param ip IP used for the device creation.
  * @return Pointer to a device. TODO: Device is allocated on heap, to avoid slicing problem.
  */
-/*static*/ Device* DeviceDiscovery::createDeviceFromDeviceString(std::string &deviceStr, std::vector<uint8_t> &ip)
-{
+/*static*/ Device *DeviceDiscovery::createDeviceFromDeviceString(std::string &deviceStr, std::vector<uint8_t> &ip) {
     std::string ipAddrStr =
             std::to_string(ip[0]) + "." + std::to_string(ip[1]) + "." + std::to_string(ip[2]) + "." +
             std::to_string(ip[3]);
-    if(deviceStr.find("Agilent Technologies,33522B") != std::string::npos)
+    if (deviceStr.find("Agilent Technologies,33522B") != std::string::npos)
         return new KST33500(ipAddrStr.c_str(), SOCKET_TIMEOUT);
-    if(deviceStr.find("Keithley Instruments Inc., Model 26") != std::string::npos)
-        return new KEI2600(ipAddrStr.c_str(), SOCKET_TIMEOUT);
-    return new Device(nullptr, 0);
+    if (deviceStr.find("Keithley Instruments Inc., Model 26") != std::string::npos)
+        return new KEI2600(ipAddrStr.c_str(), SOCKET_TIMEOUT, Device::DIRECT_SEND);
+    return new Device(nullptr, 0, Device::DIRECT_SEND);
 }
 
 #endif // __linux

@@ -14,8 +14,7 @@
  * @param prefix is directly placed in front of arg.
  * @param suffix is placed after arg.
  */
-SubArg::SubArg(const std::string& arg, const std::string& prefix, const std::string& suffix)
-{
+SubArg::SubArg(const std::string &arg, const std::string &prefix, const std::string &suffix) {
     AddElem(arg, prefix, suffix);
 }
 
@@ -27,8 +26,7 @@ SubArg::SubArg(const std::string& arg, const std::string& prefix, const std::str
  * @param suffix is placed after arg.
  * @return pointer to current object to allow a chain of arguments, which can be written in a compact manner.
  */
-SubArg& SubArg::AddElem(const std::string& arg, const std::string& prefix, const std::string& suffix)
-{
+SubArg &SubArg::AddElem(const std::string &arg, const std::string &prefix, const std::string &suffix) {
     std::tuple<std::string, std::string, std::string> tuple = {prefix, arg, suffix};
     m_SubArgElem.push_back(tuple);
     return *this;
@@ -42,8 +40,7 @@ SubArg& SubArg::AddElem(const std::string& arg, const std::string& prefix, const
  * @param suffix is placed after arg.
  * @return pointer to current object to allow a chain of arguments, which can be written in a compact manner.
  */
-SubArg& SubArg::AddElem(int value, const std::string& prefix, const std::string& postfix)
-{
+SubArg &SubArg::AddElem(int value, const std::string &prefix, const std::string &postfix) {
     std::tuple<std::string, std::string, std::string> tuple = {prefix, std::to_string(value), postfix};
     m_SubArgElem.push_back(tuple);
     return *this;
@@ -57,8 +54,7 @@ SubArg& SubArg::AddElem(int value, const std::string& prefix, const std::string&
  * @param suffix is placed after arg.
  * @return pointer to current object to allow a chain of arguments, which can be written in a compact manner.
  */
-SubArg& SubArg::AddElem(double value, const std::string& prefix, const std::string& postfix)
-{
+SubArg &SubArg::AddElem(double value, const std::string &prefix, const std::string &postfix) {
     std::tuple<std::string, std::string, std::string> tuple = {prefix, std::to_string(value), postfix};
     m_SubArgElem.push_back(tuple);
     return *this;
@@ -68,12 +64,10 @@ SubArg& SubArg::AddElem(double value, const std::string& prefix, const std::stri
  * @brief Transform all arguments to a string to be passed to a ExecArgs object.
  * @return string representation of all subarguments.
  */
-std::string SubArg::toString()
-{
+std::string SubArg::toString() {
     // TODO return local variable!
     std::string retStr;
-    for (auto elem : m_SubArgElem)
-    {
+    for (auto elem: m_SubArgElem) {
         retStr += std::get<0>(elem) + std::get<1>(elem) + std::get<2>(elem);
     }
     return retStr;

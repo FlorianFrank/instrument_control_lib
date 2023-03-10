@@ -9,3 +9,5 @@ cmake-build-relwithdebinfo
 .DS_Store
 *.zip
 cmake-build*
+*.egg-info
+*.log

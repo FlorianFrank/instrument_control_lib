@@ -116,7 +116,7 @@ bool CommandLineInterface::Start()
     }
 
     // TODO specifiy certain class of device
-    auto *device = new Device(argumentList[0].c_str(), TIMEOUT_IN_MS, m_Logger);
+    auto *device = new Device(argumentList[0].c_str(), TIMEOUT_IN_MS, m_Logger, Device::DIRECT_SEND);
     std::cout << "    Connect to Device " <<  "IP: " << argumentList[0] << " ID (" << m_DeviceList.size()-1 << ")" << std::endl;
     if(!device->Connect())
     {
@@ -124,7 +124,7 @@ bool CommandLineInterface::Start()
     }
 
     m_DeviceList.push_back(device);
-    std::string deviceName = device->GetDeviceIdentifier();
+    std::string deviceName = device->getDeviceIdentifier();
     m_DeviceNameList.push_back(deviceName);
     m_DeviceIPList.push_back(argumentList[0]);
     std::cout << "    Device identified as " << deviceName << std::endl;
@@ -273,7 +273,7 @@ void CommandLineInterface::ActiveDevices(std::string&)
     std::cout << "    List active devices: " << std::endl;
     for(unsigned int i = 0; i < m_DeviceList.size(); i++)
     {
-        std::cout << "         ID: " << i << " " << m_DeviceNameList[i] << " IP: " << m_DeviceIPList[i] << " " << (m_DeviceList[i]->IsOpen() ? "Connected" : "Disconnected") << std::endl;
+        std::cout << "         ID: " << i << " " << m_DeviceNameList[i] << " IP: " << m_DeviceIPList[i] << " " << (m_DeviceList[i]->isOpen() ? "Connected" : "Disconnected") << std::endl;
     }
 }
 
@@ -312,7 +312,7 @@ void CommandLineInterface::GetDeviceIdentifier(std::string &args)
         return;
     }
     std::cout << "              Get Device Identifier:";
-    std::cout << "    " << m_DeviceList[index]->GetDeviceIdentifier();
+    std::cout << "    " << m_DeviceList[index]->getDeviceIdentifier();
 }
 
 
