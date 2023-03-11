@@ -1,3 +1,8 @@
+"""
+Shows how to use basic commands of a Keithley SMU. The commands should be self-explanatory.
+If you want to use command buffering with the SMU, see the other example `smu_buffering.py`.
+"""
+
 import time
 
 from py_instrument_control_lib import *
@@ -8,12 +13,20 @@ checkErrorBuffer = False
 
 
 def check_error_code(code):
+    """
+    Checks if an error occured. If so raises an Error to exit the program.
+    :param code: The error code returned by the last command.
+    """
     if code != ERROR_CODE.NO_ERROR:
         print('The last function returned an error code indicating something went wrong.')
         raise RuntimeError()
 
 
 def use_smu(smu):
+    """
+    Shows the basic usage of the lib when using a KEI2600 SMU.
+    :param smu:  The smu object to perform the operations on.
+    """
     error_code = smu.connect()
     check_error_code(error_code)
     error_code = smu.clearErrorBuffer()
