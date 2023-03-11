@@ -4,13 +4,24 @@
 #include "ctlib/Logging.hpp"
 #include <thread>
 
+void check_error_code(PIL_ERROR_CODE code) {
+    if (code != PIL_ERROR_CODE::PIL_NO_ERROR) {
+        std::cout << "The last function returned an error code indicating something went wrong." << std::endl;
+        throw *new std::runtime_error("");
+    }
+}
+
 int main() {
     std::string ip = "132.231.14.168";
     PIL::Logging logger(PIL::INFO, nullptr);
-    auto *smu = new KEI2600(ip, 0, &logger, Device::SEND_METHOD::DIRECT_SEND);
+    auto *smu = new KEI2600(ip, 2000, &logger, Device::SEND_METHOD::BUFFER_ENABLED);
+    PIL_ERROR_CODE errorCode;
 
-    smu->Connect();
+    errorCode = smu->Connect();
+    check_error_code(errorCode);
+
     smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_A, 0.42, false);
+
     smu->changeSendMode(Device::SEND_METHOD::BUFFER_ENABLED);
 
     for (int i = 0; i < 10; ++i) {
@@ -19,19 +30,20 @@ int main() {
         smu->delay(0.001);
     }
 
-    smu->executeBufferedScript(false);
+    errorCode = smu->executeBufferedScript(false);
+    check_error_code(errorCode);
 
     smu->changeSendMode(Device::DIRECT_SEND);
-    std::cout << smu->getBufferedScript() << std::endl;
 
     int bufferSize;
-    smu->getBufferSize("A_M_BUFFER", &bufferSize, false);
+    smu->getBufferSize(smu->CHANNEL_A_BUFFER, &bufferSize, false);
     std::vector<double> buffer;
 
     smu->readBuffer("A_M_BUFFER", &buffer, false);
 
+    std::cout << "Measurement returned the following values: " << std::endl;
     for (double value : buffer) {
-        std::cout << value << std::endl;
+        std::cout << value << ", ";
     }
 
     smu->Disconnect();
