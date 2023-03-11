@@ -30,6 +30,10 @@ It provides following functionality:
 
 #### &nbsp;&nbsp;&nbsp;- Tektronix 2600B Series SMU
 
+## Documentation
+See [https://florianfrank.github.io/instrument_control_lib/index.html]() for an overview of all available operations and
+further documentation. This documentation is built automatically, so it is always up to date.
+
 ## Continuous integration
 
 |       OS       |                                                          Status                                                          | 
@@ -125,7 +129,7 @@ Run the graphical installer.
 
 ## Supported Commands per device
 
-<br><br>
+[comment]: <> (TODO: Maybe remove the section and point to GH pages?)
 
 #### SPD1305X DC Power Supply
 
@@ -136,7 +140,7 @@ Run the graphical installer.
 | setVoltage() | channel, voltage | Sets the voltage on the DC power-supply.                 | See manual      |
 | getVoltage() | channel          | Get the currently adjusted voltage of a certain channel. | See manual      |
 
-<br><br>
+<br>
 
 #### Keysight 33500B Waveform Generator
 
@@ -157,7 +161,7 @@ Run the graphical installer.
 | setDisplayMode()    | mode                  | Sets the mode of the oscilloscope either to normal mode, time based mode, XY or roll mode.                                                                    | NORMAL, TIME_BASED; XY, ROLL                                   |
 | setChannelDisplay() | channel               | Turns the output of a channel on or off.                                                                                                                      | ON / OFF                                                       |
 
-<br><br>
+<br>
 
 #### Tektronix 2600B Series SMU
 
@@ -179,7 +183,7 @@ Run the graphical installer.
 | enableBeep()              | -                         | Disable the execution of a beep sound on the oscilloscope.                       | See manual      |
 | beep()                    | -                         | Send a beep signal to the SMU.                                                   | See manual.     |
 
-<br><br>
+<br>
 
 #### Keysight 33500B Waveform Generator
 
@@ -197,6 +201,8 @@ Run the graphical installer.
 
 ## Examples
 
+See the [examples](./examples) directory for samples on how to use this lib with C++ and with Python.
+
 ### Connect to devices
 
 ```c++
@@ -204,14 +210,14 @@ Run the graphical installer.
 
 int main() {
     // provide a IP address, some devices may need an extra port parameter
-    KST33500 k("xx.xx.xx.xx"); 
+    KST33500 k("xx.xx.xx.xx", <timeout>); 
     k.Connect();
 }
 ```
 
 ## Development
 
-In this lab, we use socket to send SCPI commands to devices in order
+In this lab, we use sockets to send SCPI commands to devices in order
 control them remotely.   
 Check the documents in [Docs](./docs%20and%20specs) for SCPI commands.
 
@@ -225,14 +231,14 @@ command of Keysight waveform generator:
 FUNCtion <function>
 ```
 
-which set a <function> waveform.   
+which sets a <function> waveform.   
 Go to kst33500.h file and add a function signature called "function".
 
 ```c++
 int function(string fun);
 ```
 
-Go to skt33500.cpp file and add the implementation of this function.
+Go to kst33500.cpp file and add the implementation of this function.
 What you need to do is making an SCPI command and invoke the Exec function.
 
 ```c++
@@ -243,7 +249,7 @@ int KST33500::function(string fun) {
 }
 ```
 
-That's it. After that, you can use like:
+That's it. After that, you can use it like this:
 
 ```c++
 k.function("SIN");
@@ -253,12 +259,12 @@ k.function("SIN");
 
 1. Easy installation with pip.
 
-   - Just execute `pip install .` in the root directory. This will install the instrument control lib for the current
-     python installation. You can now just import py_instrument_control_lib and use it just like the C++ lib. With the pip
-     installer the lib now supports autocompletion and type hints.
+    Execute `pip install .` in the root directory to install the instrument control lib for the current python
+    installation. You can now just import py_instrument_control_lib and use it just like the C++ lib. With the pip
+    installer the lib now supports autocompletion and type hints.
 
 2. Open the python console
-    1. Make sure you installed the lib with 
+    1. Make sure you installed the lib using pip
     2. Open the library as module
     3. Create a SMU object with an IP and an timeout for the socket
     4. Connect to the SMU
@@ -266,39 +272,26 @@ k.function("SIN");
         - All defined error codes are listed below
 
   ```bash
-  $ python3.exe
-  Python 3.8.13 (default, Mar 28 2022, 11:38:47) 
-  [GCC 7.5.0] :: Anaconda, Inc. on linux
-  Type "help", "copyright", "credits" or "license" for more information.
-  >>> 
-  >>> import os
-  >>> os.listdir()
-  ['instrument_control_lib.py', 'libpy_instrument_control_lib.pyd', 'libpy_instrument_control_lib.so']
-  
-  >>> from libpy_instrument_control_lib import *
-  >>> smu = KEI2600("192.168.1.10", 2000)
-  >>> error_code = smu.connect()
-  >>> print(error_code)
-  ERROR_CODE.NO_ERROR
-  >>> device_identifier = smu.getDeviceIdentifier()
-  >>> print(device_identifier)
-  Keithley Instruments Inc*, Model 2636B, 4031
-  
-  >>> error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3, False)
-  >>> if error_code != ERROR_CODE.NO_ERROR: 
-        # stop execution or do some error handling
-        
-  >>> error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 5.0, False)
-  >>> # error handling
-  
-  >>> error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A, False)
-  >>> # error handling
-  
-  >>> measure_value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_B, False)
+$ python3
+>>> from py_instrument_control_lib import *
+>>> smu = KEI2600("192.168.1.10", 2000, SEND_METHOD.DIRECT_SEND)
+>>> error_code = smu.connect()
+>>> print(error_code)
+ERROR_CODE.NO_ERROR
+>>> device_identifier = smu.getDeviceIdentifier()
+>>> print(device_identifier)
+Keithley Instruments Inc*, Model 2636B, 4031
+>>> error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3, False)
+>>> if error_code != ERROR_CODE.NO_ERROR: 
+          pass  # stop execution or do some error handling
+>>> error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 5.0, False)
+>>> # error handling
+>>> error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A, False)
+>>> # error handling
+>>> measure_value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_B, False)
   >>> print(measure_value)
-    3.04
+3.04
   >>> smu.disconnect()
-     
   ```
 
 ### Functions
@@ -306,7 +299,7 @@ k.function("SIN");
 This list gives an overview of the smu functions and how to call them.
 
 ```python
-    # Establish the ethernet connection to the device
+# Establish the connection to the device
 error_code = smu.connect()
 error_code = smu.disconnect()
 
@@ -336,7 +329,7 @@ error_code = smu.enableSourceeAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A,
 error_code = smu.disableSourceAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, False)
 error_code = smu.disableSourceAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, False)
 
-smu.setSenseMode(SMU_CHANNEL.CHANNEL_A, SMU_SENSE.LOCAL, FALSE)
+smu.setSenseMode(SMU_CHANNEL.CHANNEL_A, SMU_SENSE.LOCAL, False)
 
 error_code = smu.setSourceRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.0, False)
 
@@ -345,12 +338,12 @@ device_description = smu.getDeviceIdentifier()
 
 ### Error codes
 
-There exists a function which transforms the error codes into Strings.
+There is a function which transforms the error codes into Strings.
 Some error codes are not used in the library because these are derived from the abstraction library.
 **This function will be implemented in python soon!**
 
 ```python
-            # No error occurred
+# No error occurred
 NO_ERROR
 # Invalid arguments passed to a function, e.g. passing a nullptr.
 PIL_INVALID_ARGUMENT
