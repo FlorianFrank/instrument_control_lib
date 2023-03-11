@@ -749,7 +749,7 @@ PIL_ERROR_CODE KEI2600::beep(float timeInSeconds, int frequency, bool checkError
  */
 std::string KEI2600::getLastError() {
     if (isBuffered()) {
-        return "Currently Buffering, currently only accumulating buffered script.";
+        return "Currently Buffering, only accumulating buffered script.";
     } else {
         ExecArgs argsErrorQueue;
         argsErrorQueue.AddArgument("errorcode, message = errorqueue.next()", "");
@@ -784,7 +784,7 @@ PIL_ERROR_CODE KEI2600::clearErrorBuffer() {
  * @return PIL_NO_ERROR if there is no item in the error queue. Otherwise return PIL_ITEM_IN_ERROR_QUEUE.
  * If the queue could not be requested successfully. Return a specific error code.
  */
-PIL_ERROR_CODE KEI2600::getErrorBufferStatus() {
+PIL_ERROR_CODE KEI2600::getErrorBufferStatus() {  // TODO: Include in Buffering?
     ExecArgs argsErrorQueue;
     argsErrorQueue.AddArgument("count = errorqueue.count", "");
     auto ret = Exec("", &argsErrorQueue);
