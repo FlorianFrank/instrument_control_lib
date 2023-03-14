@@ -86,7 +86,7 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
         .def("sendAndExecuteScript", &KEI2600::sendAndExecuteScript)
         .def("performLinearVoltageSweep", &KEI2600::performLinearVoltageSweep)
         .def("executeBufferedScript", &KEI2600::executeBufferedScript)
-        .def("readBufferPy", &KEI2600::readBufferPy)
+        .def("getBuffer", &KEI2600::readBufferPy)
         .def("changeSendMode", &KEI2600::changeSendMode)
         .def("delay", &KEI2600::delay)
         .def_readonly("CHANNEL_A_BUFFER", &KEI2600::CHANNEL_A_BUFFER)
