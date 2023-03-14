@@ -31,7 +31,9 @@ def use_smu(smu):
     check_error_code(error_code)
     error_code = smu.clearErrorBuffer()
     check_error_code(error_code)
-    print(f'getDeviceIdentifier returned {smu.getDeviceIdentifier()}')
+
+    error_code = smu.disableBeep(False)
+    check_error_code(error_code)
 
     error_code = smu.beep(0.2, 500, 0)
     check_error_code(error_code)
@@ -46,7 +48,7 @@ def use_smu(smu):
     check_error_code(error_code)
 
     for i in range(10):
-        error_code = smu.setLevel(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, i * 100, checkErrorBuffer)
+        error_code = smu.setLevel(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, i / 10, checkErrorBuffer)
         check_error_code(error_code)
 
         print(f'Measured {smu.measure(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, checkErrorBuffer)} '
@@ -69,12 +71,8 @@ def use_smu(smu):
 
     error_code = smu.disconnect()
     check_error_code(error_code)
-    print(f'getDeviceIdentifier returned {smu.getDeviceIdentifier()}')  # fails because we disconnected already
 
 
 if __name__ == "__main__":
     smu = KEI2600(ip, timeout, SEND_METHOD.DIRECT_SEND)
-    try:
-        use_smu(smu)
-    except RuntimeError:
-        print('Graceful exit.')
+    use_smu(smu)

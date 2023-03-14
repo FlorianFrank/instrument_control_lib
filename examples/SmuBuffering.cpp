@@ -25,9 +25,9 @@ int main() {
     smu->changeSendMode(Device::SEND_METHOD::BUFFER_ENABLED);
 
     for (int i = 0; i < 10; ++i) {
-        smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_A, i / 100.0, false);
+        smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_A, i / 10.0, false);
         smu->measure(SMU::VOLTAGE, SMU::CHANNEL_A, nullptr, false);
-        smu->delay(0.001);
+        smu->delay(0.1);
     }
 
     errorCode = smu->executeBufferedScript(false);

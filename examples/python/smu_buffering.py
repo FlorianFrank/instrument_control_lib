@@ -1,6 +1,7 @@
 """
 Shows how to use command buffering with a Keithley SMU.
 """
+import time
 
 from py_instrument_control_lib import *
 
@@ -31,6 +32,9 @@ def use_smu(smu):
     smu.changeSendMode(SEND_METHOD.DIRECT_SEND)
     error_code = smu.clearErrorBuffer()
     check_error_code(error_code)
+
+    error_code = smu.disableBeep(False)
+    check_error_code(error_code)
     smu.changeSendMode(SEND_METHOD.BUFFER_ENABLED)
 
     # These commands are all not executed directly, but saved and executed in batch when executing the buffered script.
@@ -39,7 +43,7 @@ def use_smu(smu):
     smu.turnOn(SMU_CHANNEL.CHANNEL_A, checkErrorBuffer)
 
     for i in range(10):
-        smu.setLevel(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, i * 100, checkErrorBuffer)
+        smu.setLevel(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, i / 10, checkErrorBuffer)
         smu.measure(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, checkErrorBuffer)
         smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, checkErrorBuffer)
         smu.delay(0.1)  # When buffering, use smu.delay for the delay to be in the buffered script
@@ -55,10 +59,13 @@ def use_smu(smu):
     error_code = smu.executeBufferedScript(checkErrorBuffer)
     check_error_code(error_code)
 
+    smu.changeSendMode(SEND_METHOD.DIRECT_SEND)
+    time.sleep(5)  # Wait for script to finish running
+
     # If there are measurements when buffering, the values are saved in a channel buffer. They are saved in the order
     # they are measured in a list. You have to manually make sense of these values (see below). These values can be
     # retrieved after executing the buffered script.
-    values_channel_a = smu.getBuffer(KEI2600.CHANNEL_A_BUFFER)
+    values_channel_a = smu.getBuffer(smu.CHANNEL_A_BUFFER, False)
     print(f'Measured the following values when executing buffered Script: {values_channel_a}')
 
     # There are various methods of making sense of the measured values. The simplest is to use the same program as when
@@ -69,17 +76,13 @@ def use_smu(smu):
         print(f'Measured {values_channel_a[ctr]} V on CHANNEL_A')
         ctr += 1
 
-        print(f'Measured {values_channel_a[ctr]} A on CHANNEL_B')
+        print(f'Measured {values_channel_a[ctr]} A on CHANNEL_A')
         ctr += 1
 
     error_code = smu.disconnect()
     check_error_code(error_code)
-    print(f'getDeviceIdentifier returned {smu.getDeviceIdentifier()}')  # fails because we disconnected already
 
 
 if __name__ == "__main__":
     smu = KEI2600(ip, timeout, SEND_METHOD.BUFFER_ENABLED)
-    try:
-        use_smu(smu)
-    except RuntimeError:
-        print('Graceful exit.')
+    use_smu(smu)

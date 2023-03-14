@@ -34,9 +34,6 @@ void useSMU() {
         smu->delay(0.1);
     }
 
-    errorCode = smu->executeBufferedScript(false);
-    check_error_code(errorCode);
-
     smu->Disconnect();
 }
 
