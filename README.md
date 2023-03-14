@@ -31,8 +31,8 @@ It provides following functionality:
 #### &nbsp;&nbsp;&nbsp;- Tektronix 2600B Series SMU
 
 ## Documentation
-See [https://florianfrank.github.io/instrument_control_lib/index.html]() for an overview of all available operations and
-further documentation. This documentation is built automatically, so it is always up to date.
+See [https://florianfrank.github.io/instrument_control_lib/index.html](https://florianfrank.github.io/instrument_control_lib/) for an
+overview of all available operations and further documentation. This documentation is built automatically, so it is always up to date.
 
 ## Continuous integration
 
