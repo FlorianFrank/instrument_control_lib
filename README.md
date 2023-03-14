@@ -22,17 +22,13 @@ It provides following functionality:
 
 ## Supported Devices
 
-#### &nbsp;&nbsp;&nbsp;&nbsp;- SPD1305X DC Power Supply
+#### &nbsp;&nbsp;&nbsp;- SPD1305X DC Power Supply
 
 #### &nbsp;&nbsp;&nbsp;- Keysight 33500B Waveform Generator
 
 #### &nbsp;&nbsp;&nbsp;- Keysight InfiniiVision 3000A X-Series Oscilloscopes
 
 #### &nbsp;&nbsp;&nbsp;- Tektronix 2600B Series SMU
-
-## Documentation
-See [https://florianfrank.github.io/instrument_control_lib/index.html](https://florianfrank.github.io/instrument_control_lib/) for an
-overview of all available operations and further documentation. This documentation is built automatically, so it is always up to date.
 
 ## Continuous integration
 
@@ -41,6 +37,10 @@ overview of all available operations and further documentation. This documentati
 | Windows Latest | ![Windows latest](https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/windows_latest.yml/badge.svg) |
 | Mac OS Latest  |  ![MAC OS latest](https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/mac_os_latest.yml/badge.svg)  |
 | Ubuntu Latest  |  ![Ubuntu Latest](https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/ubuntu_latest.yml/badge.svg)  |
+
+## Documentation
+See [https://florianfrank.github.io/instrument_control_lib/index.html](https://florianfrank.github.io/instrument_control_lib/) for an
+overview of all available operations and further documentation. This documentation is built automatically, so it is always up to date.
 
 ## Build
 
@@ -126,78 +126,6 @@ Run the graphical installer.
 #### 2.2.3 On MAC OS systems
 
 Run the graphical installer.
-
-## Supported Commands per device
-
-[comment]: <> (TODO: Maybe remove the section and point to GH pages?)
-
-#### SPD1305X DC Power Supply
-
-| **Function** | **Parameters**   | **Description**                                          | **Value Range** |
-|--------------|------------------|----------------------------------------------------------|-----------------|
-| setCurrent() | channel, current | Sets the current of the DC power-supply.                 | See manual.     |
-| getCurrent() | channel          | Get the currently adjusted current of a certain channel. | See manual.     |
-| setVoltage() | channel, voltage | Sets the voltage on the DC power-supply.                 | See manual      |
-| getVoltage() | channel          | Get the currently adjusted voltage of a certain channel. | See manual      |
-
-<br>
-
-#### Keysight 33500B Waveform Generator
-
-| **Function**        | **Parameters**        | **Description**                                                                                                                                               | **Value Range**                                                |
-|---------------------|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
-| run()               | -                     | Start the acquisition on the instrument.                                                                                                                      | -                                                              |
-| stop()              | -                     | Stop the acquisition on the instrument.                                                                                                                       | -                                                              |
-| single()            | -                     | Wait for the first signal which is triggered and stop the measurement.                                                                                        | -                                                              |
-| autoScale()         | -                     | The oscilloscope tries to find the best vertical channel, timebase and trigger setting for the current experiment.                                            | -                                                              |
-| setTimeRange()      | timeRange             | Sets the full-cale horizontal time in seconds for the main window.                                                                                            | 10x current time-per-devision setting                          |
-| setChannelOffset()  | channel, offset, unit | Set the offset of a channel in volts or milli volts.                                                                                                          | When amplitude is below 400 mV the offset is limited to 500 mV |
-| setChannelScale()   | channel, scale        | Sets the vertical scale or units per division of a specified channel.                                                                                         | See manual                                                     |
-| setChannelRange()   | channel, range        | Defines the full-scale vertical axis on the selected channel                                                                                                  | 8 mV - 40 V                                                    |
-| getWaveFormData()   | data                  | Return the currently captured waveform, which is visualized on the oscilloscopes screen. The data is formated in IEEE 488.2 arbitrary block data format.      | -                                                              |
-| getRealData()       | double **result       | Captures data from the oscilloscope and transforms the data from binary array to a double array.                                                              | -                                                              |
-| digitize()          | -                     | Specialized run command. Captures waveforms according to the settings of the :ACQuire format. (Can only be executed with :TIMbased:MODE being MAIN or WINDow) | -                                                              |
-| getSystemSetup()    | -                     | Outputs the current oscilloscope setup as string.                                                                                                             | -                                                              |
-| setDisplayMode()    | mode                  | Sets the mode of the oscilloscope either to normal mode, time based mode, XY or roll mode.                                                                    | NORMAL, TIME_BASED; XY, ROLL                                   |
-| setChannelDisplay() | channel               | Turns the output of a channel on or off.                                                                                                                      | ON / OFF                                                       |
-
-<br>
-
-#### Tektronix 2600B Series SMU
-
-| **Function**              | **Parameters**            | **Description**                                                                  | **Value Range** |
-|---------------------------|---------------------------|----------------------------------------------------------------------------------|-----------------|
-| turnOn()                  | channel                   | Enable a channel on the SMU.                                                     | See manual      |
-| turnOff()                 | channel                   | Disable a channel on the SMU.                                                    | See manual      |
-| measure()                 | channel, unit             | Measure a certain unit (voltage, current, power) and return the measure results. | See manual      |
-| setLevel()                | channel, unit             | Set voltage, current source level                                                | See manual      |
-| setLimit()                | channel, unit             | Set voltage, current or power limit.                                             | See manual      |
-| enableMeasureAutoRange()  | unit, channel             | Enable voltage or current measure auto range.                                    | ON              |
-| disableMeasureAutoRange() | unit, channel             | Disable voltage or current measure auto range.                                   | OFF             |
-| enableSourceAutoRange()   | unit, channel             | Enable voltage or current measure auto range.                                    | ON              |
-| disableSourceAutoRange()  | unit, channel             | Disable voltage or current measure auto range.                                   | OFF             |
-| setMeasureRange()         | unit, channel, range      | Set voltage or current measure range.                                            | See manual      |
-| setSourceRange()          | unit, channel, range      | Set voltage or current source range.                                             | See manual      |
-| setSenseMode()            | unit, channel, sense-mode | Select local sense (2-wire) remote sense (4-wire) or calibration mode.           | See manual      |
-| enableBeep()              | -                         | Enable the execution of a beep sound on the oscilloscope.                        | See manual      |
-| enableBeep()              | -                         | Disable the execution of a beep sound on the oscilloscope.                       | See manual      |
-| beep()                    | -                         | Send a beep signal to the SMU.                                                   | See manual.     |
-
-<br>
-
-#### Keysight 33500B Waveform Generator
-
-| **Function**        | **Parameters**     | **Description**                                                                                                                     | **Value Range** |
-|---------------------|--------------------|-------------------------------------------------------------------------------------------------------------------------------------|-----------------|
-| turnOn()            | channel            | Turn on the channel (A or B) on the function generator.                                                                             | -               |
-| turnOff()           | channel            | Turn off the channel (A or B) on the function generator.                                                                            | -               |
-| setFrequency()      | channel, frequency | Set a certain frequency on a channel of the function generator.                                                                     | See manual      |
-| setAmplitude()      | channel, amplitude | Set a certain amplitude on a channel of the function generator.                                                                     | See manual      |
-| setOffset()         | channel, offset    | Set a voltage offset on a certain channel of the function generator.                                                                | See manual      |
-| setPhase()          | channel, phase     | Adjust the phase on a certain function generator channel.                                                                           | See manual      |
-| setFunction()       | funcType           | Set the function currently used (allowed: sinus, square, ramp, negative ramp, triangle, noise, pseudo random bit stream, arbitrary) | See manual      |
-| display()           | text               | Display text on display of function generator.                                                                                      |                 |
-| displayConnection() | -                  | -                                                                                                                                   | -               |
 
 ## Examples
 
