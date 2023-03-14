@@ -1,8 +1,8 @@
 <map id="Device::getDeviceIdentifier" name="Device::getDeviceIdentifier">
-<area shape="rect" id="node1" title=" " alt="" coords="5,107,204,133"/>
+<area shape="rect" id="node1" title="Gets the name of the currently connected device." alt="" coords="5,107,204,133"/>
 <area shape="rect" id="node2" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="279,5,458,32"/>
 <area shape="rect" id="node3" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="316,56,421,83"/>
 <area shape="rect" id="node4" href="$classDevice.html#a6efd719941a57c5ce2ecf61a57ac2c75" title="Handle logging messages, logs it based on the previously passed logging object. If exceptions are ena..." alt="" coords="252,107,485,133"/>
-<area shape="rect" id="node5" href="$classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103" title=" " alt="" coords="298,157,439,184"/>
+<area shape="rect" id="node5" href="$classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103" title="Checks if the commands sent to the device get buffered." alt="" coords="298,157,439,184"/>
 <area shape="rect" id="node6" href="$classDevice.html#a09d709433db636fd91e5c36ee97669b0" title="Checks if the connection to the device is established." alt="" coords="309,208,429,235"/>
 </map>

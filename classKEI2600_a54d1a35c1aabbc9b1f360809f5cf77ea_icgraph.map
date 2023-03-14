@@ -1,5 +1,5 @@
 <map id="KEI2600::getBufferSize" name="KEI2600::getBufferSize">
 <area shape="rect" id="node1" title="Retrieves the size of the buffer with the given name." alt="" coords="419,5,589,32"/>
 <area shape="rect" id="node2" href="$classKEI2600.html#a1df40b049d98791f48e671e59cbcfcaa" title="Reads the complete buffer with the given name." alt="" coords="220,5,371,32"/>
-<area shape="rect" id="node3" href="$classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title=" " alt="" coords="5,5,172,32"/>
+<area shape="rect" id="node3" href="$classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title="Reads the complete buffer with the given name. Instead of returning the received error code,..." alt="" coords="5,5,172,32"/>
 </map>

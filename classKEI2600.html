@@ -135,10 +135,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ac7160a44757d3807cc46dfbf5a20dbc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Measurement method identical to <a class="el" href="classKEI2600.html#a5756077c5f8f263c2462e8a1c2417c2a" title="This function measures a certain unit on a specific channel. This function can be used to measure vol...">KEI2600::measure</a>, but in this method, the value is directly returned to support the python wrapper.  <a href="classKEI2600.html#ac7160a44757d3807cc46dfbf5a20dbc8">More...</a><br /></td></tr>
 <tr class="separator:ac7160a44757d3807cc46dfbf5a20dbc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a2e9bf63f0ff57a611bd201b5662097"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKEI2600.html#a3a2e9bf63f0ff57a611bd201b5662097">turnOn</a> (<a class="el" href="classSMU.html#a987e4da8cebd76020fdd12c1ceea78bc">SMU_CHANNEL</a> channel, bool checkErrorBuffer) override</td></tr>
-<tr class="memdesc:a3a2e9bf63f0ff57a611bd201b5662097"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function turns on a specific channel of the KEI2600-SMU.  <a href="classKEI2600.html#a3a2e9bf63f0ff57a611bd201b5662097">More...</a><br /></td></tr>
+<tr class="memdesc:a3a2e9bf63f0ff57a611bd201b5662097"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns on a specific channel of the KEI2600-SMU.  <a href="classKEI2600.html#a3a2e9bf63f0ff57a611bd201b5662097">More...</a><br /></td></tr>
 <tr class="separator:a3a2e9bf63f0ff57a611bd201b5662097"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add39a2e5c69a96b552ea0a094fd0f2e8"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKEI2600.html#add39a2e5c69a96b552ea0a094fd0f2e8">turnOff</a> (<a class="el" href="classSMU.html#a987e4da8cebd76020fdd12c1ceea78bc">SMU_CHANNEL</a> channel, bool checkErrorBuffer) override</td></tr>
-<tr class="memdesc:add39a2e5c69a96b552ea0a094fd0f2e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function turns off a specific channel of the KEI2600-SMU.  <a href="classKEI2600.html#add39a2e5c69a96b552ea0a094fd0f2e8">More...</a><br /></td></tr>
+<tr class="memdesc:add39a2e5c69a96b552ea0a094fd0f2e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns off a specific channel of the KEI2600-SMU.  <a href="classKEI2600.html#add39a2e5c69a96b552ea0a094fd0f2e8">More...</a><br /></td></tr>
 <tr class="separator:add39a2e5c69a96b552ea0a094fd0f2e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec1764f1207b9bc036b1e91402c8e87f"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKEI2600.html#aec1764f1207b9bc036b1e91402c8e87f">setLevel</a> (<a class="el" href="classSMU.html#a4c7be94a316d3928411f15ebad515fb7">UNIT</a> unit, <a class="el" href="classSMU.html#a987e4da8cebd76020fdd12c1ceea78bc">SMU_CHANNEL</a> channel, double level, bool checkErrorBuffer) override</td></tr>
 <tr class="memdesc:aec1764f1207b9bc036b1e91402c8e87f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the level of a certain channel and of a certain unit. It can set the voltage or current on Channel A or Channel B.  <a href="classKEI2600.html#aec1764f1207b9bc036b1e91402c8e87f">More...</a><br /></td></tr>
@@ -246,6 +246,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a1df40b049d98791f48e671e59cbcfcaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the complete buffer with the given name.  <a href="classKEI2600.html#a1df40b049d98791f48e671e59cbcfcaa">More...</a><br /></td></tr>
 <tr class="separator:a1df40b049d98791f48e671e59cbcfcaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59eb04543f09eee918a4345ca5720abd"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKEI2600.html#a59eb04543f09eee918a4345ca5720abd">readBufferPy</a> (const std::string &amp;bufferName, bool checkErrorBuffer)</td></tr>
+<tr class="memdesc:a59eb04543f09eee918a4345ca5720abd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the complete buffer with the given name. Instead of returning the received error code, a vector containing all values is returned. This method is used in the python wrapper.  <a href="classKEI2600.html#a59eb04543f09eee918a4345ca5720abd">More...</a><br /></td></tr>
 <tr class="separator:a59eb04543f09eee918a4345ca5720abd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54d1a35c1aabbc9b1f360809f5cf77ea"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKEI2600.html#a54d1a35c1aabbc9b1f360809f5cf77ea">getBufferSize</a> (const std::string &amp;bufferName, int *value, bool checkErrorBuffer)</td></tr>
 <tr class="memdesc:a54d1a35c1aabbc9b1f360809f5cf77ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the size of the buffer with the given name.  <a href="classKEI2600.html#a54d1a35c1aabbc9b1f360809f5cf77ea">More...</a><br /></td></tr>
@@ -282,8 +283,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a09d709433db636fd91e5c36ee97669b0 inherit pub_methods_classDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the connection to the device is established.  <a href="classDevice.html#a09d709433db636fd91e5c36ee97669b0">More...</a><br /></td></tr>
 <tr class="separator:a09d709433db636fd91e5c36ee97669b0 inherit pub_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cb269e16ba7f35d45d716ed4f7b2103 inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103">isBuffered</a> () const</td></tr>
+<tr class="memdesc:a6cb269e16ba7f35d45d716ed4f7b2103 inherit pub_methods_classDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the commands sent to the device get buffered.  <a href="classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103">More...</a><br /></td></tr>
 <tr class="separator:a6cb269e16ba7f35d45d716ed4f7b2103 inherit pub_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa44c6120859cf5d5ad9edf71c55df2e5 inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#aa44c6120859cf5d5ad9edf71c55df2e5">getDeviceIdentifier</a> ()</td></tr>
+<tr class="memdesc:aa44c6120859cf5d5ad9edf71c55df2e5 inherit pub_methods_classDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the name of the currently connected device.  <a href="classDevice.html#aa44c6120859cf5d5ad9edf71c55df2e5">More...</a><br /></td></tr>
 <tr class="separator:aa44c6120859cf5d5ad9edf71c55df2e5 inherit pub_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96b33b9121c59a9606829a7c8379e9c2 inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">Exec</a> (const std::string &amp;command, <a class="el" href="classExecArgs.html">ExecArgs</a> *args=nullptr, char *result=nullptr, bool br=true, int size=1024)</td></tr>
 <tr class="memdesc:a96b33b9121c59a9606829a7c8379e9c2 inherit pub_methods_classDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute a (SCPI) command  <a href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2">More...</a><br /></td></tr>
@@ -295,10 +298,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a88d97c1dad043bf37d5e3d21953bdf49 inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a88d97c1dad043bf37d5e3d21953bdf49">ReturnErrorMessage</a> ()</td></tr>
 <tr class="separator:a88d97c1dad043bf37d5e3d21953bdf49 inherit pub_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af458a5c17f67981fd1892aa65cf5ced4 inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#af458a5c17f67981fd1892aa65cf5ced4">getBufferedScript</a> ()</td></tr>
+<tr class="memdesc:af458a5c17f67981fd1892aa65cf5ced4 inherit pub_methods_classDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms the current buffered script into a string and returns it.  <a href="classDevice.html#af458a5c17f67981fd1892aa65cf5ced4">More...</a><br /></td></tr>
 <tr class="separator:af458a5c17f67981fd1892aa65cf5ced4 inherit pub_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9dab42d52a7735f325852e88d5e15091 inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a9dab42d52a7735f325852e88d5e15091">changeSendMode</a> (<a class="el" href="classDevice.html#af09cecb2bae857b2de924ecea6f1e3c7">SEND_METHOD</a> mode)</td></tr>
+<tr class="memdesc:a9dab42d52a7735f325852e88d5e15091 inherit pub_methods_classDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the send mode of this device, i.e. whether the commands get buffered or sent directly to the device.  <a href="classDevice.html#a9dab42d52a7735f325852e88d5e15091">More...</a><br /></td></tr>
 <tr class="separator:a9dab42d52a7735f325852e88d5e15091 inherit pub_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25e4f976e664c5cf63c214f560316907 inherit pub_methods_classDevice"><td class="memItemLeft" align="right" valign="top">PIL_ERROR_CODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a25e4f976e664c5cf63c214f560316907">delay</a> (double delayTime)</td></tr>
+<tr class="memdesc:a25e4f976e664c5cf63c214f560316907 inherit pub_methods_classDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the execution for the specified amount of time in seconds. If buffering is enabled, the delay is included in the buffered script. Otherwise this thread sleeps for the given time.  <a href="classDevice.html#a25e4f976e664c5cf63c214f560316907">More...</a><br /></td></tr>
 <tr class="separator:a25e4f976e664c5cf63c214f560316907 inherit pub_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -376,6 +382,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:a000c7fab344d0ba3f0ad836304376e76 inherit pro_static_methods_classDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a post request to the given url with the given payload.  <a href="classDevice.html#a000c7fab344d0ba3f0ad836304376e76">More...</a><br /></td></tr>
 <tr class="separator:a000c7fab344d0ba3f0ad836304376e76 inherit pro_static_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18d66b6997bda5f93eeb32861f4c2ea6 inherit pro_static_methods_classDevice"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a18d66b6997bda5f93eeb32861f4c2ea6">vectorToStringNL</a> (std::vector&lt; std::string &gt; vector)</td></tr>
+<tr class="memdesc:a18d66b6997bda5f93eeb32861f4c2ea6 inherit pro_static_methods_classDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms the given vector into a string. Each vector entry will be a line in the resulting string.  <a href="classDevice.html#a18d66b6997bda5f93eeb32861f4c2ea6">More...</a><br /></td></tr>
 <tr class="separator:a18d66b6997bda5f93eeb32861f4c2ea6 inherit pro_static_methods_classDevice"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d58f2aa389e000a65e56d980f257c64 inherit pro_static_methods_classDevice"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDevice.html#a9d58f2aa389e000a65e56d980f257c64">replaceAllSubstrings</a> (std::string str, const std::string &amp;from, const std::string &amp;to)</td></tr>
 <tr class="memdesc:a9d58f2aa389e000a65e56d980f257c64 inherit pro_static_methods_classDevice"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces all substrings in the string with the given replacement string.  <a href="classDevice.html#a9d58f2aa389e000a65e56d980f257c64">More...</a><br /></td></tr>
@@ -652,7 +659,7 @@ Here is the caller graph for this function:</div>
 <map name="aclassKEI2600_a493ff85f52f46135ac6aee50ad3f50b9_icgraph" id="aclassKEI2600_a493ff85f52f46135ac6aee50ad3f50b9_icgraph">
 <area shape="rect" title="Clears the buffer with the given name." alt="" coords="419,5,573,32"/>
 <area shape="rect" href="classKEI2600.html#a1df40b049d98791f48e671e59cbcfcaa" title="Reads the complete buffer with the given name." alt="" coords="220,5,371,32"/>
-<area shape="rect" href="classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title=" " alt="" coords="5,5,172,32"/>
+<area shape="rect" href="classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title="Reads the complete buffer with the given name. Instead of returning the received error code,..." alt="" coords="5,5,172,32"/>
 </map>
 </div>
 
@@ -672,6 +679,7 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Resets the buffered script to the default. Also resets the number of buffer entries in the measurement buffers. </p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1185,11 +1193,10 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classKEI2600_a00050b1900e421a59cf30d59a432b1a5_cgraph.png" border="0" usemap="#aclassKEI2600_a00050b1900e421a59cf30d59a432b1a5_cgraph" alt=""/></div>
 <map name="aclassKEI2600_a00050b1900e421a59cf30d59a432b1a5_cgraph" id="aclassKEI2600_a00050b1900e421a59cf30d59a432b1a5_cgraph">
-<area shape="rect" title="Executes the buffered script." alt="" coords="5,78,195,119"/>
+<area shape="rect" title="Executes the buffered script." alt="" coords="5,49,195,90"/>
 <area shape="rect" href="classKEI2600.html#a5ed3182f95d10c530ff170c8406ae1c4" title=" " alt="" coords="255,5,461,32"/>
 <area shape="rect" href="classDevice.html#a9d58f2aa389e000a65e56d980f257c64" title="Replaces all substrings in the string with the given replacement string." alt="" coords="254,56,462,83"/>
 <area shape="rect" href="classKEI2600.html#a4da80dbe8adb81815a98e47114e25774" title="Sends and executes the given script." alt="" coords="243,107,473,149"/>
-<area shape="rect" href="classDevice.html#a18d66b6997bda5f93eeb32861f4c2ea6" title=" " alt="" coords="265,173,451,200"/>
 <area shape="rect" href="classDevice.html#ad0b48035a3908e644d02733c4448febe" title="Checks if a error occured given the error code." alt="" coords="761,115,920,141"/>
 <area shape="rect" href="classKEI2600.html#a52f9e7e2269415aaf0e86f229c5edab1" title="Executes the script with the given name on the smu." alt="" coords="532,64,703,91"/>
 <area shape="rect" href="classKEI2600.html#a0fc6a7098dd6d10cf222be4dba58a940" title="Sends the given script to the SMU. The scripts does not get executed." alt="" coords="521,165,713,192"/>
@@ -1312,7 +1319,7 @@ Here is the caller graph for this function:</div>
 <map name="aclassKEI2600_a54d1a35c1aabbc9b1f360809f5cf77ea_icgraph" id="aclassKEI2600_a54d1a35c1aabbc9b1f360809f5cf77ea_icgraph">
 <area shape="rect" title="Retrieves the size of the buffer with the given name." alt="" coords="419,5,589,32"/>
 <area shape="rect" href="classKEI2600.html#a1df40b049d98791f48e671e59cbcfcaa" title="Reads the complete buffer with the given name." alt="" coords="220,5,371,32"/>
-<area shape="rect" href="classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title=" " alt="" coords="5,5,172,32"/>
+<area shape="rect" href="classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title="Reads the complete buffer with the given name. Instead of returning the received error code,..." alt="" coords="5,5,172,32"/>
 </map>
 </div>
 
@@ -1384,7 +1391,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="216,5,395,32"/>
 <area shape="rect" href="classDevice.html#ad0b48035a3908e644d02733c4448febe" title="Checks if a error occured given the error code." alt="" coords="226,56,385,83"/>
 <area shape="rect" href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="253,107,358,133"/>
-<area shape="rect" href="classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103" title=" " alt="" coords="235,157,376,184"/>
+<area shape="rect" href="classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103" title="Checks if the commands sent to the device get buffered." alt="" coords="235,157,376,184"/>
 </map>
 </div>
 <div class="dynheader">
@@ -1468,7 +1475,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="classSubArg.html#adc3b8f8ab4e5840ad777638e31fe13c4" title="Add a new string element to the SubArg&#45;object. It is directly concatenated to the previous arguments." alt="" coords="215,56,350,83"/>
 <area shape="rect" href="classDevice.html#ad0b48035a3908e644d02733c4448febe" title="Checks if a error occured given the error code." alt="" coords="203,107,362,133"/>
 <area shape="rect" href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="230,157,335,184"/>
-<area shape="rect" href="classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103" title=" " alt="" coords="212,208,353,235"/>
+<area shape="rect" href="classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103" title="Checks if the commands sent to the device get buffered." alt="" coords="212,208,353,235"/>
 </map>
 </div>
 <div class="dynheader">
@@ -1533,7 +1540,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="classDevice.html#ad0b48035a3908e644d02733c4448febe" title="Checks if a error occured given the error code." alt="" coords="482,5,641,32"/>
 <area shape="rect" href="classKEI2600.html#a00c91442df6f1ee0aa2a25133814536d" title="Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return PIL..." alt="" coords="209,56,424,83"/>
 <area shape="rect" href="classKEI2600.html#a6cb85ed160de36aeda8ef8e7158bcf78" title="Return last error in error&#45;queue." alt="" coords="235,107,398,133"/>
-<area shape="rect" href="classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103" title=" " alt="" coords="491,208,632,235"/>
+<area shape="rect" href="classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103" title="Checks if the commands sent to the device get buffered." alt="" coords="491,208,632,235"/>
 <area shape="rect" href="classKEI2600.html#a5756077c5f8f263c2462e8a1c2417c2a" title="This function measures a certain unit on a specific channel. This function can be used to measure vol..." alt="" coords="247,157,387,184"/>
 <area shape="rect" href="classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="472,107,651,133"/>
 <area shape="rect" href="classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="509,56,614,83"/>
@@ -1654,6 +1661,14 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Reads the complete buffer with the given name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bufferName</td><td>The name of the buffer. </td></tr>
+    <tr><td class="paramname">result</td><td>The vector to write the received values to. </td></tr>
+    <tr><td class="paramname">checkErrorBuffer</td><td>Whether to check the error buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>The received error code. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
@@ -1674,7 +1689,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="classKEI2600_a1df40b049d98791f48e671e59cbcfcaa_icgraph.png" border="0" usemap="#aclassKEI2600_a1df40b049d98791f48e671e59cbcfcaa_icgraph" alt=""/></div>
 <map name="aclassKEI2600_a1df40b049d98791f48e671e59cbcfcaa_icgraph" id="aclassKEI2600_a1df40b049d98791f48e671e59cbcfcaa_icgraph">
 <area shape="rect" title="Reads the complete buffer with the given name." alt="" coords="220,5,371,32"/>
-<area shape="rect" href="classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title=" " alt="" coords="5,5,172,32"/>
+<area shape="rect" href="classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title="Reads the complete buffer with the given name. Instead of returning the received error code,..." alt="" coords="5,5,172,32"/>
 </map>
 </div>
 
@@ -1705,12 +1720,22 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Reads the complete buffer with the given name. Instead of returning the received error code, a vector containing all values is returned. This method is used in the python wrapper. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bufferName</td><td>The name of the buffe.r </td></tr>
+    <tr><td class="paramname">checkErrorBuffer</td><td>Whether to check the error buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The received error code. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classKEI2600_a59eb04543f09eee918a4345ca5720abd_cgraph.png" border="0" usemap="#aclassKEI2600_a59eb04543f09eee918a4345ca5720abd_cgraph" alt=""/></div>
 <map name="aclassKEI2600_a59eb04543f09eee918a4345ca5720abd_cgraph" id="aclassKEI2600_a59eb04543f09eee918a4345ca5720abd_cgraph">
-<area shape="rect" title=" " alt="" coords="5,56,172,83"/>
+<area shape="rect" title="Reads the complete buffer with the given name. Instead of returning the received error code,..." alt="" coords="5,56,172,83"/>
 <area shape="rect" href="classKEI2600.html#a1df40b049d98791f48e671e59cbcfcaa" title="Reads the complete buffer with the given name." alt="" coords="220,56,371,83"/>
 <area shape="rect" href="classKEI2600.html#a493ff85f52f46135ac6aee50ad3f50b9" title="Clears the buffer with the given name." alt="" coords="427,31,581,57"/>
 <area shape="rect" href="classKEI2600.html#a54d1a35c1aabbc9b1f360809f5cf77ea" title="Retrieves the size of the buffer with the given name." alt="" coords="419,81,589,108"/>
@@ -2741,7 +2766,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>This function turns off a specific channel of the KEI2600-SMU. </p>
+<p>Turns off a specific channel of the KEI2600-SMU. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">channel</td><td>channel to enable. </td></tr>
@@ -2789,7 +2814,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>This function turns on a specific channel of the KEI2600-SMU. </p>
+<p>Turns on a specific channel of the KEI2600-SMU. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">channel</td><td>channel to enable. </td></tr>

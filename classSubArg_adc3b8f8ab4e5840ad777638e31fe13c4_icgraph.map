@@ -36,7 +36,7 @@
 <area shape="rect" id="node40" href="$classKST3000.html#a38bc69f14634568ca868bba591723533" title="set waveform points mode" alt="" coords="771,1677,1021,1704"/>
 <area shape="rect" id="node41" href="$classSubArg.html#ad978bb835db3331fb4e1930ec056672d" title="This file contains the implementation of sub&#45;arguments. E.g. when a command has the structure smua...." alt="" coords="835,1728,957,1755"/>
 <area shape="rect" id="node3" href="$classKEI2600.html#a1df40b049d98791f48e671e59cbcfcaa" title="Reads the complete buffer with the given name." alt="" coords="529,107,679,133"/>
-<area shape="rect" id="node4" href="$classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title=" " alt="" coords="270,107,437,133"/>
+<area shape="rect" id="node4" href="$classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title="Reads the complete buffer with the given name. Instead of returning the received error code,..." alt="" coords="270,107,437,133"/>
 <area shape="rect" id="node11" href="$classKST3000.html#a762ded4a805dfd410224cfaf95e66cc5" title="convert a measurement data array to a 2d array: time array &amp; voltage array" alt="" coords="269,360,437,387"/>
 <area shape="rect" id="node12" href="$classKST3000.html#a9ecd39f48a38870473b438d40d166af6" title="save waveform data to the target file" alt="" coords="5,360,221,387"/>
 <area shape="rect" id="node16" href="$classKEI2600.html#ac7160a44757d3807cc46dfbf5a20dbc8" title="Measurement method identical to KEI2600::measure, but in this method, the value is directly returned ..." alt="" coords="526,512,682,539"/>

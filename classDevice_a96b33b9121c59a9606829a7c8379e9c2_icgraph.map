@@ -4,7 +4,7 @@
 <area shape="rect" id="node3" href="$classKEI2600.html#a295c11141ff72a00c1455c6a2983c3fa" title="Send a beeping sound with a specific duration and frequency to the SMU." alt="" coords="905,56,1020,83"/>
 <area shape="rect" id="node4" href="$classKEI2600.html#a493ff85f52f46135ac6aee50ad3f50b9" title="Clears the buffer with the given name." alt="" coords="885,157,1040,184"/>
 <area shape="rect" id="node7" href="$classKEI2600.html#a4a2adacc527dd6cce95977013fb6822b" title="Clear the error buffer." alt="" coords="870,208,1055,235"/>
-<area shape="rect" id="node8" href="$classDevice.html#a25e4f976e664c5cf63c214f560316907" title=" " alt="" coords="907,259,1018,285"/>
+<area shape="rect" id="node8" href="$classDevice.html#a25e4f976e664c5cf63c214f560316907" title="Stops the execution for the specified amount of time in seconds. If buffering is enabled,..." alt="" coords="907,259,1018,285"/>
 <area shape="rect" id="node9" href="$classKST3000.html#ac85102301233e02fc9d55d106e183ed8" title="Set timebase(horizontal) delay; Equivalent to adjust the delay knob in Horizontal controls...." alt="" coords="581,284,760,311"/>
 <area shape="rect" id="node10" href="$classKST3000.html#a437b6ca320f71c357313367d57294e80" title="capture data" alt="" coords="895,360,1030,387"/>
 <area shape="rect" id="node11" href="$classKST33500.html#a55f52e6034b10e4fa5927934f0aebd49" title=" " alt="" coords="891,411,1034,437"/>
@@ -15,7 +15,7 @@
 <area shape="rect" id="node16" href="$classKEI2600.html#a52f9e7e2269415aaf0e86f229c5edab1" title="Executes the script with the given name on the smu." alt="" coords="877,664,1048,691"/>
 <area shape="rect" id="node21" href="$classKEI2600.html#a54d1a35c1aabbc9b1f360809f5cf77ea" title="Retrieves the size of the buffer with the given name." alt="" coords="877,107,1048,133"/>
 <area shape="rect" id="node22" href="$classSPD1305.html#af28d414d1bd330d5c4a003d2e9397f3a" title=" " alt="" coords="884,715,1041,741"/>
-<area shape="rect" id="node23" href="$classDevice.html#aa44c6120859cf5d5ad9edf71c55df2e5" title=" " alt="" coords="863,765,1062,792"/>
+<area shape="rect" id="node23" href="$classDevice.html#aa44c6120859cf5d5ad9edf71c55df2e5" title="Gets the name of the currently connected device." alt="" coords="863,765,1062,792"/>
 <area shape="rect" id="node24" href="$classKEI2600.html#a00c91442df6f1ee0aa2a25133814536d" title="Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return PIL..." alt="" coords="855,816,1070,843"/>
 <area shape="rect" id="node26" href="$classKEI2600.html#a6cb85ed160de36aeda8ef8e7158bcf78" title="Return last error in error&#45;queue." alt="" coords="881,867,1044,893"/>
 <area shape="rect" id="node27" href="$classKST3000.html#afa5f5e146ecc81caf11825ff6c541dc8" title="get system setup" alt="" coords="865,968,1060,995"/>
@@ -60,7 +60,7 @@
 <area shape="rect" id="node68" href="$classSPD1305.html#ab7f6ab9eeb531e59f0b17ddc6867bee7" title=" " alt="" coords="896,2909,1029,2936"/>
 <area shape="rect" id="node69" href="$classSPD1305.html#a12d2a2dc9a209540ad9a23204b2c1b2f" title=" " alt="" coords="897,2960,1029,2987"/>
 <area shape="rect" id="node5" href="$classKEI2600.html#a1df40b049d98791f48e671e59cbcfcaa" title="Reads the complete buffer with the given name." alt="" coords="595,132,746,159"/>
-<area shape="rect" id="node6" href="$classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title=" " alt="" coords="307,132,474,159"/>
+<area shape="rect" id="node6" href="$classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title="Reads the complete buffer with the given name. Instead of returning the received error code,..." alt="" coords="307,132,474,159"/>
 <area shape="rect" id="node17" href="$classKEI2600.html#a4da80dbe8adb81815a98e47114e25774" title="Sends and executes the given script." alt="" coords="555,657,786,698"/>
 <area shape="rect" id="node18" href="$classKEI2600.html#a00050b1900e421a59cf30d59a432b1a5" title="Executes the buffered script." alt="" coords="296,627,485,669"/>
 <area shape="rect" id="node19" href="$classKEI2600.html#ac285dc67b82f47247a803920f1a909fd" title="Sends and executes the given script." alt="" coords="277,693,504,720"/>

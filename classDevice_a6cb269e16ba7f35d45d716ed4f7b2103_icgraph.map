@@ -1,8 +1,8 @@
 <map id="Device::isBuffered" name="Device::isBuffered">
-<area shape="rect" id="node1" title=" " alt="" coords="479,132,620,159"/>
-<area shape="rect" id="node2" href="$classDevice.html#a25e4f976e664c5cf63c214f560316907" title=" " alt="" coords="276,5,387,32"/>
+<area shape="rect" id="node1" title="Checks if the commands sent to the device get buffered." alt="" coords="479,132,620,159"/>
+<area shape="rect" id="node2" href="$classDevice.html#a25e4f976e664c5cf63c214f560316907" title="Stops the execution for the specified amount of time in seconds. If buffering is enabled,..." alt="" coords="276,5,387,32"/>
 <area shape="rect" id="node4" href="$classDevice.html#a5b405014c32080fb36ba4ed517fcc78d" title=" " alt="" coords="279,56,384,83"/>
-<area shape="rect" id="node5" href="$classDevice.html#aa44c6120859cf5d5ad9edf71c55df2e5" title=" " alt="" coords="232,107,431,133"/>
+<area shape="rect" id="node5" href="$classDevice.html#aa44c6120859cf5d5ad9edf71c55df2e5" title="Gets the name of the currently connected device." alt="" coords="232,107,431,133"/>
 <area shape="rect" id="node6" href="$classKEI2600.html#a6cb85ed160de36aeda8ef8e7158bcf78" title="Return last error in error&#45;queue." alt="" coords="250,157,413,184"/>
 <area shape="rect" id="node7" href="$classKEI2600.html#ac7160a44757d3807cc46dfbf5a20dbc8" title="Measurement method identical to KEI2600::measure, but in this method, the value is directly returned ..." alt="" coords="17,208,173,235"/>
 <area shape="rect" id="node8" href="$classKEI2600.html#a5756077c5f8f263c2462e8a1c2417c2a" title="This function measures a certain unit on a specific channel. This function can be used to measure vol..." alt="" coords="261,259,401,285"/>

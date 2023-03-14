@@ -1,5 +1,4 @@
 <map id="Device::vectorToStringNL" name="Device::vectorToStringNL">
-<area shape="rect" id="node1" title=" " alt="" coords="243,42,428,69"/>
-<area shape="rect" id="node2" href="$classKEI2600.html#a00050b1900e421a59cf30d59a432b1a5" title="Executes the buffered script." alt="" coords="5,5,195,47"/>
-<area shape="rect" id="node3" href="$classDevice.html#af458a5c17f67981fd1892aa65cf5ced4" title=" " alt="" coords="6,71,194,98"/>
+<area shape="rect" id="node1" title="Transforms the given vector into a string. Each vector entry will be a line in the resulting string." alt="" coords="241,5,427,32"/>
+<area shape="rect" id="node2" href="$classDevice.html#af458a5c17f67981fd1892aa65cf5ced4" title="Transforms the current buffered script into a string and returns it." alt="" coords="5,5,193,32"/>
 </map>

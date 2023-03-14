@@ -3,5 +3,5 @@
 <area shape="rect" id="node2" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="216,5,395,32"/>
 <area shape="rect" id="node3" href="$classDevice.html#ad0b48035a3908e644d02733c4448febe" title="Checks if a error occured given the error code." alt="" coords="226,56,385,83"/>
 <area shape="rect" id="node4" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="253,107,358,133"/>
-<area shape="rect" id="node5" href="$classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103" title=" " alt="" coords="235,157,376,184"/>
+<area shape="rect" id="node5" href="$classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103" title="Checks if the commands sent to the device get buffered." alt="" coords="235,157,376,184"/>
 </map>

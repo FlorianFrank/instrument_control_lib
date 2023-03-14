@@ -1,5 +1,5 @@
 <map id="/home/runner/work/instrument_control_lib/instrument_control_lib/src/devices/KEI2600.cpp" name="/home/runner/work/instrument_control_lib/instrument_control_lib/src/devices/KEI2600.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="2343,5,2567,61"/>
+<area shape="rect" id="node1" title=" " alt="" coords="2398,5,2622,61"/>
 <area shape="rect" id="node2" href="$KEI2600_8h.html" title=" " alt="" coords="2331,109,2473,136"/>
 <area shape="rect" id="node9" title=" " alt="" coords="2155,333,2289,360"/>
 <area shape="rect" id="node10" title=" " alt="" coords="2531,333,2662,360"/>
@@ -7,7 +7,8 @@
 <area shape="rect" id="node23" title=" " alt="" coords="2156,184,2243,211"/>
 <area shape="rect" id="node34" title=" " alt="" coords="2548,109,2608,136"/>
 <area shape="rect" id="node35" title=" " alt="" coords="2633,109,2697,136"/>
-<area shape="rect" id="node36" title=" " alt="" coords="2721,109,2867,136"/>
+<area shape="rect" id="node36" title=" " alt="" coords="2721,109,2801,136"/>
+<area shape="rect" id="node37" title=" " alt="" coords="2825,109,2971,136"/>
 <area shape="rect" id="node3" href="$Device_8h.html" title=" " alt="" coords="2371,259,2449,285"/>
 <area shape="rect" id="node11" href="$SMU_8h.html" title=" " alt="" coords="2369,184,2473,211"/>
 <area shape="rect" id="node4" href="$ExecArgs_8h.html" title=" " alt="" coords="2363,333,2457,360"/>

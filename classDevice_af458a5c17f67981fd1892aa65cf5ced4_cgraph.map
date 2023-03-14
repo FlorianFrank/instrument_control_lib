@@ -1,4 +1,4 @@
 <map id="Device::getBufferedScript" name="Device::getBufferedScript">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,193,32"/>
-<area shape="rect" id="node2" href="$classDevice.html#a18d66b6997bda5f93eeb32861f4c2ea6" title=" " alt="" coords="241,5,427,32"/>
+<area shape="rect" id="node1" title="Transforms the current buffered script into a string and returns it." alt="" coords="5,5,193,32"/>
+<area shape="rect" id="node2" href="$classDevice.html#a18d66b6997bda5f93eeb32861f4c2ea6" title="Transforms the given vector into a string. Each vector entry will be a line in the resulting string." alt="" coords="241,5,427,32"/>
 </map>

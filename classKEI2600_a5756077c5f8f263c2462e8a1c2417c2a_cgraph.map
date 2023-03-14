@@ -4,5 +4,5 @@
 <area shape="rect" id="node3" href="$classSubArg.html#adc3b8f8ab4e5840ad777638e31fe13c4" title="Add a new string element to the SubArg&#45;object. It is directly concatenated to the previous arguments." alt="" coords="215,56,350,83"/>
 <area shape="rect" id="node4" href="$classDevice.html#ad0b48035a3908e644d02733c4448febe" title="Checks if a error occured given the error code." alt="" coords="203,107,362,133"/>
 <area shape="rect" id="node5" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="230,157,335,184"/>
-<area shape="rect" id="node6" href="$classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103" title=" " alt="" coords="212,208,353,235"/>
+<area shape="rect" id="node6" href="$classDevice.html#a6cb269e16ba7f35d45d716ed4f7b2103" title="Checks if the commands sent to the device get buffered." alt="" coords="212,208,353,235"/>
 </map>

@@ -1,4 +1,4 @@
 <map id="KEI2600::readBuffer" name="KEI2600::readBuffer">
 <area shape="rect" id="node1" title="Reads the complete buffer with the given name." alt="" coords="220,5,371,32"/>
-<area shape="rect" id="node2" href="$classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title=" " alt="" coords="5,5,172,32"/>
+<area shape="rect" id="node2" href="$classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title="Reads the complete buffer with the given name. Instead of returning the received error code,..." alt="" coords="5,5,172,32"/>
 </map>
