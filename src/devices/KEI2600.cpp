@@ -10,6 +10,7 @@
 #include <utility> // std::move
 #include <stdexcept> // std::invalid_argument
 #include <thread>
+#include <iostream>
 
 extern "C" {
 #include "ctlib/ErrorHandler.h"
@@ -1009,7 +1010,6 @@ PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
     m_BufferedScript[1] = replaceAllSubstrings(m_BufferedScript[1], "%B_M_BUFFER_SIZE%",
                                                "" + std::to_string(m_BufferEntriesB));
 
-    std::string s = vectorToStringNL(m_BufferedScript);
     auto ret = sendAndExecuteVectorScript("bufferedScript", m_BufferedScript, checkErrorBuffer);
     m_SendMode = prevSendMode;
     clearBufferedScript();
@@ -1066,6 +1066,8 @@ PIL_ERROR_CODE KEI2600::readPartOfBuffer(int startIdx, int endIdx, const std::st
  * @return The received error code.
  */
 PIL_ERROR_CODE KEI2600::readBuffer(const std::string &bufferName, std::vector<double> *result, bool checkErrorBuffer) {
+    SEND_METHOD prevSendMode = m_SendMode;
+    m_SendMode = SEND_METHOD::DIRECT_SEND;
     int n = 0;
     getBufferSize(bufferName, &n, checkErrorBuffer);
 
@@ -1087,7 +1089,9 @@ PIL_ERROR_CODE KEI2600::readBuffer(const std::string &bufferName, std::vector<do
         appendToBuffer(1 + offset, offset + remaining, bufferName, printBuffer, result, checkErrorBuffer);
     }
 
-    return clearBuffer(bufferName, checkErrorBuffer);
+    auto ret = clearBuffer(bufferName, checkErrorBuffer);
+    m_SendMode = prevSendMode;
+    return ret;
 }
 
 /**
