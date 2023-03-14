@@ -136,13 +136,17 @@ bool Device::isOpen() const {
     return m_SocketHandle->IsOpen();
 }
 
+/**
+ * @brief Checks if the commands sent to the device get buffered.
+ * @return true if connection is buffering is enabled, otherwise false.
+ */
 bool Device::isBuffered() const {
     return m_SendMode == SEND_METHOD::BUFFER_ENABLED;
 }
 
 /**
- * @brief
- * @return
+ * @brief Gets the name of the currently connected device.
+ * @return The name of this device.
  */
 std::string Device::getDeviceIdentifier() {
     if (isBuffered())
@@ -251,6 +255,12 @@ std::string Device::ReturnErrorMessage() {
     return PIL_ReturnErrorMessageAsString(&m_ErrorHandle);
 }
 
+/**
+ * @brief Stops the execution for the specified amount of time in seconds. If buffering is enabled, the delay is included in
+ * the buffered script. Otherwise this thread sleeps for the given time.
+ * @param delayTime The delay in seconds.
+ * @return The received error code.
+ */
 PIL_ERROR_CODE Device::delay(double delayTime) {
     if (isBuffered()) {
         SubArg arg(std::to_string(delayTime), "delay(", ")");
@@ -265,17 +275,24 @@ PIL_ERROR_CODE Device::delay(double delayTime) {
 
 }
 
+/**
+ * @brief Transforms the current buffered script into a string and returns it.
+ * @return The currently buffered script as a string.
+ */
 std::string Device::getBufferedScript() {
     return vectorToStringNL(m_BufferedScript);
 }
 
+/**
+ * @brief Changes the send mode of this device, i.e. whether the commands get buffered or sent directly to the device.
+ * @param mode The new send mode to use.
+ */
 void Device::changeSendMode(SEND_METHOD mode) {
     m_SendMode = mode;
 }
 
 /**
  * @brief Checks if a error occured given the error code.
- *
  * @param errorCode The error code to check.
  * @return true if and only if there is an error.
  */
@@ -285,7 +302,6 @@ void Device::changeSendMode(SEND_METHOD mode) {
 
 /**
  * @brief Sends a post request to the given url with the given payload.
- *
  * @param url The url to send the post request to.
  * @param payload The payload to send.
  */
@@ -301,6 +317,11 @@ void Device::changeSendMode(SEND_METHOD mode) {
     }
 }
 
+/**
+ * @brief Transforms the given vector into a string. Each vector entry will be a line in the resulting string.
+ * @param vector The vector to transform.
+ * @return The given vector as string.
+ */
 /* static */ std::string Device::vectorToStringNL(std::vector<std::string> vector) {
     std::string output = vector[0];
     for (u_int i = 1; i < vector.size(); i++) {
@@ -328,7 +349,6 @@ void Device::changeSendMode(SEND_METHOD mode) {
 
 /**
  * @brief Splits a string by the given delimiter.
- *
  * @param toSplit The string to split.
  * @param delimiter The delimter to split the string by.
  * @return A vector of substrings of toSplit.

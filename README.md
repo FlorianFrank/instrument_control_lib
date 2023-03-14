@@ -22,7 +22,7 @@ It provides following functionality:
 
 ## Supported Devices
 
-#### &nbsp;&nbsp;&nbsp;&nbsp;- SPD1305X DC Power Supply
+#### &nbsp;&nbsp;&nbsp;- SPD1305X DC Power Supply
 
 #### &nbsp;&nbsp;&nbsp;- Keysight 33500B Waveform Generator
 
@@ -37,6 +37,10 @@ It provides following functionality:
 | Windows Latest | ![Windows latest](https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/windows_latest.yml/badge.svg) |
 | Mac OS Latest  |  ![MAC OS latest](https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/mac_os_latest.yml/badge.svg)  |
 | Ubuntu Latest  |  ![Ubuntu Latest](https://github.com/FlorianFrank/instrument_control_lib/actions/workflows/ubuntu_latest.yml/badge.svg)  |
+
+## Documentation
+See [https://florianfrank.github.io/instrument_control_lib/index.html](https://florianfrank.github.io/instrument_control_lib/) for an
+overview of all available operations and further documentation. This documentation is built automatically, so it is always up to date.
 
 ## Build
 
@@ -123,79 +127,9 @@ Run the graphical installer.
 
 Run the graphical installer.
 
-## Supported Commands per device
-
-<br><br>
-
-#### SPD1305X DC Power Supply
-
-| **Function** | **Parameters**   | **Description**                                          | **Value Range** |
-|--------------|------------------|----------------------------------------------------------|-----------------|
-| setCurrent() | channel, current | Sets the current of the DC power-supply.                 | See manual.     |
-| getCurrent() | channel          | Get the currently adjusted current of a certain channel. | See manual.     |
-| setVoltage() | channel, voltage | Sets the voltage on the DC power-supply.                 | See manual      |
-| getVoltage() | channel          | Get the currently adjusted voltage of a certain channel. | See manual      |
-
-<br><br>
-
-#### Keysight 33500B Waveform Generator
-
-| **Function**        | **Parameters**        | **Description**                                                                                                                                               | **Value Range**                                                |
-|---------------------|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
-| run()               | -                     | Start the acquisition on the instrument.                                                                                                                      | -                                                              |
-| stop()              | -                     | Stop the acquisition on the instrument.                                                                                                                       | -                                                              |
-| single()            | -                     | Wait for the first signal which is triggered and stop the measurement.                                                                                        | -                                                              |
-| autoScale()         | -                     | The oscilloscope tries to find the best vertical channel, timebase and trigger setting for the current experiment.                                            | -                                                              |
-| setTimeRange()      | timeRange             | Sets the full-cale horizontal time in seconds for the main window.                                                                                            | 10x current time-per-devision setting                          |
-| setChannelOffset()  | channel, offset, unit | Set the offset of a channel in volts or milli volts.                                                                                                          | When amplitude is below 400 mV the offset is limited to 500 mV |
-| setChannelScale()   | channel, scale        | Sets the vertical scale or units per division of a specified channel.                                                                                         | See manual                                                     |
-| setChannelRange()   | channel, range        | Defines the full-scale vertical axis on the selected channel                                                                                                  | 8 mV - 40 V                                                    |
-| getWaveFormData()   | data                  | Return the currently captured waveform, which is visualized on the oscilloscopes screen. The data is formated in IEEE 488.2 arbitrary block data format.      | -                                                              |
-| getRealData()       | double **result       | Captures data from the oscilloscope and transforms the data from binary array to a double array.                                                              | -                                                              |
-| digitize()          | -                     | Specialized run command. Captures waveforms according to the settings of the :ACQuire format. (Can only be executed with :TIMbased:MODE being MAIN or WINDow) | -                                                              |
-| getSystemSetup()    | -                     | Outputs the current oscilloscope setup as string.                                                                                                             | -                                                              |
-| setDisplayMode()    | mode                  | Sets the mode of the oscilloscope either to normal mode, time based mode, XY or roll mode.                                                                    | NORMAL, TIME_BASED; XY, ROLL                                   |
-| setChannelDisplay() | channel               | Turns the output of a channel on or off.                                                                                                                      | ON / OFF                                                       |
-
-<br><br>
-
-#### Tektronix 2600B Series SMU
-
-| **Function**              | **Parameters**            | **Description**                                                                  | **Value Range** |
-|---------------------------|---------------------------|----------------------------------------------------------------------------------|-----------------|
-| turnOn()                  | channel                   | Enable a channel on the SMU.                                                     | See manual      |
-| turnOff()                 | channel                   | Disable a channel on the SMU.                                                    | See manual      |
-| measure()                 | channel, unit             | Measure a certain unit (voltage, current, power) and return the measure results. | See manual      |
-| setLevel()                | channel, unit             | Set voltage, current source level                                                | See manual      |
-| setLimit()                | channel, unit             | Set voltage, current or power limit.                                             | See manual      |
-| enableMeasureAutoRange()  | unit, channel             | Enable voltage or current measure auto range.                                    | ON              |
-| disableMeasureAutoRange() | unit, channel             | Disable voltage or current measure auto range.                                   | OFF             |
-| enableSourceAutoRange()   | unit, channel             | Enable voltage or current measure auto range.                                    | ON              |
-| disableSourceAutoRange()  | unit, channel             | Disable voltage or current measure auto range.                                   | OFF             |
-| setMeasureRange()         | unit, channel, range      | Set voltage or current measure range.                                            | See manual      |
-| setSourceRange()          | unit, channel, range      | Set voltage or current source range.                                             | See manual      |
-| setSenseMode()            | unit, channel, sense-mode | Select local sense (2-wire) remote sense (4-wire) or calibration mode.           | See manual      |
-| enableBeep()              | -                         | Enable the execution of a beep sound on the oscilloscope.                        | See manual      |
-| enableBeep()              | -                         | Disable the execution of a beep sound on the oscilloscope.                       | See manual      |
-| beep()                    | -                         | Send a beep signal to the SMU.                                                   | See manual.     |
-
-<br><br>
-
-#### Keysight 33500B Waveform Generator
-
-| **Function**        | **Parameters**     | **Description**                                                                                                                     | **Value Range** |
-|---------------------|--------------------|-------------------------------------------------------------------------------------------------------------------------------------|-----------------|
-| turnOn()            | channel            | Turn on the channel (A or B) on the function generator.                                                                             | -               |
-| turnOff()           | channel            | Turn off the channel (A or B) on the function generator.                                                                            | -               |
-| setFrequency()      | channel, frequency | Set a certain frequency on a channel of the function generator.                                                                     | See manual      |
-| setAmplitude()      | channel, amplitude | Set a certain amplitude on a channel of the function generator.                                                                     | See manual      |
-| setOffset()         | channel, offset    | Set a voltage offset on a certain channel of the function generator.                                                                | See manual      |
-| setPhase()          | channel, phase     | Adjust the phase on a certain function generator channel.                                                                           | See manual      |
-| setFunction()       | funcType           | Set the function currently used (allowed: sinus, square, ramp, negative ramp, triangle, noise, pseudo random bit stream, arbitrary) | See manual      |
-| display()           | text               | Display text on display of function generator.                                                                                      |                 |
-| displayConnection() | -                  | -                                                                                                                                   | -               |
-
 ## Examples
+
+See the [examples](./examples) directory for samples on how to use this lib with C++ and with Python.
 
 ### Connect to devices
 
@@ -204,14 +138,14 @@ Run the graphical installer.
 
 int main() {
     // provide a IP address, some devices may need an extra port parameter
-    KST33500 k("xx.xx.xx.xx"); 
+    KST33500 k("xx.xx.xx.xx", <timeout>); 
     k.Connect();
 }
 ```
 
 ## Development
 
-In this lab, we use socket to send SCPI commands to devices in order
+In this lab, we use sockets to send SCPI commands to devices in order
 control them remotely.   
 Check the documents in [Docs](./docs%20and%20specs) for SCPI commands.
 
@@ -225,14 +159,14 @@ command of Keysight waveform generator:
 FUNCtion <function>
 ```
 
-which set a <function> waveform.   
+which sets a <function> waveform.   
 Go to kst33500.h file and add a function signature called "function".
 
 ```c++
 int function(string fun);
 ```
 
-Go to skt33500.cpp file and add the implementation of this function.
+Go to kst33500.cpp file and add the implementation of this function.
 What you need to do is making an SCPI command and invoke the Exec function.
 
 ```c++
@@ -243,7 +177,7 @@ int KST33500::function(string fun) {
 }
 ```
 
-That's it. After that, you can use like:
+That's it. After that, you can use it like this:
 
 ```c++
 k.function("SIN");
@@ -253,12 +187,12 @@ k.function("SIN");
 
 1. Easy installation with pip.
 
-   - Just execute `pip install .` in the root directory. This will install the instrument control lib for the current
-     python installation. You can now just import py_instrument_control_lib and use it just like the C++ lib. With the pip
-     installer the lib now supports autocompletion and type hints.
+    Execute `pip install .` in the root directory to install the instrument control lib for the current python
+    installation. You can now just import py_instrument_control_lib and use it just like the C++ lib. With the pip
+    installer the lib now supports autocompletion and type hints.
 
 2. Open the python console
-    1. Make sure you installed the lib with 
+    1. Make sure you installed the lib using pip
     2. Open the library as module
     3. Create a SMU object with an IP and an timeout for the socket
     4. Connect to the SMU
@@ -266,39 +200,26 @@ k.function("SIN");
         - All defined error codes are listed below
 
   ```bash
-  $ python3.exe
-  Python 3.8.13 (default, Mar 28 2022, 11:38:47) 
-  [GCC 7.5.0] :: Anaconda, Inc. on linux
-  Type "help", "copyright", "credits" or "license" for more information.
-  >>> 
-  >>> import os
-  >>> os.listdir()
-  ['instrument_control_lib.py', 'libpy_instrument_control_lib.pyd', 'libpy_instrument_control_lib.so']
-  
-  >>> from libpy_instrument_control_lib import *
-  >>> smu = KEI2600("192.168.1.10", 2000)
-  >>> error_code = smu.connect()
-  >>> print(error_code)
-  ERROR_CODE.NO_ERROR
-  >>> device_identifier = smu.getDeviceIdentifier()
-  >>> print(device_identifier)
-  Keithley Instruments Inc*, Model 2636B, 4031
-  
-  >>> error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3, False)
-  >>> if error_code != ERROR_CODE.NO_ERROR: 
-        # stop execution or do some error handling
-        
-  >>> error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 5.0, False)
-  >>> # error handling
-  
-  >>> error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A, False)
-  >>> # error handling
-  
-  >>> measure_value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_B, False)
+$ python3
+>>> from py_instrument_control_lib import *
+>>> smu = KEI2600("192.168.1.10", 2000, SEND_METHOD.DIRECT_SEND)
+>>> error_code = smu.connect()
+>>> print(error_code)
+ERROR_CODE.NO_ERROR
+>>> device_identifier = smu.getDeviceIdentifier()
+>>> print(device_identifier)
+Keithley Instruments Inc*, Model 2636B, 4031
+>>> error_code = smu.setLevel(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.3, False)
+>>> if error_code != ERROR_CODE.NO_ERROR: 
+          pass  # stop execution or do some error handling
+>>> error_code = smu.setLimit(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 5.0, False)
+>>> # error handling
+>>> error_code = smu.turnOn(SMU_CHANNEL.CHANNEL_A, False)
+>>> # error handling
+>>> measure_value = smu.measure(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_B, False)
   >>> print(measure_value)
-    3.04
+3.04
   >>> smu.disconnect()
-     
   ```
 
 ### Functions
@@ -306,7 +227,7 @@ k.function("SIN");
 This list gives an overview of the smu functions and how to call them.
 
 ```python
-    # Establish the ethernet connection to the device
+# Establish the connection to the device
 error_code = smu.connect()
 error_code = smu.disconnect()
 
@@ -336,7 +257,7 @@ error_code = smu.enableSourceeAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A,
 error_code = smu.disableSourceAutoRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, False)
 error_code = smu.disableSourceAutoRange(SMU_UNIT.CURRENT, SMU_CHANNEL.CHANNEL_A, False)
 
-smu.setSenseMode(SMU_CHANNEL.CHANNEL_A, SMU_SENSE.LOCAL, FALSE)
+smu.setSenseMode(SMU_CHANNEL.CHANNEL_A, SMU_SENSE.LOCAL, False)
 
 error_code = smu.setSourceRange(SMU_UNIT.VOLTAGE, SMU_CHANNEL.CHANNEL_A, 3.0, False)
 
@@ -345,12 +266,12 @@ device_description = smu.getDeviceIdentifier()
 
 ### Error codes
 
-There exists a function which transforms the error codes into Strings.
+There is a function which transforms the error codes into Strings.
 Some error codes are not used in the library because these are derived from the abstraction library.
 **This function will be implemented in python soon!**
 
 ```python
-            # No error occurred
+# No error occurred
 NO_ERROR
 # Invalid arguments passed to a function, e.g. passing a nullptr.
 PIL_INVALID_ARGUMENT

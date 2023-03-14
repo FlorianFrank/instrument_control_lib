@@ -10,6 +10,7 @@
 #include <utility> // std::move
 #include <stdexcept> // std::invalid_argument
 #include <thread>
+#include <iostream>
 
 extern "C" {
 #include "ctlib/ErrorHandler.h"
@@ -122,7 +123,7 @@ double KEI2600::measurePy(UNIT unit, SMU_CHANNEL channel, bool checkErrorBuffer)
 }
 
 /**
- * @brief This function turns on a specific channel of the KEI2600-SMU.
+ * @brief Turns on a specific channel of the KEI2600-SMU.
  * @param channel channel to enable.
  * @param checkErrorBuffer if true error buffer status is requested and evaluated.
  * @return NO_ERROR if execution was successful otherwise return error code.
@@ -132,7 +133,7 @@ PIL_ERROR_CODE KEI2600::turnOn(SMU_CHANNEL channel, bool checkErrorBuffer) {
 }
 
 /**
- * @brief This function turns off a specific channel of the KEI2600-SMU.
+ * @brief Turns off a specific channel of the KEI2600-SMU.
  * @param channel channel to enable.
  * @param checkErrorBuffer if true error buffer status is requested and evaluated.
  * @return NO_ERROR if execution was successful otherwise return error code.
@@ -141,6 +142,12 @@ PIL_ERROR_CODE KEI2600::turnOff(SMU_CHANNEL channel, bool checkErrorBuffer) {
     return handleErrorCode(toggleChannel(channel, false), checkErrorBuffer);
 }
 
+/**
+ * @brief Toggles a specific channel of the KEI2600-SMU.
+ * @param channel channel to enable.
+ * @param checkErrorBuffer if true error buffer status is requested and evaluated.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
 PIL_ERROR_CODE KEI2600::toggleChannel(SMU_CHANNEL channel, bool enable) {
     SubArg subArg("source", ".");
     subArg.AddElem("output", ".");
@@ -312,6 +319,13 @@ PIL_ERROR_CODE KEI2600::disableSourceAutoRange(UNIT unit, SMU_CHANNEL channel, b
     return handleErrorCode(toggleSourceAutoRange(unit, channel, false), checkErrorBuffer);
 }
 
+/**
+ * @brief Toggles source auto-range mode.
+ * @param unit allowed are current and voltage.
+ * @param channel selected channel either channel A or channel B.
+ * @param checkErrorBuffer if true check the error buffer after execution.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
 PIL_ERROR_CODE KEI2600::toggleSourceAutoRange(UNIT unit, SMU_CHANNEL channel, bool enable) {
     SubArg subArg("");
     subArg.AddElem("source", ".");
@@ -370,7 +384,7 @@ PIL_ERROR_CODE KEI2600::disableMeasureAnalogFilter(SMU_CHANNEL smuChannel, bool 
 }
 
 /**
- * @brief Helper function to enable or disable filter helper functions.
+ * @brief Toggles the measure analog filter.
  * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
  * @param enable enable or disable the analog filter.
  * @return NO_ERROR if execution was successful otherwise return error code.
@@ -411,6 +425,12 @@ PIL_ERROR_CODE KEI2600::disableSourceSink(SMU_CHANNEL channel, bool checkErrorBu
     return handleErrorCode(toggleSourceSink(channel, false), checkErrorBuffer);
 }
 
+/**
+ * @brief Toggles the source sink mode.
+ * @param channel channel on which this operation should be applied (SMU_CHANNEL_A, SMU_CHANNEL_B)
+ * @param checkErrorBuffer if true check the error buffer after execution.
+ * @return NO_ERROR if execution was successful otherwise return error code.
+ */
 PIL_ERROR_CODE KEI2600::toggleSourceSink(SMU_CHANNEL channel, bool enable) {
     SubArg subArg("smu");
     subArg.AddElem(getChannelStringFromEnum(channel))
@@ -749,7 +769,7 @@ PIL_ERROR_CODE KEI2600::beep(float timeInSeconds, int frequency, bool checkError
  */
 std::string KEI2600::getLastError() {
     if (isBuffered()) {
-        return "Currently Buffering, currently only accumulating buffered script.";
+        return "Currently Buffering, only accumulating buffered script.";
     } else {
         ExecArgs argsErrorQueue;
         argsErrorQueue.AddArgument("errorcode, message = errorqueue.next()", "");
@@ -784,7 +804,7 @@ PIL_ERROR_CODE KEI2600::clearErrorBuffer() {
  * @return PIL_NO_ERROR if there is no item in the error queue. Otherwise return PIL_ITEM_IN_ERROR_QUEUE.
  * If the queue could not be requested successfully. Return a specific error code.
  */
-PIL_ERROR_CODE KEI2600::getErrorBufferStatus() {
+PIL_ERROR_CODE KEI2600::getErrorBufferStatus() {  // TODO: Include in Buffering?
     ExecArgs argsErrorQueue;
     argsErrorQueue.AddArgument("count = errorqueue.count", "");
     auto ret = Exec("", &argsErrorQueue);
@@ -819,20 +839,22 @@ PIL_ERROR_CODE KEI2600::getErrorBufferStatus() {
 PIL_ERROR_CODE KEI2600::performLinearVoltageSweep(SMU_CHANNEL channel, double startVoltage, double stopVoltage,
                                                   int increaseRate_mVpS, double current, bool checkErrorBuffer) {
     std::string sweep = "start_voltage = " + std::to_string(startVoltage) + " * 1000\n"
-                        "stop_voltage = " + std::to_string(stopVoltage) + " * 1000\n"
-                        "rate = " + std::to_string(increaseRate_mVpS) + "\n"
-                        "current = " + std::to_string(current) + "\n"
-                        "channel = smu" + getChannelStringFromEnum(channel) + "\n"
-                        "channel.source.func = channel.OUTPUT_DCVOLTS\n"
-                        "channel.source.output = channel.OUTPUT_ON\n"
-                        "channel.source.limitv = (stop_voltage / 1000) + 0.1\n"
-                        "channel.source.limiti = current + 0.0001\n"
-                        "channel.source.leveli = current\n"
-                        "for v = start_voltage, stop_voltage do\n"
-                        "    channel.source.levelv = v / 1000\n"
-                        "    delay(1 / rate)\n"
-                        "end\n"
-                        "channel.source.output = channel.OUTPUT_OFF";
+                                                                            "stop_voltage = " +
+                        std::to_string(stopVoltage) + " * 1000\n"
+                                                      "rate = " + std::to_string(increaseRate_mVpS) + "\n"
+                                                                                                      "current = " +
+                        std::to_string(current) + "\n"
+                                                  "channel = smu" + getChannelStringFromEnum(channel) + "\n"
+                                                                                                        "channel.source.func = channel.OUTPUT_DCVOLTS\n"
+                                                                                                        "channel.source.output = channel.OUTPUT_ON\n"
+                                                                                                        "channel.source.limitv = (stop_voltage / 1000) + 0.1\n"
+                                                                                                        "channel.source.limiti = current + 0.0001\n"
+                                                                                                        "channel.source.leveli = current\n"
+                                                                                                        "for v = start_voltage, stop_voltage do\n"
+                                                                                                        "    channel.source.levelv = v / 1000\n"
+                                                                                                        "    delay(1 / rate)\n"
+                                                                                                        "end\n"
+                                                                                                        "channel.source.output = channel.OUTPUT_OFF";
     return sendAndExecuteScript("sweep", sweep, checkErrorBuffer);
 }
 
@@ -976,7 +998,6 @@ PIL_ERROR_CODE KEI2600::sendAndExecuteVectorScript(const std::string &scriptName
 
 /**
  * @brief Executes the buffered script.
- * 
  * @param checkErrorBuffer Whether to check the error buffer after executing.
  * @return The received error code.
  */
@@ -989,7 +1010,6 @@ PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
     m_BufferedScript[1] = replaceAllSubstrings(m_BufferedScript[1], "%B_M_BUFFER_SIZE%",
                                                "" + std::to_string(m_BufferEntriesB));
 
-    std::string s = vectorToStringNL(m_BufferedScript);
     auto ret = sendAndExecuteVectorScript("bufferedScript", m_BufferedScript, checkErrorBuffer);
     m_SendMode = prevSendMode;
     clearBufferedScript();
@@ -999,7 +1019,6 @@ PIL_ERROR_CODE KEI2600::executeBufferedScript(bool checkErrorBuffer) {
 
 /**
  * @brief Clears the buffer with the given name.
- * 
  * @param bufferName The name of the buffer.
  * @param checkErrorBuffer Whether to check the error buffer after executing.
  * @return The received error code.
@@ -1018,7 +1037,6 @@ PIL_ERROR_CODE KEI2600::clearBuffer(const std::string &bufferName, bool checkErr
 
 /**
  * @brief Reads part of the buffer with the given name.
- * 
  * @return The received error code.
  */
 PIL_ERROR_CODE KEI2600::readPartOfBuffer(int startIdx, int endIdx, const std::string &bufferName, char *printBuffer,
@@ -1042,10 +1060,14 @@ PIL_ERROR_CODE KEI2600::readPartOfBuffer(int startIdx, int endIdx, const std::st
 
 /**
  * @brief Reads the complete buffer with the given name.
- * 
+ * @param bufferName The name of the buffer.
+ * @param result The vector to write the received values to.
+ * @param checkErrorBuffer Whether to check the error buffer.
  * @return The received error code.
  */
 PIL_ERROR_CODE KEI2600::readBuffer(const std::string &bufferName, std::vector<double> *result, bool checkErrorBuffer) {
+    SEND_METHOD prevSendMode = m_SendMode;
+    m_SendMode = SEND_METHOD::DIRECT_SEND;
     int n = 0;
     getBufferSize(bufferName, &n, checkErrorBuffer);
 
@@ -1067,9 +1089,34 @@ PIL_ERROR_CODE KEI2600::readBuffer(const std::string &bufferName, std::vector<do
         appendToBuffer(1 + offset, offset + remaining, bufferName, printBuffer, result, checkErrorBuffer);
     }
 
-    return clearBuffer(bufferName, checkErrorBuffer);
+    auto ret = clearBuffer(bufferName, checkErrorBuffer);
+    m_SendMode = prevSendMode;
+    return ret;
 }
 
+/**
+ * @brief Reads the complete buffer with the given name. Instead of returning the received error code, a vector
+ * containing all values is returned. This method is used in the python wrapper.
+ * @param bufferName The name of the buffe.r
+ * @param checkErrorBuffer Whether to check the error buffer.
+ * @return The received error code.
+ */
+std::vector<double> KEI2600::readBufferPy(const std::string &bufferName, bool checkErrorBuffer) {
+    std::vector<double> buffer;
+    readBuffer(bufferName, &buffer, checkErrorBuffer);
+    return buffer;
+}
+
+/**
+ * @brief Reads a part of the buffer (from startIdx to endIdx) and appends it to the result vector.
+ * @param startIdx The start index of the values to append to the result buffer.
+ * @param endIdx The end index of the values to append to the result buffer.
+ * @param bufferName The name of the buffer to read from.
+ * @param printBuffer The buffer to use for retrieving the values from the smu.
+ * @param result The vector to append the retrived values to.
+ * @param checkErrorBuffer Whether to check the error buffer.
+ * @return The received error code.
+ */
 PIL_ERROR_CODE KEI2600::appendToBuffer(int startIdx, int endIdx, const std::string &bufferName, char *printBuffer,
                                        std::vector<double> *result, bool checkErrorBuffer) {
     std::vector<double> batchVector;
@@ -1083,12 +1130,6 @@ PIL_ERROR_CODE KEI2600::appendToBuffer(int startIdx, int endIdx, const std::stri
     }
 
     return PIL_NO_ERROR;
-}
-
-std::vector<double> KEI2600::readBufferPy(const std::string &bufferName, bool checkErrorBuffer) {
-    std::vector<double> buffer;
-    readBuffer(bufferName, &buffer, checkErrorBuffer);
-    return buffer;
 }
 
 /**
@@ -1112,6 +1153,9 @@ PIL_ERROR_CODE KEI2600::getBufferSize(const std::string &bufferName, int *value,
     return handleErrorCode(ret, checkErrorBuffer);
 }
 
+/**
+ * Resets the buffered script to the default. Also resets the number of buffer entries in the measurement buffers.
+ */
 void KEI2600::clearBufferedScript() {
     m_BufferedScript = defaultBufferedScript;
     m_BufferEntriesA = 1;
@@ -1287,7 +1331,12 @@ std::string KEI2600::getMeasurementStorage(SMU_CHANNEL channel) {
     }
 }
 
-std::string KEI2600::getLetterFromUnit(UNIT unit) {
+/**
+ * @brief Returns the standardized letter for the given unit.
+ * @param unit The unit to use.
+ * @return The letter of the given unit. If the unit is unknown, an empty string is returned.
+ */
+/*static*/ std::string KEI2600::getLetterFromUnit(UNIT unit) {
     switch (unit) {
         case SMU::CURRENT:
             return "i";
@@ -1302,7 +1351,12 @@ std::string KEI2600::getLetterFromUnit(UNIT unit) {
     }
 }
 
-std::string KEI2600::getMeasurementBufferName(SMU_CHANNEL channel) {
+/**
+ * @brief Returns the buffer name of the given channel. Each channel has its own buffer with a unique name.
+ * @param channel The channel the buffer is associated with.
+ * @return The buffer name of the given channel.
+ */
+/*static*/ std::string KEI2600::getMeasurementBufferName(SMU_CHANNEL channel) {
     std::string prefix = channel == CHANNEL_A ? "A" : "B";
     return prefix + "_M_BUFFER";
 }
