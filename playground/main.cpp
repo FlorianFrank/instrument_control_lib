@@ -1,6 +1,8 @@
+#include <unistd.h>
 #include <iostream>
 #include "Device.h"
 #include "devices/KEI2600.h"
+#include "devices/KST3000.h"
 #include "devices/KST33500.h"
 #include "ctlib/Logging.hpp"
 #include <thread>
@@ -15,6 +17,8 @@ void generic_test() {
     smu->setLevel(SMU::VOLTAGE, SMU::CHANNEL_A, 0.42, false);
 
     smu->disableBeep(false);
+
+    std::cout << smu->measurePy(SMU::VOLTAGE, SMU::CHANNEL_A, false);
 
     smu->Disconnect();
 }
@@ -84,7 +88,7 @@ void measurementBufferingTest() {
 
     smu->readBuffer(smu->CHANNEL_A_BUFFER, &buffer, false);
 
-    for (double val : buffer) {
+    for (double val: buffer) {
         std::cout << val << std::endl;
     }
 
@@ -100,8 +104,45 @@ void kstTest() {
     kst->Disconnect();
 }
 
+void sleep(int secs) {
+    unsigned int microsecond = 1000000;
+    usleep(secs * microsecond);
+}
+
+void oscTest() {
+    const char *ip = "132.231.14.181";
+    PIL::Logging logger(PIL::INFO, nullptr);
+    KST3000 o = KST3000(ip, 30000, &logger);
+    o.Connect();
+
+    o.setDisplayMode(KST3000::DISPLAY_MODES::MAIN);
+    o.setTimeRange(1);
+
+    o.setChannelRange(KST3000::CHANNEL_1, 1.6, Oscilloscope::VOLT);
+    o.setChannelRange(KST3000::CHANNEL_2, 1.6, Oscilloscope::VOLT);
+    o.setWaveformPoints(1000);
+
+    for (int i = 1; i <= 1; i++) {
+        double voltage = i / 10.0;
+        std::string file_prefix =
+                "/home/alexander/Work/Data/memristor/test_data_1";
+
+        std::string data1 = file_prefix + "_1";
+        std::string data2 = file_prefix + "_2";
+
+        o.digitize(KST3000::CHANNEL_1);
+        o.setWaveformSource(KST3000::OSC_CHANNEL::CHANNEL_1);
+        o.saveWaveformData(data1);
+        o.digitize(KST3000::CHANNEL_2);
+        o.setWaveformSource(KST3000::OSC_CHANNEL::CHANNEL_2);
+        o.saveWaveformData(data2);
+        sleep(1);
+    }
+}
+
 
 int main() {
-    measurementBufferingTest();
+    oscTest();
     return 0;
 }
+

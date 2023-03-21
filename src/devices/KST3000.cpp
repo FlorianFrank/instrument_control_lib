@@ -264,15 +264,14 @@ std::vector<std::string> split(const char *splitStr, std::string &delimiter) {
  *  Waveform X increment, Waveform X origin, Waveform X reference,
  *  Waveform Y increment, Waveform Y origin, Waveform Y reference]
  * */
-PIL_ERROR_CODE KST3000::getWaveformPreamble() {
+PIL_ERROR_CODE KST3000::getWaveformPreamble(std::string *result) {
     SubArg subArg("WAVeform");
     subArg.AddElem("PREamble", ":", "?");
 
     ExecArgs args;
     args.AddArgument(subArg, "");
 
-    std::string result;
-    return Exec2("", &args, &result, false);
+    return Exec2("", &args, result, false);
 }
 
 /**
@@ -293,7 +292,7 @@ PIL_ERROR_CODE KST3000::getWaveformPoints(int *nrWaveformPoints) {
     args.AddArgument("WAVeform", ":POINts?");
 
     std::string response;
-    auto ret = Exec("", &args, &response, false);
+    auto ret = Exec2("", &args, &response, false);
     if (ret != PIL_NO_ERROR)
         return ret;
 
@@ -336,7 +335,7 @@ PIL_ERROR_CODE KST3000::setWaveformFormat(FILE_FORMAT format) {
     SubArg subArg("WAVeform");
     subArg.AddElem("FORMat", ":");
     ExecArgs args;
-    args.AddArgument(subArg, getFileFormatStrFromEnum(format));
+    args.AddArgument(subArg, getFileFormatStrFromEnum(format), " ");
     return Exec("", &args);
 }
 
@@ -372,7 +371,7 @@ PIL_ERROR_CODE KST3000::writeToFile(const char *data, const std::string &file_pa
    The size can vary depending on the number of points acquired for the waveform.(In the example, 1000 points)
    You can then read that number of bytes from the oscilloscope and the terminating NL character.
  * */
-PIL_ERROR_CODE KST3000::getWaveformData(char *data) {
+PIL_ERROR_CODE KST3000::getWaveformData(std::string *data) {
     if (!data) {
         if (m_EnableExceptions)
             throw PIL::Exception(PIL_INVALID_ARGUMENTS, __FILENAME__, __LINE__, "");
@@ -390,16 +389,13 @@ PIL_ERROR_CODE KST3000::getWaveformData(char *data) {
     if (retGetWaveFormPoints != PIL_NO_ERROR)
         return retGetWaveFormPoints;
 
-    int data_length = 20 + num + 1;  //TODO 10 is the length of <header>, 1 is the end breakline(\n)
-    char *buffer = new char[data_length];
-    auto execRet = Exec("", &args, buffer, true, data_length);
+    auto execRet = Exec2("", &args, data, false);
     if (execRet != PIL_NO_ERROR) {
-        delete[] buffer;
         return execRet;
     }
 
-    memcpy(data, buffer + 10, num); // TODO: add check if data is large enough
-    delete[] buffer;
+    *data = data->substr(10, data->length());
+
     return PIL_NO_ERROR;
 }
 
@@ -418,24 +414,26 @@ PIL_ERROR_CODE KST3000::getRealData(double **result) {
     if (getWaveFormPointsRet != PIL_NO_ERROR)
         return getWaveFormPointsRet;
 
-    char *data = new char(points);
-    auto getWaveFormDataRet = getWaveformData(data);
+    std::string data;
+    auto getWaveFormDataRet = getWaveformData(&data);
     if (getWaveFormDataRet != PIL_NO_ERROR)
         return getWaveFormDataRet;
 
-    char preamble[MEASURE_RET_BUFF_SIZE];
-    auto getWaveFormPreambleRet = getWaveformPreamble();
+    std::string preamble;
+    auto getWaveFormPreambleRet = getWaveformPreamble(&preamble);
     if (getWaveFormPreambleRet != PIL_NO_ERROR)
         return getWaveFormPreambleRet;
 
     std::string delimiter = ",";
-    std::vector<std::string> v_preamble = split(preamble, delimiter);
+    std::vector<std::string> v_preamble = splitString(preamble, delimiter);
     double x_increment = std::stod(v_preamble[4]);          // TODO add define which makes the position more clear
     double x_origin = std::stod(v_preamble[5]);             // TODO add define which makes the position more clear
     double x_reference = std::stod(v_preamble[6]);          // TODO add define which makes the position more clear
     double y_increment = std::stod(v_preamble[7]);          // TODO add define which makes the position more clear
     double y_origin = std::stod(v_preamble[8]);             // TODO add define which makes the position more clear
     double y_reference = std::stod(v_preamble[9]);          // TODO add define which makes the position more clear
+
+    std::vector<std::string> v_data = splitString(data, delimiter);
 
     // TODO make the calculation more clear!
     for (int i = 0; i < points; i++) {
@@ -450,7 +448,6 @@ PIL_ERROR_CODE KST3000::getRealData(double **result) {
         double voltage = ((voltage_data - y_reference) * y_increment) + y_origin;
         result[1][i] = voltage;
     }
-    delete data;
     return PIL_NO_ERROR;
 }
 
@@ -469,13 +466,14 @@ PIL_ERROR_CODE KST3000::getRealData(double **result) {
  * */
 // TODO refactor to csv handler class
 PIL_ERROR_CODE KST3000::saveWaveformData(std::string &file_path) {
-    char preamble[1024]; // TODO avoid static numeric definitions in source code
-    auto getWaveFormPreambleRet = getWaveformPreamble();
+    setWaveformFormat(BYTE);
+    std::string preamble;
+    auto getWaveFormPreambleRet = getWaveformPreamble(&preamble);
     if (getWaveFormPreambleRet != PIL_NO_ERROR)
         return getWaveFormPreambleRet;
 
     std::string delimiter = ",";
-    std::vector<std::string> v_preamble = split(preamble, delimiter);
+    std::vector<std::string> v_preamble = splitString(preamble, delimiter);
     int points;
     auto getWaveformPointsRet = getWaveformPoints(&points);
     if (getWaveformPointsRet != PIL_NO_ERROR)
@@ -492,21 +490,6 @@ PIL_ERROR_CODE KST3000::saveWaveformData(std::string &file_path) {
                << std::endl; // TODO: ADD explanation, no static numeric values in the source code!
     }
     writeToFile(stream.str().c_str(), file_path);
-
-//  stringstream stream;
-//  stream << "time(ms)" << "," << "voltage(V)" << endl;
-//  for (int i = 0; i < points; i++) {
-//    double time = ((i - x_reference) * x_increment) + x_origin;
-//    int voltage_data = (int) (unsigned char) data[i];
-//
-//    if (voltage_data == 0) {
-//      continue;
-//    }
-//    double voltage = ((voltage_data - y_reference) * y_increment) + y_origin;
-//    stream << time * 1000 << "," << voltage << endl;
-//  }
-//
-//  write_to_file(stream.str(), file_path);
     return PIL_NO_ERROR;
 }
 
@@ -524,23 +507,22 @@ PIL_ERROR_CODE KST3000::setDisplayMode(DISPLAY_MODES mode) {
 /**
  * @brief capture data
  * */
-PIL_ERROR_CODE KST3000::digitize() {
+PIL_ERROR_CODE KST3000::digitize(OSC_CHANNEL channel) {
     ExecArgs args;
-    return Exec("DIGitize", &args);
+    return Exec("DIGitize CHAnnel" + getChannelFromEnum(channel), &args);
 }
 
 /**
  * @brief get system setup
  * */
-PIL_ERROR_CODE KST3000::getSystemSetup(char *buffer) {
+PIL_ERROR_CODE KST3000::getSystemSetup(std::string *buffer) {
     SubArg subArg("SYSTem");
     subArg.AddElem("SETup", ":", "?");
 
     ExecArgs args;
     args.AddArgument(subArg, "");
 
-    // TODO
-    return Exec("", &args, buffer);
+    return Exec2("", &args, buffer, false);
 }
 
 /**
@@ -549,7 +531,7 @@ PIL_ERROR_CODE KST3000::getSystemSetup(char *buffer) {
 PIL_ERROR_CODE KST3000::setWaveformSource(OSC_CHANNEL channel) {
     ExecArgs execArgs;
     execArgs.AddArgument("CHANnel", getChannelFromEnum(channel));
-    return Exec("WAVeform:SOURce", &execArgs);
+    return Exec("WAVeform:SOURce ", &execArgs);
 }
 
 /*static*/ std::string KST3000::getTriggerEdgeStr(Oscilloscope::TRIGGER_EDGE edge) {
