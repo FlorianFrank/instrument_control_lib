@@ -60,6 +60,8 @@ public:
     PIL_ERROR_CODE displayConnection();
     PIL_ERROR_CODE setChannelDisplay(OSC_CHANNEL channel, int on);
 
+    PIL_ERROR_CODE Exec2(const std::string &command, ExecArgs *args, std::string *result, bool br);
+
 private:
     // Helper-functions
     static std::string getTriggerEdgeStr(TRIGGER_EDGE edge) ;

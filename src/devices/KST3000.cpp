@@ -28,6 +28,16 @@ KST3000::KST3000(const char *ip, int timeoutInMS, PIL::Logging *logger)
     //m_DeviceName = DEVICE_NAME;
 }
 
+PIL_ERROR_CODE KST3000::Exec2(const std::string &command, ExecArgs *args, std::string *result, bool br) {
+    auto ret = Exec(command, args);
+
+    if (ret != PIL_NO_ERROR) {
+        return ret;
+    }
+
+    return Exec(" ", nullptr, result, br);
+}
+
 
 /**
  * @brief Display a line of text: Connected Successfully. Returning...
@@ -261,7 +271,8 @@ PIL_ERROR_CODE KST3000::getWaveformPreamble() {
     ExecArgs args;
     args.AddArgument(subArg, "");
 
-    return Exec("", &args);
+    std::string result;
+    return Exec2("", &args, &result, false);
 }
 
 /**
