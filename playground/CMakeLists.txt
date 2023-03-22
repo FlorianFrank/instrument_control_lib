@@ -20,23 +20,3 @@ install(TARGETS playground
         ARCHIVE DESTINATION lib
         RUNTIME DESTINATION bin
         )
-
-
-project(measure_chip)
-add_executable(measure_chip measure_chip.cpp)
-
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
-
-target_include_directories(measure_chip PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/pugixml/src"
-        "${CMAKE_CURRENT_SOURCE_DIR}/../include"
-        "${CMAKE_CURRENT_SOURCE_DIR}/../common_tools_lib/ErrorHandling/include")
-
-target_link_directories(measure_chip PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../out/lib")
-
-target_link_libraries(measure_chip PUBLIC instrument_control_lib)
-
-install(TARGETS measure_chip
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib
-        RUNTIME DESTINATION bin
-        )
