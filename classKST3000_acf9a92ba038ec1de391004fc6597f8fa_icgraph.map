@@ -1,5 +1,0 @@
-<map id="KST3000::getWaveformPreamble" name="KST3000::getWaveformPreamble">
-<area shape="rect" id="node1" title="Query the preamble of waveform data, e.g. WAVeform:PREamble?" alt="" coords="485,31,723,57"/>
-<area shape="rect" id="node2" href="$classKST3000.html#a762ded4a805dfd410224cfaf95e66cc5" title="convert a measurement data array to a 2d array: time array &amp; voltage array" alt="" coords="269,5,437,32"/>
-<area shape="rect" id="node3" href="$classKST3000.html#a9ecd39f48a38870473b438d40d166af6" title="save waveform data to the target file" alt="" coords="5,31,221,57"/>
-</map>

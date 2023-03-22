@@ -1,56 +1,57 @@
 <map id="ExecArgs::AddArgument" name="ExecArgs::AddArgument">
-<area shape="rect" id="node1" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="1069,1196,1248,1223"/>
-<area shape="rect" id="node2" href="$classExecArgs.html#a5f9ae6324d90d84d418b4449c120c241" title="Add a subarg as argument to the ExecArgList. This is necessary when the argument itself consists of m..." alt="" coords="807,5,985,32"/>
-<area shape="rect" id="node3" href="$classKEI2600.html#a493ff85f52f46135ac6aee50ad3f50b9" title="Clears the buffer with the given name." alt="" coords="819,56,973,83"/>
-<area shape="rect" id="node6" href="$classKEI2600.html#a4a2adacc527dd6cce95977013fb6822b" title="Clear the error buffer." alt="" coords="803,157,989,184"/>
-<area shape="rect" id="node7" href="$classDevice.html#a25e4f976e664c5cf63c214f560316907" title="Stops the execution for the specified amount of time in seconds. If buffering is enabled,..." alt="" coords="841,259,951,285"/>
-<area shape="rect" id="node8" href="$classKST3000.html#ac85102301233e02fc9d55d106e183ed8" title="Set timebase(horizontal) delay; Equivalent to adjust the delay knob in Horizontal controls...." alt="" coords="515,233,693,260"/>
-<area shape="rect" id="node9" href="$classKST33500.html#a55f52e6034b10e4fa5927934f0aebd49" title=" " alt="" coords="825,309,967,336"/>
-<area shape="rect" id="node10" href="$classKST3000.html#a9c62b747723ece038505106e2addd829" title="Display a line of text: Connected Successfully. Returning... The message will disappear after 2 secon..." alt="" coords="793,360,999,387"/>
-<area shape="rect" id="node11" href="$classKEI2600.html#a5a1806312d14816cd5b49eacd5ac8d8d" title="Specify the type of measurement currently displayed." alt="" coords="775,411,1017,437"/>
-<area shape="rect" id="node12" href="$classKEI2600.html#a54d1a35c1aabbc9b1f360809f5cf77ea" title="Retrieves the size of the buffer with the given name." alt="" coords="811,107,981,133"/>
-<area shape="rect" id="node13" href="$classDevice.html#aa44c6120859cf5d5ad9edf71c55df2e5" title="Gets the name of the currently connected device." alt="" coords="797,461,995,488"/>
-<area shape="rect" id="node14" href="$classKEI2600.html#a00c91442df6f1ee0aa2a25133814536d" title="Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return PIL..." alt="" coords="789,512,1003,539"/>
-<area shape="rect" id="node16" href="$classKEI2600.html#a6cb85ed160de36aeda8ef8e7158bcf78" title="Return last error in error&#45;queue." alt="" coords="815,563,977,589"/>
-<area shape="rect" id="node17" href="$classKST3000.html#afa5f5e146ecc81caf11825ff6c541dc8" title="get system setup" alt="" coords="799,664,993,691"/>
-<area shape="rect" id="node18" href="$classKST3000.html#a0301a37e69f16e30e9924c3b8e9bea8d" title="get the sampled data points" alt="" coords="501,816,707,843"/>
-<area shape="rect" id="node21" href="$classKST3000.html#a2cb297fe7c1930ecaa12eb182e228dbc" title="Query the number of waveform points to be transferred." alt="" coords="789,765,1003,792"/>
-<area shape="rect" id="node22" href="$classKST3000.html#acf9a92ba038ec1de391004fc6597f8fa" title="Query the preamble of waveform data, e.g. WAVeform:PREamble?" alt="" coords="485,664,723,691"/>
-<area shape="rect" id="node23" href="$classKEI2600.html#a5756077c5f8f263c2462e8a1c2417c2a" title="This function measures a certain unit on a specific channel. This function can be used to measure vol..." alt="" coords="826,613,966,640"/>
-<area shape="rect" id="node24" href="$classKST3000.html#a2d1b41ddeb2cbce1ece1ab039104ccda" title="Show or hide channel display. Equivalent to press channel number button." alt="" coords="791,867,1001,893"/>
-<area shape="rect" id="node25" href="$classKST3000.html#a283e563b720b61b97077d2a43a276b87" title="Set vertical offset. Equivalent to adjust the knob below channel number button." alt="" coords="797,917,995,944"/>
-<area shape="rect" id="node26" href="$classKST3000.html#a8734d2bdbc2e8cd726e21eb13d739d80" title="Similar to setChannelScale, but set the whole voltage range." alt="" coords="795,968,997,995"/>
-<area shape="rect" id="node27" href="$classKST3000.html#af63c55f2de7384d97be999556e6c7317" title="Equivalent to adjust the knob above channel numbers. e.g. CHANnel3:SCALe 5." alt="" coords="799,1019,993,1045"/>
-<area shape="rect" id="node28" href="$classSPD1305.html#a840844d4398ea417102ff22d2c70db77" title=" " alt="" coords="818,1069,974,1096"/>
-<area shape="rect" id="node29" href="$classKST3000.html#aecc19bdbc5fa7571e9a10d74aee93a3f" title="set timebase mode" alt="" coords="800,1120,992,1147"/>
-<area shape="rect" id="node30" href="$classKST33500.html#a356175b0c6bc629f074f7444753b51b2" title=" " alt="" coords="805,1171,987,1197"/>
-<area shape="rect" id="node31" href="$classKST33500.html#ab29e94d3be6538e69843e7c3105f60dc" title="Set output function of the function generator. E.g. SIN sets a sinus wave." alt="" coords="811,1221,981,1248"/>
-<area shape="rect" id="node32" href="$classKEI2600.html#aec1764f1207b9bc036b1e91402c8e87f" title="Sets the level of a certain channel and of a certain unit. It can set the voltage or current on Chann..." alt="" coords="827,1272,965,1299"/>
-<area shape="rect" id="node33" href="$classKEI2600.html#ac1928210aeb6c6aa0788af67f86a6f09" title="Sets the limit of a certain channel of a certain unit. Allowed are power voltage and current...." alt="" coords="828,1323,964,1349"/>
-<area shape="rect" id="node34" href="$classKEI2600.html#ae2dba0541e8755343e4044b81eedee4c" title="Enables or disableds automatic updates to the internal reference measurements (autozero) of the instr..." alt="" coords="787,1373,1005,1400"/>
-<area shape="rect" id="node35" href="$classKEI2600.html#ab315c7d5f0af6969b9f95fc58887cf93" title="Sets the number of measurements made when a measurement is requested." alt="" coords="797,1424,995,1451"/>
-<area shape="rect" id="node36" href="$classKEI2600.html#a1fc7d82ae4752fb1b1842e024dd96d4b" title="Sets the lowest measurement range that is used when the instrument is autoranging." alt="" coords="783,1475,1009,1501"/>
-<area shape="rect" id="node37" href="$classKEI2600.html#a1fa0fabf7e491f37e50b1137f7672b57" title="Sets the integration apeture for measurements." alt="" coords="805,1525,987,1552"/>
-<area shape="rect" id="node38" href="$classKEI2600.html#a9dd157b4fa3a260a504d40131a23a9a2" title="Sets the measure range (positive full&#45;scale value of the measurement range of that SMU)...." alt="" coords="796,1576,996,1603"/>
-<area shape="rect" id="node39" href="$classKST33500.html#ac30233388d9a50b377df633455b52901" title=" " alt="" coords="819,1627,973,1653"/>
-<area shape="rect" id="node40" href="$classKST33500.html#aac964794c330837fe563caa8055063ba" title=" " alt="" coords="819,1677,973,1704"/>
-<area shape="rect" id="node41" href="$classKEI2600.html#a843a676534b9d8529c3e55dbe5ee77d6" title="Sets the sense mode of a specific channel. LOCAL, REMOTE or CALA is supported. When selecting LOCAL,..." alt="" coords="807,1728,985,1755"/>
-<area shape="rect" id="node42" href="$classKEI2600.html#a695932d499fa40e39cda7d99a3c80aac" title="Set the source function which can bei either voltage or current." alt="" coords="795,1779,997,1805"/>
-<area shape="rect" id="node43" href="$classKEI2600.html#a4e277f09cfe4514f7b5ea6f87db885c1" title="Sets the source output&#45;off mode." alt="" coords="795,1829,997,1856"/>
-<area shape="rect" id="node44" href="$classKEI2600.html#a3fa30f537602a306418b1965e7e03b43" title="Assigning a value to this attribute sets the SMU to a fixed range large enough to source the assigned..." alt="" coords="802,1880,990,1907"/>
-<area shape="rect" id="node45" href="$classKEI2600.html#a8d1fa800384584b0ef2765ba021d8ffc" title="Set the source settling mode. (See SRC_SETTLING enum for more information)" alt="" coords="797,1931,995,1957"/>
-<area shape="rect" id="node46" href="$classKST3000.html#af3e7c3f4bf7f7155bf49dac936cb6d6e" title="Set timebase(horizontal) range; Equivalent to adjust the &quot;Horizontal&quot; knob." alt="" coords="805,1981,987,2008"/>
-<area shape="rect" id="node47" href="$classKST3000.html#a42e9404dff492a9debb8ee6d870cfff6" title="Set trigger slope." alt="" coords="805,2032,987,2059"/>
-<area shape="rect" id="node48" href="$classKST3000.html#aaf28d64448cf4fdd059d961040b7e149" title="Set trigger channel." alt="" coords="799,2083,993,2109"/>
-<area shape="rect" id="node49" href="$classKST3000.html#a82660e115efa976bbb142aa3f429926c" title="set format of waveform data(default &quot;BYTE&quot;)" alt="" coords="786,2133,1006,2160"/>
-<area shape="rect" id="node50" href="$classKST3000.html#acfab2022688382c38431854c931b232b" title="set number of waveform points" alt="" coords="789,2184,1003,2211"/>
-<area shape="rect" id="node51" href="$classKST3000.html#a38bc69f14634568ca868bba591723533" title="set waveform points mode" alt="" coords="771,2235,1021,2261"/>
-<area shape="rect" id="node52" href="$classKST3000.html#ae5e640db4b1ce82ba9f66b49a0c2b296" title="set waveform source" alt="" coords="787,2285,1005,2312"/>
-<area shape="rect" id="node53" href="$classSPD1305.html#ab7f6ab9eeb531e59f0b17ddc6867bee7" title=" " alt="" coords="829,2336,963,2363"/>
-<area shape="rect" id="node54" href="$classSPD1305.html#a12d2a2dc9a209540ad9a23204b2c1b2f" title=" " alt="" coords="830,2387,962,2413"/>
-<area shape="rect" id="node4" href="$classKEI2600.html#a1df40b049d98791f48e671e59cbcfcaa" title="Reads the complete buffer with the given name." alt="" coords="529,81,679,108"/>
-<area shape="rect" id="node5" href="$classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title="Reads the complete buffer with the given name. Instead of returning the received error code,..." alt="" coords="270,81,437,108"/>
-<area shape="rect" id="node15" href="$classKEI2600.html#ac7160a44757d3807cc46dfbf5a20dbc8" title="Measurement method identical to KEI2600::measure, but in this method, the value is directly returned ..." alt="" coords="526,563,682,589"/>
-<area shape="rect" id="node19" href="$classKST3000.html#a762ded4a805dfd410224cfaf95e66cc5" title="convert a measurement data array to a 2d array: time array &amp; voltage array" alt="" coords="269,765,437,792"/>
-<area shape="rect" id="node20" href="$classKST3000.html#a9ecd39f48a38870473b438d40d166af6" title="save waveform data to the target file" alt="" coords="5,715,221,741"/>
+<area shape="rect" id="node1" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="1121,1196,1300,1223"/>
+<area shape="rect" id="node2" href="$classExecArgs.html#a5f9ae6324d90d84d418b4449c120c241" title="Add a subarg as argument to the ExecArgList. This is necessary when the argument itself consists of m..." alt="" coords="859,5,1037,32"/>
+<area shape="rect" id="node3" href="$classKEI2600.html#a493ff85f52f46135ac6aee50ad3f50b9" title="Clears the buffer with the given name." alt="" coords="871,56,1025,83"/>
+<area shape="rect" id="node6" href="$classKEI2600.html#a4a2adacc527dd6cce95977013fb6822b" title="Clear the error buffer." alt="" coords="855,157,1041,184"/>
+<area shape="rect" id="node7" href="$classDevice.html#a25e4f976e664c5cf63c214f560316907" title="Stops the execution for the specified amount of time in seconds. If buffering is enabled,..." alt="" coords="893,259,1003,285"/>
+<area shape="rect" id="node8" href="$classKST3000.html#ac85102301233e02fc9d55d106e183ed8" title="Set timebase(horizontal) delay; Equivalent to adjust the delay knob in Horizontal controls...." alt="" coords="567,233,745,260"/>
+<area shape="rect" id="node9" href="$classKST33500.html#a55f52e6034b10e4fa5927934f0aebd49" title=" " alt="" coords="877,309,1019,336"/>
+<area shape="rect" id="node10" href="$classKST3000.html#a9c62b747723ece038505106e2addd829" title="Display a line of text: Connected Successfully. Returning... The message will disappear after 2 secon..." alt="" coords="845,360,1051,387"/>
+<area shape="rect" id="node11" href="$classKEI2600.html#a5a1806312d14816cd5b49eacd5ac8d8d" title="Specify the type of measurement currently displayed." alt="" coords="827,411,1069,437"/>
+<area shape="rect" id="node12" href="$classKEI2600.html#a54d1a35c1aabbc9b1f360809f5cf77ea" title="Retrieves the size of the buffer with the given name." alt="" coords="863,107,1033,133"/>
+<area shape="rect" id="node13" href="$classDevice.html#aa44c6120859cf5d5ad9edf71c55df2e5" title="Gets the name of the currently connected device." alt="" coords="849,461,1047,488"/>
+<area shape="rect" id="node14" href="$classKEI2600.html#a00c91442df6f1ee0aa2a25133814536d" title="Request amount of elements in error queue. If queue is empty return PIL_NO_ERROR otherwise return PIL..." alt="" coords="841,512,1055,539"/>
+<area shape="rect" id="node16" href="$classKEI2600.html#a6cb85ed160de36aeda8ef8e7158bcf78" title="Return last error in error&#45;queue." alt="" coords="867,563,1029,589"/>
+<area shape="rect" id="node17" href="$classKST3000.html#a0ee2b4831deaf394c191a8de83cad051" title="get system setup" alt="" coords="851,664,1045,691"/>
+<area shape="rect" id="node18" href="$classKST3000.html#aaeb2af696905f40c299b5871c067368c" title="get the sampled data points" alt="" coords="553,816,759,843"/>
+<area shape="rect" id="node22" href="$classKST3000.html#a2cb297fe7c1930ecaa12eb182e228dbc" title="Query the number of waveform points to be transferred." alt="" coords="841,867,1055,893"/>
+<area shape="rect" id="node23" href="$classKST3000.html#a7bca94b5aceb2002dffd9568d867d997" title="Query the preamble of waveform data, e.g. WAVeform:PREamble?" alt="" coords="537,765,775,792"/>
+<area shape="rect" id="node24" href="$classKEI2600.html#a5756077c5f8f263c2462e8a1c2417c2a" title="This function measures a certain unit on a specific channel. This function can be used to measure vol..." alt="" coords="878,613,1018,640"/>
+<area shape="rect" id="node25" href="$classKST3000.html#a2d1b41ddeb2cbce1ece1ab039104ccda" title="Show or hide channel display. Equivalent to press channel number button." alt="" coords="843,917,1053,944"/>
+<area shape="rect" id="node26" href="$classKST3000.html#a283e563b720b61b97077d2a43a276b87" title="Set vertical offset. Equivalent to adjust the knob below channel number button." alt="" coords="849,968,1047,995"/>
+<area shape="rect" id="node27" href="$classKST3000.html#a8734d2bdbc2e8cd726e21eb13d739d80" title="Similar to setChannelScale, but set the whole voltage range." alt="" coords="847,1019,1049,1045"/>
+<area shape="rect" id="node28" href="$classKST3000.html#af63c55f2de7384d97be999556e6c7317" title="Equivalent to adjust the knob above channel numbers. e.g. CHANnel3:SCALe 5." alt="" coords="851,1069,1045,1096"/>
+<area shape="rect" id="node29" href="$classSPD1305.html#a840844d4398ea417102ff22d2c70db77" title=" " alt="" coords="870,1120,1026,1147"/>
+<area shape="rect" id="node30" href="$classKST3000.html#aecc19bdbc5fa7571e9a10d74aee93a3f" title="set timebase mode" alt="" coords="852,1171,1044,1197"/>
+<area shape="rect" id="node31" href="$classKST33500.html#a356175b0c6bc629f074f7444753b51b2" title=" " alt="" coords="857,1221,1039,1248"/>
+<area shape="rect" id="node32" href="$classKST33500.html#ab29e94d3be6538e69843e7c3105f60dc" title="Set output function of the function generator. E.g. SIN sets a sinus wave." alt="" coords="863,1272,1033,1299"/>
+<area shape="rect" id="node33" href="$classKEI2600.html#aec1764f1207b9bc036b1e91402c8e87f" title="Sets the level of a certain channel and of a certain unit. It can set the voltage or current on Chann..." alt="" coords="879,1323,1017,1349"/>
+<area shape="rect" id="node34" href="$classKEI2600.html#ac1928210aeb6c6aa0788af67f86a6f09" title="Sets the limit of a certain channel of a certain unit. Allowed are power voltage and current...." alt="" coords="880,1373,1016,1400"/>
+<area shape="rect" id="node35" href="$classKEI2600.html#ae2dba0541e8755343e4044b81eedee4c" title="Enables or disableds automatic updates to the internal reference measurements (autozero) of the instr..." alt="" coords="839,1424,1057,1451"/>
+<area shape="rect" id="node36" href="$classKEI2600.html#ab315c7d5f0af6969b9f95fc58887cf93" title="Sets the number of measurements made when a measurement is requested." alt="" coords="849,1475,1047,1501"/>
+<area shape="rect" id="node37" href="$classKEI2600.html#a1fc7d82ae4752fb1b1842e024dd96d4b" title="Sets the lowest measurement range that is used when the instrument is autoranging." alt="" coords="835,1525,1061,1552"/>
+<area shape="rect" id="node38" href="$classKEI2600.html#a1fa0fabf7e491f37e50b1137f7672b57" title="Sets the integration apeture for measurements." alt="" coords="857,1576,1039,1603"/>
+<area shape="rect" id="node39" href="$classKEI2600.html#a9dd157b4fa3a260a504d40131a23a9a2" title="Sets the measure range (positive full&#45;scale value of the measurement range of that SMU)...." alt="" coords="848,1627,1048,1653"/>
+<area shape="rect" id="node40" href="$classKST33500.html#ac30233388d9a50b377df633455b52901" title=" " alt="" coords="871,1677,1025,1704"/>
+<area shape="rect" id="node41" href="$classKST33500.html#aac964794c330837fe563caa8055063ba" title=" " alt="" coords="871,1728,1025,1755"/>
+<area shape="rect" id="node42" href="$classKEI2600.html#a843a676534b9d8529c3e55dbe5ee77d6" title="Sets the sense mode of a specific channel. LOCAL, REMOTE or CALA is supported. When selecting LOCAL,..." alt="" coords="859,1779,1037,1805"/>
+<area shape="rect" id="node43" href="$classKEI2600.html#a695932d499fa40e39cda7d99a3c80aac" title="Set the source function which can bei either voltage or current." alt="" coords="847,1829,1049,1856"/>
+<area shape="rect" id="node44" href="$classKEI2600.html#a4e277f09cfe4514f7b5ea6f87db885c1" title="Sets the source output&#45;off mode." alt="" coords="847,1880,1049,1907"/>
+<area shape="rect" id="node45" href="$classKEI2600.html#a3fa30f537602a306418b1965e7e03b43" title="Assigning a value to this attribute sets the SMU to a fixed range large enough to source the assigned..." alt="" coords="854,1931,1042,1957"/>
+<area shape="rect" id="node46" href="$classKEI2600.html#a8d1fa800384584b0ef2765ba021d8ffc" title="Set the source settling mode. (See SRC_SETTLING enum for more information)" alt="" coords="849,1981,1047,2008"/>
+<area shape="rect" id="node47" href="$classKST3000.html#af3e7c3f4bf7f7155bf49dac936cb6d6e" title="Set timebase(horizontal) range; Equivalent to adjust the &quot;Horizontal&quot; knob." alt="" coords="857,2032,1039,2059"/>
+<area shape="rect" id="node48" href="$classKST3000.html#a42e9404dff492a9debb8ee6d870cfff6" title="Set trigger slope." alt="" coords="857,2083,1039,2109"/>
+<area shape="rect" id="node49" href="$classKST3000.html#aaf28d64448cf4fdd059d961040b7e149" title="Set trigger channel." alt="" coords="851,2133,1045,2160"/>
+<area shape="rect" id="node50" href="$classKST3000.html#a82660e115efa976bbb142aa3f429926c" title="set format of waveform data(default &quot;BYTE&quot;)" alt="" coords="269,715,489,741"/>
+<area shape="rect" id="node51" href="$classKST3000.html#acfab2022688382c38431854c931b232b" title="set number of waveform points" alt="" coords="841,2184,1055,2211"/>
+<area shape="rect" id="node52" href="$classKST3000.html#a38bc69f14634568ca868bba591723533" title="set waveform points mode" alt="" coords="823,2235,1073,2261"/>
+<area shape="rect" id="node53" href="$classKST3000.html#ae5e640db4b1ce82ba9f66b49a0c2b296" title="set waveform source" alt="" coords="839,2285,1057,2312"/>
+<area shape="rect" id="node54" href="$classSPD1305.html#ab7f6ab9eeb531e59f0b17ddc6867bee7" title=" " alt="" coords="881,2336,1015,2363"/>
+<area shape="rect" id="node55" href="$classSPD1305.html#a12d2a2dc9a209540ad9a23204b2c1b2f" title=" " alt="" coords="882,2387,1014,2413"/>
+<area shape="rect" id="node4" href="$classKEI2600.html#a1df40b049d98791f48e671e59cbcfcaa" title="Reads the complete buffer with the given name." alt="" coords="581,81,731,108"/>
+<area shape="rect" id="node5" href="$classKEI2600.html#a59eb04543f09eee918a4345ca5720abd" title="Reads the complete buffer with the given name. Instead of returning the received error code,..." alt="" coords="296,81,463,108"/>
+<area shape="rect" id="node15" href="$classKEI2600.html#ac7160a44757d3807cc46dfbf5a20dbc8" title="Measurement method identical to KEI2600::measure, but in this method, the value is directly returned ..." alt="" coords="578,563,734,589"/>
+<area shape="rect" id="node19" href="$classKST3000.html#a762ded4a805dfd410224cfaf95e66cc5" title="convert a measurement data array to a 2d array: time array &amp; voltage array" alt="" coords="295,867,463,893"/>
+<area shape="rect" id="node21" href="$classKST3000.html#aa1b0c5fe489a5b82637a5efa6861200a" title="convert a measurement data array to a 2d array: time array &amp; voltage array" alt="" coords="287,816,471,843"/>
+<area shape="rect" id="node20" href="$classKST3000.html#a9ecd39f48a38870473b438d40d166af6" title="save waveform data to the target file" alt="" coords="5,816,221,843"/>
 </map>

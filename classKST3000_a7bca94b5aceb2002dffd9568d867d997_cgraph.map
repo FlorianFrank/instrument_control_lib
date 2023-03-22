@@ -2,5 +2,6 @@
 <area shape="rect" id="node1" title="Query the preamble of waveform data, e.g. WAVeform:PREamble?" alt="" coords="5,56,243,83"/>
 <area shape="rect" id="node2" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="291,5,469,32"/>
 <area shape="rect" id="node3" href="$classSubArg.html#adc3b8f8ab4e5840ad777638e31fe13c4" title="Add a new string element to the SubArg&#45;object. It is directly concatenated to the previous arguments." alt="" coords="313,56,447,83"/>
-<area shape="rect" id="node4" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="327,107,433,133"/>
+<area shape="rect" id="node4" href="$classKST3000.html#a6dfaef2a5fef0c29a101f885d01a83b4" title=" " alt="" coords="317,107,443,133"/>
+<area shape="rect" id="node5" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="517,107,623,133"/>
 </map>

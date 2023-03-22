@@ -13,10 +13,11 @@ var searchData=
   ['getlasterror_140',['getLastError',['../namespacehttp_1_1detail.html#afa5ba1385c3b065a21c2494f46956d86',1,'http::detail::getLastError()'],['../namespacehttp_1_1detail.html#afa5ba1385c3b065a21c2494f46956d86',1,'http::getLastError()'],['../classKEI2600.html#a6cb85ed160de36aeda8ef8e7158bcf78',1,'KEI2600::getLastError()']]],
   ['getoutputfunction_141',['getOutputFunction',['../classFunctionGenerator.html#ae7110afecfc1b45aff23cb01ea062058',1,'FunctionGenerator']]],
   ['getrealdata_142',['getRealData',['../classKST3000.html#a762ded4a805dfd410224cfaf95e66cc5',1,'KST3000']]],
-  ['getsupporteddevices_143',['GetSupportedDevices',['../classCommandLineInterface.html#a486dce6934360d8193979ba43d35bb20',1,'CommandLineInterface']]],
-  ['getsystemsetup_144',['getSystemSetup',['../classKST3000.html#afa5f5e146ecc81caf11825ff6c541dc8',1,'KST3000']]],
-  ['getwaveformdata_145',['getWaveformData',['../classKST3000.html#a0301a37e69f16e30e9924c3b8e9bea8d',1,'KST3000']]],
-  ['getwaveformpoints_146',['getWaveformPoints',['../classKST3000.html#a2cb297fe7c1930ecaa12eb182e228dbc',1,'KST3000']]],
-  ['getwaveformpreamble_147',['getWaveformPreamble',['../classKST3000.html#acf9a92ba038ec1de391004fc6597f8fa',1,'KST3000']]],
-  ['gone_148',['Gone',['../structhttp_1_1Status.html#af67fe5faedb1ae36130c1f0379e81e01ad33df506add1d074a091070018fbaca8',1,'http::Status']]]
+  ['getrealdatapy_143',['getRealDataPy',['../classKST3000.html#aa1b0c5fe489a5b82637a5efa6861200a',1,'KST3000']]],
+  ['getsupporteddevices_144',['GetSupportedDevices',['../classCommandLineInterface.html#a486dce6934360d8193979ba43d35bb20',1,'CommandLineInterface']]],
+  ['getsystemsetup_145',['getSystemSetup',['../classKST3000.html#a0ee2b4831deaf394c191a8de83cad051',1,'KST3000']]],
+  ['getwaveformdata_146',['getWaveformData',['../classKST3000.html#aaeb2af696905f40c299b5871c067368c',1,'KST3000']]],
+  ['getwaveformpoints_147',['getWaveformPoints',['../classKST3000.html#a2cb297fe7c1930ecaa12eb182e228dbc',1,'KST3000']]],
+  ['getwaveformpreamble_148',['getWaveformPreamble',['../classKST3000.html#a7bca94b5aceb2002dffd9568d867d997',1,'KST3000']]],
+  ['gone_149',['Gone',['../structhttp_1_1Status.html#af67fe5faedb1ae36130c1f0379e81e01ad33df506add1d074a091070018fbaca8',1,'http::Status']]]
 ];

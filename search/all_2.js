@@ -37,11 +37,10 @@ var searchData=
   ['configfileparser_2ecpp_52',['ConfigFileParser.cpp',['../ConfigFileParser_8cpp.html',1,'']]],
   ['configfileparser_2eh_53',['ConfigFileParser.h',['../ConfigFileParser_8h.html',1,'']]],
   ['conflict_54',['Conflict',['../structhttp_1_1Status.html#af67fe5faedb1ae36130c1f0379e81e01a98bf357c551690f9aadf06a5a8e3031e',1,'http::Status']]],
-  ['connect_55',['Connect',['../classDevice.html#a365ae23fbe0d2ea5290881834e1969f7',1,'Device']]],
-  ['connect_56',['connect',['../classhttp_1_1detail_1_1Socket.html#adfa79697053633c3629e96b2cc4265b5',1,'http::detail::Socket']]],
-  ['connect_57',['Connect',['../classCommandLineInterface.html#aa3d89ca8df2f9537a45997639e1ee5c7',1,'CommandLineInterface']]],
-  ['continue_58',['Continue',['../structhttp_1_1Status.html#af67fe5faedb1ae36130c1f0379e81e01a34f28c089d321e727718792f16af0408',1,'http::Status']]],
-  ['created_59',['Created',['../structhttp_1_1Status.html#af67fe5faedb1ae36130c1f0379e81e01a979d4e7f0a298337c8773827ff1f8048',1,'http::Status']]],
-  ['current_60',['CURRENT',['../classSMU.html#a4c7be94a316d3928411f15ebad515fb7acb9f9acd7aeeb6303cb3ac5f7636024f',1,'SMU']]],
-  ['custom_5fcommand1_61',['CUSTOM_COMMAND1',['../CommandLineInterfaceDefines_8h.html#ae938dc7668941d60e02697de2edc63e5a10de559f5aada0fc6507027b80919ba5',1,'CommandLineInterfaceDefines.h']]]
+  ['connect_55',['connect',['../classhttp_1_1detail_1_1Socket.html#adfa79697053633c3629e96b2cc4265b5',1,'http::detail::Socket']]],
+  ['connect_56',['Connect',['../classCommandLineInterface.html#aa3d89ca8df2f9537a45997639e1ee5c7',1,'CommandLineInterface::Connect()'],['../classDevice.html#a365ae23fbe0d2ea5290881834e1969f7',1,'Device::Connect()']]],
+  ['continue_57',['Continue',['../structhttp_1_1Status.html#af67fe5faedb1ae36130c1f0379e81e01a34f28c089d321e727718792f16af0408',1,'http::Status']]],
+  ['created_58',['Created',['../structhttp_1_1Status.html#af67fe5faedb1ae36130c1f0379e81e01a979d4e7f0a298337c8773827ff1f8048',1,'http::Status']]],
+  ['current_59',['CURRENT',['../classSMU.html#a4c7be94a316d3928411f15ebad515fb7acb9f9acd7aeeb6303cb3ac5f7636024f',1,'SMU']]],
+  ['custom_5fcommand1_60',['CUSTOM_COMMAND1',['../CommandLineInterfaceDefines_8h.html#ae938dc7668941d60e02697de2edc63e5a10de559f5aada0fc6507027b80919ba5',1,'CommandLineInterfaceDefines.h']]]
 ];

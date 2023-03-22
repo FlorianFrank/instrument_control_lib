@@ -1,6 +1,9 @@
 <map id="Device::splitString" name="Device::splitString">
-<area shape="rect" id="node1" title="Splits a string by the given delimiter." alt="" coords="552,38,693,65"/>
-<area shape="rect" id="node2" href="$classKEI2600.html#ac285dc67b82f47247a803920f1a909fd" title="Sends and executes the given script." alt="" coords="277,13,504,39"/>
-<area shape="rect" id="node4" href="$classKEI2600.html#ac6f7f82d41f5eff5fd5233d5c6adb641" title="Sends the given script to the SMU. The scripts does not get executed." alt="" coords="315,63,466,90"/>
-<area shape="rect" id="node3" href="$classKEI2600.html#a77da5991bc4dbba6c1e3670e059e3cf8" title="Perform a linear voltage sweep on the SMU. Increases the voltage at the given rate until the stop vol..." alt="" coords="5,5,229,47"/>
+<area shape="rect" id="node1" title="Splits a string by the given delimiter." alt="" coords="552,107,693,133"/>
+<area shape="rect" id="node2" href="$classKST3000.html#a762ded4a805dfd410224cfaf95e66cc5" title="convert a measurement data array to a 2d array: time array &amp; voltage array" alt="" coords="307,5,475,32"/>
+<area shape="rect" id="node3" href="$classKST3000.html#a9ecd39f48a38870473b438d40d166af6" title="save waveform data to the target file" alt="" coords="9,31,225,57"/>
+<area shape="rect" id="node4" href="$classKST3000.html#aa1b0c5fe489a5b82637a5efa6861200a" title="convert a measurement data array to a 2d array: time array &amp; voltage array" alt="" coords="299,107,483,133"/>
+<area shape="rect" id="node5" href="$classKEI2600.html#ac285dc67b82f47247a803920f1a909fd" title="Sends and executes the given script." alt="" coords="277,157,504,184"/>
+<area shape="rect" id="node7" href="$classKEI2600.html#ac6f7f82d41f5eff5fd5233d5c6adb641" title="Sends the given script to the SMU. The scripts does not get executed." alt="" coords="315,208,466,235"/>
+<area shape="rect" id="node6" href="$classKEI2600.html#a77da5991bc4dbba6c1e3670e059e3cf8" title="Perform a linear voltage sweep on the SMU. Increases the voltage at the given rate until the stop vol..." alt="" coords="5,150,229,191"/>
 </map>

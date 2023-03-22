@@ -1,0 +1,4 @@
+<map id="KST3000::setWaveformFormat" name="KST3000::setWaveformFormat">
+<area shape="rect" id="node1" title="set format of waveform data(default &quot;BYTE&quot;)" alt="" coords="269,5,489,32"/>
+<area shape="rect" id="node2" href="$classKST3000.html#a9ecd39f48a38870473b438d40d166af6" title="save waveform data to the target file" alt="" coords="5,5,221,32"/>
+</map>

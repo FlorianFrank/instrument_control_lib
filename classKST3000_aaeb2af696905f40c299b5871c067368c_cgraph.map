@@ -2,6 +2,7 @@
 <area shape="rect" id="node1" title="get the sampled data points" alt="" coords="5,68,212,95"/>
 <area shape="rect" id="node2" href="$classExecArgs.html#a6d1ef4b4a943b7c52df9616f12937e50" title="This file contains the implementation of the execution arguments, which should can be passed to the E..." alt="" coords="523,5,701,32"/>
 <area shape="rect" id="node3" href="$classSubArg.html#adc3b8f8ab4e5840ad777638e31fe13c4" title="Add a new string element to the SubArg&#45;object. It is directly concatenated to the previous arguments." alt="" coords="545,68,679,95"/>
-<area shape="rect" id="node4" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="559,131,665,157"/>
-<area shape="rect" id="node5" href="$classKST3000.html#a2cb297fe7c1930ecaa12eb182e228dbc" title="Query the number of waveform points to be transferred." alt="" coords="260,43,475,69"/>
+<area shape="rect" id="node4" href="$classKST3000.html#a6dfaef2a5fef0c29a101f885d01a83b4" title=" " alt="" coords="549,131,675,157"/>
+<area shape="rect" id="node6" href="$classKST3000.html#a2cb297fe7c1930ecaa12eb182e228dbc" title="Query the number of waveform points to be transferred." alt="" coords="260,43,475,69"/>
+<area shape="rect" id="node5" href="$classDevice.html#a96b33b9121c59a9606829a7c8379e9c2" title="execute a (SCPI) command" alt="" coords="749,131,855,157"/>
 </map>

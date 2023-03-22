@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['oscilloscope_420',['Oscilloscope',['../classOscilloscope.html',1,'']]]
+  ['oscilloscope_421',['Oscilloscope',['../classOscilloscope.html',1,'']]]
 ];
