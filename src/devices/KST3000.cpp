@@ -451,6 +451,60 @@ PIL_ERROR_CODE KST3000::getRealData(double **result) {
     return PIL_NO_ERROR;
 }
 
+/**
+ * @brief convert a measurement data array to a 2d array: time array & voltage array
+ * */
+std::vector<std::vector<double>> KST3000::getRealDataPy() {
+    int points;
+    auto getWaveFormPointsRet = getWaveformPoints(&points);
+    if (getWaveFormPointsRet != PIL_NO_ERROR)
+        throw PIL::Exception(getWaveFormPointsRet, __FILENAME__, __LINE__, "Failed getting waveform points");
+
+    std::string data;
+    auto getWaveFormDataRet = getWaveformData(&data);
+    if (getWaveFormDataRet != PIL_NO_ERROR)
+        throw PIL::Exception(getWaveFormDataRet, __FILENAME__, __LINE__, "Failed getting waveform data.");
+
+    std::string preamble;
+    auto getWaveFormPreambleRet = getWaveformPreamble(&preamble);
+    if (getWaveFormPreambleRet != PIL_NO_ERROR)
+        throw PIL::Exception(getWaveFormPreambleRet, __FILENAME__, __LINE__, "Failed getting waveform preamble.");
+
+    std::string delimiter = ",";
+    std::vector<std::string> v_preamble = splitString(preamble, delimiter);
+    double x_increment = std::stod(v_preamble[4]);          // TODO add define which makes the position more clear
+    double x_origin = std::stod(v_preamble[5]);             // TODO add define which makes the position more clear
+    double x_reference = std::stod(v_preamble[6]);          // TODO add define which makes the position more clear
+    double y_increment = std::stod(v_preamble[7]);          // TODO add define which makes the position more clear
+    double y_origin = std::stod(v_preamble[8]);             // TODO add define which makes the position more clear
+    double y_reference = std::stod(v_preamble[9]);          // TODO add define which makes the position more clear
+
+    std::vector<std::string> v_data = splitString(data, delimiter);
+
+    std::vector<std::vector<double>> result;
+    std::vector<double> r1;
+    std::vector<double> r2;
+    result.push_back(r1);
+    result.push_back(r2);
+
+    // TODO make the calculation more clear!
+    for (int i = 0; i < points; i++) {
+        int voltage_data = (int) (unsigned char) data[i];
+        if (voltage_data == 0) {
+            // Hole. Holes are locations where data has not yet been acquired.
+            continue;
+        }
+
+        double time = ((i - x_reference) * x_increment) + x_origin;
+        result[0].push_back(time);
+
+        double voltage = ((voltage_data - y_reference) * y_increment) + y_origin;
+        result[1].push_back(voltage);
+    }
+
+    return result;
+}
+
 
 /**
  * @brief save waveform data to the target file

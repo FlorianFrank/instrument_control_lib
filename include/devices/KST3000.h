@@ -53,6 +53,7 @@ public:
 
     PIL_ERROR_CODE getWaveformData(std::string *data);
     PIL_ERROR_CODE getRealData(double **result);
+    std::vector<std::vector<double>> getRealDataPy();
     PIL_ERROR_CODE digitize(OSC_CHANNEL channel);
 
     PIL_ERROR_CODE getSystemSetup(std::string *result);
