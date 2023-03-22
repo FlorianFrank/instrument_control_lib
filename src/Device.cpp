@@ -41,8 +41,8 @@ Device::Device(std::string ipAddress, uint16_t srcPort, uint16_t destPort, int t
  * @param ipAddress IP address of the device
  * @param timeoutInMs
  */
-Device::Device(std::string ipAddress, int timeoutInMs, SEND_METHOD mode, bool throwException) : Device(
-        std::move(ipAddress), timeoutInMs, nullptr, mode, throwException) {
+Device::Device(std::string ipAddress, int timeoutInMs, SEND_METHOD mode, bool throwException)
+        : Device(std::move(ipAddress), timeoutInMs, nullptr, mode, throwException) {
 }
 
 

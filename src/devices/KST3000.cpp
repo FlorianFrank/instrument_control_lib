@@ -19,6 +19,7 @@
  * */
 KST3000::KST3000(const char *ip, int timeoutInMS)
         : Oscilloscope(ip, timeoutInMS, nullptr) {
+    m_Logger = new PIL::Logging(PIL::INFO, nullptr);
     //m_DeviceName = DEVICE_NAME;
 }
 
