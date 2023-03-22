@@ -142,6 +142,8 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
     /** Oscilloscope**/
     class_<KST3000>(m, "KST3000")
         .def(pybind11::init<char *, int>())
+        .def("connect", &KST3000::Connect)
+        .def("disconnect", &KST3000::Disconnect)
         .def("run", &KST3000::run)
         .def("stop", &KST3000::stop)
         .def("single", &KST3000::single)
@@ -160,8 +162,7 @@ PYBIND11_MODULE(py_instrument_control_lib, m) {
         .def("setWaveformPointsMode", &KST3000::setWaveformPointsMode)
         .def("setWaveformFormat", &KST3000::setWaveformFormat)
         .def("saveWaveformData", &KST3000::saveWaveformData)
-        .def("getWaveformData", &KST3000::getWaveformData)
-      //  .def("getRealData", &KST3000::getRealData)
+        .def("getRealData", &KST3000::getRealDataPy)
         .def("digitize", &KST3000::digitize)
         .def("getSystemSetup", &KST3000::getSystemSetup)
         .def("setDisplayMode", &KST3000::setDisplayMode)

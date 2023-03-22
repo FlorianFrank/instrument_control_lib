@@ -41,8 +41,9 @@ Device::Device(std::string ipAddress, uint16_t srcPort, uint16_t destPort, int t
  * @param ipAddress IP address of the device
  * @param timeoutInMs
  */
-Device::Device(std::string ipAddress, int timeoutInMs, SEND_METHOD mode, bool throwException) : Device(
-        std::move(ipAddress), timeoutInMs, nullptr, mode, throwException) {}
+Device::Device(std::string ipAddress, int timeoutInMs, SEND_METHOD mode, bool throwException)
+        : Device(std::move(ipAddress), timeoutInMs, nullptr, mode, throwException) {
+}
 
 
 /**
@@ -57,7 +58,7 @@ Device::Device(std::string ipAddress, int timeoutInMs, PIL::Logging *logger, SEN
 
 Device::~Device() {
     Disconnect();
-    delete m_SocketHandle;
+    //delete m_SocketHandle;  // TODO: FIX!
 }
 
 /**
@@ -357,11 +358,14 @@ void Device::changeSendMode(SEND_METHOD mode) {
     size_t pos_start = 0, pos_end, delim_len = delimiter.length();
     std::string token;
     std::vector<std::string> res;
+    res.reserve(1000);
 
     while ((pos_end = toSplit.find(delimiter, pos_start)) != std::string::npos) {
         token = toSplit.substr(pos_start, pos_end - pos_start);
         pos_start = pos_end + delim_len;
-        res.push_back(token);
+        std::string token2;
+        token2 = token;
+        res.push_back(token2);
     }
 
     res.push_back(toSplit.substr(pos_start));

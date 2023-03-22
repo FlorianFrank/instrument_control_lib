@@ -44,21 +44,24 @@ public:
     PIL_ERROR_CODE setTimeDelay(double delay);
 
     PIL_ERROR_CODE setWaveformSource(OSC_CHANNEL channel);
-    PIL_ERROR_CODE getWaveformPreamble();
+    PIL_ERROR_CODE getWaveformPreamble(std::string *result);
     PIL_ERROR_CODE getWaveformPoints(int* nrWaveFormPoints);
     PIL_ERROR_CODE setWaveformPoints(int num_points);
     PIL_ERROR_CODE setWaveformPointsMode(std::string &mode);
     PIL_ERROR_CODE setWaveformFormat(FILE_FORMAT format);
     PIL_ERROR_CODE saveWaveformData(std::string &file_path); // TODO remove unnecessary default argument
 
-    PIL_ERROR_CODE getWaveformData(char *data);
+    PIL_ERROR_CODE getWaveformData(std::string *data);
     PIL_ERROR_CODE getRealData(double **result);
-    PIL_ERROR_CODE digitize();
+    std::vector<std::vector<double>> getRealDataPy();
+    PIL_ERROR_CODE digitize(OSC_CHANNEL channel);
 
-    PIL_ERROR_CODE getSystemSetup(char *buffer);
+    PIL_ERROR_CODE getSystemSetup(std::string *result);
     PIL_ERROR_CODE setDisplayMode(DISPLAY_MODES displayMode);
     PIL_ERROR_CODE displayConnection();
     PIL_ERROR_CODE setChannelDisplay(OSC_CHANNEL channel, int on);
+
+    PIL_ERROR_CODE Exec2(const std::string &command, ExecArgs *args, std::string *result, bool br);
 
 private:
     // Helper-functions
