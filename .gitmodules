@@ -1,12 +1,12 @@
 [submodule "common_tools_lib"]
 	path = common_tools_lib
-	url = git@github.com:FlorianFrank/common_tools_lib.git
+	url = https://github.com/FlorianFrank/common_tools_lib.git
 [submodule "pugixml"]
 	path = pugixml
-	url = git@github.com:zeux/pugixml.git
+	url = https://github.com/zeux/pugixml.git
 [submodule "pybind11"]
 	path = python_interface/pybind11
-	url = git@github.com:pybind/pybind11.git
+	url = https://github.com/pybind/pybind11.git
 [submodule "config_files/doc/doxygen-awesome-css"]
 	path = config_files/doc/doxygen-awesome-css
 	url = https://github.com/jothepro/doxygen-awesome-css.git
