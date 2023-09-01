@@ -5,7 +5,7 @@
 
 This repository contains the code to configure oscilloscopes, signal generators, DC Power-supplies and other measurement
 devices.
-<br><br>
+<br> <br>
 It provides following functionality:
 <br>
 
