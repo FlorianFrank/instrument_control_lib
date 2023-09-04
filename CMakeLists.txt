@@ -62,7 +62,7 @@ install(DIRECTORY include/
         FILES_MATCHING PATTERN "*.h"
         )
 
-
+set(BUILD_DOCUMENTATION 0)
 if (BUILD_DOCUMENTATION)
     include("${CMAKE_CURRENT_SOURCE_DIR}/build_config/documentation.cmake")
     build_documentation()
