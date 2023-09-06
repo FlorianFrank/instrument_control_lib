@@ -51,6 +51,17 @@ jobs:
         shell: pwsh
         run: cmake --build . --config ${{ matrix.config.build_type }} --target all
 
+      - name: Pip install
+        working-directory: ${{runner.workspace}}
+        shell: pwsh
+        run: pip install .
+
+      - name: Pip wheel
+        working-directory: ${{runner.workspace}}
+        shell: pwsh
+        run: pip wheel .
+
+
       - name: Execute UnitTests Common Tools Lib
         working-directory: ${{runner.workspace}}/build
         run: .\common_tools_lib\SocketUnitTest.exe GTEST_OUTPUT=xml:test-results/ GTEST_COLOR=1 ctest -V;
