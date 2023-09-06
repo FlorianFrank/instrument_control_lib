@@ -54,12 +54,12 @@ jobs:
       - name: Pip install
         working-directory: ${{runner.workspace}}
         shell: pwsh
-        run: pip install .
+        run: pip install ${{runner.workspace}}/instrument_control_lib
 
       - name: Pip wheel
         working-directory: ${{runner.workspace}}
         shell: pwsh
-        run: pip wheel .
+        run: pip wheel ${{runner.workspace}}/instrument_control_lib
 
 
       - name: Execute UnitTests Common Tools Lib
