@@ -33,6 +33,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+            - os: windows-latest,
+              artifact: "windows_mingw.7z"
+              build_type: "Release"
+              cc: "gcc"
+              cxx: "g++"
+              archiver: "7z a"
+              generators: "Ninja"
 
     steps:
     - uses: actions/checkout@v3
