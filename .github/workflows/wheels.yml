@@ -44,9 +44,7 @@ jobs:
     - uses: pypa/cibuildwheel@v2.15
       env:
         CIBW_ARCHS_MACOS: auto universal2
-        CARGO_BUILD_TARGET: x86_64-pc-windows-gnu
-        CIBW_ENVIRONMENT_WINDOWS: >
-            CARGO_BUILD_TARGET=x86_64-pc-windows-gnu
+        CIBW_CARGO_BUILD_TARGET: x86_64-pc-windows-gnu
 
     - name: Verify clean directory
       run: git diff --exit-code
