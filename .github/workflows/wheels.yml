@@ -33,6 +33,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+    env:
+        CARGO_BUILD_TARGET: x86_64-pc-windows-gnu
 
     steps:
     - uses: actions/checkout@v3
@@ -43,6 +45,8 @@ jobs:
       env:
         CIBW_ARCHS_MACOS: auto universal2
         CARGO_BUILD_TARGET: x86_64-pc-windows-gnu
+        CIBW_ENVIRONMENT_WINDOWS: >
+            CARGO_BUILD_TARGET=x86_64-pc-windows-gnu
 
     - name: Verify clean directory
       run: git diff --exit-code
