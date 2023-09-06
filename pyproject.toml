@@ -28,7 +28,6 @@ filterwarnings = ["error"]
 testpaths = ["tests"]
 
 [tool.cibuildwheel]
-cargo-build-target = "x86_64-pc-windows-gnu"
 test-command = "pytest {project}/tests"
 test-extras = ["test"]
 test-skip = ["*universal2:arm64"]
