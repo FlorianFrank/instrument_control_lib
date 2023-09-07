@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.4)
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/build_config/general_config.cmake")
 
+set(CMAKE_C_COMPILER "gcc")
+set(CMAKE_CXX_COMPILER "g++")
+
 project(instrument_control_lib)
 
 file(GLOB source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
