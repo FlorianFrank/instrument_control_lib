@@ -33,24 +33,15 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        include:
-            - os: windows-latest,
-              artifact: "windows_mingw.7z"
-              build_type: "Release"
-              cc: "gcc"
-              cxx: "g++"
-              archiver: "7z a"
-              generators: "Ninja"
 
     steps:
     - uses: actions/checkout@v3
       with:
         submodules: recursive
 
-    - uses: alexanderbraml/cibuildwheel@v2.15.7
+    - uses: pypa/cibuildwheel@v2.15
       env:
         CIBW_ARCHS_MACOS: auto universal2
-        CIBW_CARGO_BUILD_TARGET: x86_64-pc-windows-gnu
 
     - name: Verify clean directory
       run: git diff --exit-code
