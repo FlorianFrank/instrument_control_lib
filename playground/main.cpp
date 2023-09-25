@@ -140,9 +140,14 @@ void oscTest() {
     }
 }
 
+DWORD WINAPI ThreadFunction(void *threadArgs) {
+    return NULL;
+}
+
 
 int main() {
-    oscTest();
+    std::cout << ThreadFunction << std::endl;
+    // oscTest();
     return 0;
 }
 
