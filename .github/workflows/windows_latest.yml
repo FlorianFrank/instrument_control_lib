@@ -29,37 +29,40 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
+      - name: Setup Ninja
+        uses: ashutoshvarma/setup-ninja@master
+
       - name: Checkout Repository and Submodules
         uses: actions/checkout@v3
         with:
           submodules: recursive
 
-      - name: Create Build Environment
-        run: cmake -E make_directory ${{runner.workspace}}/build
+      #- name: Create Build Environment
+      #  run: cmake -E make_directory ${{runner.workspace}}/build
 
-      - name: Configure CMake Windows
-        working-directory: ${{runner.workspace}}/build
-        shell: pwsh
-        run: cmake ../instrument_control_lib -GNinja -DCMAKE_BUILD_TYPE=${{matrix.config.build_type}} -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc
+      #- name: Configure CMake Windows
+      #  working-directory: ${{runner.workspace}}/build
+      #  shell: pwsh
+      #  run: cmake ../instrument_control_lib -GNinja -DCMAKE_BUILD_TYPE=${{matrix.config.build_type}} -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc
 
-      - name: Copy Windows DLLs
-        working-directory: ${{runner.workspace}}/instrument_control_lib/common_tools_lib
-        run: cp libs/windows/* ${{runner.workspace}}/build/common_tools_lib; cp libs/windows/* ${{runner.workspace}}/build/tests
+      #- name: Copy Windows DLLs
+      #  working-directory: ${{runner.workspace}}/instrument_control_lib/common_tools_lib
+      #  run: cp libs/windows/* ${{runner.workspace}}/build/common_tools_lib; cp libs/windows/* ${{runner.workspace}}/build/tests
 
-      - name: Build project
-        working-directory: ${{runner.workspace}}/build
-        shell: pwsh
-        run: cmake --build . --config ${{ matrix.config.build_type }} --target all
+      #- name: Build project
+      #  working-directory: ${{runner.workspace}}/build
+      #  shell: pwsh
+      #  run: cmake --build . --config ${{ matrix.config.build_type }} --target all
 
       - name: Pip install
         working-directory: ${{runner.workspace}}
         shell: pwsh
-        run: $env:cc = 'gcc'; $env:cxx = 'g++'; pip install ${{runner.workspace}}/instrument_control_lib
+        run: pip install ${{runner.workspace}}/instrument_control_lib
 
       - name: Pip wheel
         working-directory: ${{runner.workspace}}
         shell: pwsh
-        run: $env:cc = 'gcc'; $env:cxx = 'g++'; pip wheel ${{runner.workspace}}/instrument_control_lib
+        run: pip wheel ${{runner.workspace}}/instrument_control_lib
 
 
       - name: Execute UnitTests Common Tools Lib
