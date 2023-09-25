@@ -20,7 +20,7 @@ else() # build shared lib
     add_library(instrument_control_lib SHARED ${source_files} ${device_files} ${device_type_files} python_interface/pybind_wrapper.cpp)
 endif()
 
-target_compile_options(instrument_control_lib PRIVATE -Wall) # -Wextra -Wpedantic -Werror)
+target_compile_options(instrument_control_lib PRIVATE -Wall -Wextra) # -Wpedantic -Werror)
 
 # Build third party libraries and executables
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/pugixml")
